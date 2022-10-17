@@ -1,13 +1,12 @@
 package com.smile.petpat.user.domain;
 
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
 @Getter
+@Builder
 @Entity
 @Table(name = "users")
 public class User {
@@ -29,9 +28,7 @@ public class User {
     @Column
     private String location;
 
-
     public User() {
-
     }
 
     @Builder
