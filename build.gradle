@@ -25,13 +25,15 @@ dependencies {
 
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
-
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
     // data
     runtimeOnly 'com.h2database:h2'
     runtimeOnly 'mysql:mysql-connector-java'
 
     // 스프링 시큐리티
     implementation 'org.springframework.boot:spring-boot-starter-security'
+
+    implementation 'org.apache.commons:commons-lang3:3.9'
 
     // Test
     testImplementation 'org.springframework.boot:spring-boot-starter-test'

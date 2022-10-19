@@ -21,6 +21,6 @@ public class UserController {
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public void usernameValidChk(@RequestParam("username") String username){
-        userService.usernameValidChk(username);
+        userService.userIdValidChk(username);
     }
 }
