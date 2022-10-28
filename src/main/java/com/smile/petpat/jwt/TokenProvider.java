@@ -1,94 +1,101 @@
 package com.smile.petpat.jwt;
 
+import com.auth0.jwt.JWT;
+import com.auth0.jwt.algorithms.Algorithm;
+import com.auth0.jwt.interfaces.DecodedJWT;
+import com.auth0.jwt.interfaces.JWTVerifier;
 import com.smile.petpat.user.domain.User;
-import io.jsonwebtoken.*;
-import io.jsonwebtoken.io.Decoders;
-import io.jsonwebtoken.security.Keys;
+import com.smile.petpat.user.service.UserDetailsServiceImpl;
+import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
 
+import javax.servlet.http.HttpServletRequest;
 import java.security.Key;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Date;
+import java.util.*;
 import java.util.stream.Collectors;
 
+import static com.smile.petpat.exception.ExceptionMessage.ILLEGAL_INVALID_TOKEN;
+
 @Component
-public class TokenProvider implements InitializingBean {
+@RequiredArgsConstructor
+public class TokenProvider{
 
     private final Logger logger = LoggerFactory.getLogger(TokenProvider.class);
-    private static final String AUTHORITIES_KEY = "auth";
-    private final String secret;
-    private final long tokenValidityInMilliseconds;
-    private Key key;
+    private final UserDetailsServiceImpl userDetailsService;
+    private final JwtTokenUtils jwtTokenUtils;
+    private static final String TOKEN_PREFIX = "Bearer ";
+    @Value("${jwt.secretkey}")
+    String JWT_SECRET;
 
-    public TokenProvider(
-            @Value("${jwt.secret}") String secret,
-            @Value("${jwt.token-validity-in-seconds}") long tokenValidityInSeconds) {
-        this.secret = secret;
-        this.tokenValidityInMilliseconds = tokenValidityInSeconds * 1000;
+    // 토큰을 헤더에 담음
+    public HttpHeaders headerToken(User user) {
+        String token = jwtTokenUtils.generateJwtToken(user);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.add(HttpHeaders.AUTHORIZATION, "Bearer " + " " + token);
+        return headers;
     }
 
-    @Override
-    public void afterPropertiesSet() {
-        byte[] keyBytes = Decoders.BASE64.decode(secret);
-        this.key = Keys.hmacShaKeyFor(keyBytes);
-    }
-
-    public String createToken(Authentication authentication) {
-        String authorities = authentication.getAuthorities().stream()
-                .map(GrantedAuthority::getAuthority)
-                .collect(Collectors.joining(","));
-
-        long now = (new Date()).getTime();
-        Date validity = new Date(now + this.tokenValidityInMilliseconds);
-
-        return Jwts.builder()
-                .setSubject(authentication.getName())
-                .claim(AUTHORITIES_KEY, authorities)
-                .signWith(key, SignatureAlgorithm.HS512)
-                .setExpiration(validity)
-                .compact();
-    }
-    // 권한 정보
-    public Authentication getAuthentication(String token) {
-        Claims claims = Jwts
-                .parserBuilder()
-                .setSigningKey(key)
-                .build()
-                .parseClaimsJws(token)
-                .getBody();
-
-        Collection<? extends GrantedAuthority> authorities =
-                Arrays.stream(claims.get(AUTHORITIES_KEY).toString().split(","))
-                        .map(SimpleGrantedAuthority::new)
-                        .collect(Collectors.toList());
-
-        User principal = new User();
-
-        return new UsernamePasswordAuthenticationToken(principal, token, authorities);
-    }
-
-    public boolean validateToken(String token) {
-        try {
-            Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token);
-            return true;
-        } catch (io.jsonwebtoken.security.SecurityException | MalformedJwtException e) {
-            logger.info("잘못된 JWT 서명입니다.");
-        } catch (ExpiredJwtException e) {
-            logger.info("만료된 JWT 토큰입니다.");
-        } catch (UnsupportedJwtException e) {
-            logger.info("지원되지 않는 JWT 토큰입니다.");
-        } catch (IllegalArgumentException e) {
-            logger.info("JWT 토큰이 잘못되었습니다.");
+    // header에서 토큰 추출
+    public String resolveToken(HttpServletRequest request) {
+        String bearerToken = request.getHeader("Authorization");
+        if (bearerToken != null && bearerToken.startsWith(TOKEN_PREFIX)) {
+            return bearerToken.substring(TOKEN_PREFIX.length());
         }
-        return false;
+        return null;
+    }
+
+    public Authentication getAuthentication(String token) {
+        UserDetails userDetails = userDetailsService.loadUserByUsername(decodeUsername(token));
+        return new UsernamePasswordAuthenticationToken(
+                // The credentials that prove the principal is correct.
+                userDetails, "", userDetails.getAuthorities());
+    }
+
+    // 토큰에서 회원 정보 추출
+    public String decodeUsername(String token) {
+        DecodedJWT decodedJWT = isValidToken(token)
+                .orElseThrow(() -> new IllegalArgumentException(ILLEGAL_INVALID_TOKEN));
+
+        Date now = new Date();
+        if (decodedJWT.getExpiresAt().before(now)) {
+            throw new IllegalArgumentException(ILLEGAL_INVALID_TOKEN);
+        }
+
+        String username = decodedJWT
+                .getClaim(JwtTokenUtils.CLAIM_USER_NAME)
+                .asString();
+
+        return username;
+    }
+
+    // 토큰 유효성 검사
+    public Optional<DecodedJWT> isValidToken(String token) {
+        DecodedJWT jwt = null;
+
+        try {
+            JWTVerifier verifier = JWT
+                    .require(generateAlgorithm(JWT_SECRET))
+                    .build();
+            jwt = verifier.verify(token);
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+        }
+
+        return Optional.ofNullable(jwt);
+    }
+
+    private static Algorithm generateAlgorithm(String secretKey) {
+        return Algorithm.HMAC256(secretKey.getBytes());
     }
 }

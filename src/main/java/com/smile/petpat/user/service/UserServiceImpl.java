@@ -2,6 +2,7 @@ package com.smile.petpat.user.service;
 
 import com.smile.petpat.user.domain.*;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,7 +13,6 @@ public class UserServiceImpl implements UserService {
 
     private final UserReader userReader;
     private final UserStore userStore;
-    private final PasswordEncoder passwordEncoder;
 
     @Override
     @Transactional
@@ -27,6 +27,5 @@ public class UserServiceImpl implements UserService {
     public void userIdValidChk(String userId) {
         userReader.getUserByUserId(userId);
     }
-
 
 }

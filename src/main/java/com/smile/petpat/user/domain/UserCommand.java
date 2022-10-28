@@ -3,6 +3,7 @@ package com.smile.petpat.user.domain;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.ToString;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -34,10 +35,19 @@ public class UserCommand {
                 .password(password)
                 .build();
     }
+
     public User toRegisterEntity(){
         return User.builder()
                 .userId(userId)
                 .username(username)
+                .password(passwordEncoder.encode(password))
+                .build();
+    }
+
+    // 로그인
+    public User toLogin(){
+        return User.builder()
+                .userId(userId)
                 .password(passwordEncoder.encode(password))
                 .build();
     }

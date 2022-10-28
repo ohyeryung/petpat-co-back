@@ -17,7 +17,6 @@ public class UserStoreImpl implements UserStore {
 
     @Override
     public User store(User initUser) {
-
         validChk(initUser);
         return userRepository.save(initUser);
     }

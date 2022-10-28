@@ -1,9 +1,6 @@
 package com.smile.petpat.config;
 
-import com.smile.petpat.jwt.JwtAccessDeniedHandler;
-import com.smile.petpat.jwt.JwtAuthenticationEntryPoint;
-import com.smile.petpat.jwt.JwtSecurityConfig;
-import com.smile.petpat.jwt.TokenProvider;
+import com.smile.petpat.jwt.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -21,21 +18,9 @@ import org.springframework.web.filter.CorsFilter;
 public class WebSecurityConfig {
 
     private final TokenProvider tokenProvider;
-    private final CorsFilter corsFilter;
-    private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
-    private final JwtAccessDeniedHandler jwtAccessDeniedHandler;
 
-
-
-    public WebSecurityConfig(
-            TokenProvider tokenProvider,
-            CorsFilter corsFilter,
-            JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint,
-            JwtAccessDeniedHandler jwtAccessDeniedHandler) {
+    public WebSecurityConfig(TokenProvider tokenProvider) {
         this.tokenProvider = tokenProvider;
-        this.corsFilter = corsFilter;
-        this.jwtAuthenticationEntryPoint = jwtAuthenticationEntryPoint;
-        this.jwtAccessDeniedHandler = jwtAccessDeniedHandler;
     }
 
     @Bean
@@ -51,39 +36,26 @@ public class WebSecurityConfig {
     }
 
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
-        httpSecurity
+    public SecurityFilterChain configure(HttpSecurity http) throws Exception {
+        http
                 // token을 사용하는 방식이기 때문에 csrf를 disable합니다.
-                .csrf().disable()
-
-                .addFilterBefore(corsFilter, UsernamePasswordAuthenticationFilter.class)
-
-                .exceptionHandling()
-                .authenticationEntryPoint(jwtAuthenticationEntryPoint)
-                .accessDeniedHandler(jwtAccessDeniedHandler)
-
-                // enable h2-console
+                .cors()
                 .and()
-                .headers()
-                .frameOptions()
-                .sameOrigin()
+                .csrf().disable();
 
+        http
                 // 세션을 사용하지 않기 때문에 STATELESS로 설정
-                .and()
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-
                 .and()
+                .formLogin().disable()
+                .httpBasic().disable()
+
+                .addFilterBefore(new JwtAuthenticationFilter(tokenProvider), UsernamePasswordAuthenticationFilter.class)
                 .authorizeRequests()
-                .antMatchers("/api/hello").permitAll()
-                .antMatchers("/api/authenticate").permitAll()
-                .antMatchers("/api/signup").permitAll()
+                .antMatchers("/api/hello", "/api/authenticate", "/api/signup").permitAll()
+                .anyRequest().authenticated();
 
-                .anyRequest().authenticated()
-
-                .and()
-                .apply(new JwtSecurityConfig(tokenProvider));
-
-        return httpSecurity.build();
+        return http.build();
     }
 }

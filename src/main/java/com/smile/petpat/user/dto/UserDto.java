@@ -32,8 +32,8 @@ public class UserDto {
                     .profileImg(profileImg)
                     .build();
         }
-
     }
+
     @Getter
     @Setter
     public static class RegisterUsernameChk{
@@ -41,5 +41,13 @@ public class UserDto {
         private String username;
 
 
+    }
+
+    @Getter
+    public static class Login{
+        @NotEmpty
+        private String userId;
+        @NotEmpty
+        private String password;
     }
 }
