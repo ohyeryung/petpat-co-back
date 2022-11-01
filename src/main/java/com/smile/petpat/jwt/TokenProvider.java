@@ -73,7 +73,7 @@ public class TokenProvider{
         }
 
         String username = decodedJWT
-                .getClaim(JwtTokenUtils.CLAIM_USER_NAME)
+                .getClaim(JwtTokenUtils.CLAIM_USERNAME)
                 .asString();
 
         return username;

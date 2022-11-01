@@ -10,7 +10,6 @@ import javax.validation.constraints.NotEmpty;
 
 public class UserDto {
 
-
     @Getter
     @Setter
     public static class RegisterUserRequest{
@@ -44,10 +43,17 @@ public class UserDto {
     }
 
     @Getter
-    public static class Login{
+    public static class LoginUserRequest{
         @NotEmpty
         private String userId;
         @NotEmpty
         private String password;
+
+        public UserCommand toCommand(){
+            return UserCommand.builder()
+                    .userId(userId)
+                    .password(password)
+                    .build();
+        }
     }
 }

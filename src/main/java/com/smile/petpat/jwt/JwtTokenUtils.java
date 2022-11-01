@@ -4,6 +4,7 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.smile.petpat.user.domain.User;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
@@ -16,7 +17,7 @@ public class JwtTokenUtils {
     // JWT 토큰의 유효기간: 3일 (단위: milliseconds)
     private static final int JWT_TOKEN_VALID_MILLI_SEC = 3 * DAY * 1000;
 
-    public static final String CLAIM_USER_NAME = "USER_NAME";
+    public static final String CLAIM_USERID = "USER_ID";
     public static final String ISSUER = "petpat";
     @Value("${jwt.secretkey}")
    String JWT_SECRET;
@@ -34,9 +35,17 @@ public class JwtTokenUtils {
         return token;
     }
 
+    public HttpHeaders headerToken(User user) {
+        String token = generateJwtToken(user);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.add(HttpHeaders.AUTHORIZATION, "Bearer " + " " + token);
+        return headers;
+    }
+
     private Map<String, Object> createClaims(User user) {
         Map<String, Object> claims = new HashMap<>();
-        claims.put(CLAIM_USER_NAME, user.getUsername());
+        claims.put(CLAIM_USERID, user.getUserId());
 
         return claims;
     }

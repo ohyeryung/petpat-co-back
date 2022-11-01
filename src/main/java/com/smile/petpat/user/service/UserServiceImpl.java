@@ -13,6 +13,7 @@ public class UserServiceImpl implements UserService {
 
     private final UserReader userReader;
     private final UserStore userStore;
+    private final UserAuth userAuth;
 
     @Override
     @Transactional
@@ -21,6 +22,15 @@ public class UserServiceImpl implements UserService {
         User initUser = command.toRegisterEntity();
         userReader.getUserByUserId(initUser.getUserId());
         return userStore.store(initUser);
+    }
+
+    @Override
+    @Transactional
+    public void loginUser(UserCommand command) {
+
+        User initUser = command.toLogin();
+        userReader.getUser(initUser);
+        userAuth.getToken(initUser);
     }
 
     @Override
