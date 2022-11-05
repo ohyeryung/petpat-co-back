@@ -4,8 +4,10 @@ import lombok.Builder;
 import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
+import java.awt.font.MultipleMaster;
 import java.util.Collection;
 
 @Getter
@@ -16,18 +18,16 @@ public class User implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private Long id;
     @Column(name = "userId")
-    private String userId;
-    @Column(name = "username")
-    private String username;
+    private Long id;
+    @Column(name = "userEmail")
+    private String userEmail;
+    @Column(name = "nickname")
+    private String nickname;
     @Column(name = "password")
     private String password;
-    @Column(name = "profileUrl")
-    private String profileUrl;
-    @Column(name = "profilePath")
-    private String profilePath;
+    @Column(name = "profileImgPath")
+    private String profileImgPath;
 
     // 후에 여러컬럼이나 테이블로 분리할지 생각해야함
     @Column
@@ -37,18 +37,22 @@ public class User implements UserDetails {
     }
 
     @Builder
-    public User(Long id, String userId, String username, String password, String profileUrl, String profilePath, String location) {
+    public User(Long id, String userEmail, String nickname, String password,  String profileImgPath, String location) {
         this.id = id;
-        this.userId = userId;
-        this.username = username;
+        this.userEmail = userEmail;
+        this.nickname = nickname;
         this.password = password;
-        this.profileUrl = profileUrl;
-        this.profilePath = profilePath;
+        this.profileImgPath = profileImgPath;
         this.location = location;
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
+        return null;
+    }
+
+    @Override
+    public String getUsername() {
         return null;
     }
 

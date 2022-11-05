@@ -1,11 +1,9 @@
 package com.smile.petpat.user.service;
 
 import com.smile.petpat.user.domain.User;
-import com.smile.petpat.user.domain.UserCommand;
 import com.smile.petpat.user.domain.UserReader;
 import com.smile.petpat.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
@@ -18,8 +16,8 @@ public class UserReaderImpl implements UserReader {
     private final PasswordEncoder passwordEncoder;
 
     @Override
-    public void getUserByUserId(String userId) {
-        userRepository.findByUserId(userId).ifPresent(
+    public void getUserByUserEmail(String userEmail) {
+        userRepository.findByUserEmail(userEmail).ifPresent(
                 user -> {
                     throw new IllegalArgumentException(ILLEGAL_USERNAME_DUPLICATION);
                 }
@@ -32,7 +30,8 @@ public class UserReaderImpl implements UserReader {
     }
 
     public void pwCheck(User initUser) {
-        User foundUser = userRepository.findByUserId(initUser.getUserId()).orElseThrow(IllegalArgumentException::new);
+        User foundUser = userRepository.findByUserEmail(initUser.getUserEmail())
+                .orElseThrow(() -> new IllegalArgumentException(ILLEGAL_USER_NOT_EXIST));
         if (!passwordEncoder.matches(initUser.getPassword(), foundUser.getPassword())) {
             throw new IllegalArgumentException(ILLEGAL_PASSWORD_NOT_VALID);
         }

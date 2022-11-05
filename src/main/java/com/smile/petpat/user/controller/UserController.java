@@ -28,8 +28,8 @@ public class UserController {
 
     // 로그인
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public void userLogin(@RequestBody UserDto.LoginUserRequest request){
+    public ResponseEntity userLogin(@RequestBody UserDto.LoginUserRequest request){
         UserCommand command = request.toCommand();
-        userService.loginUser(command);
+        return userService.loginUser(command);
     }
 }

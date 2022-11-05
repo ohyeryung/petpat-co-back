@@ -1,6 +1,6 @@
 package com.smile.petpat.user.domain;
 
 public interface UserReader {
-    void getUserByUserId(String userId);
+    void getUserByUserEmail(String userEmail);
     void getUser(User user);
 }

@@ -53,7 +53,7 @@ public class WebSecurityConfig {
 
                 .addFilterBefore(new JwtAuthenticationFilter(tokenProvider), UsernamePasswordAuthenticationFilter.class)
                 .authorizeRequests()
-                .antMatchers("/api/hello", "/api/authenticate", "/api/signup").permitAll()
+                .antMatchers("/api/v1/user/**").permitAll()
                 .anyRequest().authenticated();
 
         return http.build();

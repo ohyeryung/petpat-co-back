@@ -24,7 +24,6 @@ public class JwtTokenUtils {
 
     public String generateJwtToken(User user) {
         String token = null;
-        System.out.println("secret Key : " + JWT_SECRET);
 
         token = JWT.create()
                 .withIssuer(ISSUER)
@@ -45,7 +44,7 @@ public class JwtTokenUtils {
 
     private Map<String, Object> createClaims(User user) {
         Map<String, Object> claims = new HashMap<>();
-        claims.put(CLAIM_USERID, user.getUserId());
+        claims.put(CLAIM_USERID, user.getUserEmail());
 
         return claims;
     }

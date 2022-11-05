@@ -2,6 +2,7 @@ package com.smile.petpat.user.service;
 
 import com.smile.petpat.user.domain.*;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -19,23 +20,22 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public User registerUser(UserCommand command) {
 
-        User initUser = command.toRegisterEntity();
-        userReader.getUserByUserId(initUser.getUserId());
-        return userStore.store(initUser);
+        userReader.getUserByUserEmail(command.getUserEmail());
+        return userStore.store(command.toEntity());
     }
 
     @Override
     @Transactional
-    public void loginUser(UserCommand command) {
+    public ResponseEntity<?> loginUser(UserCommand command) {
 
         User initUser = command.toLogin();
         userReader.getUser(initUser);
-        userAuth.getToken(initUser);
+        return userAuth.getToken(initUser);
     }
 
     @Override
     public void userIdValidChk(String userId) {
-        userReader.getUserByUserId(userId);
+        userReader.getUserByUserEmail(userId);
     }
 
 }

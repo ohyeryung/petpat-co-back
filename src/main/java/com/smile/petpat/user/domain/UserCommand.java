@@ -3,8 +3,11 @@ package com.smile.petpat.user.domain;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.ToString;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
 @Getter
@@ -12,43 +15,34 @@ import org.springframework.web.multipart.MultipartFile;
 @ToString
 public class UserCommand {
 
-    private final PasswordEncoder passwordEncoder;
-
-    private String userId;
-    private String username;
+    private String userEmail;
+    private String nickname;
     private String password;
-    private MultipartFile profileImg;
+    private String profileImgPath;
 
 
-    public UserCommand(PasswordEncoder passwordEncoder, String userId, String username, String password, MultipartFile profileImg) {
-        this.passwordEncoder = passwordEncoder;
-        this.userId = userId;
-        this.username = username;
+    public UserCommand(String userEmail, String nickname, String password, String profileImgPath) {
+        this.userEmail = userEmail;
+        this.nickname = nickname;
         this.password = password;
-        this.profileImg = profileImg;
+        this.profileImgPath = profileImgPath;
     }
 
+    // 회원가입
     public User toEntity(){
         return User.builder()
-                .userId(userId)
-                .username(username)
+                .userEmail(userEmail)
+                .nickname(nickname)
                 .password(password)
-                .build();
-    }
-
-    public User toRegisterEntity(){
-        return User.builder()
-                .userId(userId)
-                .username(username)
-                .password(passwordEncoder.encode(password))
+                .profileImgPath(profileImgPath)
                 .build();
     }
 
     // 로그인
     public User toLogin(){
         return User.builder()
-                .userId(userId)
-                .password(passwordEncoder.encode(password))
+                .userEmail(userEmail)
+                .password(password)
                 .build();
     }
 }

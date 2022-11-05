@@ -13,17 +13,24 @@ import org.springframework.stereotype.Component;
 public class UserStoreImpl implements UserStore {
 
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
 
     @Override
     public User store(User initUser) {
         validChk(initUser);
-        return userRepository.save(initUser);
+        User user = User.builder()
+                .userEmail(initUser.getUserEmail())
+                .nickname(initUser.getNickname())
+                .password(passwordEncoder.encode(initUser.getPassword()))
+                .profileImgPath(initUser.getProfileImgPath())
+                .build();
+        return userRepository.save(user);
     }
 
     // 유저 객체 검증
     public void validChk(User initUser){
-        if(StringUtils.isEmpty(initUser.getUsername())) throw new IllegalArgumentException();
+        if(StringUtils.isEmpty(initUser.getUserEmail())) throw new IllegalArgumentException();
         if(StringUtils.isEmpty(initUser.getPassword())) throw new IllegalArgumentException();
     }
 

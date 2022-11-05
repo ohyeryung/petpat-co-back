@@ -7,6 +7,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Pattern;
 
 public class UserDto {
 
@@ -15,20 +16,20 @@ public class UserDto {
     public static class RegisterUserRequest{
 
         @NotEmpty
-        private String userId;
+        private String userEmail;
         @NotEmpty
-        private String username;
+        private String nickname;
         @NotEmpty
         private String password;
         @NotEmpty
-        private MultipartFile profileImg;
+        private String profileImgPath;
 
         public UserCommand toCommand(){
             return UserCommand.builder()
-                    .userId(userId)
-                    .username(username)
+                    .userEmail(userEmail)
+                    .nickname(nickname)
                     .password(password)
-                    .profileImg(profileImg)
+                    .profileImgPath(profileImgPath)
                     .build();
         }
     }
@@ -45,13 +46,13 @@ public class UserDto {
     @Getter
     public static class LoginUserRequest{
         @NotEmpty
-        private String userId;
+        private String userEmail;
         @NotEmpty
         private String password;
 
         public UserCommand toCommand(){
             return UserCommand.builder()
-                    .userId(userId)
+                    .userEmail(userEmail)
                     .password(password)
                     .build();
         }
