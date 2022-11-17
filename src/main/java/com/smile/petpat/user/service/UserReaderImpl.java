@@ -26,10 +26,10 @@ public class UserReaderImpl implements UserReader {
 
     @Override
     public void getUser(User initUser) {
-        pwCheck(initUser);
+        isPwValid(initUser);
     }
 
-    public void pwCheck(User initUser) {
+    public void isPwValid(User initUser) {
         User foundUser = userRepository.findByUserEmail(initUser.getUserEmail())
                 .orElseThrow(() -> new IllegalArgumentException(ILLEGAL_USER_NOT_EXIST));
         if (!passwordEncoder.matches(initUser.getPassword(), foundUser.getPassword())) {

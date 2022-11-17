@@ -16,6 +16,7 @@ public class UserServiceImpl implements UserService {
     private final UserStore userStore;
     private final UserAuth userAuth;
 
+    // 회원가입
     @Override
     @Transactional
     public User registerUser(UserCommand command) {
@@ -24,9 +25,10 @@ public class UserServiceImpl implements UserService {
         return userStore.store(command.toEntity());
     }
 
+    // 로그인
     @Override
     @Transactional
-    public ResponseEntity<?> loginUser(UserCommand command) {
+    public ResponseEntity<String> loginUser(UserCommand command) {
 
         User initUser = command.toLogin();
         userReader.getUser(initUser);

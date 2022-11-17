@@ -18,6 +18,7 @@ public class UserDto {
         @NotEmpty
         private String userEmail;
         @NotEmpty
+//        @Pattern(regexp = )
         private String nickname;
         @NotEmpty
         private String password;
