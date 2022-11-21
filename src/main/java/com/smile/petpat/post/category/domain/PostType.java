@@ -1,8 +1,8 @@
-package com.smile.petpat.category.domain;
+package com.smile.petpat.post.category.domain;
 
 
 public enum PostType {
-    QnA("QNA"),
+    QNA("QNA"),
     REHOMING("분양"),
     TRADE("중고거래"),
     ;

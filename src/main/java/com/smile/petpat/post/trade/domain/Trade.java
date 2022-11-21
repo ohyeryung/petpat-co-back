@@ -1,6 +1,6 @@
-package com.smile.petpat.trade.domain;
+package com.smile.petpat.post.trade.domain;
 
-import com.smile.petpat.category.domain.PostType;
+import com.smile.petpat.post.category.domain.PostType;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -8,7 +8,7 @@ import javax.persistence.*;
 
 @Entity
 @Getter
-@Table(name = "trade")
+@Table(name = "tb_trade")
 @Builder
 public class Trade {
 

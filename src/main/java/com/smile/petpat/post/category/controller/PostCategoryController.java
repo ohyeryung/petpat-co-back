@@ -1,7 +1,6 @@
-package com.smile.petpat.category.controller;
+package com.smile.petpat.post.category.controller;
 
-import com.smile.petpat.category.service.PostCategoryService;
-import com.smile.petpat.category.service.PostCategoryServiceImpl;
+import com.smile.petpat.post.category.service.PostCategoryServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;

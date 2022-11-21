@@ -1,4 +1,4 @@
-package com.smile.petpat.category.domain.dto;
+package com.smile.petpat.post.category.domain.dto;
 
 import lombok.Getter;
 import lombok.Setter;

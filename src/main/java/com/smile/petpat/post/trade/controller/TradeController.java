@@ -1,4 +1,4 @@
-package com.smile.petpat.trade.controller;
+package com.smile.petpat.post.trade.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.RequestMapping;
