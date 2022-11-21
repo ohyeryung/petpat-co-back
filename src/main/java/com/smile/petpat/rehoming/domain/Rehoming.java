@@ -17,11 +17,6 @@ public class Rehoming  extends Timestamped {
     @Column(name = "rehomingPostId")
     private Long rehomingId;
 
-//    @ManyToOne(cascade = CascadeType.MERGE, targetEntity = User.class)
-//    @JoinColumn(name = "userId", updatable = false)
-//    @JsonBackReference
-//    private User user;
-
     @Column(name = "title")
     private String title;
 
@@ -54,26 +49,6 @@ public class Rehoming  extends Timestamped {
 
     @Column(name = "isCompleted")
     private boolean isCompleted;
-
-//    @Builder
-//    public Rehoming(User user, String title, String description, String petName, String petAge, String category,
-//                    String type, String gender, String region, int price, Boolean isCompleted) {
-//        this.user = user;
-//        this.title = title;
-//        this.description = description;
-//        this.petName = petName;
-//        this.petAge = petAge;
-//        this.category = category;
-//        this.type = type;
-//        this.gender = gender;
-//        this.region = region;
-//        this.price = price;
-//        this.isCompleted = isCompleted;
-//    }
-
-    public enum Status {
-
-    }
 
     public Rehoming(RehomingDto rehomingDto) {
         this.title = rehomingDto.getTitle();
