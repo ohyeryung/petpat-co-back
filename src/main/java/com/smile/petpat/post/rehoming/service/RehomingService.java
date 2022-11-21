@@ -1,10 +1,10 @@
-package com.smile.petpat.rehoming.service;
+package com.smile.petpat.post.rehoming.service;
 
-import com.smile.petpat.Image.S3Uploader;
-import com.smile.petpat.rehoming.domain.Rehoming;
-import com.smile.petpat.rehoming.dto.RehomingDto;
-import com.smile.petpat.rehoming.dto.RehomingPagingDto;
-import com.smile.petpat.rehoming.repository.RehomingRepository;
+import com.smile.petpat.image.domain.S3Uploader;
+import com.smile.petpat.post.rehoming.domain.Rehoming;
+import com.smile.petpat.post.rehoming.dto.RehomingDto;
+import com.smile.petpat.post.rehoming.dto.RehomingPagingDto;
+import com.smile.petpat.post.rehoming.repository.RehomingRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -14,7 +14,6 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @Service
-
 public class RehomingService {
     private final RehomingRepository rehomingRepository;
     private final S3Uploader s3Uploader;

@@ -33,8 +33,6 @@ dependencies {
     // 스프링 시큐리티
     implementation 'org.springframework.boot:spring-boot-starter-security'
 
-
-
     // JWT
     implementation 'com.auth0:java-jwt:3.18.2'
 

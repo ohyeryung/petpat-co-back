@@ -1,7 +1,7 @@
-package com.smile.petpat.rehoming.domain;
+package com.smile.petpat.post.rehoming.domain;
 
-import com.smile.petpat.rehoming.dto.RehomingDto;
-import com.smile.petpat.util.Timestamped;
+import com.smile.petpat.post.rehoming.dto.RehomingDto;
+import com.smile.petpat.config.comm.Timestamped;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 

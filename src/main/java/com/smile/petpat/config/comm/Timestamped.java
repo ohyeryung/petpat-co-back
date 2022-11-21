@@ -1,4 +1,4 @@
-package com.smile.petpat.util;
+package com.smile.petpat.config.comm;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;

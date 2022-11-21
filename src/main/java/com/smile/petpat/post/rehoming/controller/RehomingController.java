@@ -1,9 +1,9 @@
-package com.smile.petpat.rehoming.controller;
+package com.smile.petpat.post.rehoming.controller;
 
-import com.smile.petpat.rehoming.domain.Rehoming;
-import com.smile.petpat.rehoming.dto.RehomingDto;
-import com.smile.petpat.rehoming.dto.RehomingPagingDto;
-import com.smile.petpat.rehoming.service.RehomingService;
+import com.smile.petpat.post.rehoming.domain.Rehoming;
+import com.smile.petpat.post.rehoming.dto.RehomingDto;
+import com.smile.petpat.post.rehoming.dto.RehomingPagingDto;
+import com.smile.petpat.post.rehoming.service.RehomingService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -21,8 +21,8 @@ public class RehomingController {
     private final RehomingService rehomingService;
     // 분양 글 등록
     @PostMapping("")
-    public ResponseEntity<Rehoming> create( @RequestPart List<MultipartFile> rehomingImg,
-                          @RequestPart(value = "requestDto") RehomingDto requestDto) {
+    public ResponseEntity<Rehoming> create(@RequestPart List<MultipartFile> rehomingImg,
+                                           @RequestPart(value = "requestDto") RehomingDto requestDto) {
         return ResponseEntity.status(200).body(rehomingService.createRehoming(rehomingImg, requestDto));
     }
 

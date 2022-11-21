@@ -1,10 +1,26 @@
 package com.smile.petpat.exception;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @Getter
-@AllArgsConstructor
 public class CustomException extends RuntimeException {
-    private final ExceptionMessage exceptionMessage;
+
+    private ExceptionMessage exceptionMessage;
+
+    public CustomException(){
+    }
+
+    public CustomException(ExceptionMessage exceptionMessage) {
+        this.exceptionMessage = exceptionMessage;
+    }
+
+    public CustomException(String message, ExceptionMessage exceptionMessage) {
+        super(message);
+        this.exceptionMessage = exceptionMessage;
+    }
+
+    public CustomException(String message, Throwable cause, ExceptionMessage exceptionMessage) {
+        super(message, cause);
+        this.exceptionMessage = exceptionMessage;
+    }
 }

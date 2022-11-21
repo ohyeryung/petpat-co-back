@@ -6,7 +6,6 @@ import org.springframework.http.HttpStatus;
 
 
 @Getter
-@AllArgsConstructor
 public enum ExceptionMessage {
 
     // User
@@ -16,10 +15,16 @@ public enum ExceptionMessage {
     ILLEGAL_INVALID_TOKEN(HttpStatus.BAD_REQUEST, "80400","유효한 토큰이 아닙니다."),
 
     // Image
-    FAILIED_UPLOAD_IMAGE(HttpStatus.BAD_REQUEST, "80400", "이미지 업로드에 실패했습니다."),
+    FAILED_UPLOAD_IMAGE(HttpStatus.BAD_REQUEST, "80400", "이미지 업로드에 실패했습니다."),
     WRONG_TYPE_IMAGE(HttpStatus.BAD_REQUEST, "80400", "잘못된 형식의 파일입니다");
 
-    private final int httpStatus;
+    private final HttpStatus httpStatus;
     private final String code;
     private final String message;
+
+    ExceptionMessage(HttpStatus httpStatus, String code, String message) {
+        this.httpStatus = httpStatus;
+        this.code = code;
+        this.message = message;
+    }
 }

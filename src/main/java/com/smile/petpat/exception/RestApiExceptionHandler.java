@@ -12,6 +12,7 @@ import java.nio.charset.StandardCharsets;
 
 @RestControllerAdvice
 public class RestApiExceptionHandler {
+
     public ResponseEntity<StatusMessage> exceptionHandle(Exception ex) {
         StatusMessage message = new StatusMessage();
         HttpHeaders headers = new HttpHeaders();

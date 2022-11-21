@@ -1,4 +1,4 @@
-package com.smile.petpat.Image;
+package com.smile.petpat.image.domain;
 
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3Client;
@@ -6,7 +6,7 @@ import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.smile.petpat.exception.CustomException;
-import com.smile.petpat.exception.ExceptionMessage;
+import com.smile.petpat.image.repository.ImageRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -23,6 +23,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+import static com.smile.petpat.exception.ExceptionMessage.*;
+
 @Slf4j
 @RequiredArgsConstructor    // final 멤버변수가 있으면 생성자 항목에 포함시킴
 @Component
@@ -31,32 +33,32 @@ public class S3Uploader {
 
     private final AmazonS3Client amazonS3Client;
     private final AmazonS3 amazonS3;
-    private final PhotoRepository photoRepository;
+    private final ImageRepository imageRepository;
 
     @Value("${cloud.aws.s3.bucket}")
     private String bucket;
-
+    // 1. aws -s3 파일 저장 + image 항목 저장
     public List<String> uploadFile(List<MultipartFile> multipartFiles) {
         try {
             List<String> imageUrlList = new ArrayList<>();
 
             // forEach 구문을 통해 multipartFile로 넘어온 파일들 하나씩 fileNameList에 추가
             multipartFiles.forEach(file -> {
-                String imageRealName = createFileName(file.getOriginalFilename());
-                String fileFormatName = file.getContentType().substring(file.getContentType().lastIndexOf("/") + 1);
+                String fakeFileName = createFileName(file.getOriginalFilename());
+               // String fileFormatName = file.getContentType().substring(file.getContentType().lastIndexOf("/") + 1);
                 ObjectMetadata objectMetadata = new ObjectMetadata();
                 objectMetadata.setContentLength(file.getSize());
                 objectMetadata.setContentType(file.getContentType());
 
                 try (InputStream inputStream = file.getInputStream()) {
-                    amazonS3.putObject(new PutObjectRequest(bucket, imageRealName, inputStream, objectMetadata)
+                    amazonS3.putObject(new PutObjectRequest(bucket, fakeFileName, inputStream, objectMetadata)
                             .withCannedAcl(CannedAccessControlList.PublicRead));
                 } catch (IOException e) {
-                    throw new CustomException(ExceptionMessage.FAILIED_UPLOAD_IMAGE);
+                    throw new CustomException(FAILED_UPLOAD_IMAGE);
                 }
-                String filePath = amazonS3.getUrl(bucket, imageRealName).toString();
-                Photo photo = new Photo(imageRealName, filePath);
-                photoRepository.save(photo);
+                String filePath = amazonS3.getUrl(bucket, fakeFileName).toString();
+                Photo image = new Photo(file.getOriginalFilename(),fakeFileName, filePath);
+                imageRepository.save(image);
                 imageUrlList.add(filePath);
             });
             return imageUrlList;
@@ -66,8 +68,8 @@ public class S3Uploader {
             return imageUrlList;
         }
     }
-
-    private String createFileName(String fileName) { // 먼저 파일 업로드 시, 파일명을 난수화하기 위해 random으로 돌립니다.
+    // 파일명 난수화
+    private String createFileName(String fileName) {
         return UUID.randomUUID().toString().concat(getFileExtension(fileName));
     }
 
@@ -75,25 +77,25 @@ public class S3Uploader {
         try {
             return fileName.substring(fileName.lastIndexOf("."));
         } catch (StringIndexOutOfBoundsException e) {
-            throw new CustomException(ExceptionMessage.WRONG_TYPE_IMAGE);
+            throw new CustomException(WRONG_TYPE_IMAGE);
         }
     }
 
-    // MultipartFile을 전달받아 File로 전환한 후 S3에 업로드
-    public String upload(MultipartFile multipartFile, String dirName) throws IOException {
-        File uploadFile = convert(multipartFile)
-                .orElseThrow(() -> new IllegalArgumentException("MultipartFile -> File 전환 실패"));
-        return upload(uploadFile, dirName);
-    }
-
-    private String upload(File uploadFile, String dirName) {
-        String fileName = dirName + "/" + uploadFile.getName();
-        String uploadImageUrl = putS3(uploadFile, fileName);
-
-        removeNewFile(uploadFile);  // 로컬에 생성된 File 삭제 (MultipartFile -> File 전환 하며 로컬에 파일 생성됨)
-
-        return uploadImageUrl;      // 업로드된 파일의 S3 URL 주소 반환
-    }
+//    // MultipartFile을 전달받아 File로 전환한 후 S3에 업로드
+//    public String upload(MultipartFile multipartFile, String dirName) throws IOException {
+//        File uploadFile = convert(multipartFile)
+//                .orElseThrow(() -> new IllegalArgumentException("MultipartFile -> File 전환 실패"));
+//        return upload(uploadFile, dirName);
+//    }
+//
+//    private String upload(File uploadFile, String dirName) {
+//        String fileName = dirName + "/" + uploadFile.getName();
+//        String uploadImageUrl = putS3(uploadFile, fileName);
+//
+//        removeNewFile(uploadFile);  // 로컬에 생성된 File 삭제 (MultipartFile -> File 전환 하며 로컬에 파일 생성됨)
+//
+//        return uploadImageUrl;      // 업로드된 파일의 S3 URL 주소 반환
+//    }
 
     private String putS3(File uploadFile, String fileName) {
         amazonS3Client.putObject(

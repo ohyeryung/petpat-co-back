@@ -1,4 +1,4 @@
-package com.smile.petpat.rehoming.dto;
+package com.smile.petpat.post.rehoming.dto;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

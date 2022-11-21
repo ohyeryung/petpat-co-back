@@ -8,7 +8,7 @@ import javax.persistence.*;
 @Entity
 @Getter
 @Table(name = "TB_IMAGE")
-public class Image {
+public class Photo {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,14 +31,19 @@ public class Image {
     @Column(name = "post_id")
     private Long postId;
 
-    public Image() {
+    public Photo() {
     }
 
-    public Image(Long imageId, String filePath, String originalFileName, String fakeFileName, PostType postType) {
+    public Photo(Long imageId, String filePath, String originalFileName, String fakeFileName, PostType postType, Long postId) {
         this.imageId = imageId;
         this.filePath = filePath;
         this.originalFileName = originalFileName;
         this.fakeFileName = fakeFileName;
         this.postType = postType;
+        this.postId = postId;
+    }
+
+    public Photo(String originalFilename, String fakeFileName, String filePath) {
+
     }
 }

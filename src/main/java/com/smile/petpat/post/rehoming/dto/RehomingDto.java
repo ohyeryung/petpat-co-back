@@ -1,4 +1,4 @@
-package com.smile.petpat.rehoming.dto;
+package com.smile.petpat.post.rehoming.dto;
 
 //import com.smile.petpat.user.domain.User;
 import lombok.Getter;
