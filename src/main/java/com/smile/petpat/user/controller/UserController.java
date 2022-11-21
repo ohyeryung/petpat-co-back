@@ -28,7 +28,7 @@ public class UserController {
 
     // 로그인
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public ResponseEntity userLogin(@RequestBody UserDto.LoginUserRequest request){
+    public ResponseEntity<String> userLogin(@RequestBody UserDto.LoginUserRequest request){
         UserCommand command = request.toCommand();
         return userService.loginUser(command);
     }

@@ -4,6 +4,7 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.auth0.jwt.interfaces.JWTVerifier;
+import com.smile.petpat.exception.CustomException;
 import com.smile.petpat.user.domain.User;
 import com.smile.petpat.user.service.UserDetailsServiceImpl;
 import lombok.RequiredArgsConstructor;
@@ -13,18 +14,14 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
-import java.security.Key;
 import java.util.*;
-import java.util.stream.Collectors;
 
 import static com.smile.petpat.exception.ExceptionMessage.ILLEGAL_INVALID_TOKEN;
+
 
 @Component
 @RequiredArgsConstructor
@@ -34,6 +31,7 @@ public class TokenProvider{
     private final UserDetailsServiceImpl userDetailsService;
     private final JwtTokenUtils jwtTokenUtils;
     private static final String TOKEN_PREFIX = "Bearer ";
+
     @Value("${jwt.secretkey}")
     String JWT_SECRET;
 
@@ -65,11 +63,11 @@ public class TokenProvider{
     // 토큰에서 회원 정보 추출
     public String decodeUsername(String token) {
         DecodedJWT decodedJWT = isValidToken(token)
-                .orElseThrow(() -> new IllegalArgumentException(ILLEGAL_INVALID_TOKEN));
+                .orElseThrow(() -> new CustomException(ILLEGAL_INVALID_TOKEN));
 
         Date now = new Date();
         if (decodedJWT.getExpiresAt().before(now)) {
-            throw new IllegalArgumentException(ILLEGAL_INVALID_TOKEN);
+            throw new CustomException(ILLEGAL_INVALID_TOKEN);
         }
 
         String username = decodedJWT

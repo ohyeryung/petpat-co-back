@@ -1,5 +1,6 @@
 package com.smile.petpat.user.service;
 
+import com.smile.petpat.exception.CustomException;
 import com.smile.petpat.user.domain.User;
 import com.smile.petpat.user.domain.UserReader;
 import com.smile.petpat.user.repository.UserRepository;
@@ -19,21 +20,21 @@ public class UserReaderImpl implements UserReader {
     public void getUserByUserEmail(String userEmail) {
         userRepository.findByUserEmail(userEmail).ifPresent(
                 user -> {
-                    throw new IllegalArgumentException(ILLEGAL_USERNAME_DUPLICATION);
+                    throw new CustomException(ILLEGAL_USERNAME_DUPLICATION);
                 }
         );
     }
 
     @Override
     public void getUser(User initUser) {
-        pwCheck(initUser);
+        isPwValid(initUser);
     }
 
-    public void pwCheck(User initUser) {
+    public void isPwValid(User initUser) {
         User foundUser = userRepository.findByUserEmail(initUser.getUserEmail())
-                .orElseThrow(() -> new IllegalArgumentException(ILLEGAL_USER_NOT_EXIST));
+                .orElseThrow(() -> new CustomException(ILLEGAL_USER_NOT_EXIST));
         if (!passwordEncoder.matches(initUser.getPassword(), foundUser.getPassword())) {
-            throw new IllegalArgumentException(ILLEGAL_PASSWORD_NOT_VALID);
+            throw new CustomException(ILLEGAL_PASSWORD_NOT_VALID);
         }
     }
 

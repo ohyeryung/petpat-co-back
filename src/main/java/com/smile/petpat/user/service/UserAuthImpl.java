@@ -18,7 +18,7 @@ public class UserAuthImpl implements UserAuth {
     }
 
     @Override
-    public ResponseEntity<?> getToken(User user) {
+    public ResponseEntity<String> getToken(User user) {
 
         HttpHeaders headers = jwtTokenUtils.headerToken(user);
 

@@ -19,7 +19,7 @@ public class JwtTokenUtils {
 
     public static final String CLAIM_USERID = "USER_ID";
     public static final String ISSUER = "petpat";
-    @Value("${jwt.secretkey}")
+   @Value("${jwt.secretkey}")
    String JWT_SECRET;
 
     public String generateJwtToken(User user) {
