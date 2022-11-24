@@ -13,8 +13,8 @@ import java.nio.charset.StandardCharsets;
 @RestControllerAdvice
 public class RestApiExceptionHandler {
 
-    public ResponseEntity<StatusMessage> exceptionHandle(Exception ex) {
-        StatusMessage message = new StatusMessage();
+    public ResponseEntity<ErrorResponse> exceptionHandle(Exception ex) {
+        ErrorResponse message = new ErrorResponse();
         HttpHeaders headers = new HttpHeaders();
 
         headers.setContentType(new MediaType("application", "json", StandardCharsets.UTF_8));
@@ -24,7 +24,7 @@ public class RestApiExceptionHandler {
     }
 
     @ExceptionHandler({IllegalArgumentException.class, IOException.class})
-    public ResponseEntity<StatusMessage> handleApiRequestException(Exception ex) {
+    public ResponseEntity<ErrorResponse> handleApiRequestException(Exception ex) {
         return exceptionHandle(ex);
     }
 }
