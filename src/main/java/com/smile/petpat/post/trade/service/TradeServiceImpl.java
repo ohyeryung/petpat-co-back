@@ -1,4 +1,4 @@
-package com.smile.petpat.trade.service;
+package com.smile.petpat.post.trade.service;
 
 import org.springframework.stereotype.Service;
 
