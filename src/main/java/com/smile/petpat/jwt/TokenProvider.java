@@ -80,7 +80,6 @@ public class TokenProvider{
     // 토큰 유효성 검사
     public Optional<DecodedJWT> isValidToken(String token) {
         DecodedJWT jwt = null;
-
         try {
             JWTVerifier verifier = JWT
                     .require(generateAlgorithm(JWT_SECRET))
@@ -89,7 +88,6 @@ public class TokenProvider{
         } catch (Exception e) {
             logger.error(e.getMessage());
         }
-
         return Optional.ofNullable(jwt);
     }
 

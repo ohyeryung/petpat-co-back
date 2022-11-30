@@ -20,7 +20,11 @@ public class UserAuthImpl implements UserAuth {
     @Override
     public ResponseEntity<String> getToken(User user) {
 
+        System.out.println("UserAuthImpl Class getToken method 실행");
+
         HttpHeaders headers = jwtTokenUtils.headerToken(user);
+
+        System.out.println("headers.getOrigin() = " + headers.getOrigin());
 
         return ResponseEntity.status(HttpStatus.OK).headers(headers).body(null);
     }

@@ -1,7 +1,9 @@
 package com.smile.petpat.post.rehoming.domain;
 
+import com.smile.petpat.post.category.domain.PostType;
 import com.smile.petpat.post.rehoming.dto.RehomingDto;
 import com.smile.petpat.config.comm.Timestamped;
+import com.smile.petpat.user.domain.User;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -10,21 +12,25 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Getter
 @Entity
-@Table(name = "rehoming")
+@Table(name = "TB_REHOMING")
 public class Rehoming  extends Timestamped {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "rehomingPostId")
-    private Long rehomingId;
+    private Long rehomingPostId;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
     @Column(name = "title")
     private String title;
 
-    @Column(name = "description", columnDefinition = "TEXT", nullable = true)
+    @Column(name = "description", columnDefinition = "TEXT", nullable = false)
     private String description;
 
-    @Column(name = "viewCnt")
-    private int viewCnt;
+//    @Column(name = "viewCnt")
+//    private int viewCnt;
 
     @Column(name = "petName")
     private String petName;
@@ -47,10 +53,19 @@ public class Rehoming  extends Timestamped {
     @Column(name = "price")
     private int price;
 
-    @Column(name = "isCompleted")
-    private boolean isCompleted;
+//    @Column(name = "isCompleted")
+//    private boolean isCompleted;
 
-    public Rehoming(RehomingDto rehomingDto) {
+    @Column(name = "status")
+    @Enumerated(EnumType.STRING)
+    private Status status;
+
+    @Column(name = "post_type")
+    @Enumerated(EnumType.STRING)
+    private PostType postType;
+
+    public Rehoming(User user, RehomingDto rehomingDto) {
+        this.user = user;
         this.title = rehomingDto.getTitle();
         this.description = rehomingDto.getDescription();
         this.petName = rehomingDto.getPetName();
@@ -60,6 +75,12 @@ public class Rehoming  extends Timestamped {
         this.gender = rehomingDto.getGender();
         this.region = rehomingDto.getRegion();
         this.price = rehomingDto.getPrice();
+        // default 값으로 예약 중 data 입력 후 상태값 변경에 따라 전환
+        this.status = Status.RESERVING;
+    }
+
+    public Rehoming(RehomingDto rehomingDto) {
+        super();
     }
 }
 

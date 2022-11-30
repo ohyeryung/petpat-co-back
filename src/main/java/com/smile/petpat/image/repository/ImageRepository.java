@@ -1,7 +1,7 @@
 package com.smile.petpat.image.repository;
 
-import com.smile.petpat.image.domain.Photo;
+import com.smile.petpat.image.domain.Image;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface ImageRepository extends JpaRepository<Photo,Long> {
+public interface ImageRepository extends JpaRepository<Image,Long> {
 }

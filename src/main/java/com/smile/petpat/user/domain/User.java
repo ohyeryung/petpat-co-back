@@ -13,7 +13,7 @@ import java.util.Collection;
 @Getter
 @Builder
 @Entity
-@Table(name = "users")
+@Table(name = "TB_USER") // 테이블 명 통일하면 어떨까 싶어서 수정함! (users -> TB_USER)
 public class User implements UserDetails {
 
     @Id
