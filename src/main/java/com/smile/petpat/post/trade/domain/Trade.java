@@ -1,6 +1,7 @@
 package com.smile.petpat.post.trade.domain;
 
 import com.smile.petpat.post.category.domain.PostType;
+import com.smile.petpat.post.category.domain.TradeCategoryDetail;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -8,28 +9,34 @@ import javax.persistence.*;
 
 @Entity
 @Getter
-@Table(name = "tb_trade")
+@Table(name = "TB_TRADE")
 @Builder
 public class Trade {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "TRADE_ID")
     private String tradeId;
 
-    @Column
+    @Column(name = "TITLE")
     private String title;
 
-    @Column
+    @Column(name = "CONTENT")
     private String content;
 
-    @Column
+    @Column(name = "PRICE")
     private String price;
 
-    @Column
+    @Column(name = "LOCATION")
     private String location;
 
-    @Column
+    @Column(name = "POST_TYPE")
     @Enumerated(EnumType.STRING)
     private PostType postType;
+
+    @ManyToOne
+    @JoinColumn(referencedColumnName = "",name = "TRADE_CATEGORY_DETAIL")
+    private TradeCategoryDetail tradeCategoryDetail;
 
     public Trade() {
     }
