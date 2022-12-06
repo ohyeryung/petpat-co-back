@@ -42,14 +42,13 @@ public class Trade {
     }
 
 
-    public Trade(String tradeId, String title, String content, String price, String location, PostType postType) {
-      Trade.builder()
-              .tradeId(tradeId)
-              .title(title)
-              .content(content)
-              .price(price)
-              .location(location)
-              .postType(postType)
-              .build();
+    public Trade(String tradeId, String title, String content, String price, String location, PostType postType, TradeCategoryDetail tradeCategoryDetail) {
+        this.tradeId = tradeId;
+        this.title = title;
+        this.content = content;
+        this.price = price;
+        this.location = location;
+        this.postType = postType;
+        this.tradeCategoryDetail = tradeCategoryDetail;
     }
 }
