@@ -18,7 +18,7 @@ public class TradeCategory {
     private String tradeCategoryName;
 
     @ManyToOne
-    @JoinColumn(referencedColumnName = "",nullable = false)
+    @JoinColumn(name = "CATEGORY_GROUP",referencedColumnName = "",nullable = false)
     private CategoryGroup categoryGroup;
 
     public TradeCategory() {

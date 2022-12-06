@@ -4,51 +4,42 @@ import com.smile.petpat.post.category.domain.PostType;
 import com.smile.petpat.post.category.domain.TradeCategoryDetail;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.ToString;
 
 import javax.persistence.*;
 
-@Entity
 @Getter
-@Table(name = "TB_TRADE")
 @Builder
-public class Trade {
+@ToString
+public class TradeCommand {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "TRADE_ID")
-    private String tradeId;
-
-    @Column(name = "TITLE")
     private String title;
-
-    @Column(name = "CONTENT")
     private String content;
-
-    @Column(name = "PRICE")
     private String price;
-
-    @Column(name = "LOCATION")
     private String location;
-
-    @Column(name = "POST_TYPE")
-    @Enumerated(EnumType.STRING)
     private PostType postType;
-
-    @ManyToOne
-    @JoinColumn(referencedColumnName = "",name = "TRADE_CATEGORY_DETAIL")
     private TradeCategoryDetail tradeCategoryDetail;
 
-    public Trade() {
+    public TradeCommand(){
+
     }
 
-
-    public Trade(String tradeId, String title, String content, String price, String location, PostType postType, TradeCategoryDetail tradeCategoryDetail) {
-        this.tradeId = tradeId;
+    public TradeCommand(String title, String content, String price, String location, PostType postType, TradeCategoryDetail tradeCategoryDetail) {
         this.title = title;
         this.content = content;
         this.price = price;
         this.location = location;
         this.postType = postType;
         this.tradeCategoryDetail = tradeCategoryDetail;
+    }
+    public Trade toEntity(){
+        return Trade.builder()
+                .title(title)
+                .content(content)
+                .price(price)
+                .location(location)
+                .postType(postType)
+                .tradeCategoryDetail(tradeCategoryDetail)
+                .build();
     }
 }
