@@ -15,21 +15,19 @@ public class TradeCommand {
 
     private String title;
     private String content;
-    private String price;
+    private Long price;
     private String location;
-    private PostType postType;
     private TradeCategoryDetail tradeCategoryDetail;
 
     public TradeCommand(){
 
     }
 
-    public TradeCommand(String title, String content, String price, String location, PostType postType, TradeCategoryDetail tradeCategoryDetail) {
+    public TradeCommand(String title, String content, Long price, String location, TradeCategoryDetail tradeCategoryDetail) {
         this.title = title;
         this.content = content;
         this.price = price;
         this.location = location;
-        this.postType = postType;
         this.tradeCategoryDetail = tradeCategoryDetail;
     }
     public Trade toEntity(){
@@ -38,7 +36,6 @@ public class TradeCommand {
                 .content(content)
                 .price(price)
                 .location(location)
-                .postType(postType)
                 .tradeCategoryDetail(tradeCategoryDetail)
                 .build();
     }

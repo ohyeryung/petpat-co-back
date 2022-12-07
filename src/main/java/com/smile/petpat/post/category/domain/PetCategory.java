@@ -17,7 +17,7 @@ public class PetCategory {
     private String postCategoryName;
 
     @ManyToOne
-    @JoinColumn(name = "CATEGORY_GROUP",referencedColumnName = "")
+    @JoinColumn(name = "CATEGORY_GROUP_ID",referencedColumnName = "")
     private CategoryGroup categoryGroup;
 
     public PetCategory(){

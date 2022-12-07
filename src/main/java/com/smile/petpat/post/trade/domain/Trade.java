@@ -16,7 +16,7 @@ public class Trade {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "TRADE_ID")
-    private String tradeId;
+    private Long tradeId;
 
     @Column(name = "TITLE")
     private String title;
@@ -25,7 +25,7 @@ public class Trade {
     private String content;
 
     @Column(name = "PRICE")
-    private String price;
+    private Long price;
 
     @Column(name = "LOCATION")
     private String location;
@@ -42,13 +42,22 @@ public class Trade {
     }
 
 
-    public Trade(String tradeId, String title, String content, String price, String location, PostType postType, TradeCategoryDetail tradeCategoryDetail) {
+    public Trade(Long tradeId, String title, String content, Long price, String location, TradeCategoryDetail tradeCategoryDetail) {
         this.tradeId = tradeId;
         this.title = title;
         this.content = content;
         this.price = price;
         this.location = location;
-        this.postType = postType;
+        this.postType = PostType.TRADE;
+        this.tradeCategoryDetail = tradeCategoryDetail;
+    }
+    public Trade(Long tradeId, String title, String content, Long price, String location, PostType postType, TradeCategoryDetail tradeCategoryDetail) {
+        this.tradeId = tradeId;
+        this.title = title;
+        this.content = content;
+        this.price = price;
+        this.location = location;
+        this.postType = PostType.TRADE;
         this.tradeCategoryDetail = tradeCategoryDetail;
     }
 }

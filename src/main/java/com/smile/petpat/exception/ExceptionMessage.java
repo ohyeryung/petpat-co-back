@@ -18,6 +18,8 @@ public enum ExceptionMessage {
     FAILED_UPLOAD_IMAGE(HttpStatus.BAD_REQUEST, "80400", "이미지 업로드에 실패했습니다."),
     WRONG_TYPE_IMAGE(HttpStatus.BAD_REQUEST, "80400", "잘못된 형식의 파일입니다");
 
+    // post
+
     private final HttpStatus httpStatus;
     private final String code;
     private final String message;

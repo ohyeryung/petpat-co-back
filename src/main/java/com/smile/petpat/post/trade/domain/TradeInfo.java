@@ -7,10 +7,10 @@ import lombok.Getter;
 @Getter
 public class TradeInfo {
 
-    private String tradeId;
+    private Long tradeId;
     private String title;
     private String content;
-    private String price;
+    private Long price;
     private String location;
     private PostType postType;
     private TradeCategoryDetail tradeCategoryDetail;

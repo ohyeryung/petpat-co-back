@@ -40,7 +40,7 @@ public class TokenProvider{
         String token = jwtTokenUtils.generateJwtToken(user);
 
         HttpHeaders headers = new HttpHeaders();
-        headers.add(HttpHeaders.AUTHORIZATION, "Bearer " + " " + token);
+        headers.add(HttpHeaders.AUTHORIZATION, "Bearer " + token);
         return headers;
     }
 
