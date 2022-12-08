@@ -5,6 +5,7 @@ import com.smile.petpat.user.dto.UserDto;
 import com.smile.petpat.user.service.UserServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -16,7 +17,7 @@ public class UserController {
 
     // 회원가입
     @RequestMapping(value = "/signup",method = RequestMethod.POST)
-    public void userRegister(@RequestBody UserDto.RegisterUserRequest request){
+    public void userRegister(@Validated @RequestBody UserDto.RegisterUserRequest request){
         UserCommand command = request.toCommand();
         userService.registerUser(command);
     }
@@ -28,7 +29,7 @@ public class UserController {
 
     // 로그인
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public ResponseEntity<String> userLogin(@RequestBody UserDto.LoginUserRequest request){
+    public ResponseEntity<String> userLogin(@Validated @RequestBody UserDto.LoginUserRequest request){
         UserCommand command = request.toCommand();
         return userService.loginUser(command);
     }

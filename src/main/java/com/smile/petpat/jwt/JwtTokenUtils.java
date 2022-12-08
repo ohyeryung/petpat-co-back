@@ -34,14 +34,6 @@ public class JwtTokenUtils {
         return token;
     }
 
-    public HttpHeaders headerToken(User user) {
-        String token = generateJwtToken(user);
-
-        HttpHeaders headers = new HttpHeaders();
-        headers.add(HttpHeaders.AUTHORIZATION, "Bearer " + " " + token);
-        return headers;
-    }
-
     private Map<String, Object> createClaims(User user) {
         Map<String, Object> claims = new HashMap<>();
         claims.put(CLAIM_USERID, user.getUserEmail());
