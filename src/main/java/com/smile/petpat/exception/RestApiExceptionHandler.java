@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -38,17 +39,48 @@ public class RestApiExceptionHandler {
 //    }
 
     // @Valid 검증 실패 시 Catch
-//    @ExceptionHandler(InvalidParameterException.class)
-//    protected ResponseEntity<ErrorResponse> handleInvalidParameterException(InvalidParameterException ex) {
-//        log.error("handleInvalidParameterException", ex);
+//    @ExceptionHandler(MethodArgumentNotValidException.class)
+//    protected ResponseEntity<ErrorResponse> handleInvalidParameterException(MethodArgumentNotValidException ex) {
+//        log.error("handleMethodArgumentNotValidException", ex);
 //
-//        ErrorCode errorCode = ex.get;
+//        ErrorCode errorCode = ex.getErrorCode();
 //
 //        ErrorResponse response
 //                = ErrorResponse
 //                        .create()
 //                        .httpStatus(errorCode.getHttpStatus())
-//                        .message(ex.toString())
-//                        .errors(ex.getE)
+//                        .message(ex.getBinding)
+//                        .errors(ex.getE);
+//
+//        return new ResponseEntity<>(response, errorCode.getHttpStatus());
 //    }
+
+    @ExceptionHandler(CustomException.class)
+    protected ResponseEntity<ErrorResponse> handleCustomException(CustomException ex) {
+        log.error("handleAllException", ex);
+
+        ErrorCode errorCode = ex.getErrorCode();
+
+        ErrorResponse response
+                = ErrorResponse
+                        .create()
+                        .httpStatus(errorCode.getHttpStatus())
+                        .code(errorCode.getCode())
+                        .message(ex.toString());
+
+        return new ResponseEntity<>(response, errorCode.getHttpStatus());
+    }
+
+    @ExceptionHandler(Exception.class)
+    protected ResponseEntity<ErrorResponse> handleException(Exception ex) {
+        log.error("handleException", ex);
+
+        ErrorResponse response
+                = ErrorResponse
+                        .create()
+                        .httpStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+                        .message(ex.toString());
+
+        return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
 }

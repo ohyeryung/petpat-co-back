@@ -54,6 +54,7 @@ public class ErrorResponse {
         return customFieldErrors;
     }
 
+    //BindingResult.getFieldErrors() 메소드를 통해 전달받은 fieldErrors
     public void setCustomFieldErrors(List<FieldError> fieldErrors) {
         customFieldErrors = new ArrayList<>();
 
