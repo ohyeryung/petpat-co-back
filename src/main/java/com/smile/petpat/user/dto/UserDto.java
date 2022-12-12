@@ -3,9 +3,7 @@ package com.smile.petpat.user.dto;
 import com.smile.petpat.user.domain.UserCommand;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.web.multipart.MultipartFile;
 
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
 
@@ -21,6 +19,8 @@ public class UserDto {
 //        @Pattern(regexp = )
         private String nickname;
         @NotEmpty
+        @Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[$@$!%*#?&])[A-Za-z\\d$@$!%*#?&]{8,12}$",
+                message = "비밀번호는 8자 이상 12자 이하의 길이의 영문자, 숫자, 특수문자(!@#$%^&*)만 사용 가능합니다.")
         private String password;
         @NotEmpty
         private String profileImgPath;
