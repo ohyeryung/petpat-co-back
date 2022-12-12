@@ -5,6 +5,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 @RequiredArgsConstructor
 public class TradeServiceImpl implements TradeService{
@@ -20,5 +23,13 @@ public class TradeServiceImpl implements TradeService{
         Trade trade= tradeStore.store(initTrade);
         return new TradeInfo(trade);
         //2. 사진 등록
+    }
+
+    @Override
+    public List<TradeInfo> listTrade() {
+        List<Trade> listTrade = tradeReader.readTradeList();
+        List<TradeInfo> tradeInfos = listTrade.stream()
+                .map(TradeInfo::new).collect(Collectors.toList());
+        return tradeInfos;
     }
 }

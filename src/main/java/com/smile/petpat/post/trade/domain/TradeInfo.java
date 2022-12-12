@@ -2,12 +2,15 @@ package com.smile.petpat.post.trade.domain;
 
 import com.smile.petpat.post.category.domain.PostType;
 import com.smile.petpat.post.category.domain.TradeCategoryDetail;
+import lombok.Builder;
 import lombok.Getter;
 
 @Getter
+@Builder
 public class TradeInfo {
 
     private Long tradeId;
+    private Long userId;
     private String title;
     private String content;
     private Long price;
@@ -17,6 +20,7 @@ public class TradeInfo {
 
     public TradeInfo(Trade trade) {
         this.tradeId = trade.getTradeId();
+        this.userId = trade.getUser().getId();
         this.title = trade.getTitle();
         this.content = trade.getContent();
         this.price = trade.getPrice();
@@ -24,4 +28,6 @@ public class TradeInfo {
         this.postType = trade.getPostType();
         this.tradeCategoryDetail = trade.getTradeCategoryDetail();
     }
+
+
 }

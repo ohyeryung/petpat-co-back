@@ -4,6 +4,7 @@ import com.smile.petpat.post.trade.domain.TradeCommand;
 import com.smile.petpat.post.trade.domain.TradeDto;
 import com.smile.petpat.post.trade.domain.TradeInfo;
 import com.smile.petpat.post.trade.service.TradeServiceImpl;
+import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,9 +20,25 @@ public class TradeController {
 
     private final TradeServiceImpl tradeService;
 
+
+    /**
+     * 분양게시물 등록
+     * @return 성공 시 200 Success 반환
+     */
+    @ApiOperation(value = "분양게시물 등록", notes = "분양게시물 등록")
     @RequestMapping(value = "",method = RequestMethod.POST)
     public void registerTrade(@RequestBody @Valid TradeDto.RegisterTrade tradeDto){
         TradeCommand tradeCommand = tradeDto.toCommand();
         TradeInfo tradeInfo = tradeService.registerTrade(tradeCommand);
+    }
+
+    /**
+     * 분양게시물 목록 조회
+     * @return 성공 시 200 Success 와 함께 분양게시물 목록 반환
+     */
+    @ApiOperation(value = "분양게시물 목록 조회", notes = "분양 게시물 목록 조회")
+    @RequestMapping(value = "",method = RequestMethod.GET)
+    public void listTrade(){
+        tradeService.listTrade();
     }
 }

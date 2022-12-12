@@ -2,6 +2,7 @@ package com.smile.petpat.post.trade.domain;
 
 import com.smile.petpat.post.category.domain.PostType;
 import com.smile.petpat.post.category.domain.TradeCategoryDetail;
+import com.smile.petpat.user.domain.User;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -17,6 +18,10 @@ public class Trade {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "TRADE_ID")
     private Long tradeId;
+
+    @ManyToOne
+    @JoinColumn(referencedColumnName = "userId",name = "USER_ID")
+    private User user;
 
     @Column(name = "TITLE")
     private String title;
@@ -60,4 +65,17 @@ public class Trade {
         this.postType = PostType.TRADE;
         this.tradeCategoryDetail = tradeCategoryDetail;
     }
+
+    public Trade(Long tradeId, User user, String title, String content, Long price, String location, TradeCategoryDetail tradeCategoryDetail) {
+        this.tradeId = tradeId;
+        this.user = user;
+        this.title = title;
+        this.content = content;
+        this.price = price;
+        this.location = location;
+        this.postType = PostType.TRADE;
+        this.tradeCategoryDetail = tradeCategoryDetail;
+    }
+
+
 }
