@@ -21,7 +21,7 @@ public class RehomingService {
     public Rehoming createRehoming(List<MultipartFile> rehomingImg, RehomingDto requestDto) {
 
         List<String> filePath = s3Uploader.uploadFile(rehomingImg);
-
+        System.out.println(requestDto.getTitle());
         RehomingDto rehomingDto = new RehomingDto(requestDto.getTitle(),requestDto.getDescription(),
                 requestDto.getPetName(), requestDto.getPetAge(), requestDto.getCategory(),requestDto.getType(),
                 requestDto.getGender(),requestDto.getRegion(), requestDto.getPrice(), requestDto.isCompleted(), filePath);

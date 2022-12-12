@@ -20,7 +20,7 @@ public class Trade {
     private Long tradeId;
 
     @ManyToOne
-    @JoinColumn(referencedColumnName = "userId",name = "USER_ID")
+    @JoinColumn(referencedColumnName = "USER_ID",name = "USER_ID")
     private User user;
 
     @Column(name = "TITLE")
@@ -39,34 +39,16 @@ public class Trade {
     @Enumerated(EnumType.STRING)
     private PostType postType;
 
-    @ManyToOne
-    @JoinColumn(referencedColumnName = "",name = "TRADE_CATEGORY_DETAIL")
-    private TradeCategoryDetail tradeCategoryDetail;
+//    @ManyToOne
+//    @JoinColumn(referencedColumnName = "",name = "TRADE_CATEGORY_DETAIL")
+//    private TradeCategoryDetail tradeCategoryDetail;
 
     public Trade() {
     }
 
-
-    public Trade(Long tradeId, String title, String content, Long price, String location, TradeCategoryDetail tradeCategoryDetail) {
-        this.tradeId = tradeId;
-        this.title = title;
-        this.content = content;
-        this.price = price;
-        this.location = location;
-        this.postType = PostType.TRADE;
-        this.tradeCategoryDetail = tradeCategoryDetail;
-    }
-    public Trade(Long tradeId, String title, String content, Long price, String location, PostType postType, TradeCategoryDetail tradeCategoryDetail) {
-        this.tradeId = tradeId;
-        this.title = title;
-        this.content = content;
-        this.price = price;
-        this.location = location;
-        this.postType = PostType.TRADE;
-        this.tradeCategoryDetail = tradeCategoryDetail;
-    }
-
-    public Trade(Long tradeId, User user, String title, String content, Long price, String location, TradeCategoryDetail tradeCategoryDetail) {
+    public Trade(Long tradeId, User user, String title, String content, Long price, String location, PostType postType
+                // TradeCategoryDetail tradeCategoryDetail
+    ) {
         this.tradeId = tradeId;
         this.user = user;
         this.title = title;
@@ -74,7 +56,22 @@ public class Trade {
         this.price = price;
         this.location = location;
         this.postType = PostType.TRADE;
-        this.tradeCategoryDetail = tradeCategoryDetail;
+        //this.tradeCategoryDetail = tradeCategoryDetail;
+    }
+
+
+
+    public Trade(Long tradeId, User user, String title, String content, Long price, String location
+                // TradeCategoryDetail tradeCategoryDetail
+    ) {
+        this.tradeId = tradeId;
+        this.user = user;
+        this.title = title;
+        this.content = content;
+        this.price = price;
+        this.location = location;
+        this.postType = PostType.TRADE;
+        //this.tradeCategoryDetail = tradeCategoryDetail;
     }
 
 

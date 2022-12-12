@@ -41,7 +41,7 @@ public class TradeCommand {
                 .content(content)
                 .price(price)
                 .location(location)
-                .tradeCategoryDetail(tradeCategoryDetail)
+               // .tradeCategoryDetail(tradeCategoryDetail)
                 .build();
     }
 }

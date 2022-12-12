@@ -35,6 +35,8 @@ public class TradeController {
     @RequestMapping(value = "",method = RequestMethod.POST)
     public SuccessResponse registerTrade(@RequestBody @Valid TradeDto.RegisterTrade tradeDto, @AuthenticationPrincipal UserDetailsImpl userDetails){
         TradeCommand tradeCommand = tradeDto.toCommand();
+        System.out.println(tradeDto.getTitle());
+        System.out.println(userDetails.getUser().getUserEmail());
         tradeService.registerTrade(tradeCommand,userDetails.getUser());
         return SuccessResponse.success("ok");
     }

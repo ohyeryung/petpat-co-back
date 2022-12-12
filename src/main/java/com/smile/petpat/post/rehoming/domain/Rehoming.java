@@ -10,44 +10,44 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Getter
 @Entity
-@Table(name = "rehoming")
+@Table(name = "TB_REHOMING")
 public class Rehoming  extends Timestamped {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "rehomingPostId")
+    @Column(name = "REHOMING_ID")
     private Long rehomingId;
 
-    @Column(name = "title")
+    @Column(name = "TITLE")
     private String title;
 
-    @Column(name = "description", columnDefinition = "TEXT", nullable = true)
+    @Column(name = "DESCRIPTION", columnDefinition = "TEXT", nullable = true)
     private String description;
 
-    @Column(name = "viewCnt")
+    @Column(name = "VIEW_CNT")
     private int viewCnt;
 
-    @Column(name = "petName")
+    @Column(name = "PET_NAME")
     private String petName;
 
-    @Column(name = "petAge")
+    @Column(name = "PET_AGE")
     private String petAge;
 
-    @Column(name = "category")
+    @Column(name = "CATEGORY")
     private String category;
 
-    @Column(name = "type")
+    @Column(name = "TYPE")
     private String type;
 
-    @Column(name = "gender")
+    @Column(name = "GENDER")
     private String gender;
 
-    @Column(name = "region")
+    @Column(name = "REGION")
     private String region;
 
-    @Column(name = "price")
+    @Column(name = "PRICE")
     private int price;
 
-    @Column(name = "isCompleted")
+    @Column(name = "IS_COMPLETED")
     private boolean isCompleted;
 
     public Rehoming(RehomingDto rehomingDto) {
