@@ -20,7 +20,7 @@ import org.springframework.stereotype.Component;
 import javax.servlet.http.HttpServletRequest;
 import java.util.*;
 
-import static com.smile.petpat.common.exception.ErrorCode.ILLEGAL_INVALID_TOKEN;
+import static com.smile.petpat.common.response.ErrorCode.ILLEGAL_INVALID_TOKEN;
 
 
 @Component

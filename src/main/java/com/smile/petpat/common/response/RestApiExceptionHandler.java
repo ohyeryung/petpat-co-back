@@ -1,5 +1,6 @@
-package com.smile.petpat.common.exception;
+package com.smile.petpat.common.response;
 
+import com.smile.petpat.common.exception.CustomException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -61,7 +62,6 @@ public class RestApiExceptionHandler {
                 = ErrorResponse
                         .create()
                         .httpStatus(errorCode.getHttpStatus())
-                        .code(errorCode.getCode())
                         .message(ex.toString());
 
         return new ResponseEntity<>(response, errorCode.getHttpStatus());

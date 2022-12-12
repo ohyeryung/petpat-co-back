@@ -1,17 +1,21 @@
 package com.smile.petpat.post.trade.controller;
 
+import com.smile.petpat.common.response.SuccessResponse;
 import com.smile.petpat.post.trade.domain.TradeCommand;
 import com.smile.petpat.post.trade.domain.TradeDto;
 import com.smile.petpat.post.trade.domain.TradeInfo;
 import com.smile.petpat.post.trade.service.TradeServiceImpl;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -27,9 +31,10 @@ public class TradeController {
      */
     @ApiOperation(value = "분양게시물 등록", notes = "분양게시물 등록")
     @RequestMapping(value = "",method = RequestMethod.POST)
-    public void registerTrade(@RequestBody @Valid TradeDto.RegisterTrade tradeDto){
+    public SuccessResponse registerTrade(@RequestBody @Valid TradeDto.RegisterTrade tradeDto, @AuthenticationPrincipal UserDetails userDetails){
         TradeCommand tradeCommand = tradeDto.toCommand();
         TradeInfo tradeInfo = tradeService.registerTrade(tradeCommand);
+        return SuccessResponse.success("ok");
     }
 
     /**
@@ -38,7 +43,8 @@ public class TradeController {
      */
     @ApiOperation(value = "분양게시물 목록 조회", notes = "분양 게시물 목록 조회")
     @RequestMapping(value = "",method = RequestMethod.GET)
-    public void listTrade(){
-        tradeService.listTrade();
+    public SuccessResponse listTrade(){
+       List<TradeInfo> tradeInfos =  tradeService.listTrade();
+       return SuccessResponse.success(tradeInfos,"ok");
     }
 }

@@ -8,7 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
-import static com.smile.petpat.common.exception.ErrorCode.*;
+import static com.smile.petpat.common.response.ErrorCode.*;
 
 @Component
 @RequiredArgsConstructor

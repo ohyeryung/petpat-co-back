@@ -1,5 +1,7 @@
 package com.smile.petpat.common.exception;
 
+import com.smile.petpat.common.response.ErrorCode;
+
 public class CustomException extends RuntimeException {
 
     public ErrorCode errorCode;
