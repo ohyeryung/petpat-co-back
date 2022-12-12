@@ -1,6 +1,6 @@
 package com.smile.petpat.user.service;
 
-import com.smile.petpat.exception.CustomException;
+import com.smile.petpat.common.exception.CustomException;
 import com.smile.petpat.user.domain.User;
 import com.smile.petpat.user.domain.UserReader;
 import com.smile.petpat.user.repository.UserRepository;
@@ -8,7 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
-import static com.smile.petpat.exception.ErrorCode.*;
+import static com.smile.petpat.common.exception.ErrorCode.*;
 
 @Component
 @RequiredArgsConstructor

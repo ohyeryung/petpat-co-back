@@ -1,4 +1,4 @@
-package com.smile.petpat.exception;
+package com.smile.petpat.common.exception;
 
 public class CustomException extends RuntimeException {
 
