@@ -5,6 +5,8 @@ import com.smile.petpat.post.trade.domain.TradeCommand;
 import com.smile.petpat.post.trade.domain.TradeDto;
 import com.smile.petpat.post.trade.domain.TradeInfo;
 import com.smile.petpat.post.trade.service.TradeServiceImpl;
+import com.smile.petpat.user.service.UserDetailsImpl;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.validation.Valid;
 import java.util.List;
 
+@Api(tags = {"post_trade_api"})
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/trade")
@@ -24,16 +27,15 @@ public class TradeController {
 
     private final TradeServiceImpl tradeService;
 
-
     /**
      * 분양게시물 등록
      * @return 성공 시 200 Success 반환
      */
     @ApiOperation(value = "분양게시물 등록", notes = "분양게시물 등록")
     @RequestMapping(value = "",method = RequestMethod.POST)
-    public SuccessResponse registerTrade(@RequestBody @Valid TradeDto.RegisterTrade tradeDto, @AuthenticationPrincipal UserDetails userDetails){
+    public SuccessResponse registerTrade(@RequestBody @Valid TradeDto.RegisterTrade tradeDto, @AuthenticationPrincipal UserDetailsImpl userDetails){
         TradeCommand tradeCommand = tradeDto.toCommand();
-        TradeInfo tradeInfo = tradeService.registerTrade(tradeCommand);
+        tradeService.registerTrade(tradeCommand,userDetails.getUser());
         return SuccessResponse.success("ok");
     }
 

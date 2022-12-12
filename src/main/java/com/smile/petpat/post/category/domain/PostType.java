@@ -2,15 +2,17 @@ package com.smile.petpat.post.category.domain;
 
 
 public enum PostType {
-    QNA("QNA"),
-    REHOMING("분양"),
-    TRADE("중고거래"),
+    QNA("QNA","QNA"),
+    REHOMING("REHOMING","분양"),
+    TRADE("TRADE","중고거래"),
     ;
+    private final String code;
+    private final String description;
 
-    private final String postType;
-
-    PostType(String postType) {
-        this.postType = postType;
+    PostType(String code, String description) {
+        this.code = code;
+        this.description = description;
     }
+
 
 }

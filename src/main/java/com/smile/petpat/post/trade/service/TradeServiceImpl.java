@@ -1,6 +1,7 @@
 package com.smile.petpat.post.trade.service;
 
 import com.smile.petpat.post.trade.domain.*;
+import com.smile.petpat.user.domain.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,11 +18,10 @@ public class TradeServiceImpl implements TradeService{
 
     @Override
     @Transactional
-    public TradeInfo registerTrade(TradeCommand tradeCommand) {
+    public void registerTrade(TradeCommand tradeCommand, User user) {
         //1. 게시물 등록
-        Trade initTrade = tradeCommand.toEntity();
+        Trade initTrade = tradeCommand.toRegisterEntity(user);
         Trade trade= tradeStore.store(initTrade);
-        return new TradeInfo(trade);
         //2. 사진 등록
     }
 
