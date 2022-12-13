@@ -8,6 +8,7 @@ import lombok.ToString;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 
@@ -15,7 +16,6 @@ import java.util.List;
 public class TradeDto {
 
     @Getter
-    @Builder
     @ToString
     public static class RegisterTrade{
 
@@ -23,29 +23,26 @@ public class TradeDto {
         private String title;
         @NotBlank(message = "내용은 필수값입니다.")
         private String content;
-        @NotBlank(message = "가격은 필수값입니다.")
-        private String price;
+        @NotNull(message = "가격은 필수값입니다.")
+        private Long price;
         @NotBlank(message = "위치는 필수값입니다.")
         private String location;
-        @NotBlank(message = "게시물타입은 필수값입니다.")
-        private PostType postType;
-        @NotBlank(message = "카테고리는 필수값입니다.")
+       // @NotBlank(message = "카테고리는 필수값입니다.")
         private TradeCategoryDetail tradeCategoryDetail;
-        private List<MultipartFile>  images;
+       // private List<MultipartFile>  images;
 
         public RegisterTrade(){
 
         }
 
-        public RegisterTrade(String title, String content, String price, String location, PostType postType, TradeCategoryDetail tradeCategoryDetail, List<MultipartFile> images) {
-            if(images.size()>4) new IllegalArgumentException("중고거래 이미지는 5까지 등록가능합니다.");
+        public RegisterTrade(String title, String content, Long price, String location, TradeCategoryDetail tradeCategoryDetail) {
+            //if(images.size()>4) new IllegalArgumentException("중고거래 이미지는 5까지 등록가능합니다.");
             this.title = title;
             this.content = content;
             this.price = price;
             this.location = location;
-            this.postType = postType;
             this.tradeCategoryDetail = tradeCategoryDetail;
-            this.images = images;
+           // this.images = images;
         }
 
         public TradeCommand toCommand() {
@@ -54,7 +51,6 @@ public class TradeDto {
                  .content(content)
                  .price(price)
                  .location(location)
-                 .postType(postType)
                  .tradeCategoryDetail(tradeCategoryDetail)
                  .build();
 

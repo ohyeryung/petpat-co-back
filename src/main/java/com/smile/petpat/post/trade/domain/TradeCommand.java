@@ -2,6 +2,7 @@ package com.smile.petpat.post.trade.domain;
 
 import com.smile.petpat.post.category.domain.PostType;
 import com.smile.petpat.post.category.domain.TradeCategoryDetail;
+import com.smile.petpat.user.domain.User;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.ToString;
@@ -13,33 +14,34 @@ import javax.persistence.*;
 @ToString
 public class TradeCommand {
 
+    private User user;
     private String title;
     private String content;
-    private String price;
+    private Long price;
     private String location;
-    private PostType postType;
     private TradeCategoryDetail tradeCategoryDetail;
 
     public TradeCommand(){
 
     }
 
-    public TradeCommand(String title, String content, String price, String location, PostType postType, TradeCategoryDetail tradeCategoryDetail) {
+    public TradeCommand(User user, String title, String content, Long price, String location, TradeCategoryDetail tradeCategoryDetail) {
+        this.user = user;
         this.title = title;
         this.content = content;
         this.price = price;
         this.location = location;
-        this.postType = postType;
         this.tradeCategoryDetail = tradeCategoryDetail;
     }
-    public Trade toEntity(){
+
+    public Trade toRegisterEntity(User user){
         return Trade.builder()
+                .user(user)
                 .title(title)
                 .content(content)
                 .price(price)
                 .location(location)
-                .postType(postType)
-                .tradeCategoryDetail(tradeCategoryDetail)
+               // .tradeCategoryDetail(tradeCategoryDetail)
                 .build();
     }
 }

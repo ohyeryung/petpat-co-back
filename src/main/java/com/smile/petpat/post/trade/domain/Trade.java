@@ -2,6 +2,7 @@ package com.smile.petpat.post.trade.domain;
 
 import com.smile.petpat.post.category.domain.PostType;
 import com.smile.petpat.post.category.domain.TradeCategoryDetail;
+import com.smile.petpat.user.domain.User;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -16,7 +17,11 @@ public class Trade {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "TRADE_ID")
-    private String tradeId;
+    private Long tradeId;
+
+    @ManyToOne
+    @JoinColumn(referencedColumnName = "USER_ID",name = "USER_ID")
+    private User user;
 
     @Column(name = "TITLE")
     private String title;
@@ -25,7 +30,7 @@ public class Trade {
     private String content;
 
     @Column(name = "PRICE")
-    private String price;
+    private Long price;
 
     @Column(name = "LOCATION")
     private String location;
@@ -34,21 +39,40 @@ public class Trade {
     @Enumerated(EnumType.STRING)
     private PostType postType;
 
-    @ManyToOne
-    @JoinColumn(referencedColumnName = "",name = "TRADE_CATEGORY_DETAIL")
-    private TradeCategoryDetail tradeCategoryDetail;
+//    @ManyToOne
+//    @JoinColumn(referencedColumnName = "",name = "TRADE_CATEGORY_DETAIL")
+//    private TradeCategoryDetail tradeCategoryDetail;
 
     public Trade() {
     }
 
-
-    public Trade(String tradeId, String title, String content, String price, String location, PostType postType, TradeCategoryDetail tradeCategoryDetail) {
+    public Trade(Long tradeId, User user, String title, String content, Long price, String location, PostType postType
+                // TradeCategoryDetail tradeCategoryDetail
+    ) {
         this.tradeId = tradeId;
+        this.user = user;
         this.title = title;
         this.content = content;
         this.price = price;
         this.location = location;
-        this.postType = postType;
-        this.tradeCategoryDetail = tradeCategoryDetail;
+        this.postType = PostType.TRADE;
+        //this.tradeCategoryDetail = tradeCategoryDetail;
     }
+
+
+
+    public Trade(Long tradeId, User user, String title, String content, Long price, String location
+                // TradeCategoryDetail tradeCategoryDetail
+    ) {
+        this.tradeId = tradeId;
+        this.user = user;
+        this.title = title;
+        this.content = content;
+        this.price = price;
+        this.location = location;
+        this.postType = PostType.TRADE;
+        //this.tradeCategoryDetail = tradeCategoryDetail;
+    }
+
+
 }

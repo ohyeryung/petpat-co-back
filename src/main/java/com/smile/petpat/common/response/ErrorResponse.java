@@ -1,8 +1,7 @@
-package com.smile.petpat.exception;
+package com.smile.petpat.common.response;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.Data;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.Errors;
 import org.springframework.validation.FieldError;
@@ -15,7 +14,6 @@ public class ErrorResponse {
 
     private LocalDateTime timestamp = LocalDateTime.now();
     public String message; // 예외 메세지
-    public String code; // 사용자 지정 코드
     public HttpStatus httpStatus; // Http 상태 값 400, 404, 500 등
 
     // @Valid 검증 안된 필드가 담김
@@ -34,17 +32,10 @@ public class ErrorResponse {
         this.httpStatus = httpStatus;
         return this;
     }
-
-    public ErrorResponse code(String code) {
-        this.code = code;
-        return this;
-    }
-
     public ErrorResponse message(String message) {
         this.message = message;
         return this;
     }
-
     public ErrorResponse errors(Errors errors) {
         setCustomFieldErrors(errors.getFieldErrors());
         return this;
