@@ -8,33 +8,33 @@ import javax.persistence.*;
 @Entity
 @Getter
 @Table(name = "TB_IMAGE")
-public class Photo {
+public class Image {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "image_id")
+    @Column(name = "IMAGE_ID")
     private Long imageId;
 
-    @Column(name = "file_path")
+    @Column(name = "FILE_PATH")
     private String filePath;
 
-    @Column(name = "original_file_name")
+    @Column(name = "ORIGINAL_FILE_NAME")
     private String originalFileName;
 
-    @Column(name = "fake_file_name")
+    @Column(name = "FAKE_FILE_NAME")
     private String fakeFileName;
 
-    @Column(name = "post_type")
+    @Column(name = "POST_TYPE")
     @Enumerated(EnumType.STRING)
     private PostType postType;
 
-    @Column(name = "post_id")
+    @Column(name = "POST_ID")
     private Long postId;
 
-    public Photo() {
+    public Image() {
     }
 
-    public Photo(Long imageId, String filePath, String originalFileName, String fakeFileName, PostType postType, Long postId) {
+    public Image(Long imageId, String filePath, String originalFileName, String fakeFileName, PostType postType, Long postId) {
         this.imageId = imageId;
         this.filePath = filePath;
         this.originalFileName = originalFileName;
@@ -43,7 +43,9 @@ public class Photo {
         this.postId = postId;
     }
 
-    public Photo(String originalFilename, String fakeFileName, String filePath) {
-
+    public Image(String originalFilename, String fakeFileName, String filePath) {
+        this.originalFileName = originalFilename;
+        this.fakeFileName = fakeFileName;
+        this.filePath = filePath;
     }
 }

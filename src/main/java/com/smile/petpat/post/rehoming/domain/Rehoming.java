@@ -1,7 +1,9 @@
 package com.smile.petpat.post.rehoming.domain;
 
-import com.smile.petpat.post.rehoming.dto.RehomingDto;
 import com.smile.petpat.config.comm.Timestamped;
+import com.smile.petpat.post.category.domain.PostType;
+import com.smile.petpat.post.rehoming.dto.RehomingReqDto;
+import com.smile.petpat.user.domain.User;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -16,6 +18,10 @@ public class Rehoming  extends Timestamped {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "REHOMING_ID")
     private Long rehomingId;
+
+    @ManyToOne
+    @JoinColumn(name = "USER_ID")
+    private User user;
 
     @Column(name = "TITLE")
     private String title;
@@ -47,10 +53,16 @@ public class Rehoming  extends Timestamped {
     @Column(name = "PRICE")
     private int price;
 
-    @Column(name = "IS_COMPLETED")
-    private boolean isCompleted;
+    @Column(name = "STATUS")
+    @Enumerated(EnumType.STRING)
+    private Status status;
 
-    public Rehoming(RehomingDto rehomingDto) {
+    @Column(name = "POST_TYPE")
+    @Enumerated(EnumType.STRING)
+    private PostType postType;
+
+    public Rehoming(User user, RehomingReqDto rehomingDto) {
+        this.user = user;
         this.title = rehomingDto.getTitle();
         this.description = rehomingDto.getDescription();
         this.petName = rehomingDto.getPetName();
@@ -60,6 +72,9 @@ public class Rehoming  extends Timestamped {
         this.gender = rehomingDto.getGender();
         this.region = rehomingDto.getRegion();
         this.price = rehomingDto.getPrice();
+        // default 값으로 예약 중 data 입력 후 상태값 변경에 따라 전환
+        this.status = Status.RESERVING;
+        this.postType = PostType.REHOMING;
     }
 }
 
