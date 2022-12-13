@@ -1,4 +1,4 @@
-//package com.smile.petpat.image.domain;
-//
-//public interface ImageStore {
-//}
+package com.smile.petpat.image.domain;
+
+public interface ImageStore {
+}

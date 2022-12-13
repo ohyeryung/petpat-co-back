@@ -4,7 +4,7 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.auth0.jwt.interfaces.JWTVerifier;
-import com.smile.petpat.exception.CustomException;
+import com.smile.petpat.common.exception.CustomException;
 import com.smile.petpat.user.domain.User;
 import com.smile.petpat.user.service.UserDetailsServiceImpl;
 import lombok.RequiredArgsConstructor;
@@ -20,7 +20,7 @@ import org.springframework.stereotype.Component;
 import javax.servlet.http.HttpServletRequest;
 import java.util.*;
 
-import static com.smile.petpat.exception.ExceptionMessage.ILLEGAL_INVALID_TOKEN;
+import static com.smile.petpat.common.response.ErrorCode.ILLEGAL_INVALID_TOKEN;
 
 
 @Component
@@ -40,7 +40,7 @@ public class TokenProvider{
         String token = jwtTokenUtils.generateJwtToken(user);
 
         HttpHeaders headers = new HttpHeaders();
-        headers.add(HttpHeaders.AUTHORIZATION, "Bearer " + " " + token);
+        headers.add(HttpHeaders.AUTHORIZATION, "Bearer " + token);
         return headers;
     }
 

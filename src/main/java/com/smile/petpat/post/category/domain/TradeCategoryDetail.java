@@ -19,6 +19,6 @@ public class TradeCategoryDetail {
     private String tradeCategoryName;
 
     @ManyToOne
-    @JoinColumn(referencedColumnName = "")
+    @JoinColumn(referencedColumnName = "TRADE_CATEGORY_ID",name = "TRADE_CATEGORY_ID")
     private TradeCategory tradeCategory;
 }

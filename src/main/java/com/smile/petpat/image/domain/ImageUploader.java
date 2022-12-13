@@ -10,14 +10,13 @@ import java.util.List;
 @Component
 @RequiredArgsConstructor
 public class ImageUploader {
-    private final ImageReader imageReader;
-    // private final ImageStore imageStore;
     private final S3Uploader s3Uploader;
     private final ImageRepository imageRepository;
-    private final Image image;
 
     public void saveFile(List< MultipartFile > multipartFiles) {
         s3Uploader.uploadFile(multipartFiles);
+
+        Image image = new Image();
         imageRepository.save(image);
     }
 }

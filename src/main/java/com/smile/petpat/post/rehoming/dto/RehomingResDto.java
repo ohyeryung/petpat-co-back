@@ -1,16 +1,20 @@
 package com.smile.petpat.post.rehoming.dto;
 
+import com.smile.petpat.post.category.domain.PostType;
 import com.smile.petpat.post.rehoming.domain.Rehoming;
+import com.smile.petpat.post.rehoming.domain.Status;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import java.util.List;
 
 @Getter
-@Setter
 @NoArgsConstructor
-public class RehomingDto {
+public class RehomingResDto {
+    private Long rehomingId;
+    private Long userId;
+    private String nickname;
+    private List<String> rehomingImg;
     private String title;
     private String description;
     private String petName;
@@ -20,23 +24,14 @@ public class RehomingDto {
     private String gender;
     private String region;
     private int price;
-    private List<String> filePath;
+    private Status status;
+    private List<String> tagList;
+    private PostType postType;
 
-    public RehomingDto(String title, String description, String petName, String petAge, String category, String type, String gender, String region, int price, List<String> filePath) {
-//        this.userId = userId;
-        this.title = title;
-        this.description = description;
-        this.petName = petName;
-        this.petAge = petAge;
-        this.category = category;
-        this.type = type;
-        this.gender = gender;
-        this.region = region;
-        this.price = price;
-        this.filePath = filePath;
-    }
-
-    public RehomingDto(Rehoming rehoming) {
+    public RehomingResDto(Rehoming rehoming, List<String> rehomingImg, List<String> tagList) {
+        this.rehomingId = rehoming.getRehomingId();
+        this.userId = rehoming.getUser().getId();
+        this.nickname = rehoming.getUser().getNickname();
         this.title = rehoming.getTitle();
         this.description = rehoming.getDescription();
         this.petName = rehoming.getPetName();
@@ -46,5 +41,9 @@ public class RehomingDto {
         this.gender = rehoming.getGender();
         this.region = rehoming.getRegion();
         this.price = rehoming.getPrice();
+        this.status = rehoming.getStatus();
+        this.rehomingImg = rehomingImg;
+        this.tagList = tagList;
+        this.postType = rehoming.getPostType();
     }
 }

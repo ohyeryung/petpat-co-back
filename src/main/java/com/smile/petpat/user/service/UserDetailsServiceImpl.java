@@ -1,5 +1,6 @@
 package com.smile.petpat.user.service;
 
+import com.smile.petpat.user.domain.User;
 import com.smile.petpat.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -14,7 +15,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String userEmail) throws UsernameNotFoundException {
-        return userRepository.findByUserEmail(userEmail)
+       User user =  userRepository.findByUserEmail(userEmail)
                 .orElseThrow(() -> new UsernameNotFoundException("Can't find " + userEmail));
+        return new UserDetailsImpl(user);
     }
 }

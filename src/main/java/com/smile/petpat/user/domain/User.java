@@ -13,24 +13,24 @@ import java.util.Collection;
 @Getter
 @Builder
 @Entity
-@Table(name = "TB_USER") // 테이블 명 통일하면 어떨까 싶어서 수정함! (users -> TB_USER)
+@Table(name = "TB_USER")
 public class User implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "userId")
+    @Column(name = "USER_ID")
     private Long id;
-    @Column(name = "userEmail")
+    @Column(name = "USER_EMAIL")
     private String userEmail;
-    @Column(name = "nickname")
+    @Column(name = "NICKNAME")
     private String nickname;
-    @Column(name = "password")
+    @Column(name = "PASSWORD")
     private String password;
-    @Column(name = "profileImgPath")
+    @Column(name = "PROFILE_IMG_PATH")
     private String profileImgPath;
 
     // 후에 여러컬럼이나 테이블로 분리할지 생각해야함
-    @Column
+    @Column(name = "LOCATION")
     private String location;
 
     public User() {

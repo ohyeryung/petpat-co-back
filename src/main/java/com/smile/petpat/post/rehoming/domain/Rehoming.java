@@ -1,8 +1,8 @@
 package com.smile.petpat.post.rehoming.domain;
 
-import com.smile.petpat.post.category.domain.PostType;
-import com.smile.petpat.post.rehoming.dto.RehomingDto;
 import com.smile.petpat.config.comm.Timestamped;
+import com.smile.petpat.post.category.domain.PostType;
+import com.smile.petpat.post.rehoming.dto.RehomingReqDto;
 import com.smile.petpat.user.domain.User;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,55 +16,52 @@ import javax.persistence.*;
 public class Rehoming  extends Timestamped {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "rehomingPostId")
-    private Long rehomingPostId;
+    @Column(name = "REHOMING_ID")
+    private Long rehomingId;
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "USER_ID")
     private User user;
 
-    @Column(name = "title")
+    @Column(name = "TITLE")
     private String title;
 
-    @Column(name = "description", columnDefinition = "TEXT", nullable = false)
+    @Column(name = "DESCRIPTION", columnDefinition = "TEXT", nullable = true)
     private String description;
 
-//    @Column(name = "viewCnt")
-//    private int viewCnt;
+    @Column(name = "VIEW_CNT")
+    private int viewCnt;
 
-    @Column(name = "petName")
+    @Column(name = "PET_NAME")
     private String petName;
 
-    @Column(name = "petAge")
+    @Column(name = "PET_AGE")
     private String petAge;
 
-    @Column(name = "category")
+    @Column(name = "CATEGORY")
     private String category;
 
-    @Column(name = "type")
+    @Column(name = "TYPE")
     private String type;
 
-    @Column(name = "gender")
+    @Column(name = "GENDER")
     private String gender;
 
-    @Column(name = "region")
+    @Column(name = "REGION")
     private String region;
 
-    @Column(name = "price")
+    @Column(name = "PRICE")
     private int price;
 
-//    @Column(name = "isCompleted")
-//    private boolean isCompleted;
-
-    @Column(name = "status")
+    @Column(name = "STATUS")
     @Enumerated(EnumType.STRING)
     private Status status;
 
-    @Column(name = "post_type")
+    @Column(name = "POST_TYPE")
     @Enumerated(EnumType.STRING)
     private PostType postType;
 
-    public Rehoming(User user, RehomingDto rehomingDto) {
+    public Rehoming(User user, RehomingReqDto rehomingDto) {
         this.user = user;
         this.title = rehomingDto.getTitle();
         this.description = rehomingDto.getDescription();
@@ -77,10 +74,7 @@ public class Rehoming  extends Timestamped {
         this.price = rehomingDto.getPrice();
         // default 값으로 예약 중 data 입력 후 상태값 변경에 따라 전환
         this.status = Status.RESERVING;
-    }
-
-    public Rehoming(RehomingDto rehomingDto) {
-        super();
+        this.postType = PostType.REHOMING;
     }
 }
 
