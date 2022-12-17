@@ -10,7 +10,6 @@ import lombok.ToString;
 @Builder
 @ToString
 public class TradeCommand {
-
     private User user;
     private String title;
     private String content;
@@ -22,7 +21,7 @@ public class TradeCommand {
 
     }
 
-    public TradeCommand(User user, String title, String content, Long price, String location, TradeCategoryDetail tradeCategoryDetail) {
+    public TradeCommand( User user, String title, String content, Long price, String location, TradeCategoryDetail tradeCategoryDetail) {
         this.user = user;
         this.title = title;
         this.content = content;
@@ -42,8 +41,10 @@ public class TradeCommand {
                 .build();
     }
 
-    public Trade toUpdateEntity(){
+    public Trade toUpdateEntity(User user,Long tradeId){
         return Trade.builder()
+                .tradeId(tradeId)
+                .user(user)
                 .title(title)
                 .content(content)
                 .price(price)

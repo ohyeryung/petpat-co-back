@@ -30,7 +30,9 @@ public class TradeController {
      */
     @ApiOperation(value = "분양게시물 등록", notes = "분양게시물 등록")
     @RequestMapping(value = "",method = RequestMethod.POST)
-    public SuccessResponse registerTrade(@RequestBody @Valid TradeDto.CommonTrade tradeDto, @AuthenticationPrincipal UserDetailsImpl userDetails){
+    public SuccessResponse registerTrade(@RequestBody @Valid TradeDto.CommonTrade tradeDto,
+                                         @AuthenticationPrincipal UserDetailsImpl userDetails
+    ){
         TradeCommand tradeCommand = tradeDto.toCommand();
         tradeService.registerTrade(tradeCommand,userDetails.getUser());
         return SuccessResponse.success("ok");
@@ -51,10 +53,16 @@ public class TradeController {
      * @return 성공 시 200 Success 와 함께 수정한 분양게시물  반환
      */
     @ApiOperation(value = "분양게시물 수정", notes = "분양 게시물 수정")
-    @RequestMapping(value = "",method = RequestMethod.DELETE)
-    public SuccessResponse updateTrade(@RequestBody TradeDto.CommonTrade updateTrade,@AuthenticationPrincipal UserDetailsImpl userDetails){
+    @RequestMapping(value = "/{postId}",method = RequestMethod.PUT)
+    public SuccessResponse updateTrade(@RequestBody TradeDto.CommonTrade updateTrade,
+                                       @AuthenticationPrincipal UserDetailsImpl userDetails,
+                                       @PathVariable Long postId
+    ){
+        System.out.println("updateTrade = " + updateTrade.getContent());
+        System.out.println("userDetails = " + userDetails.getUser().getId());
+        System.out.println("postId = " + postId);
         TradeCommand tradeCommand = updateTrade.toCommand();
-        return SuccessResponse.success(tradeService.updateTrade(tradeCommand,userDetails.getUser()));
+        return SuccessResponse.success(tradeService.updateTrade(tradeCommand,userDetails.getUser(),postId));
 
     }
 
@@ -64,7 +72,9 @@ public class TradeController {
      */
     @ApiOperation(value = "분양게시물 삭제", notes = "분양 게시물 삭제")
     @RequestMapping(value = "/{tradeId}",method = RequestMethod.DELETE)
-    public SuccessResponse deleteTrade(@PathVariable Long tradeId,@AuthenticationPrincipal UserDetailsImpl userDetails){
+    public SuccessResponse deleteTrade(@PathVariable Long tradeId,
+                                       @AuthenticationPrincipal UserDetailsImpl userDetails
+    ){
         tradeService.deleteTrade(tradeId,userDetails.getUser());
         return SuccessResponse.success("ok");
     }

@@ -30,9 +30,10 @@ public class TradeStoreImpl implements TradeStore {
     }
 
     @Override
-    public Trade patch(Trade trade,Long userId) {
-        tradeReader.userChk(trade.getTradeId(),userId);
-         return tradeRepository.save(trade);
+    public Trade update(Trade trade,Long userId,Long postId) {
+        tradeReader.userChk(postId,userId);
+        Trade save = tradeRepository.save(trade);
+        return tradeRepository.save(trade);
     }
 
 
