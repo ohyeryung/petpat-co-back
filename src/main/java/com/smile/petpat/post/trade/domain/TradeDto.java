@@ -13,7 +13,7 @@ public class TradeDto {
 
     @Getter
     @ToString
-    public static class RegisterTrade{
+    public static class CommonTrade{
 
         @NotBlank(message = "제목은 필수값입니다.")
         private String title;
@@ -27,11 +27,11 @@ public class TradeDto {
         private TradeCategoryDetail tradeCategoryDetail;
        // private List<MultipartFile>  images;
 
-        public RegisterTrade(){
+        public CommonTrade(){
 
         }
 
-        public RegisterTrade(String title, String content, Long price, String location, TradeCategoryDetail tradeCategoryDetail) {
+        public CommonTrade(String title, String content, Long price, String location, TradeCategoryDetail tradeCategoryDetail) {
             //if(images.size()>4) new IllegalArgumentException("중고거래 이미지는 5까지 등록가능합니다.");
             this.title = title;
             this.content = content;
@@ -52,4 +52,5 @@ public class TradeDto {
 
         }
     }
+
 }

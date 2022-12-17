@@ -41,4 +41,14 @@ public class TradeCommand {
                // .tradeCategoryDetail(tradeCategoryDetail)
                 .build();
     }
+
+    public Trade toUpdateEntity(){
+        return Trade.builder()
+                .title(title)
+                .content(content)
+                .price(price)
+                .location(location)
+                // .tradeCategoryDetail(tradeCategoryDetail)
+                .build();
+    }
 }

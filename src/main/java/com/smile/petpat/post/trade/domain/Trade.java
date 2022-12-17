@@ -4,6 +4,7 @@ import com.smile.petpat.post.category.domain.PostGroup;
 import com.smile.petpat.user.domain.User;
 import lombok.Builder;
 import lombok.Getter;
+import org.apache.commons.lang3.StringUtils;
 
 import javax.persistence.*;
 
@@ -45,7 +46,7 @@ public class Trade {
     public Trade() {
     }
 
-    public Trade(Long tradeId, User user, String title, String content, Long price, String location, PostGroup postType
+    public Trade(Long tradeId, User user, String title, String content, Long price, String location,PostGroup postType
                 // TradeCategoryDetail tradeCategoryDetail
     ) {
         this.tradeId = tradeId;
@@ -58,10 +59,8 @@ public class Trade {
         //this.tradeCategoryDetail = tradeCategoryDetail;
     }
 
-
-
     public Trade(Long tradeId, User user, String title, String content, Long price, String location
-                // TradeCategoryDetail tradeCategoryDetail
+                 // TradeCategoryDetail tradeCategoryDetail
     ) {
         this.tradeId = tradeId;
         this.user = user;

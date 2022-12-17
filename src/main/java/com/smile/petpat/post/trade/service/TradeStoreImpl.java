@@ -18,8 +18,8 @@ public class TradeStoreImpl implements TradeStore {
     private final TradeReaderImpl  tradeReader;
 
     @Override
-    public Trade store(Trade initTrade) {
-        return tradeRepository.save(initTrade);
+    public Trade store(Trade trade) {
+        return tradeRepository.save(trade);
     }
 
     @Override
@@ -27,6 +27,12 @@ public class TradeStoreImpl implements TradeStore {
         tradeReader.userChk(tradeId,userId);
         tradeRepository.deleteById(tradeId);
 
+    }
+
+    @Override
+    public Trade patch(Trade trade,Long userId) {
+        tradeReader.userChk(trade.getTradeId(),userId);
+         return tradeRepository.save(trade);
     }
 
 

@@ -30,7 +30,7 @@ public class TradeController {
      */
     @ApiOperation(value = "분양게시물 등록", notes = "분양게시물 등록")
     @RequestMapping(value = "",method = RequestMethod.POST)
-    public SuccessResponse registerTrade(@RequestBody @Valid TradeDto.RegisterTrade tradeDto, @AuthenticationPrincipal UserDetailsImpl userDetails){
+    public SuccessResponse registerTrade(@RequestBody @Valid TradeDto.CommonTrade tradeDto, @AuthenticationPrincipal UserDetailsImpl userDetails){
         TradeCommand tradeCommand = tradeDto.toCommand();
         tradeService.registerTrade(tradeCommand,userDetails.getUser());
         return SuccessResponse.success("ok");
@@ -50,7 +50,13 @@ public class TradeController {
      * 분양게시물 수정
      * @return 성공 시 200 Success 와 함께 수정한 분양게시물  반환
      */
+    @ApiOperation(value = "분양게시물 수정", notes = "분양 게시물 수정")
+    @RequestMapping(value = "",method = RequestMethod.DELETE)
+    public SuccessResponse updateTrade(@RequestBody TradeDto.CommonTrade updateTrade,@AuthenticationPrincipal UserDetailsImpl userDetails){
+        TradeCommand tradeCommand = updateTrade.toCommand();
+        return SuccessResponse.success(tradeService.updateTrade(tradeCommand,userDetails.getUser()));
 
+    }
 
     /**
      * 분양게시물  삭제

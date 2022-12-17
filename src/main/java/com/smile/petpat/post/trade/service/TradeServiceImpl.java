@@ -32,8 +32,18 @@ public class TradeServiceImpl implements TradeService{
                 .map(TradeInfo::new).collect(Collectors.toList());
         return tradeInfos;
     }
-
+    @Override
     public void deleteTrade(Long tradeId, User user) {
         tradeStore.delete(tradeId, user.getId());
     }
+
+    @Override
+    public TradeInfo updateTrade(TradeCommand tradeCommand, User user) {
+        Trade initTrade = tradeCommand.toUpdateEntity();
+        Trade trade = tradeStore.patch(initTrade,user.getId());
+        TradeInfo tradeInfo = new TradeInfo(trade);
+        return tradeInfo;
+    }
+
+
 }
