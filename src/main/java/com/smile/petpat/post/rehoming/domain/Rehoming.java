@@ -1,7 +1,8 @@
 package com.smile.petpat.post.rehoming.domain;
 
 import com.smile.petpat.config.comm.Timestamped;
-import com.smile.petpat.post.category.domain.PostType;
+import com.smile.petpat.post.category.domain.PostGroup;
+import com.smile.petpat.post.common.status.PostStatus;
 import com.smile.petpat.post.rehoming.dto.RehomingReqDto;
 import com.smile.petpat.user.domain.User;
 import lombok.Getter;
@@ -55,11 +56,11 @@ public class Rehoming  extends Timestamped {
 
     @Column(name = "STATUS")
     @Enumerated(EnumType.STRING)
-    private Status status;
+    private PostStatus status;
 
     @Column(name = "POST_TYPE")
     @Enumerated(EnumType.STRING)
-    private PostType postType;
+    private PostGroup postType;
 
     public Rehoming(User user, RehomingReqDto rehomingDto) {
         this.user = user;
@@ -73,8 +74,8 @@ public class Rehoming  extends Timestamped {
         this.region = rehomingDto.getRegion();
         this.price = rehomingDto.getPrice();
         // default 값으로 예약 중 data 입력 후 상태값 변경에 따라 전환
-        this.status = Status.RESERVING;
-        this.postType = PostType.REHOMING;
+        this.status = PostStatus.REHOMING_RESERVING;
+        this.postType = PostGroup.REHOMING;
     }
 }
 

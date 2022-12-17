@@ -1,13 +1,10 @@
 package com.smile.petpat.post.trade.domain;
 
-import com.smile.petpat.post.category.domain.PostType;
 import com.smile.petpat.post.category.domain.TradeCategoryDetail;
 import com.smile.petpat.user.domain.User;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.ToString;
-
-import javax.persistence.*;
 
 @Getter
 @Builder

@@ -17,4 +17,17 @@ public class TradeReaderImpl implements TradeReader {
     public List<Trade> readTradeList() {
         return tradeRepository.findAll();
     }
+
+    @Override
+    public Trade readTradeById(Long tradeId) {
+        return   tradeRepository.findById(tradeId).orElseThrow(
+                ()  -> new IllegalArgumentException("존재하지 않는 게시물입니다.")
+        );
+    }
+
+    public void userChk(Long tradeId,Long userId){
+       Trade trade = readTradeById(tradeId);
+       if(trade.getUser().getId().equals(userId)) throw new IllegalArgumentException("권한이 없습니다.");
+
+    }
 }

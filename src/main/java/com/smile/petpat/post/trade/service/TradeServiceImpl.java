@@ -32,4 +32,8 @@ public class TradeServiceImpl implements TradeService{
                 .map(TradeInfo::new).collect(Collectors.toList());
         return tradeInfos;
     }
+
+    public void deleteTrade(Long tradeId, User user) {
+        tradeStore.delete(tradeId, user.getId());
+    }
 }
