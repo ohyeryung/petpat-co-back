@@ -4,4 +4,5 @@ import java.util.List;
 
 public interface TradeReader {
     List<Trade> readTradeList();
+    Trade readTradeById(Long tradeId);
 }

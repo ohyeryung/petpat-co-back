@@ -1,6 +1,6 @@
 package com.smile.petpat.image.domain;
 
-import com.smile.petpat.post.category.domain.PostType;
+import com.smile.petpat.post.category.domain.PostGroup;
 import lombok.Getter;
 
 import javax.persistence.*;
@@ -26,7 +26,7 @@ public class Image {
 
     @Column(name = "POST_TYPE")
     @Enumerated(EnumType.STRING)
-    private PostType postType;
+    private PostGroup postType;
 
     @Column(name = "POST_ID")
     private Long postId;
@@ -34,7 +34,7 @@ public class Image {
     public Image() {
     }
 
-    public Image(Long imageId, String filePath, String originalFileName, String fakeFileName, PostType postType, Long postId) {
+    public Image(Long imageId, String filePath, String originalFileName, String fakeFileName, PostGroup postType, Long postId) {
         this.imageId = imageId;
         this.filePath = filePath;
         this.originalFileName = originalFileName;

@@ -1,6 +1,6 @@
 package com.smile.petpat.tag.domain;
 
-import com.smile.petpat.post.category.domain.PostType;
+import com.smile.petpat.post.category.domain.PostGroup;
 import com.smile.petpat.post.rehoming.domain.Rehoming;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -22,7 +22,7 @@ public class Tag {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "POST_TYPE")
-    private PostType postType;
+    private PostGroup postType;
 
     @ManyToOne
     @JoinColumn(name = "POST_ID")
