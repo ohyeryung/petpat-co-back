@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Api(tags = {"category_api"})
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/v1/category")
+@RequestMapping("/api/v1")
 public class PostCategoryController {
 
     private final PostCategoryServiceImpl postCategoryService;
@@ -23,10 +23,29 @@ public class PostCategoryController {
      * @return 성공 시 200 Success 와 함께 카테고리 그룹 목록 반환
      */
     @ApiOperation(value = "카테고리 그룹 리스트 조회", notes = "카테고리 그룹 리스트 조회")
-    @RequestMapping(value = "/{postType}",method = RequestMethod.GET)
-    public SuccessResponse getCategoryGroup(@PathVariable String postType){
-       return SuccessResponse.success(postCategoryService.getCategoryGroup(postType));
+    @RequestMapping(value = "/categoryGroup/{postType}",method = RequestMethod.GET)
+    public SuccessResponse getCategoryGroup(@PathVariable(value = "postType") String postType){
+       return SuccessResponse.success(postCategoryService.getCategoryGroup(postType),"ok");
     }
 
+    /**
+     * 반려동물 카테고리 그룹 리스트 조회
+     * @return 성공 시 200 Success 와 함께 반려동물 카테고리 그룹 목록 반환
+     */
+    @ApiOperation(value = "반려동물 카테고리 그룹 리스트 조회", notes = "반려동물 카테고리 그룹 리스트 조회")
+    @RequestMapping(value = "/petCategory/{categoryGroup}",method = RequestMethod.GET)
+    public SuccessResponse getPetCategory(@PathVariable(value ="categoryGroup") Long categoryGroup){
+       return SuccessResponse.success(postCategoryService.getPetCategory(categoryGroup));
+    }
+
+    /**
+     * 카테고리 그룹 리스트 조회
+     * @return 성공 시 200 Success 와 함께 카테고리 그룹 목록 반환
+     */
+    @ApiOperation(value = "반려동물 카테고리 그룹 리스트 조회", notes = "반려동물 카테고리 그룹 리스트 조회")
+    @RequestMapping(value = "/tradeCategory/{categoryGroup}",method = RequestMethod.GET)
+    public void getTradeCategory(@PathVariable(value = "categoryGroup") Long categoryGroup){
+        postCategoryService.getTradeCategory(categoryGroup);
+    }
 
 }
