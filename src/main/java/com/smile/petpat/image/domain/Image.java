@@ -15,14 +15,14 @@ public class Image {
     @Column(name = "IMAGE_ID")
     private Long imageId;
 
-    @Column(name = "FILE_PATH")
-    private String filePath;
-
     @Column(name = "ORIGINAL_FILE_NAME")
     private String originalFileName;
 
     @Column(name = "FAKE_FILE_NAME")
     private String fakeFileName;
+
+    @Column(name = "FILE_PATH")
+    private String filePath;
 
     @Column(name = "POST_TYPE")
     @Enumerated(EnumType.STRING)
@@ -34,18 +34,11 @@ public class Image {
     public Image() {
     }
 
-    public Image(Long imageId, String filePath, String originalFileName, String fakeFileName, PostType postType, Long postId) {
-        this.imageId = imageId;
-        this.filePath = filePath;
+    public Image(String originalFileName, String fakeFileName, String filePath, PostType postType, Long postId) {
         this.originalFileName = originalFileName;
         this.fakeFileName = fakeFileName;
+        this.filePath = filePath;
         this.postType = postType;
         this.postId = postId;
-    }
-
-    public Image(String originalFilename, String fakeFileName, String filePath) {
-        this.originalFileName = originalFilename;
-        this.fakeFileName = fakeFileName;
-        this.filePath = filePath;
     }
 }
