@@ -58,12 +58,8 @@ public class TradeController {
                                        @AuthenticationPrincipal UserDetailsImpl userDetails,
                                        @PathVariable Long postId
     ){
-        System.out.println("updateTrade = " + updateTrade.getContent());
-        System.out.println("userDetails = " + userDetails.getUser().getId());
-        System.out.println("postId = " + postId);
         TradeCommand tradeCommand = updateTrade.toCommand();
         return SuccessResponse.success(tradeService.updateTrade(tradeCommand,userDetails.getUser(),postId));
-
     }
 
     /**

@@ -1,10 +1,9 @@
 package com.smile.petpat.post.trade.domain;
 
-import com.smile.petpat.post.category.domain.PostGroup;
+import com.smile.petpat.post.category.domain.PostType;
 import com.smile.petpat.user.domain.User;
 import lombok.Builder;
 import lombok.Getter;
-import org.apache.commons.lang3.StringUtils;
 
 import javax.persistence.*;
 
@@ -37,7 +36,7 @@ public class Trade {
 
     @Column(name = "POST_TYPE")
     @Enumerated(EnumType.STRING)
-    private PostGroup postType;
+    private PostType postType;
 
 //    @ManyToOne
 //    @JoinColumn(referencedColumnName = "",name = "TRADE_CATEGORY_DETAIL")
@@ -46,8 +45,8 @@ public class Trade {
     public Trade() {
     }
 
-    public Trade(Long tradeId, User user, String title, String content, Long price, String location,PostGroup postType
-                // TradeCategoryDetail tradeCategoryDetail
+    public Trade(Long tradeId, User user, String title, String content, Long price, String location, PostType postType
+                 // TradeCategoryDetail tradeCategoryDetail
     ) {
         this.tradeId = tradeId;
         this.user = user;
@@ -55,7 +54,7 @@ public class Trade {
         this.content = content;
         this.price = price;
         this.location = location;
-        this.postType = PostGroup.TRADE;
+        this.postType = PostType.TRADE;
         //this.tradeCategoryDetail = tradeCategoryDetail;
     }
 
@@ -68,7 +67,7 @@ public class Trade {
         this.content = content;
         this.price = price;
         this.location = location;
-        this.postType = PostGroup.TRADE;
+        this.postType = PostType.TRADE;
         //this.tradeCategoryDetail = tradeCategoryDetail;
     }
 

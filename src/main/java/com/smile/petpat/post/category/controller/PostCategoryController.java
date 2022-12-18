@@ -1,5 +1,6 @@
 package com.smile.petpat.post.category.controller;
 
+import com.smile.petpat.common.response.SuccessResponse;
 import com.smile.petpat.post.category.service.PostCategoryServiceImpl;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -23,8 +24,8 @@ public class PostCategoryController {
      */
     @ApiOperation(value = "카테고리 그룹 리스트 조회", notes = "카테고리 그룹 리스트 조회")
     @RequestMapping(value = "/{postType}",method = RequestMethod.GET)
-    public void getCategoryGroup(@PathVariable String postType){
-        postCategoryService.getCategoryGroup(postType);
+    public SuccessResponse getCategoryGroup(@PathVariable String postType){
+       return SuccessResponse.success(postCategoryService.getCategoryGroup(postType));
     }
 
 

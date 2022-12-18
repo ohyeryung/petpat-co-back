@@ -29,7 +29,6 @@ public class TradeReaderImpl implements TradeReader {
 
     public void userChk(Long tradeId,Long userId){
        Trade trade = readTradeById(tradeId);
-       log.info("게시물의 유저아이디와 수정하는 아이디 ={}{}",trade.getUser().getId().equals(userId),userId);
        if(!trade.getUser().getId().equals(userId)) {
            throw new IllegalArgumentException("권한이 없습니다.");
        }
