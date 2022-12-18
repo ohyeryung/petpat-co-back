@@ -1,23 +1,18 @@
-package com.smile.petpat.post.rehoming.dto;
+package com.smile.petpat.post.rehoming.domain;
 
 import com.smile.petpat.post.category.domain.PostType;
-import com.smile.petpat.post.rehoming.domain.Rehoming;
-import com.smile.petpat.post.rehoming.domain.Status;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
-import java.util.List;
+import java.time.LocalDateTime;
 
 @Getter
-@NoArgsConstructor
-public class RehomingResDto {
+public class RehomingInfo {
     private Long rehomingId;
+    private String rehomingImg;
     private Long userId;
     private String nickname;
-    private List<String> rehomingImg;
     private String title;
     private String description;
-    private int viewCnt;
     private String petName;
     private String petAge;
     private String category;
@@ -27,15 +22,17 @@ public class RehomingResDto {
     private Long price;
     private Status status;
     private PostType postType;
-    private List<String> tagList;
-
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
     private boolean isLiked;
     private boolean isBookmarked;
+    private int veiwCnt;
     private int likeCnt;
     private int bookmarkCnt;
 
-    public RehomingResDto(Rehoming rehoming, List<String> rehomingImg, boolean isLiked, boolean isBookmarked, int likeCnt, int bookmarkCnt) {
+    public RehomingInfo(Rehoming rehoming) {
         this.rehomingId = rehoming.getRehomingId();
+        // this.rehomingImg = rehomingImg;
         this.userId = rehoming.getUser().getId();
         this.nickname = rehoming.getUser().getNickname();
         this.title = rehoming.getTitle();
@@ -48,12 +45,13 @@ public class RehomingResDto {
         this.region = rehoming.getRegion();
         this.price = rehoming.getPrice();
         this.status = rehoming.getStatus();
-        this.rehomingImg = rehomingImg;
-        // this.tagList = tagList;
         this.postType = rehoming.getPostType();
-        this.isLiked = isLiked;
-        this.isBookmarked = isBookmarked;
-        this.likeCnt = likeCnt;
-        this.bookmarkCnt = bookmarkCnt;
+        this.createdAt = rehoming.getCreatedAt();
+        this.updatedAt = rehoming.getUpdatedAt();
+        this.isLiked = false;
+        this.isBookmarked = false;
+        this.veiwCnt = rehoming.getViewCnt();
+        this.likeCnt = 0;
+        this.bookmarkCnt = 0;
     }
 }
