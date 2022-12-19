@@ -39,13 +39,23 @@ public class PostCategoryController {
     }
 
     /**
-     * 카테고리 그룹 리스트 조회
-     * @return 성공 시 200 Success 와 함께 카테고리 그룹 목록 반환
+     * 중고거래 카테고리 그룹 리스트 조회
+     * @return 성공 시 200 Success 와 함께 중고거래카테고리 그룹 목록 반환
      */
-    @ApiOperation(value = "반려동물 카테고리 그룹 리스트 조회", notes = "반려동물 카테고리 그룹 리스트 조회")
+    @ApiOperation(value = "중고거래 카테고리 그룹 리스트 조회", notes = "중고거래 카테고리 그룹 리스트 조회")
     @RequestMapping(value = "/tradeCategory/{categoryGroup}",method = RequestMethod.GET)
-    public void getTradeCategory(@PathVariable(value = "categoryGroup") Long categoryGroup){
-        postCategoryService.getTradeCategory(categoryGroup);
+    public SuccessResponse getTradeCategory(@PathVariable(value = "categoryGroup") Long categoryGroup){
+       return SuccessResponse.success(postCategoryService.getTradeCategory(categoryGroup));
+    }
+
+    /**
+     * 중고거래 상세 카테고리 그룹 리스트 조회
+     * @return 성공 시 200 Success 와 함께 중고거래 상세카테고리 그룹 목록 반환
+     */
+    @ApiOperation(value = "중고거래 상세카테고리 그룹 리스트 조회", notes = "중고거래 상세카테고리 그룹 리스트 조회")
+    @RequestMapping(value = "/tradeCategoryDetail/{tradeCategory}",method = RequestMethod.GET)
+    public void getTradeCategoryDetail(@PathVariable(value = "tradeCategory") Long tradeCategory){
+        postCategoryService.getTradeCategoryDetail(tradeCategory);
     }
 
 }

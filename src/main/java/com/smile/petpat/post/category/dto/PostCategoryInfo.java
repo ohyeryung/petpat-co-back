@@ -2,6 +2,7 @@ package com.smile.petpat.post.category.dto;
 
 import com.smile.petpat.post.category.domain.PetCategory;
 import com.smile.petpat.post.category.domain.TradeCategory;
+import com.smile.petpat.post.category.domain.TradeCategoryDetail;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -41,4 +42,19 @@ public class PostCategoryInfo {
         }
 
     }
+
+    @Getter
+    @ToString
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class TradeCategoryDetailRes{
+        private Long tradeCategoryDetailId;
+        private String tradeCategoryDetailName;
+
+        public TradeCategoryDetailRes(TradeCategoryDetail tradeCategoryDetail){
+            this.tradeCategoryDetailId = tradeCategoryDetail.getTradeCategoryDetailId();
+            this.tradeCategoryDetailName = tradeCategoryDetail.getTradeCategoryName();
+        }
+    }
+
 }

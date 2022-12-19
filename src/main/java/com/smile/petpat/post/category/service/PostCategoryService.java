@@ -11,4 +11,5 @@ public interface PostCategoryService {
     List<CategoryGroup> getCategoryGroup(String postTypeDescription);
     List<PetCategoryRes> getPetCategory(Long categoryGroup);
     List<TradeCategoryRes> getTradeCategory(Long categoryGroup);
+    List<TradeCategoryDetailRes> getTradeCategoryDetail(Long tradeCategory);
 }
