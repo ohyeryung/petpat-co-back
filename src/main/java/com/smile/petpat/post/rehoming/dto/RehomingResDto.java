@@ -1,6 +1,6 @@
 package com.smile.petpat.post.rehoming.dto;
 
-import com.smile.petpat.post.category.domain.PostGroup;
+import com.smile.petpat.post.category.domain.PostType;
 import com.smile.petpat.post.rehoming.domain.Rehoming;
 import com.smile.petpat.post.common.status.PostStatus;
 import lombok.Getter;
@@ -26,7 +26,7 @@ public class RehomingResDto {
     private int price;
     private PostStatus status;
     private List<String> tagList;
-    private PostGroup postType;
+    private PostType postType;
 
     public RehomingResDto(Rehoming rehoming, List<String> rehomingImg, List<String> tagList) {
         this.rehomingId = rehoming.getRehomingId();

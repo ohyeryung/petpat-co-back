@@ -1,6 +1,6 @@
 package com.smile.petpat.post.trade.domain;
 
-import com.smile.petpat.post.category.domain.PostGroup;
+import com.smile.petpat.post.category.domain.PostType;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -14,10 +14,10 @@ public class TradeInfo {
     private String content;
     private Long price;
     private String location;
-    private PostGroup postType;
+    private PostType postType;
     //private TradeCategoryDetail tradeCategoryDetail;
 
-    public TradeInfo(Long tradeId, Long userId, String title, String content, Long price, String location, PostGroup postType
+    public TradeInfo(Long tradeId, Long userId, String title, String content, Long price, String location, PostType postType
            // , TradeCategoryDetail tradeCategoryDetail
     ) {
         this.tradeId = tradeId;

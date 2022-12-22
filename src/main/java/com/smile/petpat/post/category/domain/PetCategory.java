@@ -11,7 +11,7 @@ public class PetCategory {
 
     @Id
     @Column(name = "PET_CATEGORY_ID")
-    private Long PetCategoryId;
+    private Long petCategoryId;
 
     @Column(name = "PET_CATEGORY_NAME")
     private String postCategoryName;
@@ -24,7 +24,7 @@ public class PetCategory {
     }
 
     public PetCategory(Long petCategoryId, String postCategoryName, CategoryGroup categoryGroup) {
-        PetCategoryId = petCategoryId;
+        this.petCategoryId = petCategoryId;
         this.postCategoryName = postCategoryName;
         this.categoryGroup = categoryGroup;
     }

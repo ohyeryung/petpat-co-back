@@ -17,12 +17,12 @@ public class CategoryGroup {
 
     @Column(name = "POST_TYPE")
     @Enumerated(EnumType.STRING)
-    private PostGroup postType;
+    private PostType postType;
 
     public CategoryGroup(){
     }
 
-    public CategoryGroup(Long categoryGroupId, String categoryGroupName, PostGroup postType) {
+    public CategoryGroup(Long categoryGroupId, String categoryGroupName, PostType postType) {
         this.categoryGroupId = categoryGroupId;
         this.categoryGroupName = categoryGroupName;
         this.postType = postType;

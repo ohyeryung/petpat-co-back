@@ -45,8 +45,7 @@ public class TradeController {
     @ApiOperation(value = "분양게시물 목록 조회", notes = "분양 게시물 목록 조회")
     @RequestMapping(value = "",method = RequestMethod.GET)
     public SuccessResponse listTrade(){
-       List<TradeInfo> tradeInfos =  tradeService.listTrade();
-       return SuccessResponse.success(tradeInfos,"ok");
+       return SuccessResponse.success(tradeService.listTrade(),"ok");
     }
     /**
      * 분양게시물 수정
@@ -58,12 +57,8 @@ public class TradeController {
                                        @AuthenticationPrincipal UserDetailsImpl userDetails,
                                        @PathVariable Long postId
     ){
-        System.out.println("updateTrade = " + updateTrade.getContent());
-        System.out.println("userDetails = " + userDetails.getUser().getId());
-        System.out.println("postId = " + postId);
         TradeCommand tradeCommand = updateTrade.toCommand();
         return SuccessResponse.success(tradeService.updateTrade(tradeCommand,userDetails.getUser(),postId));
-
     }
 
     /**

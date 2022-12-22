@@ -46,7 +46,6 @@ public class TradeServiceImpl implements TradeService{
     public TradeInfo updateTrade(TradeCommand tradeCommand, User user,Long tradeId) {
         Trade initTrade = tradeCommand.toUpdateEntity(user,tradeId);
         Trade trade = tradeStore.update(initTrade,user.getId(),tradeId);
-
         TradeInfo tradeInfo = new TradeInfo(trade);
         return tradeInfo;
     }
