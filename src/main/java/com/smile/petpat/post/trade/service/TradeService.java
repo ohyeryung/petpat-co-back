@@ -11,4 +11,8 @@ public interface TradeService{
     void registerTrade(TradeCommand tradeCommand, User user);
 
     List<TradeInfo> listTrade();
+
+    void deleteTrade(Long tradeId,User user);
+
+    TradeInfo updateTrade(TradeCommand tradeCommand,User user,Long postId);
 }
