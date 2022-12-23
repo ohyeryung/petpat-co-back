@@ -2,6 +2,7 @@ package com.smile.petpat.post.rehoming.domain;
 
 import com.smile.petpat.post.category.domain.PetCategory;
 import com.smile.petpat.post.category.domain.PostType;
+import com.smile.petpat.post.common.status.PostStatus;
 import com.smile.petpat.user.domain.User;
 import lombok.Builder;
 import lombok.Getter;
@@ -40,7 +41,7 @@ public class RehomingCommand {
                 .gender(gender)
                 .region(region)
                 .price(price)
-                .status(Status.FINDING)
+                .status(PostStatus.REHOMING_FINDING)
                 .postType(PostType.REHOMING)
                 .build();
     }

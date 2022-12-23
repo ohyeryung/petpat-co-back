@@ -1,6 +1,7 @@
 package com.smile.petpat.post.rehoming.domain;
 
 import com.smile.petpat.post.category.domain.PostType;
+import com.smile.petpat.post.common.status.PostStatus;
 import lombok.Getter;
 
 import java.time.LocalDateTime;
@@ -20,7 +21,7 @@ public class RehomingInfo {
     private String gender;
     private String region;
     private Long price;
-    private Status status;
+    private PostStatus status;
     private PostType postType;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;

@@ -2,6 +2,7 @@ package com.smile.petpat.post.rehoming.domain;
 
 import com.smile.petpat.config.comm.Timestamped;
 import com.smile.petpat.post.category.domain.PostType;
+import com.smile.petpat.post.common.status.PostStatus;
 import com.smile.petpat.user.domain.User;
 import lombok.Builder;
 import lombok.Getter;
@@ -51,7 +52,7 @@ public class Rehoming  extends Timestamped {
 
     @Column(name = "STATUS")
     @Enumerated(EnumType.STRING)
-    private Status status;
+    private PostStatus status;
 
     @Column(name = "POST_TYPE")
     @Enumerated(EnumType.STRING)
@@ -60,7 +61,7 @@ public class Rehoming  extends Timestamped {
     private int viewCnt;
 
     public Rehoming(Long rehomingId, User user, String title, String description, String petName, String petAge,
-                    String category, String type, String gender, String region, Long price, Status status, PostType postType, int viewCnt) {
+                    String category, String type, String gender, String region, Long price, PostStatus status, PostType postType, int viewCnt) {
         this.rehomingId = rehomingId;
         this.user = user;
         this.title = title;
