@@ -28,6 +28,7 @@ import java.util.stream.Collectors;
 public class S3Uploader {
     private final AmazonS3 amazonS3;
     private final ImageRepository imageRepository;
+    private final ImageUtils imageUtils;
 
     @Value("${cloud.aws.s3.bucket}")
     private String bucket;
@@ -37,23 +38,37 @@ public class S3Uploader {
     public List<String> uploadFile(List<MultipartFile> multipartFiles, Long postId, PostType postType) {
         try {
             List<String> imageUrlList = new ArrayList<>();
+
+            List<Image> imageList = new ArrayList<>();
+
             // forEach 구문을 통해 multipartFile로 넘어온 파일들 하나씩 fileNameList에 추가
             multipartFiles.forEach(file -> {
-                String fakeFileName = createFileName(file.getOriginalFilename());
-                String originalFileName = file.getOriginalFilename();
+
+                String fakeFileName = imageUtils.createFileName(file.getOriginalFilename());
+
                 ObjectMetadata objectMetadata = new ObjectMetadata();
+                objectMetadata.setContentLength(file.getSize());
+                objectMetadata.setContentType(file.getContentType());
+
                 try (InputStream inputStream = file.getInputStream()) {
                     amazonS3.putObject(new PutObjectRequest(bucket, fakeFileName, inputStream, objectMetadata)
                             .withCannedAcl(CannedAccessControlList.PublicRead));
                 } catch (IOException e) {
-                    // throw new CustomException(FAILED_UPLOAD_IMAGE);
-                    throw new IllegalArgumentException("파일 업로드에 실패했습니다.");
+                     throw new CustomException(FAILED_UPLOAD_IMAGE);
                 }
+                String originalFileName = file.getOriginalFilename();
                 String filePath = amazonS3.getUrl(bucket, fakeFileName).toString();
+
                 Image image = new Image(originalFileName, fakeFileName, filePath, postType, postId);
                 imageRepository.save(image);
+
+               
+
+                imageList.add(image);
+
                 imageUrlList.add(filePath);
             });
+            imageRepository.saveAll(imageList);
             return imageUrlList;
         } catch (NullPointerException e) {
             List<String> imageUrlList = new ArrayList<>();
@@ -61,6 +76,7 @@ public class S3Uploader {
             return imageUrlList;
         }
     }
+
 
     // 이미지 파일 수정
     @Transactional
@@ -127,5 +143,6 @@ public class S3Uploader {
         }
 
     }
+
 
 }
