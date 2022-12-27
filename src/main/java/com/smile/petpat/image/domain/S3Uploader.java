@@ -6,7 +6,6 @@ import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.smile.petpat.common.exception.CustomException;
-import com.smile.petpat.image.repository.ImageRepository;
 import com.smile.petpat.post.category.domain.PostType;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -18,15 +17,12 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.transaction.Transactional;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
-import java.util.stream.Collectors;
 
 import static com.smile.petpat.common.response.ErrorCode.FAILED_UPLOAD_IMAGE;
 
 @Slf4j
-@RequiredArgsConstructor    // final 멤버변수가 있으면 생성자 항목에 포함시킴
+@RequiredArgsConstructor
 @Component
 @Service
 public class S3Uploader {
@@ -37,8 +33,6 @@ public class S3Uploader {
 
     @Value("${cloud.aws.s3.bucket}")
     private String bucket;
-
-
 
     public String uploadFile(MultipartFile file){
         String fakeFileName = imageUtils.createFileName(file.getOriginalFilename());
@@ -55,7 +49,6 @@ public class S3Uploader {
         return amazonS3.getUrl(bucket, fakeFileName).toString();
     }
 
-
     // 게시글 Id와 postType 으로 S3 이미지 삭제
     @Transactional
     public void deleteS3(List<String> imgUrl, Long postId, PostType postType) {
@@ -68,14 +61,5 @@ public class S3Uploader {
     public void deleteImage(String fileName){
         amazonS3.deleteObject(bucket, fileName);
     }
-
-
-
-
-
-
-
-
-
 
 }

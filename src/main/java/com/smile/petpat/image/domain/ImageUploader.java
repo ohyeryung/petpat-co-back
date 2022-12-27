@@ -14,13 +14,14 @@ import java.util.stream.Collectors;
 public class ImageUploader {
     private final ImageRepository imageRepository;
 
+    // 이미지 등록
     @Transactional
     public List<Image> savePostImage(List<Image> imageList){
         return imageRepository.saveAll(imageList);
     }
 
-    public Image toImageEntity(String fakeFileName, String originalFileName, String filePath,Long postId, PostType postType){
-        return new Image(originalFileName,fakeFileName,filePath,postId,postType);
+    public Image toImageEntity(String fakeFileName, String originalFileName, String filePath, Long postId, PostType postType){
+        return new Image(originalFileName, fakeFileName, filePath, postId, postType);
     }
 
     // 로컬 이미지 삭제 (db)
