@@ -3,7 +3,7 @@ package com.smile.petpat.post.rehoming.dto;
 import lombok.Getter;
 
 @Getter
-public class RehomingUpdateRequestDto {
+public class RehomingUpdateReqDto {
     private Long rehomingId;
     private String title;
     private String description;

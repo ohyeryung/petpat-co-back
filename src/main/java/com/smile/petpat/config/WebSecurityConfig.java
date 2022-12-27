@@ -2,6 +2,7 @@ package com.smile.petpat.config;
 
 import com.smile.petpat.jwt.*;
 import org.springframework.context.annotation.Bean;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -54,7 +55,7 @@ public class WebSecurityConfig {
                 .addFilterBefore(new JwtAuthenticationFilter(tokenProvider), UsernamePasswordAuthenticationFilter.class)
                 .authorizeRequests()
                 .antMatchers("/api/v1/user/**").permitAll()
-
+                .antMatchers(HttpMethod.GET,"/api/v1/rehoming/**").permitAll()
                 .anyRequest().authenticated();
 
         return http.build();

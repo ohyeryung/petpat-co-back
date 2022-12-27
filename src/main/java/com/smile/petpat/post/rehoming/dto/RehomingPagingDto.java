@@ -1,5 +1,6 @@
 package com.smile.petpat.post.rehoming.dto;
 
+import com.smile.petpat.post.rehoming.domain.Rehoming;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -19,5 +20,9 @@ public class RehomingPagingDto {
         this.rehomigList = rehomigListDto.getContent();
         this.totalPage = rehomigListDto.getTotalPages();
         this.islastPage = islastPage;
+    }
+
+    public RehomingPagingDto(List<Rehoming> rehoming) {
+        this.rehomigList = rehoming;
     }
 }
