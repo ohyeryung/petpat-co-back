@@ -1,11 +1,14 @@
 package com.smile.petpat.post.rehoming.service;
 
+import com.smile.petpat.image.domain.ImageUploadManager;
+import com.smile.petpat.image.domain.ImageUploader;
 import com.smile.petpat.image.domain.S3Uploader;
 import com.smile.petpat.post.category.domain.PostType;
 import com.smile.petpat.post.rehoming.domain.*;
 import com.smile.petpat.post.rehoming.dto.RehomingPagingDto;
 import com.smile.petpat.post.rehoming.dto.RehomingResDto;
 import com.smile.petpat.post.rehoming.repository.RehomingRepository;
+import com.smile.petpat.tag.service.TagService;
 import com.smile.petpat.user.domain.User;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,9 +25,12 @@ import java.util.stream.Collectors;
 @Service
 public class RehomingService {
     private final RehomingRepository rehomingRepository;
+    private final ImageUploadManager imageUploadManager;
+    private final TagService tagService;
     private final RehomingStore rehomingStore;
     private final S3Uploader s3Uploader;
     private final RehomingReader rehomingReader;
+    private final ImageUploader imageUploader;
 
     // 1. 분양 글 등록
     @Transactional
@@ -36,7 +42,7 @@ public class RehomingService {
 
         // 1-2. 이미지 등록
         Long postId = rehoming.getRehomingId();
-        s3Uploader.uploadFile(rehomingImg, postId, PostType.REHOMING);
+        imageUploadManager.uploadPostImage(rehomingImg, postId, PostType.REHOMING);
 
     }
 
@@ -60,7 +66,7 @@ public class RehomingService {
     @Transactional
     public RehomingResDto detailRehoming(Long postId) {
         Rehoming rehoming = rehomingReader.readRehomingById(postId);
-        List<String> imgList = s3Uploader.createImgList(postId, PostType.REHOMING);
+        List<String> imgList = imageUploader.createImgList(postId, PostType.REHOMING);
         // 조회수 카운트 하는 method 들어갈 자리
         /*
         * TODO : count method 추가 + boolean 값 처리 방안 고안 */
@@ -79,8 +85,8 @@ public class RehomingService {
         Rehoming rehoming = rehomingStore.update(initRehoming, user.getId(), postId);
 
         // 4-2. 이미지 수정 후 저장
-        s3Uploader.updateFile(rehomingImg, postId, PostType.REHOMING);
-        List<String> imgList = s3Uploader.createImgList(postId, PostType.REHOMING);
+        imageUploadManager.updateFile(rehomingImg, postId, PostType.REHOMING);
+        List<String> imgList = imageUploader.createImgList(postId, PostType.REHOMING);
         RehomingResDto rehomingInfo = new RehomingResDto(rehoming, imgList);
         return rehomingInfo;
     }
@@ -91,7 +97,6 @@ public class RehomingService {
         // 5-1. 게시글 삭제
         rehomingStore.delete(user.getId(), rehomingId);
         // 5-2. 해당 게시글 이미지 삭제
-        s3Uploader.deleteS3(rehomingId, PostType.REHOMING);
-        s3Uploader.deleteImg(rehomingId, PostType.REHOMING);
+        imageUploadManager.removePostImage(rehomingId, PostType.REHOMING);
     }
 }

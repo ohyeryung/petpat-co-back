@@ -1,15 +1,18 @@
 package com.smile.petpat.post.rehoming.dto;
 
 import com.smile.petpat.post.rehoming.domain.RehomingCommand;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.List;
 
 @Getter
+@Setter
 @NoArgsConstructor
+@Builder
 public class RehomingReqDto {
-
     private String title;
     private String description;
     private String petName;

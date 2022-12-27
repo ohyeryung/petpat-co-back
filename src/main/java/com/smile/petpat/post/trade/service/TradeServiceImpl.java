@@ -31,8 +31,7 @@ public class TradeServiceImpl implements TradeService{
     @Transactional
     public List<TradeInfo> listTrade() {
         List<Trade> listTrade = tradeReader.readTradeList();
-        List<TradeInfo> tradeInfos = listTrade.stream()
-                .map(TradeInfo::new).collect(Collectors.toList());
+        List<TradeInfo> tradeInfos = listTrade.stream().map(TradeInfo::new).collect(Collectors.toList());
         return tradeInfos;
     }
     @Override
