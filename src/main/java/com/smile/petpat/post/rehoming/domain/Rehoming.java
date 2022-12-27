@@ -3,18 +3,17 @@ package com.smile.petpat.post.rehoming.domain;
 import com.smile.petpat.config.comm.Timestamped;
 import com.smile.petpat.post.category.domain.PostType;
 import com.smile.petpat.post.common.status.PostStatus;
-import com.smile.petpat.post.rehoming.dto.RehomingReqDto;
 import com.smile.petpat.user.domain.User;
+import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
-@NoArgsConstructor
 @Getter
 @Entity
 @Table(name = "TB_REHOMING")
-public class Rehoming  extends Timestamped {
+@Builder
+public class Rehoming extends Timestamped {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "REHOMING_ID")
@@ -29,9 +28,6 @@ public class Rehoming  extends Timestamped {
 
     @Column(name = "DESCRIPTION", columnDefinition = "TEXT", nullable = true)
     private String description;
-
-    @Column(name = "VIEW_CNT")
-    private int viewCnt;
 
     @Column(name = "PET_NAME")
     private String petName;
@@ -52,7 +48,7 @@ public class Rehoming  extends Timestamped {
     private String region;
 
     @Column(name = "PRICE")
-    private int price;
+    private Long price;
 
     @Column(name = "STATUS")
     @Enumerated(EnumType.STRING)
@@ -61,22 +57,31 @@ public class Rehoming  extends Timestamped {
     @Column(name = "POST_TYPE")
     @Enumerated(EnumType.STRING)
     private PostType postType;
+    @Column(name = "VIEW_CNT")
+    private int viewCnt;
 
-    public Rehoming(User user, RehomingReqDto rehomingDto) {
+    public Rehoming(Long rehomingId, User user, String title, String description, String petName, String petAge,
+                    String category, String type, String gender, String region, Long price, PostStatus status, PostType postType, int viewCnt) {
+        this.rehomingId = rehomingId;
         this.user = user;
-        this.title = rehomingDto.getTitle();
-        this.description = rehomingDto.getDescription();
-        this.petName = rehomingDto.getPetName();
-        this.petAge = rehomingDto.getPetAge();
-        this.category = rehomingDto.getCategory();
-        this.type = rehomingDto.getType();
-        this.gender = rehomingDto.getGender();
-        this.region = rehomingDto.getRegion();
-        this.price = rehomingDto.getPrice();
-        // default 값으로 예약 중 data 입력 후 상태값 변경에 따라 전환
-        this.status = PostStatus.REHOMING_RESERVING;
-        this.postType = PostType.REHOMING;
+        this.title = title;
+        this.description = description;
+        this.petName = petName;
+        this.petAge = petAge;
+        this.category = category;
+        this.type = type;
+        this.gender = gender;
+        this.region = region;
+        this.price = price;
+        this.status = status;
+        this.postType = postType;
+        this.viewCnt = viewCnt;
     }
+
+    public Rehoming() {
+
+    }
+
 }
 
 
