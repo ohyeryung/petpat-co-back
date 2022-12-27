@@ -34,7 +34,7 @@ public class Image {
     public Image() {
     }
 
-    public Image(String originalFileName, String fakeFileName, String filePath, PostType postType, Long postId) {
+    public Image(String originalFileName, String fakeFileName, String filePath,Long postId, PostType postType) {
         this.originalFileName = originalFileName;
         this.fakeFileName = fakeFileName;
         this.filePath = filePath;

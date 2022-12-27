@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/v1/qna")
 public class QnaController {
 
-    private final QnaService qnaService;
 
     /**
      * Qna 게시물 등록

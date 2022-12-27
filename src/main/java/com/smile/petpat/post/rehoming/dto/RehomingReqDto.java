@@ -1,5 +1,7 @@
 package com.smile.petpat.post.rehoming.dto;
 
+import com.smile.petpat.post.rehoming.domain.RehomingCommand;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
