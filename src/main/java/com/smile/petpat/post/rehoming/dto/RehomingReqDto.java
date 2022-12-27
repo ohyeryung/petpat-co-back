@@ -1,5 +1,6 @@
 package com.smile.petpat.post.rehoming.dto;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -9,6 +10,7 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
+@Builder
 public class RehomingReqDto {
     private String title;
     private String description;
@@ -34,6 +36,21 @@ public class RehomingReqDto {
         this.price = price;
         this.filePath = filePath;
         this.tagList = tagList;
+    }
+
+    public RehomingReqDto toRehomingDto(List<String> filePath){
+        return RehomingReqDto.builder()
+                .title(title)
+                .description(description)
+                .petName(petName)
+                .petAge(petAge)
+                .category(category)
+                .type(type)
+                .gender(gender)
+                .region(region)
+                .price(price)
+                .tagList(tagList)
+                .build();
     }
 
 }

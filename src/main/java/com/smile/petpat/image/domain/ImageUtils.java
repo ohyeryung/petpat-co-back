@@ -9,9 +9,6 @@ import java.util.UUID;
 @Component
 public class ImageUtils {
 
-    public void fileUploader(List<MultipartFile> multipartFiles){
-
-    }
 
     public String createFileName(String fileName) {
         return UUID.randomUUID().toString().concat(getFileExtension(fileName));

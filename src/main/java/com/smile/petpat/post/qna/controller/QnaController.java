@@ -21,7 +21,7 @@ public class QnaController {
      * @return 성공 시 200 Success 반환
      */
     @RequestMapping(value = "",method = RequestMethod.POST)
-    public void registerQna(){
+    public void qnaAdd(){
 
     }
 
@@ -30,7 +30,7 @@ public class QnaController {
      * @return 성공 시 200 Success 반환
      */
     @RequestMapping(value = "",method = RequestMethod.GET)
-    public void listQna(){
+    public void qnaList(){
 
     }
 
@@ -39,7 +39,7 @@ public class QnaController {
      * @return 성공 시 200 Success 반환
      */
     @RequestMapping(value = "/{postId}",method = RequestMethod.PUT)
-    public void updateQna(@PathVariable String postId){
+    public void qnaModify(@PathVariable String postId){
 
     }
 
@@ -48,7 +48,7 @@ public class QnaController {
      * @return 성공 시 200 Success 반환
      */
     @RequestMapping(value = "/{postId}",method = RequestMethod.DELETE)
-    public void deleteQna(@PathVariable String postId){
+    public void qnaRemove(@PathVariable String postId){
 
     }
 }

@@ -1,5 +1,6 @@
 package com.smile.petpat.post.rehoming.service;
 
+import com.smile.petpat.image.domain.ImageUploadManager;
 import com.smile.petpat.image.domain.S3Uploader;
 import com.smile.petpat.post.rehoming.domain.Rehoming;
 import com.smile.petpat.post.rehoming.dto.RehomingPagingDto;
@@ -21,7 +22,7 @@ import java.util.List;
 @Service
 public class RehomingService {
     private final RehomingRepository rehomingRepository;
-    private final S3Uploader s3Uploader;
+    private final ImageUploadManager imageUploadManager;
     private final TagService tagService;
 
     // 1. 분양 글 등록
@@ -29,10 +30,11 @@ public class RehomingService {
 
         List<String> filePath = saveImg(rehomingImg);
 
-        RehomingReqDto rehomingDto = new RehomingReqDto(requestDto.getTitle(),requestDto.getDescription(),
-                requestDto.getPetName(), requestDto.getPetAge(), requestDto.getCategory(),requestDto.getType(),
-                requestDto.getGender(),requestDto.getRegion(), requestDto.getPrice(), filePath, requestDto.getTagList());
+//        RehomingReqDto rehomingDto = new RehomingReqDto(requestDto.getTitle(),requestDto.getDescription(),
+//                requestDto.getPetName(), requestDto.getPetAge(), requestDto.getCategory(),requestDto.getType(),
+//                requestDto.getGender(),requestDto.getRegion(), requestDto.getPrice(), filePath, requestDto.getTagList());
 
+        RehomingReqDto rehomingDto = requestDto.toRehomingDto(filePath);
         Rehoming rehoming = rehomingRepository.save(new Rehoming(user, rehomingDto));
 
         tagService.saveTag(requestDto.getTagList());
@@ -42,8 +44,9 @@ public class RehomingService {
 
     // 1-1.분양 이미지 업로드
     public List<String> saveImg(List<MultipartFile> rehomingImg) {
-        return s3Uploader.uploadFile(rehomingImg);
+        return imageUploadManager.uploadPostImage(rehomingImg);
     }
+
     // 분양 글 목록 조회
     public RehomingPagingDto readRehoming(Pageable pageable) {
         List<Rehoming> rehoming = rehomingRepository.findAll();
