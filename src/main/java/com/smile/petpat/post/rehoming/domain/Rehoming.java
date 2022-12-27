@@ -13,7 +13,7 @@ import javax.persistence.*;
 @Entity
 @Table(name = "TB_REHOMING")
 @Builder
-public class Rehoming  extends Timestamped {
+public class Rehoming extends Timestamped {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "REHOMING_ID")

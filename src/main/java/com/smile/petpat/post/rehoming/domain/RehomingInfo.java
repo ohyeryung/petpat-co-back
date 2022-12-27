@@ -3,10 +3,12 @@ package com.smile.petpat.post.rehoming.domain;
 import com.smile.petpat.post.category.domain.PostType;
 import com.smile.petpat.post.common.status.PostStatus;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
 @Getter
+@NoArgsConstructor
 public class RehomingInfo {
     private Long rehomingId;
     private String rehomingImg;
@@ -27,7 +29,7 @@ public class RehomingInfo {
     private LocalDateTime updatedAt;
     private boolean isLiked;
     private boolean isBookmarked;
-    private int veiwCnt;
+    private int viewCnt;
     private int likeCnt;
     private int bookmarkCnt;
 
@@ -51,7 +53,7 @@ public class RehomingInfo {
         this.updatedAt = rehoming.getUpdatedAt();
         this.isLiked = false;
         this.isBookmarked = false;
-        this.veiwCnt = rehoming.getViewCnt();
+        this.viewCnt = rehoming.getViewCnt();
         this.likeCnt = 0;
         this.bookmarkCnt = 0;
     }

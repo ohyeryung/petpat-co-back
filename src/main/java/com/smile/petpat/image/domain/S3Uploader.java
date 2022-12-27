@@ -1,7 +1,6 @@
 package com.smile.petpat.image.domain;
 
 import com.amazonaws.services.s3.AmazonS3;
-import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
@@ -14,23 +13,27 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.transaction.Transactional;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Slf4j
 @RequiredArgsConstructor    // final 멤버변수가 있으면 생성자 항목에 포함시킴
 @Component
 @Service
 public class S3Uploader {
-
-    private final AmazonS3Client amazonS3Client;
     private final AmazonS3 amazonS3;
     private final ImageRepository imageRepository;
 
     @Value("${cloud.aws.s3.bucket}")
     private String bucket;
 
+    // 이미지 파일 업로드
+    @Transactional
     public List<String> uploadFile(List<MultipartFile> multipartFiles, Long postId, PostType postType) {
         try {
             List<String> imageUrlList = new ArrayList<>();
@@ -59,29 +62,46 @@ public class S3Uploader {
         }
     }
 
-    // 게시글 이미지 리스트 추출 method
-    public List<String> createImgList(Long postId, PostType postType) {
-        log.info("S3Uploader에서의 createImgList method 실행");
-        List<String> imgList = new ArrayList<>();
-        List<Image> images = imageRepository.findAllByPostIdAndPostType(postId, postType);
-        switch (postType) {
-            case REHOMING:
-                for (Image image : images) {
-                    imgList.add(image.getFilePath());
-                }
-                break;
-            case TRADE:
-                for (Image image : images) {
-                    imgList.add(image.getFilePath());
-                }
-                // break;
-            case QNA:
-                for (Image image : images) {
-                    imgList.add(image.getFilePath());
-                }
-                // break;
+    // 이미지 파일 수정
+    @Transactional
+    public List<String> updateFile(List<MultipartFile> multipartFiles, Long postId, PostType postType) {
+        for (String key : createKey(postId, postType)) getFileExtension(key);
+        deleteS3(postId, postType);
+        deleteImg(postId, postType);
+        return uploadFile(multipartFiles, postId, postType);
+    }
+
+    // 게시글 Id와 postType 으로 S3 이미지 삭제
+    @Transactional
+    public void deleteS3(Long postId, PostType postType) {
+        List<String> imgUrl = createKey(postId, postType);
+        for (String img : imgUrl) {
+            deleteImage(img);
         }
-        return imgList;
+    }
+
+    // 로컬 이미지 삭제
+    public void deleteImg(Long postId, PostType postType) {
+        imageRepository.deleteByPostIdAndPostType(postId, postType);
+    }
+
+    // S3 이미지 삭제
+    public void deleteImage(String fileName){
+        amazonS3.deleteObject(bucket, fileName);
+    }
+
+    // 게시글 이미지 url 리스트 추출 method
+    @Transactional
+    public List<String> createImgList(Long postId, PostType postType) {
+        List<Image> images = imageRepository.findAllByPostIdAndPostType(postId, postType);
+        return images.stream().map(Image::getFilePath).collect(Collectors.toList());
+    }
+
+    // 게시글 별 이미지 key 값 추출 메소드
+    @Transactional
+    public List<String> createKey(Long postId, PostType postType) {
+        List<Image> images = imageRepository.findAllByPostIdAndPostType(postId, postType);
+        return images.stream().map(Image::getFakeFileName).collect(Collectors.toList());
     }
 
     // 파일명 난수화
@@ -103,7 +123,6 @@ public class S3Uploader {
             }
             return fileName.substring(fileName.lastIndexOf("."));
         } catch (StringIndexOutOfBoundsException e) {
-//            throw new CustomException(WRONG_TYPE_IMAGE);
             throw new IllegalArgumentException("파일 타입을 확인해주세요");
         }
 

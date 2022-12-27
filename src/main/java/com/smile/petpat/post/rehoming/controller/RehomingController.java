@@ -31,8 +31,9 @@ public class RehomingController {
     /*
     * 1. 분양 글 등록 */
     @PostMapping("")
-    public SuccessResponse create(@AuthenticationPrincipal UserDetailsImpl userDetails, @RequestPart List<MultipartFile> rehomingImg,
-                                                 @RequestPart RehomingReqDto rehomingDto) {
+    public SuccessResponse create(@AuthenticationPrincipal UserDetailsImpl userDetails,
+                                  @RequestPart List<MultipartFile> rehomingImg,
+                                  @RequestPart RehomingReqDto rehomingDto) {
         RehomingCommand rehomingCommand = rehomingDto.toCommand();
         rehomingService.createRehoming(userDetails.getUser(), rehomingImg, rehomingCommand);
         return SuccessResponse.success("OK");
@@ -42,12 +43,11 @@ public class RehomingController {
     * 2.  분양 글 목록 조회 */
     @GetMapping("")
     public SuccessResponse read(@RequestParam Long pageno, @PageableDefault Pageable pageable) {
-
         return SuccessResponse.success(rehomingService.readRehoming(pageable),"OK");
     }
 
     /*
-    * 2-1. 분양 글 목록 조회 (페이징 처리 전)*/
+    * 2-1. 분양 글 목록 조회 (페이징 처리 전) */
     @GetMapping("/test")
     public SuccessResponse listRehoming() {
         List<RehomingInfo> rehomingInfos = rehomingService.listRehoming();
@@ -57,15 +57,23 @@ public class RehomingController {
     /*
     * 3. 분양 글 상세 조회 */
     @GetMapping("/detail")
-    public SuccessResponse<RehomingResDto> detail(@RequestParam Long postId) {
+    public SuccessResponse detail(@RequestParam Long postId) {
         return SuccessResponse.success(rehomingService.detailRehoming(postId), "OK");
     }
 
     /* 4. 분양 글 수정 */
     @PutMapping("")
-    public ResponseEntity<Long> put(@AuthenticationPrincipal UserDetailsImpl userDetails, @RequestParam Long postId, @RequestBody RehomingReqDto rehomingDto) {
-        return ResponseEntity.status(200).body(rehomingService.putRehoming(userDetails.getUser(), postId, rehomingDto));
+    public SuccessResponse put(@AuthenticationPrincipal UserDetailsImpl userDetails,
+                               @RequestPart List<MultipartFile> rehomingImg,
+                               @RequestParam Long postId, @RequestPart RehomingReqDto rehomingDto) {
+        RehomingCommand rehomingCommand = rehomingDto.toCommand();
+        return SuccessResponse.success(rehomingService.putRehoming(userDetails.getUser(), postId, rehomingCommand, rehomingImg), "OK");
     }
 
-    /* 5. 분양 글 삭제*/
+    /* 5. 분양 글 삭제 */
+    @DeleteMapping("")
+    public SuccessResponse delete(@AuthenticationPrincipal UserDetailsImpl userDetails, @RequestParam Long postId) {
+        rehomingService.deleteRehoming(userDetails.getUser(), postId);
+        return SuccessResponse.success("OK");
+    }
 }
