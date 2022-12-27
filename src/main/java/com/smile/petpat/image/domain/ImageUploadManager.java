@@ -1,7 +1,5 @@
 package com.smile.petpat.image.domain;
 
-import com.amazonaws.services.s3.AmazonS3;
-import com.smile.petpat.image.repository.ImageRepository;
 import com.smile.petpat.post.category.domain.PostType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -26,7 +24,7 @@ public class ImageUploadManager {
     }
 
     /* 게시글 이미지 등록 */
-    public List<String> uploadPostImage(List<MultipartFile> multipartFiles,Long postId, PostType postType ){
+    public List<String> uploadPostImage(List<MultipartFile> multipartFiles, Long postId, PostType postType){
         List<Image> imageList = new ArrayList<>();
         multipartFiles.forEach(file ->{
             String fakeFileName = imageUtils.createFileName(file.getOriginalFilename());
@@ -37,13 +35,13 @@ public class ImageUploadManager {
         });
 
         return imageUploader.savePostImage(imageList).stream()
-                .map(image -> image.getFilePath())
-                .collect(Collectors.toCollection(ArrayList :: new));
+                .map(Image::getFilePath)
+                .collect(Collectors.toCollection(ArrayList::new));
     }
 
     // 이미지 파일 수정
     @Transactional
-    public List<String> updateFile(List<MultipartFile> multipartFiles, Long postId, PostType postType) {
+    public List<String> updateImage(List<MultipartFile> multipartFiles, Long postId, PostType postType) {
         List<String> fakeFiles = imageUploader.createKey(postId, postType);
         for (String fakeFile :fakeFiles) {
             imageUtils.getFileExtension(fakeFile);
@@ -60,8 +58,4 @@ public class ImageUploadManager {
         imageUploader.deleteImg(postId, postType);
 
     }
-
-
-
-
 }

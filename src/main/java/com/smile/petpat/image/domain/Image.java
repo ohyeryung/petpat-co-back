@@ -24,21 +24,21 @@ public class Image {
     @Column(name = "FILE_PATH")
     private String filePath;
 
+    @Column(name = "POST_ID")
+    private Long postId;
+
     @Column(name = "POST_TYPE")
     @Enumerated(EnumType.STRING)
     private PostType postType;
 
-    @Column(name = "POST_ID")
-    private Long postId;
-
     public Image() {
     }
 
-    public Image(String originalFileName, String fakeFileName, String filePath,Long postId, PostType postType) {
+    public Image(String originalFileName, String fakeFileName, String filePath, Long postId, PostType postType) {
         this.originalFileName = originalFileName;
         this.fakeFileName = fakeFileName;
         this.filePath = filePath;
-        this.postType = postType;
         this.postId = postId;
+        this.postType = postType;
     }
 }

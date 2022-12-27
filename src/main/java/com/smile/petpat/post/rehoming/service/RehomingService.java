@@ -2,13 +2,11 @@ package com.smile.petpat.post.rehoming.service;
 
 import com.smile.petpat.image.domain.ImageUploadManager;
 import com.smile.petpat.image.domain.ImageUploader;
-import com.smile.petpat.image.domain.S3Uploader;
 import com.smile.petpat.post.category.domain.PostType;
 import com.smile.petpat.post.rehoming.domain.*;
 import com.smile.petpat.post.rehoming.dto.RehomingPagingDto;
 import com.smile.petpat.post.rehoming.dto.RehomingResDto;
 import com.smile.petpat.post.rehoming.repository.RehomingRepository;
-import com.smile.petpat.tag.service.TagService;
 import com.smile.petpat.user.domain.User;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -26,9 +24,7 @@ import java.util.stream.Collectors;
 public class RehomingService {
     private final RehomingRepository rehomingRepository;
     private final ImageUploadManager imageUploadManager;
-    private final TagService tagService;
     private final RehomingStore rehomingStore;
-    private final S3Uploader s3Uploader;
     private final RehomingReader rehomingReader;
     private final ImageUploader imageUploader;
 
@@ -57,9 +53,8 @@ public class RehomingService {
     // 2-1. 분양 글 목록 조회
     public List<RehomingInfo> listRehoming() {
         List<Rehoming> listRehoming = rehomingReader.readRehomingList();
-        List<RehomingInfo> rehomingInfos = listRehoming.stream()
+        return listRehoming.stream()
                 .map(RehomingInfo::new).collect(Collectors.toList());
-        return rehomingInfos;
     }
 
     // 3. 분양 글 상세 조회
@@ -85,10 +80,9 @@ public class RehomingService {
         Rehoming rehoming = rehomingStore.update(initRehoming, user.getId(), postId);
 
         // 4-2. 이미지 수정 후 저장
-        imageUploadManager.updateFile(rehomingImg, postId, PostType.REHOMING);
+        imageUploadManager.updateImage(rehomingImg, postId, PostType.REHOMING);
         List<String> imgList = imageUploader.createImgList(postId, PostType.REHOMING);
-        RehomingResDto rehomingInfo = new RehomingResDto(rehoming, imgList);
-        return rehomingInfo;
+        return new RehomingResDto(rehoming, imgList);
     }
 
     // 5. 분양 글 삭제
