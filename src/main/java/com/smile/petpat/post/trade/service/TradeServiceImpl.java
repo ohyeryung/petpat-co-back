@@ -36,7 +36,7 @@ public class TradeServiceImpl implements TradeService{
 
     }
 
-    // 추후 querydsl로 변경예정 
+    // 추후 querydsl로 변경예정
     @Override
     public List<TradeInfo> listTrade() {
         List<Trade> listTrade = tradeReader.readTradeList();
