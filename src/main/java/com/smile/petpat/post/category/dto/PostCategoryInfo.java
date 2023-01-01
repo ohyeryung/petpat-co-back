@@ -53,7 +53,7 @@ public class PostCategoryInfo {
 
         public TradeCategoryDetailRes(TradeCategoryDetail tradeCategoryDetail){
             this.tradeCategoryDetailId = tradeCategoryDetail.getTradeCategoryDetailId();
-            this.tradeCategoryDetailName = tradeCategoryDetail.getTradeCategoryName();
+            this.tradeCategoryDetailName = tradeCategoryDetail.getTradeCategoryDetailName();
         }
     }
 

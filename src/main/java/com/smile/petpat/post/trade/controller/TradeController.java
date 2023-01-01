@@ -25,12 +25,12 @@ public class TradeController {
     private final TradeServiceImpl tradeService;
 
     /**
-     * 분양게시물 등록
+     * 중고거래 게시물 등록
      * @return 성공 시 200 Success 반환
      */
-    @ApiOperation(value = "분양게시물 등록", notes = "분양게시물 등록")
+    @ApiOperation(value = "중고거래 게시물 등록", notes = "중고거래 게시물 등록")
     @RequestMapping(value = "",method = RequestMethod.POST)
-    public SuccessResponse registerTrade(@RequestBody @Valid TradeDto.CommonTrade tradeDto,
+    public SuccessResponse registerTrade(@ModelAttribute @Valid TradeDto.CommonTrade tradeDto,
                                          @AuthenticationPrincipal UserDetailsImpl userDetails
     ){
         TradeCommand tradeCommand = tradeDto.toCommand();
@@ -39,33 +39,44 @@ public class TradeController {
     }
 
     /**
-     * 분양게시물 목록 조회
+     * 중고거래 게시물 목록 조회
      * @return 성공 시 200 Success 와 함께 분양게시물 목록 반환
      */
-    @ApiOperation(value = "분양게시물 목록 조회", notes = "분양 게시물 목록 조회")
+    @ApiOperation(value = "중고거래 게시물 목록 조회", notes = "중고거래 게시물 목록 조회")
     @RequestMapping(value = "",method = RequestMethod.GET)
     public SuccessResponse listTrade(){
        return SuccessResponse.success(tradeService.listTrade(),"ok");
     }
+
     /**
-     * 분양게시물 수정
-     * @return 성공 시 200 Success 와 함께 수정한 분양게시물  반환
+     * 중고거래 게시물 상세 조회
+     * @return 성공 시 200 Success 와 함께 분양게시물 상세 반환
      */
-    @ApiOperation(value = "분양게시물 수정", notes = "분양 게시물 수정")
+    @ApiOperation(value = "중고거래 게시물 상세조회", notes = "중고거래 게시물 상세조회")
+    @RequestMapping(value = "/{tradeId}",method = RequestMethod.GET)
+    public SuccessResponse detailTrade(@PathVariable Long tradeId){
+       return  SuccessResponse.success(tradeService.tradeDetail(tradeId),"ok");
+    }
+
+    /**
+     * 중고거래 게시물 수정
+     * @return 성공 시 200 Success 와 함께 수정한 분양게시물 반환
+     */
+    @ApiOperation(value = "중고거래 게시물 수정", notes = "중고거래 게시물 수정")
     @RequestMapping(value = "/{postId}",method = RequestMethod.PUT)
-    public SuccessResponse updateTrade(@RequestBody TradeDto.CommonTrade updateTrade,
+    public SuccessResponse updateTrade(@RequestBody TradeDto.CommonTrade tradeDto,
                                        @AuthenticationPrincipal UserDetailsImpl userDetails,
                                        @PathVariable Long postId
     ){
-        TradeCommand tradeCommand = updateTrade.toCommand();
+        TradeCommand tradeCommand = tradeDto.toCommand();
         return SuccessResponse.success(tradeService.updateTrade(tradeCommand,userDetails.getUser(),postId));
     }
 
     /**
-     * 분양게시물  삭제
+     * 중고거래 게시물  삭제
      * @return 성공 시 200 Success 반환
      */
-    @ApiOperation(value = "분양게시물 삭제", notes = "분양 게시물 삭제")
+    @ApiOperation(value = "중고거래 게시물 삭제", notes = "중고거래 게시물 삭제")
     @RequestMapping(value = "/{tradeId}",method = RequestMethod.DELETE)
     public SuccessResponse deleteTrade(@PathVariable Long tradeId,
                                        @AuthenticationPrincipal UserDetailsImpl userDetails
@@ -73,4 +84,5 @@ public class TradeController {
         tradeService.deleteTrade(tradeId,userDetails.getUser());
         return SuccessResponse.success("ok");
     }
+
 }

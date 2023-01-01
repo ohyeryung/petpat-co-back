@@ -1,5 +1,6 @@
 package com.smile.petpat.post.trade.service;
 
+import com.smile.petpat.post.category.repository.TradeCategoryDetailRepository;
 import com.smile.petpat.post.trade.domain.Trade;
 import com.smile.petpat.post.trade.domain.TradeReader;
 import com.smile.petpat.post.trade.domain.TradeStore;
@@ -16,6 +17,7 @@ public class TradeStoreImpl implements TradeStore {
 
     private final TradeRepository tradeRepository;
     private final TradeReaderImpl  tradeReader;
+
 
     @Override
     public Trade store(Trade trade) {

@@ -15,4 +15,6 @@ public interface TradeService{
     void deleteTrade(Long tradeId,User user);
 
     TradeInfo updateTrade(TradeCommand tradeCommand,User user,Long postId);
+
+    TradeInfo tradeDetail(Long tradeId);
 }
