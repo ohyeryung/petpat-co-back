@@ -20,20 +20,17 @@ public class Comment {
     @JoinColumn(referencedColumnName = "USER_ID",name = "USER_ID")
     private User user;
 
-    @ManyToOne
-    @JoinColumn(referencedColumnName = "COMMENT_ID", name = "COMMENT_ID")
-    private Comment comment;
+
     @Column(name = "CONTENT")
     private String content;
 
     public Comment() {
     }
 
-    public Comment(Long commentId, Long parentCommentId, User user, Comment comment, String content) {
+    public Comment(Long commentId, Long parentCommentId, User user, String content) {
         this.commentId = commentId;
         this.parentCommentId = parentCommentId;
         this.user = user;
-        this.comment = comment;
         this.content = content;
     }
 }
