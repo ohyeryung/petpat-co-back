@@ -15,8 +15,8 @@ public class TradeCategoryDetail {
     @Column(name = "TRADE_CATEGORY_DETAIL_ID")
     private Long tradeCategoryDetailId;
 
-    @Column(name = "TRADE_CATEGORY_NAME")
-    private String tradeCategoryName;
+    @Column(name = "TRADE_CATEGORY_DETAIL_NAME")
+    private String tradeCategoryDetailName;
 
     @ManyToOne
     @JoinColumn(referencedColumnName = "TRADE_CATEGORY_ID",name = "TRADE_CATEGORY_ID")
