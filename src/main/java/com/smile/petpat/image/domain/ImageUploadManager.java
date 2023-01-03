@@ -5,7 +5,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -40,12 +39,8 @@ public class ImageUploadManager {
     }
 
     // 이미지 파일 수정
-    @Transactional
     public List<String> updateImage(List<MultipartFile> multipartFiles, Long postId, PostType postType) {
         List<String> fakeFiles = imageUploader.createKey(postId, postType);
-        for (String fakeFile :fakeFiles) {
-            imageUtils.getFileExtension(fakeFile);
-        }
         s3Uploader.deleteS3(fakeFiles,postId, postType);
         imageUploader.deleteImg(postId, postType);
         return uploadPostImage(multipartFiles, postId, postType);
