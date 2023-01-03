@@ -44,8 +44,8 @@ public class Rehoming extends Timestamped {
     @Column(name = "GENDER")
     private String gender;
 
-    @Column(name = "REGION")
-    private String region;
+    @Column(name = "LOCATION")
+    private String location;
 
     @Column(name = "PRICE")
     private Long price;
@@ -61,7 +61,7 @@ public class Rehoming extends Timestamped {
     private int viewCnt;
 
     public Rehoming(Long rehomingId, User user, String title, String description, String petName, String petAge,
-                    String category, String type, String gender, String region, Long price, PostStatus status, PostType postType, int viewCnt) {
+                    String category, String type, String gender, String location, Long price, PostStatus status, PostType postType, int viewCnt) {
         this.rehomingId = rehomingId;
         this.user = user;
         this.title = title;
@@ -71,7 +71,7 @@ public class Rehoming extends Timestamped {
         this.category = category;
         this.type = type;
         this.gender = gender;
-        this.region = region;
+        this.location = location;
         this.price = price;
         this.status = status;
         this.postType = postType;
@@ -81,7 +81,6 @@ public class Rehoming extends Timestamped {
     public Rehoming() {
 
     }
-
 }
 
 

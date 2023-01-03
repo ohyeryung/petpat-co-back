@@ -1,9 +1,6 @@
 package com.smile.petpat.post.category.domain;
 
 
-import org.springframework.expression.spel.ast.Operator;
-
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Map;
 import java.util.function.Function;

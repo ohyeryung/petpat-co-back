@@ -21,7 +21,7 @@ public class RehomingInfo {
     private String category;
     private String type;
     private String gender;
-    private String region;
+    private String location;
     private Long price;
     private PostStatus status;
     private PostType postType;
@@ -45,7 +45,7 @@ public class RehomingInfo {
         this.category = rehoming.getCategory();
         this.type = rehoming.getType();
         this.gender = rehoming.getGender();
-        this.region = rehoming.getRegion();
+        this.location = rehoming.getLocation();
         this.price = rehoming.getPrice();
         this.status = rehoming.getStatus();
         this.postType = rehoming.getPostType();
