@@ -6,11 +6,9 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
 import javax.transaction.Transactional;
-
 public interface RehomingRepository extends JpaRepository<Rehoming, Long> {
-//    Rehoming findByUserId(Long id);
     @Transactional
     @Modifying
-    @Query("update Rehoming r set r.viewCnt = r.viewCnt + 1 where r.rehomingId = :id")
-    int updateViews(Long id);
+    @Query("update Rehoming set viewCnt = viewCnt + 1 where rehomingId = :postId")
+    void updateViews(Long postId);
 }
