@@ -23,7 +23,7 @@ public class RehomingResDto {
     private String category;
     private String type;
     private String gender;
-    private String region;
+    private String location;
     private Long price;
     private PostStatus status;
     private PostType postType;
@@ -37,29 +37,57 @@ public class RehomingResDto {
     private int likeCnt;
     private int bookmarkCnt;
 
-public RehomingResDto(Rehoming rehoming, List<String> rehomingImg) {
-    this.rehomingId = rehoming.getRehomingId();
-    this.userId = rehoming.getUser().getId();
-    this.nickname = rehoming.getUser().getNickname();
-    this.title = rehoming.getTitle();
-    this.description = rehoming.getDescription();
-    this.petName = rehoming.getPetName();
-    this.petAge = rehoming.getPetAge();
-    this.category = rehoming.getCategory();
-    this.type = rehoming.getType();
-    this.gender = rehoming.getGender();
-    this.region = rehoming.getRegion();
-    this.price = rehoming.getPrice();
-    this.status = rehoming.getStatus();
-    this.rehomingImg = rehomingImg;
-    // this.tagList = tagList;
-    this.postType = rehoming.getPostType();
-    this.createdAt = rehoming.getCreatedAt();
-    this.updatedAt = rehoming.getUpdatedAt();
-    this.isLiked = false;
-    this.isBookmarked = false;
-    this.viewCnt = rehoming.getViewCnt();
-    this.likeCnt = 0;
-    this.bookmarkCnt = 0;
-}
+    // 회원 조회 시
+    public RehomingResDto(Rehoming rehoming, List<String> rehomingImg, boolean isLiked, boolean isBookmarked, int likeCnt, int bookmarkCnt) {
+        this.rehomingId = rehoming.getRehomingId();
+        this.userId = rehoming.getUser().getId();
+        this.nickname = rehoming.getUser().getNickname();
+        this.title = rehoming.getTitle();
+        this.description = rehoming.getDescription();
+        this.petName = rehoming.getPetName();
+        this.petAge = rehoming.getPetAge();
+        this.category = rehoming.getCategory();
+        this.type = rehoming.getType();
+        this.gender = rehoming.getGender();
+        this.location = rehoming.getLocation();
+        this.price = rehoming.getPrice();
+        this.status = rehoming.getStatus();
+        this.rehomingImg = rehomingImg;
+        // this.tagList = tagList;
+        this.postType = rehoming.getPostType();
+        this.createdAt = rehoming.getCreatedAt();
+        this.updatedAt = rehoming.getUpdatedAt();
+        this.isLiked = isLiked;
+        this.isBookmarked = isBookmarked;
+        this.viewCnt = rehoming.getViewCnt();
+        this.likeCnt = likeCnt;
+        this.bookmarkCnt = bookmarkCnt;
+    }
+
+    // 비회원 조회 시
+    public RehomingResDto(Rehoming rehoming, List<String> rehomingImg) {
+        this.rehomingId = rehoming.getRehomingId();
+        this.userId = rehoming.getUser().getId();
+        this.nickname = rehoming.getUser().getNickname();
+        this.title = rehoming.getTitle();
+        this.description = rehoming.getDescription();
+        this.petName = rehoming.getPetName();
+        this.petAge = rehoming.getPetAge();
+        this.category = rehoming.getCategory();
+        this.type = rehoming.getType();
+        this.gender = rehoming.getGender();
+        this.location = rehoming.getLocation();
+        this.price = rehoming.getPrice();
+        this.status = rehoming.getStatus();
+        this.rehomingImg = rehomingImg;
+        // this.tagList = tagList;
+        this.postType = rehoming.getPostType();
+        this.createdAt = rehoming.getCreatedAt();
+        this.updatedAt = rehoming.getUpdatedAt();
+        this.isLiked = false;
+        this.isBookmarked = false;
+        this.viewCnt = rehoming.getViewCnt();
+        this.likeCnt = 0;
+        this.bookmarkCnt = 0;
+    }
 }

@@ -24,7 +24,7 @@ public class RehomingCommand {
     private String category;
     private String type;
     private String gender;
-    private String region;
+    private String location;
     private Long price;
 
 //    private List<String> tagList;
@@ -43,7 +43,7 @@ public class RehomingCommand {
                 .category(category)
                 .type(type)
                 .gender(gender)
-                .region(region)
+                .location(location)
                 .price(price)
                 .status(PostStatus.REHOMING_FINDING)
                 .postType(PostType.REHOMING)
@@ -62,7 +62,7 @@ public class RehomingCommand {
                 .category(category)
                 .type(type)
                 .gender(gender)
-                .region(region)
+                .location(location)
                 .price(price)
                 .status(PostStatus.REHOMING_FINDING)
                 .postType(PostType.REHOMING)

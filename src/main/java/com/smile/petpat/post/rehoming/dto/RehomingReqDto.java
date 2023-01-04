@@ -20,12 +20,12 @@ public class RehomingReqDto {
     private String category;
     private String type;
     private String gender;
-    private String region;
+    private String location;
     private Long price;
     private List<String> filePath;
     private List<String> tagList;
 
-    public RehomingReqDto(String title, String description, String petName, String petAge, String category, String type, String gender, String region, Long price, List<String> filePath, List<String> tagList) {
+    public RehomingReqDto(String title, String description, String petName, String petAge, String category, String type, String gender, String location, Long price, List<String> filePath, List<String> tagList) {
         this.title = title;
         this.description = description;
         this.petName = petName;
@@ -33,7 +33,7 @@ public class RehomingReqDto {
         this.category = category;
         this.type = type;
         this.gender = gender;
-        this.region = region;
+        this.location = location;
         this.price = price;
         this.filePath = filePath;
         this.tagList = tagList;
@@ -47,7 +47,7 @@ public class RehomingReqDto {
                 .category(category)
                 .type(type)
                 .gender(gender)
-                .region(region)
+                .location(location)
                 .price(price)
                 .build();
     }
