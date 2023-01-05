@@ -9,8 +9,6 @@ import com.smile.petpat.user.service.UserDetailsImpl;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -28,25 +26,18 @@ public class RehomingController {
     * 1. 분양 글 등록 */
     @ApiOperation(value = "분양게시글 등록", notes = "분양게시글 등록")
     @RequestMapping(value = "",method = RequestMethod.POST)
-    public SuccessResponse create(@AuthenticationPrincipal UserDetailsImpl userDetails,
+    public SuccessResponse registerRehoming(@AuthenticationPrincipal UserDetailsImpl userDetails,
                                   @RequestPart List<MultipartFile> rehomingImg,
                                   @RequestPart RehomingReqDto rehomingDto) {
         RehomingCommand rehomingCommand = rehomingDto.toCommand();
-        rehomingService.createRehoming(userDetails.getUser(), rehomingImg, rehomingCommand);
+        rehomingService.registerRehoming(userDetails.getUser(), rehomingImg, rehomingCommand);
         return SuccessResponse.success("OK");
     }
 
     /*
-    * 2.  분양 글 목록 조회 */
-    @ApiOperation(value = "분양게시글 조회", notes = "분양게시글 조회")
-    @RequestMapping(value = "",method = RequestMethod.GET)
-    public SuccessResponse read(@RequestParam Long pageno, @PageableDefault Pageable pageable) {
-        return SuccessResponse.success(rehomingService.readRehoming(pageable),"OK");
-    }
-
-    /*
-    * 2-1. 분양 글 목록 조회 (페이징 처리 전) */
-    @GetMapping("/test")
+    * 2. 분양 글 목록 조회 (페이징 처리 전) */
+    @ApiOperation(value = "분양게시글 목록 조회", notes = "분양게시글 목록 조회")
+    @RequestMapping(value = "", method = RequestMethod.GET)
     public SuccessResponse listRehoming() {
         List<RehomingInfo> rehomingInfos = rehomingService.listRehoming();
         return SuccessResponse.success(rehomingInfos, "OK");
@@ -56,24 +47,24 @@ public class RehomingController {
     * 3. 분양 글 상세 조회 */
     @ApiOperation(value = "분양게시글 상세 조회", notes = "분양게시글 상세 조회")
     @RequestMapping(value = "/detail", method = RequestMethod.GET)
-    public SuccessResponse detail(@RequestParam Long postId) {
+    public SuccessResponse detailRehoming(@RequestParam Long postId) {
         return SuccessResponse.success(rehomingService.detailRehoming(postId), "OK");
     }
 
     /* 4. 분양 글 수정 */
     @ApiOperation(value = "분양게시물 수정", notes = "분양 게시물 수정")
     @RequestMapping(value = "",method = RequestMethod.PUT)
-    public SuccessResponse put(@AuthenticationPrincipal UserDetailsImpl userDetails,
+    public SuccessResponse updateRehoming(@AuthenticationPrincipal UserDetailsImpl userDetails,
                                @RequestPart List<MultipartFile> rehomingImg,
                                @RequestParam Long postId, @RequestPart RehomingReqDto rehomingDto) {
         RehomingCommand rehomingCommand = rehomingDto.toCommand();
-        return SuccessResponse.success(rehomingService.putRehoming(userDetails.getUser(), postId, rehomingCommand, rehomingImg), "OK");
+        return SuccessResponse.success(rehomingService.updateRehoming(userDetails.getUser(), postId, rehomingCommand, rehomingImg), "OK");
     }
 
     /* 5. 분양 글 삭제 */
     @ApiOperation(value = "분양게시물 삭제", notes = "분양 게시물 삭제")
     @RequestMapping(value = "",method = RequestMethod.DELETE)
-    public SuccessResponse delete(@AuthenticationPrincipal UserDetailsImpl userDetails, @RequestParam Long postId) {
+    public SuccessResponse deleteRehoming(@AuthenticationPrincipal UserDetailsImpl userDetails, @RequestParam Long postId) {
         rehomingService.deleteRehoming(userDetails.getUser(), postId);
         return SuccessResponse.success("OK");
     }

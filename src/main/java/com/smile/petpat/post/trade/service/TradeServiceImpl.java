@@ -4,6 +4,7 @@ import com.smile.petpat.image.domain.ImageUploadManager;
 import com.smile.petpat.image.domain.ImageUploader;
 import com.smile.petpat.post.category.domain.PostType;
 import com.smile.petpat.post.category.domain.TradeCategoryDetail;
+import com.smile.petpat.post.common.views.ViewsServiceImpl;
 import com.smile.petpat.post.trade.domain.*;
 import com.smile.petpat.user.domain.User;
 import lombok.RequiredArgsConstructor;
@@ -23,6 +24,7 @@ public class TradeServiceImpl implements TradeService{
     private final TradeReader tradeReader;
     private final ImageUploadManager imageUploadManager;
     private final ImageUploader imageUploader;
+    private final ViewsServiceImpl viewsService;
 
     @Override
     @Transactional
@@ -46,6 +48,8 @@ public class TradeServiceImpl implements TradeService{
 
     @Override
     public TradeInfo tradeDetail(Long tradeId) {
+        // 조회수 계산
+        viewsService.updateViewCnt(tradeId, PostType.TRADE);
         List<String> imgList = imageUploader.createImgList(tradeId, PostType.TRADE);
         Trade trade = tradeReader.readTradeById(tradeId);
         return new TradeInfo(trade,imgList);

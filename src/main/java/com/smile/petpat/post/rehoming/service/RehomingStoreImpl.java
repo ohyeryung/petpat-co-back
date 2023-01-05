@@ -23,14 +23,8 @@ public class RehomingStoreImpl implements RehomingStore {
     /* 2. 분양 게시글 수정 */
     @Override
     public Rehoming update(Rehoming rehoming, Long userId, Long postId) {
-        log.info("3. StoreImpl Class 에서 게시글 작성 시간 = " + rehoming.getCreatedAt());
-        log.info("4. StoreImpl Class 단에서 게시글 수정 시간 = " + rehoming.getUpdatedAt());
         rehomingReader.userChk(userId, postId);
-        Rehoming newRehoming = rehomingRepository.save(rehoming);
-
-        log.info("5. StoreImpl Class 에서 게시글 작성 시간 = " + newRehoming.getCreatedAt());
-        log.info("6. StoreImpl Class 단에서 게시글 수정 시간 = " + newRehoming.getUpdatedAt());
-        return newRehoming;
+        return rehomingRepository.save(rehoming);
     }
 
     /* 3. 분양 게시글 삭제 */

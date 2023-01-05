@@ -1,5 +1,6 @@
 package com.smile.petpat.post.trade.domain;
 
+import com.smile.petpat.config.comm.Timestamped;
 import com.smile.petpat.post.category.domain.PostType;
 import com.smile.petpat.post.category.domain.TradeCategoryDetail;
 import com.smile.petpat.user.domain.User;
@@ -12,7 +13,7 @@ import javax.persistence.*;
 @Getter
 @Table(name = "TB_TRADE")
 @Builder
-public class Trade {
+public class Trade extends Timestamped {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -39,6 +40,9 @@ public class Trade {
     @Enumerated(EnumType.STRING)
     private PostType postType;
 
+    @Column(name = "VIEW_CNT")
+    private int viewCnt;
+
     @ManyToOne
     @JoinColumn(referencedColumnName = "",name = "TRADE_CATEGORY_DETAIL")
     private TradeCategoryDetail tradeCategoryDetail;
@@ -46,7 +50,7 @@ public class Trade {
     public Trade() {
     }
 
-    public Trade(Long tradeId, User user, String title, String content, Long price, String location, PostType postType, TradeCategoryDetail tradeCategoryDetail
+    public Trade(Long tradeId, User user, String title, String content, Long price, String location, PostType postType, int viewCnt, TradeCategoryDetail tradeCategoryDetail
     ) {
         this.tradeId = tradeId;
         this.user = user;
@@ -55,10 +59,11 @@ public class Trade {
         this.price = price;
         this.location = location;
         this.postType = PostType.TRADE;
+        this.viewCnt = viewCnt;
         this.tradeCategoryDetail = tradeCategoryDetail;
     }
 
-    public Trade(Long tradeId, User user, String title, String content, Long price, String location, TradeCategoryDetail tradeCategoryDetail
+    public Trade(Long tradeId, User user, String title, String content, Long price, String location, int viewCnt, TradeCategoryDetail tradeCategoryDetail
     ) {
         this.tradeId = tradeId;
         this.user = user;
@@ -67,6 +72,7 @@ public class Trade {
         this.price = price;
         this.location = location;
         this.postType = PostType.TRADE;
+        this.viewCnt = viewCnt;
         this.tradeCategoryDetail = tradeCategoryDetail;
     }
 

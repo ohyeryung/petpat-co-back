@@ -3,14 +3,12 @@ package com.smile.petpat.post.rehoming.service;
 import com.smile.petpat.image.domain.ImageUploadManager;
 import com.smile.petpat.image.domain.ImageUploader;
 import com.smile.petpat.post.category.domain.PostType;
+import com.smile.petpat.post.common.views.ViewsServiceImpl;
 import com.smile.petpat.post.rehoming.domain.*;
-import com.smile.petpat.post.rehoming.dto.RehomingPagingDto;
 import com.smile.petpat.post.rehoming.dto.RehomingResDto;
-import com.smile.petpat.post.rehoming.repository.RehomingRepository;
 import com.smile.petpat.user.domain.User;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -22,15 +20,15 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 @Service
 public class RehomingService {
-    private final RehomingRepository rehomingRepository;
     private final ImageUploadManager imageUploadManager;
     private final RehomingStore rehomingStore;
     private final RehomingReader rehomingReader;
     private final ImageUploader imageUploader;
+    private final ViewsServiceImpl viewsService;
 
     // 1. 분양 글 등록
     @Transactional
-    public void createRehoming(User user, List<MultipartFile> rehomingImg, RehomingCommand rehomingCommand) {
+    public void registerRehoming(User user, List<MultipartFile> rehomingImg, RehomingCommand rehomingCommand) {
 
         // 1-1. 게시물 등록
         Rehoming initRehoming = rehomingCommand.toRegisterEntity(user);
@@ -43,14 +41,6 @@ public class RehomingService {
     }
 
     // 2. 분양 글 목록 조회
-    @Transactional
-    public RehomingPagingDto readRehoming(Pageable pageable) {
-
-        List<Rehoming> rehoming = rehomingRepository.findAll();
-        return new RehomingPagingDto(rehoming);
-    }
-
-    // 2-1. 분양 글 목록 조회
     public List<RehomingInfo> listRehoming() {
         List<Rehoming> listRehoming = rehomingReader.readRehomingList();
         return listRehoming.stream()
@@ -60,11 +50,10 @@ public class RehomingService {
     // 3. 분양 글 상세 조회
     @Transactional
     public RehomingResDto detailRehoming(Long postId) {
+        // 조회수 계산
+        viewsService.updateViewCnt(postId, PostType.REHOMING);
         Rehoming rehoming = rehomingReader.readRehomingById(postId);
         List<String> imgList = imageUploader.createImgList(postId, PostType.REHOMING);
-        // 조회수 카운트 하는 method 들어갈 자리
-        /*
-        * TODO : count method 추가 + boolean 값 처리 방안 고안 */
         return new RehomingResDto(rehoming, imgList);
     }
 
@@ -73,7 +62,7 @@ public class RehomingService {
     * TODO : 수정 시 게시글 생성시간 null 로 변경되는 현상 (수정 필요)
     *  */
     @Transactional
-    public RehomingResDto putRehoming(User user, Long postId, RehomingCommand rehomingCommand, List<MultipartFile> rehomingImg) {
+    public RehomingResDto updateRehoming(User user, Long postId, RehomingCommand rehomingCommand, List<MultipartFile> rehomingImg) {
 
         // 4-1. 게시글 수정 후 저장
         Rehoming initRehoming = rehomingCommand.toUpdateEntity(user, postId);

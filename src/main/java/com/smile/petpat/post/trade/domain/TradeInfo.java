@@ -1,8 +1,6 @@
 package com.smile.petpat.post.trade.domain;
 
-import com.smile.petpat.image.domain.Image;
 import com.smile.petpat.post.category.domain.PostType;
-import com.smile.petpat.post.category.domain.TradeCategoryDetail;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -20,10 +18,11 @@ public class TradeInfo {
     private List<String> imageList;
     private String location;
     private PostType postType;
+    private int viewCnt;
     private String tradeCategoryDetailName;
 
 
-    public TradeInfo(Long tradeId, Long userId, String title, String content, Long price, List<String> imageList, String location, PostType postType, String tradeCategoryDetailName) {
+    public TradeInfo(Long tradeId, Long userId, String title, String content, Long price, List<String> imageList, String location, PostType postType, int viewCnt, String tradeCategoryDetailName) {
         this.tradeId = tradeId;
         this.userId = userId;
         this.title = title;
@@ -32,6 +31,7 @@ public class TradeInfo {
         this.imageList = imageList;
         this.location = location;
         this.postType = postType;
+        this.viewCnt = viewCnt;
         this.tradeCategoryDetailName = tradeCategoryDetailName;
     }
 
@@ -44,6 +44,7 @@ public class TradeInfo {
         this.location = trade.getLocation();
         this.imageList = imageList;
         this.postType = trade.getPostType();
+        this.viewCnt = trade.getViewCnt();
         this.tradeCategoryDetailName = trade.getTradeCategoryDetail().getTradeCategoryDetailName();
     }
 
@@ -55,6 +56,7 @@ public class TradeInfo {
         this.price = trade.getPrice();
         this.location = trade.getLocation();
         this.postType = trade.getPostType();
+        this.viewCnt = trade.getViewCnt();
         this.tradeCategoryDetailName = trade.getTradeCategoryDetail().getTradeCategoryDetailName();
     }
 
