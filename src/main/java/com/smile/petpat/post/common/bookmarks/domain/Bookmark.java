@@ -1,4 +1,4 @@
-package com.smile.petpat.post.common.likes.domain;
+package com.smile.petpat.post.common.bookmarks.domain;
 
 import com.smile.petpat.post.category.domain.PostType;
 import com.smile.petpat.user.domain.User;
@@ -6,13 +6,13 @@ import com.smile.petpat.user.domain.User;
 import javax.persistence.*;
 
 @Table
-@Entity(name = "TB_LIKES")
-public class Likes {
+@Entity(name = "TB_BOOKMARK")
+public class Bookmark {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "LIKE_ID")
-    private Long likeId;
+    @Column(name = "BOOKMARK_ID")
+    private Long bookmarkId;
 
     @Column(name = "POST_TYPE")
     @Enumerated(EnumType.STRING)
@@ -25,13 +25,14 @@ public class Likes {
     @JoinColumn(name = "USER_ID", referencedColumnName = "USER_ID")
     private User user;
 
-    public Likes(){
+    public Bookmark(){
 
     }
 
-    public Likes(PostType postType, Long postId, User user) {
+    public Bookmark(PostType postType, Long postId, User user) {
         this.postType = postType;
         this.postId = postId;
         this.user = user;
     }
 }
+

@@ -3,18 +3,15 @@ package com.smile.petpat.post.trade.controller;
 import com.smile.petpat.common.response.SuccessResponse;
 import com.smile.petpat.post.trade.domain.TradeCommand;
 import com.smile.petpat.post.trade.domain.TradeDto;
-import com.smile.petpat.post.trade.domain.TradeInfo;
 import com.smile.petpat.post.trade.service.TradeServiceImpl;
 import com.smile.petpat.user.service.UserDetailsImpl;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.List;
 
 @Api(tags = {"post_trade_api"})
 @RestController
@@ -54,8 +51,12 @@ public class TradeController {
      */
     @ApiOperation(value = "중고거래 게시물 상세조회", notes = "중고거래 게시물 상세조회")
     @RequestMapping(value = "/{tradeId}",method = RequestMethod.GET)
-    public SuccessResponse detailTrade(@PathVariable Long tradeId){
-       return  SuccessResponse.success(tradeService.tradeDetail(tradeId),"ok");
+    public SuccessResponse detailTrade(@PathVariable Long tradeId, @AuthenticationPrincipal UserDetailsImpl userDetails){
+        if (userDetails == null) {
+            return SuccessResponse.success(tradeService.tradeDetail(tradeId),"ok");
+        } else {
+            return SuccessResponse.success(tradeService.tradeDetailforUser(tradeId, userDetails.getUser()),"ok");
+        }
     }
 
     /**

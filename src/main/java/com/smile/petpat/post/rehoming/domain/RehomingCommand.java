@@ -56,7 +56,6 @@ public class RehomingCommand {
                 .user(user)
                 .title(title)
                 .description(description)
-                .viewCnt(viewCnt)
                 .petName(petName)
                 .petAge(petAge)
                 .category(category)
