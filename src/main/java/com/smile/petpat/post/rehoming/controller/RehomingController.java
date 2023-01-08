@@ -4,7 +4,7 @@ import com.smile.petpat.common.response.SuccessResponse;
 import com.smile.petpat.post.rehoming.domain.RehomingCommand;
 import com.smile.petpat.post.rehoming.domain.RehomingInfo;
 import com.smile.petpat.post.rehoming.dto.RehomingReqDto;
-import com.smile.petpat.post.rehoming.service.RehomingService;
+import com.smile.petpat.post.rehoming.service.RehomingServiceImpl;
 import com.smile.petpat.user.service.UserDetailsImpl;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -20,7 +20,7 @@ import java.util.List;
 @RequestMapping("/api/v1/rehoming")
 public class RehomingController {
 
-    private final RehomingService rehomingService;
+    private final RehomingServiceImpl rehomingService;
 
     /*
     * 1. 분양 글 등록 */
@@ -44,11 +44,14 @@ public class RehomingController {
     }
 
     /*
-    * 3. 분양 글 상세 조회 */
+     * 3. 분양 글 상세 조회 */
     @ApiOperation(value = "분양게시글 상세 조회", notes = "분양게시글 상세 조회")
     @RequestMapping(value = "/detail", method = RequestMethod.GET)
-    public SuccessResponse detailRehoming(@RequestParam Long postId) {
-        return SuccessResponse.success(rehomingService.detailRehoming(postId), "OK");
+    public SuccessResponse detail(@RequestParam Long postId, @AuthenticationPrincipal UserDetailsImpl userDetails) {
+        if (userDetails == null) {
+            return SuccessResponse.success(rehomingService.detailRehoming(postId), "OK");
+        }
+        return SuccessResponse.success(rehomingService.detailRehomingForMember(postId, userDetails.getUser()), "OK");
     }
 
     /* 4. 분양 글 수정 */
