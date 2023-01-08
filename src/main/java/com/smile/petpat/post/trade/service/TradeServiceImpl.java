@@ -4,6 +4,9 @@ import com.smile.petpat.image.domain.ImageUploadManager;
 import com.smile.petpat.image.domain.ImageUploader;
 import com.smile.petpat.post.category.domain.PostType;
 import com.smile.petpat.post.category.domain.TradeCategoryDetail;
+import com.smile.petpat.post.common.CommonUtils;
+import com.smile.petpat.post.common.bookmarks.repository.BookmarkRepository;
+import com.smile.petpat.post.common.likes.repository.LikesRepository;
 import com.smile.petpat.post.common.views.ViewsServiceImpl;
 import com.smile.petpat.post.trade.domain.*;
 import com.smile.petpat.user.domain.User;
@@ -25,6 +28,9 @@ public class TradeServiceImpl implements TradeService{
     private final ImageUploadManager imageUploadManager;
     private final ImageUploader imageUploader;
     private final ViewsServiceImpl viewsService;
+    private final CommonUtils commonUtils;
+    private final LikesRepository likesRepository;
+    private final BookmarkRepository bookmarkRepository;
 
     @Override
     @Transactional
@@ -56,14 +62,21 @@ public class TradeServiceImpl implements TradeService{
     }
 
     @Override
+    public TradeInfo tradeDetailforUser(Long tradeId, User user) {
+        // 조회수 계산
+        viewsService.updateViewCnt(tradeId, PostType.TRADE);
+        Trade trade = tradeReader.readTradeById(tradeId);
+        return getTradeInfo(tradeId, user, trade);
+
+    }
+
+    @Override
     @Transactional
     public TradeInfo updateTrade(TradeCommand tradeCommand, User user,Long tradeId) {
         TradeCategoryDetail categoryDetail = tradeReader.readTradeCategoryDetailById(tradeCommand.getTradeCategoryDetailId());
         Trade initTrade = tradeCommand.toUpdateEntity(user,tradeId,categoryDetail);
         Trade trade = tradeStore.update(initTrade,user.getId(),tradeId);
-        List<String> imageList = imageUploadManager.updateImage(tradeCommand.getImages(), trade.getTradeId(), PostType.TRADE);
-        TradeInfo tradeInfo = new TradeInfo(trade,imageList);
-        return tradeInfo;
+        return getTradeInfo(tradeId, user, trade);
     }
 
     @Override
@@ -75,6 +88,12 @@ public class TradeServiceImpl implements TradeService{
         imageUploadManager.removePostImage(tradeId, PostType.TRADE);
     }
 
-
-
+    private TradeInfo getTradeInfo(Long tradeId, User user, Trade trade) {
+        List<String> imgList = imageUploader.createImgList(tradeId, PostType.TRADE);
+        int bookmarkCnt = bookmarkRepository.findByPostIdAndPostType(tradeId, PostType.TRADE).size();
+        int likeCnt = likesRepository.findByPostIdAndPostType(tradeId, PostType.TRADE).size();
+        return new TradeInfo(trade, imgList, bookmarkCnt, likeCnt,
+                commonUtils.BookmarkPostChk(tradeId, PostType.TRADE, user),
+                commonUtils.LikePostChk(tradeId, PostType.TRADE, user));
+    }
 }
