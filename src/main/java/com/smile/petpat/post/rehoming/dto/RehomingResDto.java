@@ -63,7 +63,7 @@ public class RehomingResDto {
     }
 
     // 비회원 조회 시
-    public RehomingResDto(Rehoming rehoming, List<String> rehomingImg) {
+    public RehomingResDto(Rehoming rehoming, List<String> rehomingImg, Long likeCnt, Long bookmarkCnt) {
         this.rehomingId = rehoming.getRehomingId();
         this.userId = rehoming.getUser().getId();
         this.nickname = rehoming.getUser().getNickname();
@@ -84,7 +84,7 @@ public class RehomingResDto {
         this.isLiked = false;
         this.isBookmarked = false;
         this.viewCnt = rehoming.getViewCnt();
-        this.likeCnt = 0L;
-        this.bookmarkCnt = 0L;
+        this.likeCnt = likeCnt;
+        this.bookmarkCnt = bookmarkCnt;
     }
 }

@@ -83,7 +83,9 @@ public class RehomingServiceImpl implements RehomingService{
         viewsService.updateViewCnt(postId, PostType.REHOMING);
         Rehoming rehoming = rehomingReader.readRehomingById(postId);
         List<String> imgList = imageUploader.createImgList(postId, PostType.REHOMING);
-        return new RehomingResDto(rehoming, imgList);
+        return new RehomingResDto(rehoming, imgList,
+                commonUtils.getLikesCnt(postId, PostType.REHOMING),
+                commonUtils.getBookmarkCnt(postId, PostType.REHOMING));
     }
 
     // 4. 분양 글 수정
