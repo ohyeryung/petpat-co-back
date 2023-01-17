@@ -30,7 +30,7 @@ public class RehomingCommand {
 //    private List<String> tagList;
     private PetCategory petCategory;
 
-    private PostStatus postStatus;
+    private PostStatus status;
 
     public Rehoming toRegisterEntity(User user) {
         return Rehoming.builder()

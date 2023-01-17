@@ -18,16 +18,16 @@ public class TradeInfo {
     private List<String> imageList;
     private String location;
     private PostType postType;
-    private int viewCnt;
-    private int bookmarkCnt;
-    private int likeCnt;
-    private boolean isBookmarked;
     private boolean isLiked;
+    private boolean isBookmarked;
+    private int viewCnt;
+    private Long likeCnt;
+    private Long bookmarkCnt;
     private String tradeCategoryDetailName;
 
 
-    public TradeInfo(Long tradeId, Long userId, String title, String content, Long price, List<String> imageList, String location, PostType postType, int viewCnt,
-                     int bookmarkCnt, int likeCnt, boolean isBookmarked, boolean isLiked, String tradeCategoryDetailName) {
+    public TradeInfo(Long tradeId, Long userId, String title, String content, Long price, List<String> imageList, String location, PostType postType,
+                     boolean isBookmarked, boolean isLiked, int viewCnt, Long likeCnt, Long bookmarkCnt, String tradeCategoryDetailName) {
         this.tradeId = tradeId;
         this.userId = userId;
         this.title = title;
@@ -36,15 +36,15 @@ public class TradeInfo {
         this.imageList = imageList;
         this.location = location;
         this.postType = postType;
-        this.viewCnt = viewCnt;
-        this.bookmarkCnt = bookmarkCnt;
-        this.likeCnt = likeCnt;
-        this.isBookmarked = isBookmarked;
         this.isLiked = isLiked;
+        this.isBookmarked = isBookmarked;
+        this.viewCnt = viewCnt;
+        this.likeCnt = likeCnt;
+        this.bookmarkCnt = bookmarkCnt;
         this.tradeCategoryDetailName = tradeCategoryDetailName;
     }
 
-    public TradeInfo(Trade trade, List<String> imageList, int bookmarkCnt,int likeCnt, boolean isBookmarked, boolean isLiked) {
+    public TradeInfo(Trade trade, List<String> imageList, boolean isLiked, boolean isBookmarked, Long likeCnt, Long bookmarkCnt) {
         this.tradeId = trade.getTradeId();
         this.userId = trade.getUser().getId();
         this.title = trade.getTitle();
@@ -53,11 +53,11 @@ public class TradeInfo {
         this.location = trade.getLocation();
         this.imageList = imageList;
         this.postType = trade.getPostType();
-        this.viewCnt = trade.getViewCnt();
-        this.bookmarkCnt = bookmarkCnt;
-        this.likeCnt = likeCnt;
-        this.isBookmarked = isBookmarked;
         this.isLiked = isLiked;
+        this.isBookmarked = isBookmarked;
+        this.viewCnt = trade.getViewCnt();
+        this.likeCnt = likeCnt;
+        this.bookmarkCnt = bookmarkCnt;
         this.tradeCategoryDetailName = trade.getTradeCategoryDetail().getTradeCategoryDetailName();
     }
 

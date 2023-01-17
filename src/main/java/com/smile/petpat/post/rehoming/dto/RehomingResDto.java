@@ -27,18 +27,17 @@ public class RehomingResDto {
     private Long price;
     private PostStatus status;
     private PostType postType;
-    private List<String> tagList;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
-
     private boolean isLiked;
     private boolean isBookmarked;
     private int viewCnt;
-    private int likeCnt;
-    private int bookmarkCnt;
+    private Long likeCnt;
+    private Long bookmarkCnt;
+
 
     // 회원 조회 시
-    public RehomingResDto(Rehoming rehoming, List<String> rehomingImg, boolean isLiked, boolean isBookmarked, int likeCnt, int bookmarkCnt) {
+    public RehomingResDto(Rehoming rehoming, List<String> rehomingImg, boolean isLiked, boolean isBookmarked, Long likeCnt, Long bookmarkCnt) {
         this.rehomingId = rehoming.getRehomingId();
         this.userId = rehoming.getUser().getId();
         this.nickname = rehoming.getUser().getNickname();
@@ -53,7 +52,6 @@ public class RehomingResDto {
         this.price = rehoming.getPrice();
         this.status = rehoming.getStatus();
         this.rehomingImg = rehomingImg;
-        // this.tagList = tagList;
         this.postType = rehoming.getPostType();
         this.createdAt = rehoming.getCreatedAt();
         this.updatedAt = rehoming.getUpdatedAt();
@@ -80,14 +78,13 @@ public class RehomingResDto {
         this.price = rehoming.getPrice();
         this.status = rehoming.getStatus();
         this.rehomingImg = rehomingImg;
-        // this.tagList = tagList;
         this.postType = rehoming.getPostType();
         this.createdAt = rehoming.getCreatedAt();
         this.updatedAt = rehoming.getUpdatedAt();
         this.isLiked = false;
         this.isBookmarked = false;
         this.viewCnt = rehoming.getViewCnt();
-        this.likeCnt = 0;
-        this.bookmarkCnt = 0;
+        this.likeCnt = 0L;
+        this.bookmarkCnt = 0L;
     }
 }

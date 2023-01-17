@@ -23,9 +23,8 @@ public class RehomingReqDto {
     private String location;
     private Long price;
     private List<String> filePath;
-    private List<String> tagList;
 
-    public RehomingReqDto(String title, String description, String petName, String petAge, String category, String type, String gender, String location, Long price, List<String> filePath, List<String> tagList) {
+    public RehomingReqDto(String title, String description, String petName, String petAge, String category, String type, String gender, String location, Long price, List<String> filePath) {
         this.title = title;
         this.description = description;
         this.petName = petName;
@@ -36,7 +35,6 @@ public class RehomingReqDto {
         this.location = location;
         this.price = price;
         this.filePath = filePath;
-        this.tagList = tagList;
     }
     public RehomingCommand toCommand() {
         return RehomingCommand.builder()
