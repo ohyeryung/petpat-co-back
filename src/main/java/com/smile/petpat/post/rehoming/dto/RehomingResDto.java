@@ -1,7 +1,5 @@
 package com.smile.petpat.post.rehoming.dto;
 
-import com.smile.petpat.post.category.domain.CategoryGroup;
-import com.smile.petpat.post.category.domain.PetCategory;
 import com.smile.petpat.post.category.domain.PostType;
 import com.smile.petpat.post.common.status.PostStatus;
 import com.smile.petpat.post.rehoming.domain.Rehoming;
