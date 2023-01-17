@@ -76,6 +76,4 @@ public class Trade extends Timestamped {
         this.tradeCategoryDetail = tradeCategoryDetail;
     }
 
-
-
 }
