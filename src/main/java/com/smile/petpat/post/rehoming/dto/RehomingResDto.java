@@ -1,5 +1,7 @@
 package com.smile.petpat.post.rehoming.dto;
 
+import com.smile.petpat.post.category.domain.CategoryGroup;
+import com.smile.petpat.post.category.domain.PetCategory;
 import com.smile.petpat.post.category.domain.PostType;
 import com.smile.petpat.post.common.status.PostStatus;
 import com.smile.petpat.post.rehoming.domain.Rehoming;
@@ -45,8 +47,8 @@ public class RehomingResDto {
         this.description = rehoming.getDescription();
         this.petName = rehoming.getPetName();
         this.petAge = rehoming.getPetAge();
-        this.category = rehoming.getCategory();
-        this.type = rehoming.getType();
+        this.category = rehoming.getCategory().getCategoryGroupName();
+        this.type = rehoming.getType().getPetCategoryName();
         this.gender = rehoming.getGender();
         this.location = rehoming.getLocation();
         this.price = rehoming.getPrice();
@@ -71,8 +73,8 @@ public class RehomingResDto {
         this.description = rehoming.getDescription();
         this.petName = rehoming.getPetName();
         this.petAge = rehoming.getPetAge();
-        this.category = rehoming.getCategory();
-        this.type = rehoming.getType();
+        this.category = rehoming.getCategory().getCategoryGroupName();
+        this.type = rehoming.getType().getPetCategoryName();
         this.gender = rehoming.getGender();
         this.location = rehoming.getLocation();
         this.price = rehoming.getPrice();

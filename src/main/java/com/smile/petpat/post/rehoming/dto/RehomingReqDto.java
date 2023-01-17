@@ -1,5 +1,7 @@
 package com.smile.petpat.post.rehoming.dto;
 
+import com.smile.petpat.post.category.domain.CategoryGroup;
+import com.smile.petpat.post.category.domain.PetCategory;
 import com.smile.petpat.post.rehoming.domain.RehomingCommand;
 import lombok.Builder;
 import lombok.Getter;
@@ -17,14 +19,14 @@ public class RehomingReqDto {
     private String description;
     private String petName;
     private String petAge;
-    private String category;
-    private String type;
+    private Long category;
+    private Long type;
     private String gender;
     private String location;
     private Long price;
     private List<String> filePath;
 
-    public RehomingReqDto(String title, String description, String petName, String petAge, String category, String type, String gender, String location, Long price, List<String> filePath) {
+    public RehomingReqDto(String title, String description, String petName, String petAge, Long category, Long type, String gender, String location, Long price, List<String> filePath) {
         this.title = title;
         this.description = description;
         this.petName = petName;

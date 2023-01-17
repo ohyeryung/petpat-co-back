@@ -1,6 +1,8 @@
 package com.smile.petpat.post.rehoming.domain;
 
 import com.smile.petpat.config.comm.Timestamped;
+import com.smile.petpat.post.category.domain.CategoryGroup;
+import com.smile.petpat.post.category.domain.PetCategory;
 import com.smile.petpat.post.category.domain.PostType;
 import com.smile.petpat.post.common.status.PostStatus;
 import com.smile.petpat.user.domain.User;
@@ -37,11 +39,17 @@ public class Rehoming extends Timestamped {
     @Column(name = "PET_AGE")
     private String petAge;
 
-    @Column(name = "CATEGORY")
-    private String category;
+//    @Column(name = "CATEGORY")
+//    private String category;
+    @ManyToOne
+    @JoinColumn(name = "CATEGORY_GROUP_ID")
+    private CategoryGroup category;
 
-    @Column(name = "TYPE")
-    private String type;
+//    @Column(name = "TYPE")
+//    private String type;
+    @ManyToOne
+    @JoinColumn(referencedColumnName = "",name = "PET_CATEGORY_ID")
+    private PetCategory type;
 
     @Column(name = "GENDER")
     private String gender;
@@ -63,7 +71,7 @@ public class Rehoming extends Timestamped {
     private int viewCnt;
 
 public Rehoming(Long rehomingId, User user, String title, String description, String petName, String petAge,
-                String category, String type, String gender, String location, Long price, PostStatus status,
+                CategoryGroup category, PetCategory type, String gender, String location, Long price, PostStatus status,
                 PostType postType, int viewCnt) {
     this.rehomingId = rehomingId;
     this.user = user;
