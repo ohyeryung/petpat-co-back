@@ -2,13 +2,15 @@ package com.smile.petpat.post.rehoming.controller;
 
 import com.smile.petpat.common.response.SuccessResponse;
 import com.smile.petpat.post.rehoming.domain.RehomingCommand;
-import com.smile.petpat.post.rehoming.domain.RehomingInfo;
+import com.smile.petpat.post.rehoming.dto.RehomingPagingDto;
 import com.smile.petpat.post.rehoming.dto.RehomingReqDto;
 import com.smile.petpat.post.rehoming.service.RehomingServiceImpl;
 import com.smile.petpat.user.service.UserDetailsImpl;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -38,8 +40,13 @@ public class RehomingController {
     * 2. 분양 글 목록 조회 (페이징 처리 전) */
     @ApiOperation(value = "분양게시글 목록 조회", notes = "분양게시글 목록 조회")
     @RequestMapping(value = "", method = RequestMethod.GET)
-    public SuccessResponse listRehoming() {
-        List<RehomingInfo> rehomingInfos = rehomingService.listRehoming();
+    public SuccessResponse listRehoming(@AuthenticationPrincipal UserDetailsImpl userDetails, @PageableDefault Pageable pageable) {
+        RehomingPagingDto rehomingInfos;
+        if (userDetails == null) {
+            rehomingInfos = rehomingService.listRehoming(pageable);
+        } else {
+            rehomingInfos = rehomingService.listRehomingForMember(userDetails.getUser(), pageable);
+        }
         return SuccessResponse.success(rehomingInfos, "OK");
     }
 

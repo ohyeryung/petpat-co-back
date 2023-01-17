@@ -5,8 +5,6 @@ import com.smile.petpat.image.domain.ImageUploader;
 import com.smile.petpat.post.category.domain.PostType;
 import com.smile.petpat.post.category.domain.TradeCategoryDetail;
 import com.smile.petpat.post.common.CommonUtils;
-import com.smile.petpat.post.common.bookmarks.repository.BookmarkRepository;
-import com.smile.petpat.post.common.likes.repository.LikesRepository;
 import com.smile.petpat.post.common.views.ViewsServiceImpl;
 import com.smile.petpat.post.trade.domain.*;
 import com.smile.petpat.user.domain.User;
@@ -29,8 +27,6 @@ public class TradeServiceImpl implements TradeService{
     private final ImageUploader imageUploader;
     private final ViewsServiceImpl viewsService;
     private final CommonUtils commonUtils;
-    private final LikesRepository likesRepository;
-    private final BookmarkRepository bookmarkRepository;
 
     @Override
     @Transactional
@@ -90,10 +86,10 @@ public class TradeServiceImpl implements TradeService{
 
     private TradeInfo getTradeInfo(Long tradeId, User user, Trade trade) {
         List<String> imgList = imageUploader.createImgList(tradeId, PostType.TRADE);
-        int bookmarkCnt = bookmarkRepository.findByPostIdAndPostType(tradeId, PostType.TRADE).size();
-        int likeCnt = likesRepository.findByPostIdAndPostType(tradeId, PostType.TRADE).size();
-        return new TradeInfo(trade, imgList, bookmarkCnt, likeCnt,
+        return new TradeInfo(trade, imgList,
+                commonUtils.LikePostChk(tradeId, PostType.TRADE, user),
                 commonUtils.BookmarkPostChk(tradeId, PostType.TRADE, user),
-                commonUtils.LikePostChk(tradeId, PostType.TRADE, user));
+                commonUtils.getLikesCnt(tradeId, PostType.TRADE),
+                commonUtils.getBookmarkCnt(tradeId, PostType.TRADE));
     }
 }

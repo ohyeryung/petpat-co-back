@@ -24,7 +24,7 @@ public class PostCategoryInfo {
 
         public PetCategoryRes(PetCategory petCategory) {
             this.petCategoryId = petCategory.getPetCategoryId();
-            this.petCategoryName = petCategory.getPostCategoryName();
+            this.petCategoryName = petCategory.getPetCategoryName();
         }
     }
 

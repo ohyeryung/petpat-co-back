@@ -20,17 +20,11 @@ public class RehomingStoreImpl implements RehomingStore {
         return rehomingRepository.save(initRehoming);
     }
 
-    /* 2. 분양 게시글 수정 */
-    @Override
-    public Rehoming update(Rehoming rehoming, Long userId, Long postId) {
-        rehomingReader.userChk(userId, postId);
-        return rehomingRepository.save(rehoming);
-    }
-
-    /* 3. 분양 게시글 삭제 */
+    /* 2. 분양 게시글 삭제 */
     @Override
     public void delete(Long userId, Long postId) {
-        rehomingReader.userChk(userId, postId);
+        Rehoming rehoming = rehomingReader.readRehomingById(postId);
+        rehomingReader.userChk(userId, rehoming);
         rehomingRepository.deleteById(postId);
     }
 }
