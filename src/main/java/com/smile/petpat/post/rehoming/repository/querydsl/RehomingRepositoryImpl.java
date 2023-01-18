@@ -18,10 +18,10 @@ import static com.smile.petpat.post.common.likes.domain.QLikes.likes;
 import static com.smile.petpat.post.rehoming.domain.QRehoming.rehoming;
 import static com.smile.petpat.user.domain.QUser.user;
 
-public class RehomingRepositoryImpl implements RehomingRepositoryQuerydsl{
+public class RehomingRepositoryImpl implements RehomingRepositoryQuerydsl {
     private final JPAQueryFactory queryFactory;
 
-    public RehomingRepositoryImpl(EntityManager em){
+    public RehomingRepositoryImpl(EntityManager em) {
         this.queryFactory = new JPAQueryFactory(em);
     }
 

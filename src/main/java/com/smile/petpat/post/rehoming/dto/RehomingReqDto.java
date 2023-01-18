@@ -36,6 +36,7 @@ public class RehomingReqDto {
         this.price = price;
         this.filePath = filePath;
     }
+
     public RehomingCommand toCommand() {
         return RehomingCommand.builder()
                 .title(title)

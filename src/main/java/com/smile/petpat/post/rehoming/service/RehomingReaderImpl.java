@@ -27,12 +27,14 @@ public class RehomingReaderImpl implements RehomingReader {
                 () -> new IllegalArgumentException("존재하지 않는 게시물입니다.")
         );
     }
+
     @Override
     public void userChk(Long userId, Rehoming rehoming) {
-        if(!rehoming.getUser().getId().equals(userId)) {
+        if (!rehoming.getUser().getId().equals(userId)) {
             throw new IllegalArgumentException("본인 글만 수정/삭제가 가능합니다.");
         }
     }
+
     @Override
     public PetCategory readPetTypeById(Long petCategoryId) {
         return petCategoryRepository.findById(petCategoryId).orElseThrow(

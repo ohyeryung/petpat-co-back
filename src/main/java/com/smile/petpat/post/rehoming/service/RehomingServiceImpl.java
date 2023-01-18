@@ -89,7 +89,6 @@ public class RehomingServiceImpl implements RehomingService {
     // 4. 분양 글 수정
     @Override
     public RehomingResDto updateRehoming(User user, Long postId, RehomingCommand rehomingCommand, List<MultipartFile> rehomingImg) {
-
         // 4-1. 게시글 존재 유무 판단
         Rehoming rehoming = rehomingReader.readRehomingById(postId);
         rehomingReader.userChk(user.getId(), rehoming);
