@@ -39,16 +39,12 @@ public class Rehoming extends Timestamped {
     @Column(name = "PET_AGE")
     private String petAge;
 
-//    @Column(name = "CATEGORY")
-//    private String category;
     @ManyToOne
     @JoinColumn(name = "CATEGORY_GROUP_ID")
     private CategoryGroup category;
 
-//    @Column(name = "TYPE")
-//    private String type;
     @ManyToOne
-    @JoinColumn(referencedColumnName = "",name = "PET_CATEGORY_ID")
+    @JoinColumn(name = "PET_CATEGORY_ID")
     private PetCategory type;
 
     @Column(name = "GENDER")
@@ -70,42 +66,54 @@ public class Rehoming extends Timestamped {
     @Column(name = "VIEW_CNT")
     private int viewCnt;
 
-public Rehoming(Long rehomingId, User user, String title, String description, String petName, String petAge,
-                CategoryGroup category, PetCategory type, String gender, String location, Long price, PostStatus status,
-                PostType postType, int viewCnt) {
-    this.rehomingId = rehomingId;
-    this.user = user;
-    this.title = title;
-    this.description = description;
-    this.petName = petName;
-    this.petAge = petAge;
-    this.category = category;
-    this.type = type;
-    this.gender = gender;
-    this.location = location;
-    this.price = price;
-    this.status = status;
-    this.postType = postType;
-    this.viewCnt = viewCnt;
-}
+    public void isFinding() {
+        this.status = PostStatus.REHOMING_FINDING;
+    }
+
+    public void isReserved() {
+        this.status = PostStatus.REHOMING_RESERVING;
+    }
+
+    public void isMatched() {
+        this.status = PostStatus.REHOMING_MATCHED;
+    }
+
+    public Rehoming(Long rehomingId, User user, String title, String description, String petName, String petAge,
+                    CategoryGroup category, PetCategory type, String gender, String location, Long price, PostStatus status,
+                    PostType postType, int viewCnt) {
+        this.rehomingId = rehomingId;
+        this.user = user;
+        this.title = title;
+        this.description = description;
+        this.petName = petName;
+        this.petAge = petAge;
+        this.category = category;
+        this.type = type;
+        this.gender = gender;
+        this.location = location;
+        this.price = price;
+        this.status = status;
+        this.postType = postType;
+        this.viewCnt = viewCnt;
+    }
+
     public Rehoming() {
 
     }
 
     // 분양 게시글 수정
-public void update(Rehoming initRehoming) {
-    this.title = initRehoming.getTitle();
-    this.description = initRehoming.getDescription();
-    this.petName = initRehoming.getPetName();
-    this.petAge = initRehoming.getPetAge();
-    this.category = initRehoming.getCategory();
-    this.type = initRehoming.getType();
-    this.gender = initRehoming.getGender();
-    this.location = initRehoming.getLocation();
-    this.price = initRehoming.getPrice();
-    this.status = initRehoming.getStatus();
-    this.postType = PostType.REHOMING;
-}
+    public void update(Rehoming initRehoming) {
+        this.title = initRehoming.getTitle();
+        this.description = initRehoming.getDescription();
+        this.petName = initRehoming.getPetName();
+        this.petAge = initRehoming.getPetAge();
+        this.category = initRehoming.getCategory();
+        this.type = initRehoming.getType();
+        this.gender = initRehoming.getGender();
+        this.location = initRehoming.getLocation();
+        this.price = initRehoming.getPrice();
+        this.status = initRehoming.getStatus();
+    }
 }
 
 

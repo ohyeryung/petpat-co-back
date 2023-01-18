@@ -11,10 +11,23 @@ import java.util.List;
 
 public interface RehomingService {
     void registerRehoming(User user, List<MultipartFile> rehomingImg, RehomingCommand rehomingCommand);
+
     RehomingPagingDto listRehomingForMember(User user, Pageable pageable);
+
     RehomingPagingDto listRehoming(Pageable pageable);
+
     RehomingResDto detailRehomingForMember(Long postId, User user);
+
     RehomingResDto detailRehoming(Long postId);
+
     RehomingResDto updateRehoming(User user, Long postId, RehomingCommand rehomingCommand, List<MultipartFile> rehomingImg);
-    void deleteRehoming(User user, Long rehomingId);
+
+    void deleteRehoming(User user, Long postId);
+
+    void updateStatusFinding(User user, Long postId);
+
+    void updateStatusReserved(User user, Long postId);
+
+    void updateStatusMatched(User user, Long postId);
+
 }
