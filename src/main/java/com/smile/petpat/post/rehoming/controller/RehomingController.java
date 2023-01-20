@@ -3,7 +3,7 @@ package com.smile.petpat.post.rehoming.controller;
 import com.smile.petpat.common.response.SuccessResponse;
 import com.smile.petpat.post.rehoming.domain.RehomingCommand;
 import com.smile.petpat.post.rehoming.dto.RehomingPagingDto;
-import com.smile.petpat.post.rehoming.dto.RehomingReqDto;
+
 import com.smile.petpat.post.rehoming.service.RehomingServiceImpl;
 import com.smile.petpat.user.service.UserDetailsImpl;
 import io.swagger.annotations.Api;
@@ -30,7 +30,7 @@ public class RehomingController {
     @RequestMapping(value = "",method = RequestMethod.POST)
     public SuccessResponse registerRehoming(@AuthenticationPrincipal UserDetailsImpl userDetails,
                                   @RequestPart List<MultipartFile> rehomingImg,
-                                  @RequestPart RehomingReqDto rehomingDto) {
+                                  @RequestPart RehomingCommand rehomingDto) {
         RehomingCommand rehomingCommand = rehomingDto.toCommand();
         rehomingService.registerRehoming(userDetails.getUser(), rehomingImg, rehomingCommand);
         return SuccessResponse.success("OK");
@@ -40,7 +40,8 @@ public class RehomingController {
     * 2. 분양 글 목록 조회 (페이징 처리 전) */
     @ApiOperation(value = "분양게시글 목록 조회", notes = "분양게시글 목록 조회")
     @RequestMapping(value = "", method = RequestMethod.GET)
-    public SuccessResponse listRehoming(@AuthenticationPrincipal UserDetailsImpl userDetails, @PageableDefault Pageable pageable) {
+    public SuccessResponse listRehoming(@AuthenticationPrincipal UserDetailsImpl userDetails,
+                                        @PageableDefault Pageable pageable) {
         RehomingPagingDto rehomingInfos;
         if (userDetails == null) {
             rehomingInfos = rehomingService.listRehoming(pageable);
@@ -54,7 +55,8 @@ public class RehomingController {
      * 3. 분양 글 상세 조회 */
     @ApiOperation(value = "분양게시글 상세 조회", notes = "분양게시글 상세 조회")
     @RequestMapping(value = "/detail", method = RequestMethod.GET)
-    public SuccessResponse detail(@RequestParam Long postId, @AuthenticationPrincipal UserDetailsImpl userDetails) {
+    public SuccessResponse detail(@RequestParam Long postId,
+                                  @AuthenticationPrincipal UserDetailsImpl userDetails) {
         if (userDetails == null) {
             return SuccessResponse.success(rehomingService.detailRehoming(postId), "OK");
         }
@@ -66,7 +68,7 @@ public class RehomingController {
     @RequestMapping(value = "",method = RequestMethod.PUT)
     public SuccessResponse updateRehoming(@AuthenticationPrincipal UserDetailsImpl userDetails,
                                @RequestPart List<MultipartFile> rehomingImg,
-                               @RequestParam Long postId, @RequestPart RehomingReqDto rehomingDto) {
+                               @RequestParam Long postId, @RequestPart RehomingCommand rehomingDto) {
         RehomingCommand rehomingCommand = rehomingDto.toCommand();
         return SuccessResponse.success(rehomingService.updateRehoming(userDetails.getUser(), postId, rehomingCommand, rehomingImg), "OK");
     }
@@ -74,7 +76,8 @@ public class RehomingController {
     /* 5. 분양 글 삭제 */
     @ApiOperation(value = "분양게시물 삭제", notes = "분양 게시물 삭제")
     @RequestMapping(value = "",method = RequestMethod.DELETE)
-    public SuccessResponse deleteRehoming(@AuthenticationPrincipal UserDetailsImpl userDetails, @RequestParam Long postId) {
+    public SuccessResponse deleteRehoming(@AuthenticationPrincipal UserDetailsImpl userDetails,
+                                          @RequestParam Long postId) {
         rehomingService.deleteRehoming(userDetails.getUser(), postId);
         return SuccessResponse.success("OK");
     }
@@ -90,7 +93,7 @@ public class RehomingController {
     @ApiOperation(value = "분양게시물 예약 중")
     @RequestMapping(value = "/statusReserved", method = RequestMethod.POST)
     public SuccessResponse updateStatusReserved(@AuthenticationPrincipal UserDetailsImpl userDetails,
-                                        @RequestParam Long postId) {
+                                                @RequestParam Long postId) {
         rehomingService.updateStatusReserved(userDetails.getUser(), postId);
         return SuccessResponse.success("OK");
     }
