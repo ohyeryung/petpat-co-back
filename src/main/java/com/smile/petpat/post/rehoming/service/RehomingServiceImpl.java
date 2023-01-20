@@ -6,7 +6,8 @@ import com.smile.petpat.post.category.domain.CategoryGroup;
 import com.smile.petpat.post.category.domain.PetCategory;
 import com.smile.petpat.post.category.domain.PostType;
 import com.smile.petpat.post.common.CommonUtils;
-import com.smile.petpat.post.common.views.ViewsServiceImpl;
+import com.smile.petpat.post.common.status.PostStatus;
+import com.smile.petpat.post.common.views.ViewsService;
 import com.smile.petpat.post.rehoming.domain.Rehoming;
 import com.smile.petpat.post.rehoming.domain.RehomingCommand;
 import com.smile.petpat.post.rehoming.domain.RehomingReader;
@@ -29,10 +30,10 @@ import java.util.List;
 @Service
 public class RehomingServiceImpl implements RehomingService {
     private final ImageUploadManager imageUploadManager;
-    private final RehomingStore rehomingStore;
-    private final RehomingReader rehomingReader;
     private final ImageUploader imageUploader;
-    private final ViewsServiceImpl viewsService;
+    private final RehomingReader rehomingReader;
+    private final RehomingStore rehomingStore;
+    private final ViewsService viewsService;
     private final CommonUtils commonUtils;
     private final RehomingRepository rehomingRepository;
 
@@ -95,7 +96,8 @@ public class RehomingServiceImpl implements RehomingService {
         // 4-2. 게시글 수정
         CategoryGroup category = rehomingReader.readCategoryById(rehomingCommand.getCategory());
         PetCategory type = rehomingReader.readPetTypeById(rehomingCommand.getType());
-        Rehoming initRehoming = rehomingCommand.toUpdateEntity(user, postId, category, type);
+        PostStatus status = rehoming.getStatus();
+        Rehoming initRehoming = rehomingCommand.toUpdateEntity(user, postId, category, type, status);
         rehoming.update(initRehoming);
         // 4-3. 이미지 수정
         imageUploadManager.updateImage(rehomingImg, postId, PostType.REHOMING);
