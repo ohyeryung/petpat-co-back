@@ -6,5 +6,6 @@ import org.springframework.data.domain.Pageable;
 
 public interface RehomingRepositoryQuerydsl {
     Page<RehomingInfo> rehomingListForMember(Long userId, Pageable pageable);
+
     Page<RehomingInfo> rehomingList(Pageable pageable);
 }

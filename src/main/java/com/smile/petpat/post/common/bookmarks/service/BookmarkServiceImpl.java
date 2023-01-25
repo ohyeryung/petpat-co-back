@@ -17,7 +17,7 @@ import static com.smile.petpat.post.category.domain.PostType.REHOMING;
 
 @Service
 @RequiredArgsConstructor
-public class BookmarkServiceImpl {
+public class BookmarkServiceImpl implements BookmarkService {
 
     private final BookmarkRepository bookmarkRepository;
     private final CommonUtils commonUtils;
@@ -25,7 +25,8 @@ public class BookmarkServiceImpl {
     private final TradeReaderImpl tradeReader;
 
     @Transactional
-    public HashMap<String, String> isBookmark(String postType, Long postId, User user) {
+    @Override
+    public HashMap<String, String> BookmarkPost(String postType, Long postId, User user) {
         // 1. 존재하지 않는 postType 의 postId 조회 요청 시 에러 반환
         if (PostType.valueOf(postType) == REHOMING)
             rehomingReader.readRehomingById(postId);
@@ -34,7 +35,7 @@ public class BookmarkServiceImpl {
         }
 
         // 2. 만약 유저가 해당 글을 북마크 했었다면 -> 삭제
-        if (commonUtils.getBookmarkPost(postId, PostType.valueOf(postType), user)!=null){
+        if (commonUtils.getBookmarkPost(postId, PostType.valueOf(postType), user) != null) {
             commonUtils.delBookmark(postId, postType, user);
             int cnt = bookmarkRepository.findByPostIdAndPostType(postId, PostType.valueOf(postType)).size();
             return commonUtils.toggleResponseHashMap(false, cnt, postId, postType);

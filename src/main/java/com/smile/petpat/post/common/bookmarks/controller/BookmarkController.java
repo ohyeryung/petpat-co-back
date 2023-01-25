@@ -20,6 +20,6 @@ public class BookmarkController {
     @RequestMapping(value = "/{postType}/{postId}", method = RequestMethod.POST)
     public SuccessResponse<HashMap<String, String>> isBookmark(@PathVariable String postType, @PathVariable Long postId,
                                                @AuthenticationPrincipal UserDetailsImpl userDetails) {
-        return SuccessResponse.success(bookmarkService.isBookmark(postType, postId, userDetails.getUser()));
+        return SuccessResponse.success(bookmarkService.BookmarkPost(postType, postId, userDetails.getUser()));
     }
 }

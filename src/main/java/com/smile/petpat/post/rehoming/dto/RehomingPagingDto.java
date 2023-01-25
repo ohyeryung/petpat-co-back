@@ -10,7 +10,7 @@ import java.util.List;
 @Getter
 @NoArgsConstructor
 public class RehomingPagingDto {
-    private  int contentCnt;
+    private int contentCnt;
     private List<?> content = new ArrayList<>();
     private int pageSize;
     private int page;

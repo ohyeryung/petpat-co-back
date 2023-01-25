@@ -17,7 +17,7 @@ import lombok.ToString;
 public class RehomingCommand {
 
     private User user;
-    private  String title;
+    private String title;
     private String description;
     private int viewCnt;
     private String petName;

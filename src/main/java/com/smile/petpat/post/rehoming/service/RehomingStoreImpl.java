@@ -4,10 +4,8 @@ import com.smile.petpat.post.rehoming.domain.Rehoming;
 import com.smile.petpat.post.rehoming.domain.RehomingStore;
 import com.smile.petpat.post.rehoming.repository.RehomingRepository;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
-@Slf4j
 @RequiredArgsConstructor
 @Component
 public class RehomingStoreImpl implements RehomingStore {

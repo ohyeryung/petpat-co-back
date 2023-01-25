@@ -5,7 +5,10 @@ import com.smile.petpat.post.category.domain.PetCategory;
 
 public interface RehomingReader {
     Rehoming readRehomingById(Long rehomingId);
+
     void userChk(Long userId, Rehoming rehoming);
+
     CategoryGroup readCategoryById(Long categoryId);
+
     PetCategory readPetTypeById(Long petCategoryId);
 }
