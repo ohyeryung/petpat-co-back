@@ -7,18 +7,25 @@ import org.springframework.http.HttpStatus;
 @Getter
 public enum ErrorCode {
 
-    // User
+    // USER
     ILLEGAL_USERNAME_DUPLICATION(HttpStatus.BAD_REQUEST,  "중복된 아이디입니다."),
     ILLEGAL_USER_NOT_EXIST(HttpStatus.BAD_REQUEST, "가입되지 않은 아이디입니다."),
     ILLEGAL_PASSWORD_NOT_VALID (HttpStatus.BAD_REQUEST, "비밀번호가 일치하지 않습니다."),
     ILLEGAL_INVALID_TOKEN(HttpStatus.BAD_REQUEST, "유효한 토큰이 아닙니다."),
     INVALID_PASSWORD_PATTERN(HttpStatus.BAD_REQUEST,  "비밀번호는 8자 이상 12자 이하의 길이의 영문자, 숫자, 특수문자(!@#$%^&*)만 사용 가능합니다."),
 
-    // Image
+    // IMAGE
     FAILED_UPLOAD_IMAGE(HttpStatus.BAD_REQUEST,  "이미지 업로드에 실패했습니다."),
-    WRONG_TYPE_IMAGE(HttpStatus.BAD_REQUEST,  "잘못된 형식의 파일입니다");
+    WRONG_TYPE_IMAGE(HttpStatus.BAD_REQUEST,  "잘못된 형식의 파일입니다"),
+    EXCEEDED_MAX_IMAGE_COUNT(HttpStatus.BAD_REQUEST, "업로드가능한 최대 이미지갯수를 초과하였습니다."),
+    EXCEEDED_MAX_IMAGE_SIZE(HttpStatus.BAD_REQUEST,"업로드가능한 최대 이미지용량을 초과하였습니다.")
 
-    // post
+    // POST
+
+
+    ;
+
+
 
     private final HttpStatus httpStatus;
     private final String message;
