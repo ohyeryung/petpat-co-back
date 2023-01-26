@@ -14,18 +14,18 @@ public class PetCategory {
     private Long petCategoryId;
 
     @Column(name = "PET_CATEGORY_NAME")
-    private String postCategoryName;
+    private String petCategoryName;
 
     @ManyToOne
-    @JoinColumn(name = "CATEGORY_GROUP_ID",referencedColumnName = "")
+    @JoinColumn(name = "CATEGORY_GROUP_ID", referencedColumnName = "")
     private CategoryGroup categoryGroup;
 
     public PetCategory(){
     }
 
-    public PetCategory(Long petCategoryId, String postCategoryName, CategoryGroup categoryGroup) {
+    public PetCategory(Long petCategoryId, String petCategoryName, CategoryGroup categoryGroup) {
         this.petCategoryId = petCategoryId;
-        this.postCategoryName = postCategoryName;
+        this.petCategoryName = petCategoryName;
         this.categoryGroup = categoryGroup;
     }
 }

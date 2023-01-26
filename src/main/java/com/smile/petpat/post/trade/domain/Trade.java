@@ -24,27 +24,27 @@ public class Trade extends Timestamped {
     @JoinColumn(referencedColumnName = "USER_ID",name = "USER_ID")
     private User user;
 
-    @Column(name = "TITLE")
+    @Column(name = "TITLE", nullable = false, length = 20)
     private String title;
 
-    @Column(name = "CONTENT")
+    @Column(name = "CONTENT", nullable = false, length = 2000)
     private String content;
 
-    @Column(name = "PRICE")
+    @Column(name = "PRICE", nullable = false, length = 8)
     private Long price;
 
-    @Column(name = "LOCATION")
+    @Column(name = "LOCATION", nullable = false)
     private String location;
 
-    @Column(name = "POST_TYPE")
+    @Column(name = "POST_TYPE" , nullable = false)
     @Enumerated(EnumType.STRING)
     private PostType postType;
 
-    @Column(name = "VIEW_CNT")
+    @Column(name = "VIEW_CNT", nullable = false)
     private int viewCnt;
 
     @ManyToOne
-    @JoinColumn(referencedColumnName = "",name = "TRADE_CATEGORY_DETAIL")
+    @JoinColumn(referencedColumnName = "",name = "TRADE_CATEGORY_DETAIL", nullable = false)
     private TradeCategoryDetail tradeCategoryDetail;
 
     public Trade() {
@@ -75,7 +75,5 @@ public class Trade extends Timestamped {
         this.viewCnt = viewCnt;
         this.tradeCategoryDetail = tradeCategoryDetail;
     }
-
-
 
 }

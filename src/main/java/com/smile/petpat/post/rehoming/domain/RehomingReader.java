@@ -1,8 +1,14 @@
 package com.smile.petpat.post.rehoming.domain;
 
-import java.util.List;
+import com.smile.petpat.post.category.domain.CategoryGroup;
+import com.smile.petpat.post.category.domain.PetCategory;
 
 public interface RehomingReader {
-    List<Rehoming> readRehomingList();
     Rehoming readRehomingById(Long rehomingId);
+
+    void userChk(Long userId, Rehoming rehoming);
+
+    CategoryGroup readCategoryById(Long categoryId);
+
+    PetCategory readPetTypeById(Long petCategoryId);
 }
