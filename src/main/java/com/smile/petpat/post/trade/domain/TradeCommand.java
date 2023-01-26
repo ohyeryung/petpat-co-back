@@ -1,6 +1,8 @@
 package com.smile.petpat.post.trade.domain;
 
+import com.smile.petpat.post.category.domain.PostType;
 import com.smile.petpat.post.category.domain.TradeCategoryDetail;
+import com.smile.petpat.post.common.status.PostStatus;
 import com.smile.petpat.user.domain.User;
 import lombok.Builder;
 import lombok.Getter;
@@ -18,6 +20,8 @@ public class TradeCommand {
     private String content;
     private Long price;
     private String location;
+    private PostType postType;
+    private PostStatus postStatus;
     private Long tradeCategoryDetailId;
     private List<MultipartFile> images;
 
@@ -25,12 +29,14 @@ public class TradeCommand {
 
     }
 
-    public TradeCommand(User user, String title, String content, Long price, String location, Long tradeCategoryDetailId, List<MultipartFile> images) {
+    public TradeCommand(User user, String title, String content, Long price, String location, PostType postType, PostStatus postStatus, Long tradeCategoryDetailId, List<MultipartFile> images) {
         this.user = user;
         this.title = title;
         this.content = content;
         this.price = price;
         this.location = location;
+        this.postType = postType;
+        this.postStatus = postStatus;
         this.tradeCategoryDetailId = tradeCategoryDetailId;
         this.images = images;
     }
@@ -42,6 +48,8 @@ public class TradeCommand {
                 .content(content)
                 .price(price)
                 .location(location)
+                .postType(PostType.TRADE)
+                .status(PostStatus.TRADE_FINDING)
                 .tradeCategoryDetail(tradeCategoryDetail)
                 .build();
     }
@@ -54,6 +62,8 @@ public class TradeCommand {
                 .content(content)
                 .price(price)
                 .location(location)
+                .postType(PostType.TRADE)
+                .status(PostStatus.TRADE_FINDING)
                 .tradeCategoryDetail(tradeCategoryDetail)
                 .build();
     }
