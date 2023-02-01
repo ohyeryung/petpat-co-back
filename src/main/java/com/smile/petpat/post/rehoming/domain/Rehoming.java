@@ -27,33 +27,33 @@ public class Rehoming extends Timestamped {
     @JoinColumn(name = "USER_ID")
     private User user;
 
-    @Column(name = "TITLE")
+    @Column(name = "TITLE", nullable = false, length = 20)
     private String title;
 
-    @Column(name = "DESCRIPTION", columnDefinition = "TEXT")
+    @Column(name = "DESCRIPTION", columnDefinition = "TEXT", nullable = false, length = 2000)
     private String description;
 
-    @Column(name = "PET_NAME")
+    @Column(name = "PET_NAME", nullable = false)
     private String petName;
 
-    @Column(name = "PET_AGE")
+    @Column(name = "PET_AGE", nullable = false)
     private String petAge;
 
     @ManyToOne
-    @JoinColumn(name = "CATEGORY_GROUP_ID")
+    @JoinColumn(name = "CATEGORY_GROUP_ID", nullable = false)
     private CategoryGroup category;
 
     @ManyToOne
-    @JoinColumn(name = "PET_CATEGORY_ID")
+    @JoinColumn(name = "PET_CATEGORY_ID", nullable = false)
     private PetCategory type;
 
-    @Column(name = "GENDER")
+    @Column(name = "GENDER", nullable = false)
     private String gender;
 
-    @Column(name = "LOCATION")
+    @Column(name = "LOCATION", nullable = false)
     private String location;
 
-    @Column(name = "PRICE")
+    @Column(name = "PRICE", length = 8)
     private Long price;
 
     @Column(name = "STATUS")

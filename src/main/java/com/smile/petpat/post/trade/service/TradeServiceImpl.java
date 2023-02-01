@@ -5,7 +5,7 @@ import com.smile.petpat.image.domain.ImageUploader;
 import com.smile.petpat.post.category.domain.PostType;
 import com.smile.petpat.post.category.domain.TradeCategoryDetail;
 import com.smile.petpat.post.common.CommonUtils;
-import com.smile.petpat.post.common.views.ViewsServiceImpl;
+import com.smile.petpat.post.common.views.ViewsService;
 import com.smile.petpat.post.trade.domain.*;
 import com.smile.petpat.user.domain.User;
 import lombok.RequiredArgsConstructor;
@@ -25,7 +25,7 @@ public class TradeServiceImpl implements TradeService{
     private final TradeReader tradeReader;
     private final ImageUploadManager imageUploadManager;
     private final ImageUploader imageUploader;
-    private final ViewsServiceImpl viewsService;
+    private final ViewsService viewsService;
     private final CommonUtils commonUtils;
 
     @Override
@@ -66,6 +66,7 @@ public class TradeServiceImpl implements TradeService{
 
     }
 
+
     @Override
     @Transactional
     public TradeInfo updateTrade(TradeCommand tradeCommand, User user,Long tradeId) {
@@ -92,4 +93,25 @@ public class TradeServiceImpl implements TradeService{
                 commonUtils.getLikesCnt(tradeId, PostType.TRADE),
                 commonUtils.getBookmarkCnt(tradeId, PostType.TRADE));
     }
+
+
+    @Override
+    public void updateStatusFinding(User user, Long postId) {
+        Trade trade = tradeReader.readTradeById(postId);
+        trade.isFinding();
+    }
+
+    @Override
+    public void updateStatusReserved(User user, Long postId) {
+        Trade trade = tradeReader.readTradeById(postId);
+        trade.isReserved();
+    }
+
+    @Override
+    public void updateStatusMatched(User user, Long postId) {
+        Trade trade = tradeReader.readTradeById(postId);
+        trade.isMatched();
+    }
+
+
 }
