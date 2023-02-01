@@ -86,4 +86,29 @@ public class TradeController {
         return SuccessResponse.success("ok");
     }
 
+
+    @ApiOperation(value = "분양게시물 분양 중")
+    @RequestMapping(value = "/statusFinding", method = RequestMethod.POST)
+    public SuccessResponse updateStatusFinding(@AuthenticationPrincipal UserDetailsImpl userDetails,
+                                               @RequestParam Long postId) {
+        tradeService.updateStatusFinding(userDetails.getUser(), postId);
+        return SuccessResponse.success("OK");
+    }
+
+    @ApiOperation(value = "분양게시물 예약 중")
+    @RequestMapping(value = "/statusReserved", method = RequestMethod.POST)
+    public SuccessResponse updateStatusReserved(@AuthenticationPrincipal UserDetailsImpl userDetails,
+                                                @RequestParam Long postId) {
+        tradeService.updateStatusReserved(userDetails.getUser(), postId);
+        return SuccessResponse.success("OK");
+    }
+
+    @ApiOperation(value = "분양게시물 예약 완료")
+    @RequestMapping(value = "/statusMatched", method = RequestMethod.POST)
+    public SuccessResponse updateStatusMatched(@AuthenticationPrincipal UserDetailsImpl userDetails,
+                                               @RequestParam Long postId) {
+        tradeService.updateStatusMatched(userDetails.getUser(), postId);
+        return SuccessResponse.success("OK");
+    }
+
 }

@@ -66,6 +66,7 @@ public class TradeServiceImpl implements TradeService{
 
     }
 
+
     @Override
     @Transactional
     public TradeInfo updateTrade(TradeCommand tradeCommand, User user,Long tradeId) {
@@ -92,4 +93,25 @@ public class TradeServiceImpl implements TradeService{
                 commonUtils.getLikesCnt(tradeId, PostType.TRADE),
                 commonUtils.getBookmarkCnt(tradeId, PostType.TRADE));
     }
+
+
+    @Override
+    public void updateStatusFinding(User user, Long postId) {
+        Trade trade = tradeReader.readTradeById(postId);
+        trade.isFinding();
+    }
+
+    @Override
+    public void updateStatusReserved(User user, Long postId) {
+        Trade trade = tradeReader.readTradeById(postId);
+        trade.isReserved();
+    }
+
+    @Override
+    public void updateStatusMatched(User user, Long postId) {
+        Trade trade = tradeReader.readTradeById(postId);
+        trade.isMatched();
+    }
+
+
 }

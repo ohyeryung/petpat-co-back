@@ -19,4 +19,12 @@ public interface TradeService{
     TradeInfo tradeDetail(Long tradeId);
 
     TradeInfo tradeDetailforUser(Long tradeId, User user);
+
+    void updateStatusFinding(User user, Long postId);
+
+    void updateStatusReserved(User user, Long postId);
+
+    void updateStatusMatched(User user, Long postId);
+
+
 }
