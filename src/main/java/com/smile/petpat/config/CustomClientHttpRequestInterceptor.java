@@ -1,4 +1,4 @@
-package com.smile.petpat.common.response.config;
+package com.smile.petpat.config;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

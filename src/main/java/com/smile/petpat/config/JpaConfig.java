@@ -1,4 +1,4 @@
-package com.smile.petpat.common.response.config;
+package com.smile.petpat.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;

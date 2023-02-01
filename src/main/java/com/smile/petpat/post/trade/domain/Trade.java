@@ -1,6 +1,6 @@
 package com.smile.petpat.post.trade.domain;
 
-import com.smile.petpat.common.response.config.comm.Timestamped;
+import com.smile.petpat.config.comm.Timestamped;
 import com.smile.petpat.post.category.domain.PostType;
 import com.smile.petpat.post.category.domain.TradeCategoryDetail;
 import com.smile.petpat.post.common.status.PostStatus;
