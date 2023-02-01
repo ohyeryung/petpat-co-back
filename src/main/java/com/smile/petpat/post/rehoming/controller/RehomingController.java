@@ -37,7 +37,7 @@ public class RehomingController {
     }
 
     /*
-    * 2. 분양 글 목록 조회 (페이징 처리 전) */
+    * 2. 분양 글 목록 조회 */
     @ApiOperation(value = "분양게시글 목록 조회", notes = "분양게시글 목록 조회")
     @RequestMapping(value = "", method = RequestMethod.GET)
     public SuccessResponse listRehoming(@AuthenticationPrincipal UserDetailsImpl userDetails,

@@ -1,4 +1,4 @@
-package com.smile.petpat.config;
+package com.smile.petpat.common.response.config;
 
 import com.smile.petpat.jwt.*;
 import org.springframework.context.annotation.Bean;

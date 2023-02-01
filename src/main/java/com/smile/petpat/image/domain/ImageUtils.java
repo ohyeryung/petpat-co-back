@@ -21,7 +21,7 @@ public class ImageUtils {
                 case "gif" : break;
                 case "png" : break;
                 case "jpg" : break;
-                case "jpge" : break;
+                case "jpeg" : break;
                 default: throw new IllegalArgumentException("파일 타입을 확인해주세요");
             }
             return fileName.substring(fileName.lastIndexOf("."));

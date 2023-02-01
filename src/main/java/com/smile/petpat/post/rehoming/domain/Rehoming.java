@@ -1,6 +1,6 @@
 package com.smile.petpat.post.rehoming.domain;
 
-import com.smile.petpat.config.comm.Timestamped;
+import com.smile.petpat.common.response.config.comm.Timestamped;
 import com.smile.petpat.post.category.domain.CategoryGroup;
 import com.smile.petpat.post.category.domain.PetCategory;
 import com.smile.petpat.post.category.domain.PostType;

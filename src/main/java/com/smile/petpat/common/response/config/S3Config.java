@@ -1,4 +1,4 @@
-package com.smile.petpat.config;
+package com.smile.petpat.common.response.config;
 
 import com.amazonaws.auth.AWSCredentials;
 import com.amazonaws.auth.AWSStaticCredentialsProvider;
