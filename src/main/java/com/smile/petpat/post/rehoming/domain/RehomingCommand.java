@@ -7,11 +7,9 @@ import com.smile.petpat.post.common.status.PostStatus;
 import com.smile.petpat.user.domain.User;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.Setter;
 import lombok.ToString;
 
 @Getter
-@Setter
 @Builder
 @ToString
 public class RehomingCommand {
@@ -19,7 +17,6 @@ public class RehomingCommand {
     private User user;
     private String title;
     private String description;
-    private int viewCnt;
     private String petName;
     private String petAge;
     private Long category;
@@ -27,17 +24,12 @@ public class RehomingCommand {
     private String gender;
     private String location;
     private Long price;
+    private int viewCnt;
 
-    private PetCategory petCategory;
-
-    private PostStatus status;
-
-    public Rehoming toRegisterEntity(User user, CategoryGroup category, PetCategory type) {
-        return Rehoming.builder()
-                .user(user)
+    public RehomingCommand toCommand() {
+        return RehomingCommand.builder()
                 .title(title)
                 .description(description)
-                .viewCnt(viewCnt)
                 .petName(petName)
                 .petAge(petAge)
                 .category(category)
@@ -45,12 +37,28 @@ public class RehomingCommand {
                 .gender(gender)
                 .location(location)
                 .price(price)
+                .build();
+    }
+
+    public Rehoming toRegisterEntity(User user, CategoryGroup category, PetCategory type) {
+        return Rehoming.builder()
+                .user(user)
+                .title(title)
+                .description(description)
+                .petName(petName)
+                .petAge(petAge)
+                .category(category)
+                .type(type)
+                .gender(gender)
+                .location(location)
+                .price(price)
+                .viewCnt(viewCnt)
                 .status(PostStatus.REHOMING_FINDING)
                 .postType(PostType.REHOMING)
                 .build();
     }
 
-    public Rehoming toUpdateEntity(User user, Long rehomingId, CategoryGroup category, PetCategory type) {
+    public Rehoming toUpdateEntity(User user, Long rehomingId, CategoryGroup category, PetCategory type, PostStatus status) {
         return Rehoming.builder()
                 .rehomingId(rehomingId)
                 .user(user)
@@ -63,8 +71,7 @@ public class RehomingCommand {
                 .gender(gender)
                 .location(location)
                 .price(price)
-                .status(PostStatus.REHOMING_FINDING)
-                .postType(PostType.REHOMING)
+                .status(status)
                 .build();
     }
 }

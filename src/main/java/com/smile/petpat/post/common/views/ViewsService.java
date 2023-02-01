@@ -10,7 +10,7 @@ import javax.transaction.Transactional;
 
 @Service
 @RequiredArgsConstructor
-public class ViewsServiceImpl {
+public class ViewsService {
     private final RehomingRepository rehomingRepository;
     private final TradeRepository tradeRepository;
     /*
