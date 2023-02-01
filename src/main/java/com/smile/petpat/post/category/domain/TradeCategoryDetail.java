@@ -7,7 +7,10 @@ import javax.persistence.*;
 
 @Getter
 @Entity
-@Table(name = "TB_TRADE_CATEGORY_DETAIL")
+@Table(name = "TB_TRADE_CATEGORY_DETAIL",
+        indexes = {@Index(name = "trade_category_detail_index", columnList = "TRADE_CATEGORY_DETAIL_NAME")
+
+})
 public class TradeCategoryDetail {
 
     @Id
