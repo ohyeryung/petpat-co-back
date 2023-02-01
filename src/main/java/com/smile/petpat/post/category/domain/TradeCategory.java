@@ -6,7 +6,11 @@ import javax.persistence.*;
 
 @Getter
 @Entity
-@Table(name = "TB_TRADE_CATEGORY")
+@Table(name = "TB_TRADE_CATEGORY",
+        indexes = {
+                @Index(name = "trade_category_name_index",columnList = "TRADE_CATEGORY_NAME")
+
+})
 public class TradeCategory {
 
     @Id

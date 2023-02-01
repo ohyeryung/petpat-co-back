@@ -67,4 +67,16 @@ public class Trade extends Timestamped {
         this.viewCnt = viewCnt;
         this.tradeCategoryDetail = tradeCategoryDetail;
     }
+
+    public void isFinding() {
+        this.status = PostStatus.TRADE_FINDING;
+    }
+
+    public void isReserved() {
+        this.status = PostStatus.TRADE_RESERVING;
+    }
+
+    public void isMatched() {
+        this.status = PostStatus.TRADE_COMPLETED;
+    }
 }
