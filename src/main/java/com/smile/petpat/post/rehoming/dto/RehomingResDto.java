@@ -23,7 +23,11 @@ public class RehomingResDto {
     private String category;
     private String type;
     private String gender;
-    private String location;
+    private String cityName;
+    private String cityCountryName;
+    private String townShipName;
+    private String detailAdName;
+    private String fullAdName;
     private Long price;
     private PostStatus status;
     private PostType postType;
@@ -48,7 +52,11 @@ public class RehomingResDto {
         this.category = rehoming.getCategory().getCategoryGroupName();
         this.type = rehoming.getType().getPetCategoryName();
         this.gender = rehoming.getGender();
-        this.location = rehoming.getLocation();
+        this.cityName = rehoming.getCityName();
+        this.cityCountryName = rehoming.getCityCountryName();
+        this.townShipName = rehoming.getTownShipName();
+        this.detailAdName = rehoming.getDetailAdName();
+        this.fullAdName = rehoming.getFullAdName();
         this.price = rehoming.getPrice();
         this.status = rehoming.getStatus();
         this.rehomingImg = rehomingImg;
@@ -74,7 +82,11 @@ public class RehomingResDto {
         this.category = rehoming.getCategory().getCategoryGroupName();
         this.type = rehoming.getType().getPetCategoryName();
         this.gender = rehoming.getGender();
-        this.location = rehoming.getLocation();
+        this.cityName = rehoming.getCityName();
+        this.cityCountryName = rehoming.getCityCountryName();
+        this.townShipName = rehoming.getTownShipName();
+        this.detailAdName = rehoming.getDetailAdName();
+        this.fullAdName = rehoming.getFullAdName();
         this.price = rehoming.getPrice();
         this.status = rehoming.getStatus();
         this.rehomingImg = rehomingImg;

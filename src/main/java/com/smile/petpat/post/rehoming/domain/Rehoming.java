@@ -50,8 +50,20 @@ public class Rehoming extends Timestamped {
     @Column(name = "GENDER", nullable = false)
     private String gender;
 
-    @Column(name = "LOCATION", nullable = false)
-    private String location;
+    @Column(name = "CITY_NAME", nullable = false)
+    private String cityName;
+
+    @Column(name = "CITY_COUNTRY_NAME", nullable = false)
+    private String cityCountryName;
+
+    @Column(name = "TOWNSHIP_NAME", nullable = false)
+    private String townShipName;
+
+    @Column(name = "DETAIL_AD_NAME", nullable = false)
+    private String detailAdName;
+
+    @Column(name = "FULL_AD_NAME", nullable = false)
+    private String fullAdName;
 
     @Column(name = "PRICE", length = 8)
     private Long price;
@@ -79,8 +91,9 @@ public class Rehoming extends Timestamped {
     }
 
     public Rehoming(Long rehomingId, User user, String title, String description, String petName, String petAge,
-                    CategoryGroup category, PetCategory type, String gender, String location, Long price, PostStatus status,
-                    PostType postType, int viewCnt) {
+                    CategoryGroup category, PetCategory type, String gender, String cityName,
+                    String cityCountryName, String townShipName, String detailAdName, String fullAdName,
+                    Long price, PostStatus status, PostType postType, int viewCnt) {
         this.rehomingId = rehomingId;
         this.user = user;
         this.title = title;
@@ -90,7 +103,11 @@ public class Rehoming extends Timestamped {
         this.category = category;
         this.type = type;
         this.gender = gender;
-        this.location = location;
+        this.cityName = cityName;
+        this.cityCountryName = cityCountryName;
+        this.townShipName = townShipName;
+        this.detailAdName = detailAdName;
+        this.fullAdName = fullAdName;
         this.price = price;
         this.status = status;
         this.postType = postType;
@@ -110,10 +127,20 @@ public class Rehoming extends Timestamped {
         this.category = initRehoming.getCategory();
         this.type = initRehoming.getType();
         this.gender = initRehoming.getGender();
-        this.location = initRehoming.getLocation();
+        this.cityName = initRehoming.getCityName();
+        this.cityCountryName = initRehoming.getCityCountryName();
+        this.townShipName = initRehoming.getTownShipName();
+        this.detailAdName = initRehoming.getDetailAdName();
+        this.fullAdName = initRehoming.getFullAdName();
         this.price = initRehoming.getPrice();
         this.status = initRehoming.getStatus();
     }
+
+    // 조회수 증가
+    public void updateViewCnt(Rehoming rehoming) {
+        this.viewCnt = rehoming.getViewCnt() + 1;
+    }
+
 }
 
 

@@ -22,7 +22,11 @@ public class RehomingCommand {
     private Long category;
     private Long type;
     private String gender;
-    private String location;
+    private String cityName;
+    private String cityCountryName;
+    private String townShipName;
+    private String detailAdName;
+    private String fullAdName;
     private Long price;
     private int viewCnt;
 
@@ -35,7 +39,11 @@ public class RehomingCommand {
                 .category(category)
                 .type(type)
                 .gender(gender)
-                .location(location)
+                .cityName(cityName)
+                .cityCountryName(cityCountryName)
+                .townShipName(townShipName)
+                .detailAdName(detailAdName)
+                .fullAdName(fullAdName)
                 .price(price)
                 .build();
     }
@@ -50,7 +58,11 @@ public class RehomingCommand {
                 .category(category)
                 .type(type)
                 .gender(gender)
-                .location(location)
+                .cityName(cityName)
+                .cityCountryName(cityCountryName)
+                .townShipName(townShipName)
+                .detailAdName(detailAdName)
+                .fullAdName(fullAdName)
                 .price(price)
                 .viewCnt(viewCnt)
                 .status(PostStatus.REHOMING_FINDING)
@@ -69,7 +81,11 @@ public class RehomingCommand {
                 .category(category)
                 .type(type)
                 .gender(gender)
-                .location(location)
+                .cityName(cityName)
+                .cityCountryName(cityCountryName)
+                .townShipName(townShipName)
+                .detailAdName(detailAdName)
+                .fullAdName(fullAdName)
                 .price(price)
                 .status(status)
                 .build();

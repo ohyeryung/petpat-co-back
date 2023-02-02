@@ -21,7 +21,11 @@ public class RehomingInfo {
     private String category;
     private String type;
     private String gender;
-    private String location;
+    private String cityName;
+    private String cityCountryName;
+    private String townShipName;
+    private String detailAdName;
+    private String fullAdName;
     private Long price;
     private PostStatus status;
     private PostType postType;
@@ -36,7 +40,8 @@ public class RehomingInfo {
     // 회원
     public RehomingInfo(Long rehomingId, Long userId, String nickname,
                         String title, String description, String petName, String petAge,
-                        String category, String type, String gender, String location,
+                        String category, String type, String gender, String cityName, String cityCountryName,
+                        String townShipName, String detailAdName, String fullAdName,
                         Long price, PostStatus status, PostType postType, LocalDateTime createdAt, LocalDateTime updatedAt,
                         Long isLiked, Long isBookmarked, int viewCnt, Long likeCnt, Long bookmarkCnt) {
         this.rehomingId = rehomingId;
@@ -49,7 +54,11 @@ public class RehomingInfo {
         this.category = category;
         this.type = type;
         this.gender = gender;
-        this.location = location;
+        this.cityName = cityName;
+        this.cityCountryName = cityCountryName;
+        this.townShipName = townShipName;
+        this.detailAdName = detailAdName;
+        this.fullAdName = fullAdName;
         this.price = price;
         this.status = status;
         // this.rehomingImg = rehomingImg;
@@ -70,7 +79,8 @@ public class RehomingInfo {
     // 비회원
     public RehomingInfo(Long rehomingId, Long userId, String nickname,
                         String title, String description, String petName, String petAge,
-                        String category, String type, String gender, String location,
+                        String category, String type, String gender, String cityName, String cityCountryName,
+                        String townShipName, String detailAdName, String fullAdName,
                         Long price, PostStatus status, PostType postType, LocalDateTime createdAt, LocalDateTime updatedAt,
                         int viewCnt, Long likeCnt, Long bookmarkCnt) {
         this.rehomingId = rehomingId;
@@ -83,7 +93,11 @@ public class RehomingInfo {
         this.category = category;
         this.type = type;
         this.gender = gender;
-        this.location = location;
+        this.cityName = cityName;
+        this.cityCountryName = cityCountryName;
+        this.townShipName = townShipName;
+        this.detailAdName = detailAdName;
+        this.fullAdName = fullAdName;
         this.price = price;
         this.status = status;
         // this.rehomingImg = rehomingImg;
