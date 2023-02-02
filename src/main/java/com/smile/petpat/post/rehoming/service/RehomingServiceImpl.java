@@ -7,7 +7,6 @@ import com.smile.petpat.post.category.domain.PetCategory;
 import com.smile.petpat.post.category.domain.PostType;
 import com.smile.petpat.post.common.CommonUtils;
 import com.smile.petpat.post.common.status.PostStatus;
-import com.smile.petpat.post.common.views.ViewsService;
 import com.smile.petpat.post.rehoming.domain.Rehoming;
 import com.smile.petpat.post.rehoming.domain.RehomingCommand;
 import com.smile.petpat.post.rehoming.domain.RehomingReader;
@@ -33,7 +32,6 @@ public class RehomingServiceImpl implements RehomingService {
     private final ImageUploader imageUploader;
     private final RehomingReader rehomingReader;
     private final RehomingStore rehomingStore;
-    private final ViewsService viewsService;
     private final CommonUtils commonUtils;
     private final RehomingRepository rehomingRepository;
 
@@ -68,9 +66,9 @@ public class RehomingServiceImpl implements RehomingService {
     @Override
     @Transactional
     public RehomingResDto detailRehomingForMember(Long postId, User user) {
-        // 조회수 계산
-        viewsService.updateViewCnt(postId, PostType.REHOMING);
         Rehoming rehoming = rehomingReader.readRehomingById(postId);
+        // 조회수 계산
+        rehoming.updateViewCnt(rehoming);
         return getResDto(user, postId, rehoming);
     }
 
@@ -78,9 +76,9 @@ public class RehomingServiceImpl implements RehomingService {
     @Override
     @Transactional
     public RehomingResDto detailRehoming(Long postId) {
-        // 조회수 계산
-        viewsService.updateViewCnt(postId, PostType.REHOMING);
         Rehoming rehoming = rehomingReader.readRehomingById(postId);
+        // 조회수 계산
+        rehoming.updateViewCnt(rehoming);
         List<String> imgList = imageUploader.createImgList(postId, PostType.REHOMING);
         return new RehomingResDto(rehoming, imgList,
                 commonUtils.getLikesCnt(postId, PostType.REHOMING),

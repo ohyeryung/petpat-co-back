@@ -5,7 +5,6 @@ import com.smile.petpat.image.domain.ImageUploader;
 import com.smile.petpat.post.category.domain.PostType;
 import com.smile.petpat.post.category.domain.TradeCategoryDetail;
 import com.smile.petpat.post.common.CommonUtils;
-import com.smile.petpat.post.common.views.ViewsService;
 import com.smile.petpat.post.trade.domain.*;
 import com.smile.petpat.user.domain.User;
 import lombok.RequiredArgsConstructor;
@@ -25,7 +24,6 @@ public class TradeServiceImpl implements TradeService{
     private final TradeReader tradeReader;
     private final ImageUploadManager imageUploadManager;
     private final ImageUploader imageUploader;
-    private final ViewsService viewsService;
     private final CommonUtils commonUtils;
 
     @Override
@@ -50,18 +48,18 @@ public class TradeServiceImpl implements TradeService{
 
     @Override
     public TradeInfo tradeDetail(Long tradeId) {
-        // 조회수 계산
-        viewsService.updateViewCnt(tradeId, PostType.TRADE);
         List<String> imgList = imageUploader.createImgList(tradeId, PostType.TRADE);
         Trade trade = tradeReader.readTradeById(tradeId);
+        // 조회수 계산
+        trade.updateViewCnt(trade);
         return new TradeInfo(trade,imgList);
     }
 
     @Override
     public TradeInfo tradeDetailforUser(Long tradeId, User user) {
-        // 조회수 계산
-        viewsService.updateViewCnt(tradeId, PostType.TRADE);
         Trade trade = tradeReader.readTradeById(tradeId);
+        // 조회수 계산
+        trade.updateViewCnt(trade);
         return getTradeInfo(tradeId, user, trade);
 
     }

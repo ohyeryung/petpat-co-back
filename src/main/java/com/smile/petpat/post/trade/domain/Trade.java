@@ -79,4 +79,8 @@ public class Trade extends Timestamped {
     public void isMatched() {
         this.status = PostStatus.TRADE_COMPLETED;
     }
+
+    public void updateViewCnt(Trade trade) {
+        this.viewCnt = trade.getViewCnt() + 1;
+    }
 }
