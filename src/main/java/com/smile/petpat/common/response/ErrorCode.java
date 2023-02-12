@@ -16,6 +16,7 @@ public enum ErrorCode {
 
     // IMAGE
     FAILED_UPLOAD_IMAGE(HttpStatus.BAD_REQUEST,  "이미지 업로드에 실패했습니다."),
+    BELOW_MIN_IMAGE_COUNT(HttpStatus.BAD_REQUEST, "최소 1개이상의 이미지를 등록해야합니다."),
     WRONG_TYPE_IMAGE(HttpStatus.BAD_REQUEST,  "잘못된 형식의 파일입니다"),
     EXCEEDED_MAX_IMAGE_COUNT(HttpStatus.BAD_REQUEST, "업로드가능한 최대 이미지갯수를 초과하였습니다."),
     EXCEEDED_MAX_IMAGE_SIZE(HttpStatus.BAD_REQUEST,"업로드가능한 최대 이미지용량을 초과하였습니다.")
