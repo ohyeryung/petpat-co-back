@@ -8,6 +8,11 @@ import com.smile.petpat.user.domain.User;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.ToString;
+import org.springframework.web.multipart.MultipartFile;
+
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import java.util.List;
 
 @Getter
 @Builder
@@ -15,23 +20,24 @@ import lombok.ToString;
 public class RehomingCommand {
 
     private User user;
-    private String title;
-    private String description;
-    private String petName;
-    private String petAge;
-    private Long category;
-    private Long type;
-    private String gender;
+    private List<MultipartFile> rehomingImg;
+    @NotBlank(message = "제목은 필수값입니다.") private String title;
+    @NotBlank(message = "설명은 필수값입니다.") private String description;
+    @NotBlank(message = "이름은 필수값입니다.") private String petName;
+    @NotBlank(message = "나이는 필수값입니다.") private String petAge;
+    @NotNull(message = "카테고리는 필수값입니다.") private Long category;
+    @NotNull(message = "종은 필수값입니다.") private Long type;
+    @NotBlank(message = "성별은 필수값입니다.") private String gender;
     private String cityName;
     private String cityCountryName;
     private String townShipName;
     private String detailAdName;
     private String fullAdName;
-    private Long price;
-    private int viewCnt;
+    @NotNull(message = "책임비는 필수값입니다.") private Long price;
 
     public RehomingCommand toCommand() {
         return RehomingCommand.builder()
+                .rehomingImg(rehomingImg)
                 .title(title)
                 .description(description)
                 .petName(petName)
@@ -64,7 +70,6 @@ public class RehomingCommand {
                 .detailAdName(detailAdName)
                 .fullAdName(fullAdName)
                 .price(price)
-                .viewCnt(viewCnt)
                 .status(PostStatus.REHOMING_FINDING)
                 .postType(PostType.REHOMING)
                 .build();
