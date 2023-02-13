@@ -10,7 +10,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.List;
 
 public interface RehomingService {
-    void registerRehoming(User user, List<MultipartFile> rehomingImg, RehomingCommand rehomingCommand);
+    void registerRehoming(User user, RehomingCommand rehomingCommand);
 
     RehomingPagingDto listRehomingForMember(User user, Pageable pageable);
 
