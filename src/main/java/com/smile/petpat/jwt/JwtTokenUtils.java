@@ -31,6 +31,8 @@ public class JwtTokenUtils {
                 .withExpiresAt(new Date(System.currentTimeMillis() + JWT_TOKEN_VALID_MILLI_SEC))
                 .sign(generateAlgorithm(JWT_SECRET));
 
+        System.out.println("token: " + token);
+
         return token;
     }
 

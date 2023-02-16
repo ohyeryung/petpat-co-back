@@ -2,11 +2,14 @@ package com.smile.petpat.user.service;
 
 import com.smile.petpat.user.domain.User;
 import com.smile.petpat.user.domain.UserStore;
+import com.smile.petpat.user.dto.SocialUserDto;
 import com.smile.petpat.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
+
+import java.util.UUID;
 
 @Component
 @RequiredArgsConstructor
@@ -24,8 +27,31 @@ public class UserStoreImpl implements UserStore {
                 .nickname(initUser.getNickname())
                 .password(passwordEncoder.encode(initUser.getPassword()))
                 .profileImgPath(initUser.getProfileImgPath())
+                .oauthType(User.oauthEnum.NORMAL)
                 .build();
         return userRepository.save(user);
+    }
+
+    @Override
+    public User socialStore(SocialUserDto socialUser) {
+        User kakaoUser = userRepository.findByUserEmail(socialUser.getUserEmail())
+                .orElse(null);
+
+        String password = passwordEncoder.encode(UUID.randomUUID().toString());
+
+        if (kakaoUser == null) {
+            User user = User.builder()
+                    .id(socialUser.getId())
+                    .userEmail(socialUser.getUserEmail())
+                    .nickname(socialUser.getNickname())
+                    .password(password)
+                    .oauthType(User.oauthEnum.KAKAO)
+                    .build();
+
+            userRepository.save(user);
+        }
+
+        return kakaoUser;
     }
 
     // 유저 객체 검증

@@ -36,17 +36,18 @@ public class TokenProvider{
     String JWT_SECRET;
 
     // 토큰을 헤더에 담음
-    public HttpHeaders headerToken(User user) {
-        String token = jwtTokenUtils.generateJwtToken(user);
+    public HttpHeaders headerToken(String token) {
 
         HttpHeaders headers = new HttpHeaders();
         headers.add(HttpHeaders.AUTHORIZATION, "Bearer " + token);
+        System.out.println("담은 토큰: " + token);
         return headers;
     }
 
     // header에서 토큰 추출
     public String resolveToken(HttpServletRequest request) {
         String bearerToken = request.getHeader("Authorization");
+        System.out.println("header에서 추출한 토큰: " + bearerToken);
         if (bearerToken != null && bearerToken.startsWith(TOKEN_PREFIX)) {
             return bearerToken.substring(TOKEN_PREFIX.length());
         }
@@ -69,6 +70,7 @@ public class TokenProvider{
         if (decodedJWT.getExpiresAt().before(now)) {
             throw new CustomException(ILLEGAL_INVALID_TOKEN);
         }
+        System.out.println("토큰 날짜 통과");
 
         String username = decodedJWT
                 .getClaim(JwtTokenUtils.CLAIM_USERID)
