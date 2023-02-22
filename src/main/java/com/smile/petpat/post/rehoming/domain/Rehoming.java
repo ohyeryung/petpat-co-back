@@ -59,7 +59,7 @@ public class Rehoming extends Timestamped {
     @Column(name = "TOWNSHIP_NAME", nullable = false)
     private String townShipName;
 
-    @Column(name = "DETAIL_AD_NAME", nullable = false)
+    @Column(name = "DETAIL_AD_NAME")
     private String detailAdName;
 
     @Column(name = "FULL_AD_NAME", nullable = false)

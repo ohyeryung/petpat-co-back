@@ -38,7 +38,7 @@ public class RehomingServiceImpl implements RehomingService {
     // 1. 분양 글 등록
     @Override
     @Transactional
-    public void registerRehoming(User user, List<MultipartFile> rehomingImg, RehomingCommand rehomingCommand) {
+    public void registerRehoming(User user, RehomingCommand rehomingCommand) {
         // 1-1. 게시물 등록
         CategoryGroup category = rehomingReader.readCategoryById(rehomingCommand.getCategory());
         PetCategory type = rehomingReader.readPetTypeById(rehomingCommand.getType());
@@ -46,7 +46,7 @@ public class RehomingServiceImpl implements RehomingService {
         Rehoming rehoming = rehomingStore.store(initRehoming);
         // 1-2. 이미지 등록
         Long postId = rehoming.getRehomingId();
-        imageUploadManager.uploadPostImage(rehomingImg, postId, PostType.REHOMING);
+        imageUploadManager.uploadPostImage(rehomingCommand.getRehomingImg(), postId, PostType.REHOMING);
 
     }
 

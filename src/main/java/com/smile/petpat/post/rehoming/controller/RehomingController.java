@@ -15,6 +15,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.validation.Valid;
 import java.util.List;
 @Api(tags = {"post_rehoming_api"})
 @RestController
@@ -29,10 +30,9 @@ public class RehomingController {
     @ApiOperation(value = "분양게시글 등록", notes = "분양게시글 등록")
     @RequestMapping(value = "",method = RequestMethod.POST)
     public SuccessResponse registerRehoming(@AuthenticationPrincipal UserDetailsImpl userDetails,
-                                  @RequestPart List<MultipartFile> rehomingImg,
-                                  @RequestPart RehomingCommand rehomingDto) {
+                                  @ModelAttribute @Valid RehomingCommand rehomingDto) {
         RehomingCommand rehomingCommand = rehomingDto.toCommand();
-        rehomingService.registerRehoming(userDetails.getUser(), rehomingImg, rehomingCommand);
+        rehomingService.registerRehoming(userDetails.getUser(), rehomingCommand);
         return SuccessResponse.success("OK");
     }
 
