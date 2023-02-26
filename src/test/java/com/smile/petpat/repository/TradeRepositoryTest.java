@@ -17,7 +17,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DisplayName("중고거래 JPA 연결 테스트")
-@DataJpaTest  // transactional 이 걸려있다, 기본값은 rollback이다. 따라서 ddl문이 적용되지 않은다.
+@DataJpaTest()  // transactional 이 걸려있다, 기본값은 rollback이다. 따라서 ddl문이 적용되지 않은다.
 class TradeRepositoryTest {
 
     private final UserRepository userRepository;
@@ -35,6 +35,7 @@ class TradeRepositoryTest {
     }
 
     private User user1;
+
     @BeforeEach
     void beforeEach(){
         user1 = User
@@ -70,6 +71,7 @@ class TradeRepositoryTest {
                 .build();
         Trade saveTrade = tradeRepository.save(trade);
         // Then
+        System.out.println(saveTrade.getTradeCategoryDetail().getTradeCategoryDetailName());
         assertThat(tradeRepository.count()).isEqualTo(previousCount +1);
 
     }
