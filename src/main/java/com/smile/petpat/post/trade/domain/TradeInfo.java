@@ -15,8 +15,13 @@ public class TradeInfo {
     private String title;
     private String content;
     private Long price;
+    private String cityName;
+    private String cityCountryName;
+    private String townShipName;
+    private String detailAdName;
+    private String fullAdName;
+
     private List<String> imageList;
-    private String location;
     private PostType postType;
     private boolean isLiked;
     private boolean isBookmarked;
@@ -26,15 +31,18 @@ public class TradeInfo {
     private String tradeCategoryDetailName;
 
 
-    public TradeInfo(Long tradeId, Long userId, String title, String content, Long price, List<String> imageList, String location, PostType postType,
-                     boolean isBookmarked, boolean isLiked, int viewCnt, Long likeCnt, Long bookmarkCnt, String tradeCategoryDetailName) {
+    public TradeInfo(Long tradeId, Long userId, String title, String content, Long price, String cityName, String cityCountryName, String townShipName, String detailAdName, String fullAdName, List<String> imageList, PostType postType, boolean isLiked, boolean isBookmarked, int viewCnt, Long likeCnt, Long bookmarkCnt, String tradeCategoryDetailName) {
         this.tradeId = tradeId;
         this.userId = userId;
         this.title = title;
         this.content = content;
         this.price = price;
+        this.cityName = cityName;
+        this.cityCountryName = cityCountryName;
+        this.townShipName = townShipName;
+        this.detailAdName = detailAdName;
+        this.fullAdName = fullAdName;
         this.imageList = imageList;
-        this.location = location;
         this.postType = postType;
         this.isLiked = isLiked;
         this.isBookmarked = isBookmarked;
@@ -50,7 +58,11 @@ public class TradeInfo {
         this.title = trade.getTitle();
         this.content = trade.getContent();
         this.price = trade.getPrice();
-        this.location = trade.getLocation();
+        this.cityName = trade.getCityName();
+        this.cityCountryName = trade.getCityCountryName();
+        this.townShipName = trade.getTownShipName();
+        this.detailAdName = trade.getDetailAdName();
+        this.fullAdName = trade.getFullAdName();
         this.imageList = imageList;
         this.postType = trade.getPostType();
         this.isLiked = isLiked;
@@ -67,7 +79,11 @@ public class TradeInfo {
         this.title = trade.getTitle();
         this.content = trade.getContent();
         this.price = trade.getPrice();
-        this.location = trade.getLocation();
+        this.cityName = trade.getCityName();
+        this.cityCountryName = trade.getCityCountryName();
+        this.townShipName = trade.getTownShipName();
+        this.detailAdName = trade.getDetailAdName();
+        this.fullAdName = trade.getFullAdName();
         this.postType = trade.getPostType();
         this.viewCnt = trade.getViewCnt();
         this.tradeCategoryDetailName = trade.getTradeCategoryDetail().getTradeCategoryDetailName();
@@ -80,7 +96,11 @@ public class TradeInfo {
         this.content = trade.getContent();
         this.price = trade.getPrice();
         this.imageList = imgList;
-        this.location = trade.getLocation();
+        this.cityName = trade.getCityName();
+        this.cityCountryName = trade.getCityCountryName();
+        this.townShipName = trade.getTownShipName();
+        this.detailAdName = trade.getDetailAdName();
+        this.fullAdName = trade.getFullAdName();
         this.postType = trade.getPostType();
         this.viewCnt = trade.getViewCnt();
     }
