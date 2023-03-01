@@ -45,7 +45,7 @@ public class UserReaderImpl implements UserReader {
     @Override
     public SocialUserDto getKakaoUserInfo(String accessToken) throws JsonProcessingException {
         HttpHeaders headers = new HttpHeaders();
-        headers.add("Authorization", "Bearer" + accessToken);
+        headers.add("Authorization", "Bearer " + accessToken);
         headers.add("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
 
         HttpEntity<MultiValueMap<String, String>> kakaoUserInfoRequest = new HttpEntity<>(headers);
@@ -64,8 +64,6 @@ public class UserReaderImpl implements UserReader {
         Long id = jsonNode.get("id").asLong();
         String email = jsonNode.get("kakao_account").get("email").asText();
         String nickname = jsonNode.get("properties").get("nickname").asText();
-
-        System.out.println(id + email+ nickname);
 
         return new SocialUserDto(id, email, nickname);
     }

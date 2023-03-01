@@ -7,7 +7,8 @@ import com.smile.petpat.jwt.JwtTokenUtils;
 import com.smile.petpat.user.domain.User;
 import com.smile.petpat.user.domain.UserAuth;
 import lombok.RequiredArgsConstructor;
-import lombok.Value;
+
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -26,10 +27,17 @@ import java.util.Collection;
 public class UserAuthImpl implements UserAuth {
 
     private final JwtTokenUtils jwtTokenUtils;
-    private String kakaoClientId = "ba11120ddd303415ecab18425ddd60db";
-    private String kakaoRedirectUri = "http://localhost:8082/api/v1/user/kakao/callback";
-    private String googleClientId = "";
-    private String googleClientSecret = "";
+
+    @Value("${spring.security.oauth2.client.registration.kakao.client-id}")
+    private String kakaoClientId;
+    @Value("${spring.security.oauth2.client.registration.kakao.redirect-uri}")
+    private String kakaoRedirectUri;
+
+    @Value("${spring.security.oauth2.client.registration.google.client-id}")
+    private String googleClientId;
+    @Value("${spring.security.oauth2.client.registration.google.client-secret}")
+    private String googleClientSecret;
+    @Value("${spring.security.oauth2.client.registration.google.redirect-uri}")
     private String googleRedirectUri = "";
 
     @Override
@@ -62,7 +70,6 @@ public class UserAuthImpl implements UserAuth {
         String responseBody = response.getBody();
         ObjectMapper objectMapper = new ObjectMapper();
         JsonNode responseToken = objectMapper.readTree(responseBody);
-        System.out.println("카카오 코드 가져옴: " + code);
 
         return responseToken.get("access_token").asText();
     }

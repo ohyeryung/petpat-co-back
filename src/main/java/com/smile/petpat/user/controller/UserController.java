@@ -7,6 +7,8 @@ import com.smile.petpat.user.dto.SocialUserDto;
 import com.smile.petpat.user.dto.UserDto;
 import com.smile.petpat.user.service.UserServiceImpl;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +21,7 @@ import javax.servlet.http.HttpServletResponse;
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/user")
 public class UserController {
+    private final Logger logger = LoggerFactory.getLogger(TokenProvider.class);
 
     private final UserServiceImpl userService;
     private final TokenProvider tokenProvider;
@@ -50,9 +53,9 @@ public class UserController {
     // 카카오 로그인
     @RequestMapping(value = "/kakao/callback", method = RequestMethod.GET)
     public void kakaoLogin(@RequestParam String code, HttpServletResponse response) throws JsonProcessingException {
-        System.out.println("*****Controller Welcome******");
         String token = userService.kakaoUserLogin(code);
 
+        logger.info("welcome controller");
         response.addHeader("Authorization", "Bearer " + token);
     }
 }

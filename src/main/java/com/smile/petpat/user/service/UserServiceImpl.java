@@ -9,7 +9,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.servlet.http.HttpServletResponse;
 
 @Service
 @RequiredArgsConstructor
@@ -44,7 +43,6 @@ public class UserServiceImpl implements UserService {
     public String kakaoUserLogin(String code) throws JsonProcessingException {
         String accessToken = userAuth.getKakaoAccessToken(code);
         SocialUserDto kakaoUserInfo = userReader.getKakaoUserInfo(accessToken);
-        System.out.println("kakaoUserInfo: " + kakaoUserInfo);
         User kakaoUser = userStore.socialStore(kakaoUserInfo);
 
         return userAuth.forceLogin(kakaoUser);
