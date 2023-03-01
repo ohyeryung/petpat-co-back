@@ -65,7 +65,7 @@ public class UserReaderImpl implements UserReader {
         String email = jsonNode.get("kakao_account").get("email").asText();
         String nickname = jsonNode.get("properties").get("nickname").asText();
 
-        return new SocialUserDto(id, email, nickname);
+        return new SocialUserDto(id, email, nickname, User.oauthEnum.KAKAO);
     }
 
     public void isPwValid(User initUser) {

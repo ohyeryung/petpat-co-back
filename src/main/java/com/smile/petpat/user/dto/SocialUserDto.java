@@ -1,5 +1,6 @@
 package com.smile.petpat.user.dto;
 
+import com.smile.petpat.user.domain.User;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,12 +17,14 @@ public class SocialUserDto {
     @NotEmpty
     private String userEmail;
     private String nickname;
+    private User.oauthEnum oauthType;
 
 
-    public SocialUserDto(Long id, String userEmail, String nickname) {
+    public SocialUserDto(Long id, String userEmail, String nickname, User.oauthEnum oauthType) {
         this.id = id;
         this.userEmail = userEmail;
         this.nickname = nickname;
+        this.oauthType = oauthType;
     }
 
 

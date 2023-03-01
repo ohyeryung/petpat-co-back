@@ -34,24 +34,24 @@ public class UserStoreImpl implements UserStore {
 
     @Override
     public User socialStore(SocialUserDto socialUser) {
-        User kakaoUser = userRepository.findByUserEmail(socialUser.getUserEmail())
+        User findUser = userRepository.findByUserEmail(socialUser.getUserEmail())
                 .orElse(null);
 
-        String password = passwordEncoder.encode(UUID.randomUUID().toString());
+        if (findUser == null) {
+            String password = passwordEncoder.encode(UUID.randomUUID().toString());
 
-        if (kakaoUser == null) {
             User user = User.builder()
                     .id(socialUser.getId())
                     .userEmail(socialUser.getUserEmail())
                     .nickname(socialUser.getNickname())
                     .password(password)
-                    .oauthType(User.oauthEnum.KAKAO)
+                    .oauthType(socialUser.getOauthType())
                     .build();
 
             userRepository.save(user);
         }
 
-        return kakaoUser;
+        return findUser;
     }
 
     // 유저 객체 검증
