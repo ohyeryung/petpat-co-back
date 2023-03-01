@@ -13,14 +13,15 @@ import java.util.Scanner;
 @NoArgsConstructor
 public class SocialUserDto {
     private Long id;
-    private String nickname;
     @NotEmpty
     private String userEmail;
+    private String nickname;
 
-    public SocialUserDto(Long id, String nickname, String userEmail) {
+
+    public SocialUserDto(Long id, String userEmail, String nickname) {
         this.id = id;
-        this.nickname = nickname;
         this.userEmail = userEmail;
+        this.nickname = nickname;
     }
 
 
