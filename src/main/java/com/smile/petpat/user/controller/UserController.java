@@ -21,7 +21,6 @@ import javax.servlet.http.HttpServletResponse;
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/user")
 public class UserController {
-    private final Logger logger = LoggerFactory.getLogger(TokenProvider.class);
 
     private final UserServiceImpl userService;
     private final TokenProvider tokenProvider;
@@ -55,7 +54,14 @@ public class UserController {
     public void kakaoLogin(@RequestParam String code, HttpServletResponse response) throws JsonProcessingException {
         String token = userService.kakaoUserLogin(code);
 
-        logger.info("welcome controller");
+        response.addHeader("Authorization", "Bearer " + token);
+    }
+
+    // 구글 로그인
+    @RequestMapping(value = "/google/callback", method = RequestMethod.GET)
+    public void googleLogin(@RequestParam String code, HttpServletResponse response) throws JsonProcessingException {
+        String token = userService.googleUserLogin(code);
+
         response.addHeader("Authorization", "Bearer " + token);
     }
 }

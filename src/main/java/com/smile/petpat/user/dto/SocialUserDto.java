@@ -17,14 +17,14 @@ public class SocialUserDto {
     @NotEmpty
     private String userEmail;
     private String nickname;
-    private User.oauthEnum oauthType;
+    private User.loginTypeEnum loginType;
 
 
-    public SocialUserDto(Long id, String userEmail, String nickname, User.oauthEnum oauthType) {
+    public SocialUserDto(Long id, String userEmail, String nickname, User.loginTypeEnum loginType) {
         this.id = id;
         this.userEmail = userEmail;
         this.nickname = nickname;
-        this.oauthType = oauthType;
+        this.loginType = loginType;
     }
 
 

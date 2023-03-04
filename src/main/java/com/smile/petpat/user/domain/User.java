@@ -28,34 +28,34 @@ public class User implements UserDetails {
     private String profileImgPath;
     @Enumerated(value = EnumType.STRING)
     @Column(name = "OAUTH_TYPE")
-    private oauthEnum oauthType;
+    private loginTypeEnum loginType;
 
     // 후에 여러컬럼이나 테이블로 분리할지 생각해야함
     @Column(name = "LOCATION")
     private String location;
 
     @Builder
-    public User(Long id, String userEmail, String nickname, String password,  String profileImgPath, oauthEnum oauthType,  String location) {
+    public User(Long id, String userEmail, String nickname, String password,  String profileImgPath, loginTypeEnum loginType,  String location) {
         this.id = id;
         this.userEmail = userEmail;
         this.nickname = nickname;
         this.password = password;
         this.profileImgPath = profileImgPath;
-        this.oauthType = oauthType;
+        this.loginType = loginType;
         this.location = location;
     }
 
     public User(User socialUser) {
     }
 
-    public enum oauthEnum{
+    public enum loginTypeEnum{
         NORMAL("일반유저"),
         KAKAO("카카오유저"),
         GOOGLE("구글유저");
 
         private String userType;
 
-        oauthEnum(String userType) {
+        loginTypeEnum(String userType) {
             this.userType = userType;
         }
     }

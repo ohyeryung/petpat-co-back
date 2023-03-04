@@ -8,4 +8,5 @@ public interface UserReader {
     void getUser(User user);
 
     SocialUserDto getKakaoUserInfo(String accessToken) throws JsonProcessingException;
+    SocialUserDto getGoogleUserInfo(String accessToken) throws JsonProcessingException;
 }

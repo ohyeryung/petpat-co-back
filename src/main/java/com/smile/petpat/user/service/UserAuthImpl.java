@@ -38,12 +38,11 @@ public class UserAuthImpl implements UserAuth {
     @Value("${spring.security.oauth2.client.registration.google.client-secret}")
     private String googleClientSecret;
     @Value("${spring.security.oauth2.client.registration.google.redirect-uri}")
-    private String googleRedirectUri = "";
+    private String googleRedirectUri;
 
     @Override
     public String getToken(User user) {
-        String token = jwtTokenUtils.generateJwtToken(user);
-        return token;
+        return jwtTokenUtils.generateJwtToken(user);
     }
 
 

@@ -16,10 +16,9 @@ public class JwtTokenUtils {
     // JWT 토큰의 유효기간: 3일 (단위: milliseconds)
     private static final int JWT_TOKEN_VALID_MILLI_SEC = 3 * DAY * 1000;
     public static final String CLAIM_USERID = "USER_ID";
+//    public static final String CLAIM_OAUTH = "OAUTH_INFO";
     public static final String ISSUER = "petpat";
-//
-//    @Value("${jwt.issuer}")
-//    static String ISSUER;
+
     @Value("${jwt.secretkey}")
     String JWT_SECRET;
 

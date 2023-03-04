@@ -65,7 +65,35 @@ public class UserReaderImpl implements UserReader {
         String email = jsonNode.get("kakao_account").get("email").asText();
         String nickname = jsonNode.get("properties").get("nickname").asText();
 
-        return new SocialUserDto(id, email, nickname, User.oauthEnum.KAKAO);
+        return new SocialUserDto(id, email, nickname, User.loginTypeEnum.KAKAO);
+    }
+
+    @Override
+    public SocialUserDto getGoogleUserInfo(String accessToken) throws JsonProcessingException {
+        // 헤더에 엑세스토큰 담기, Content-type 지정
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Authorization", "Bearer " + accessToken);
+        headers.add("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
+
+        // POST 요청 보내기
+        HttpEntity<MultiValueMap<String, String>> googleUser = new HttpEntity<>(headers);
+        RestTemplate restTemplate = new RestTemplate();
+        ResponseEntity<String> response = restTemplate.exchange(
+                "https://openidconnect.googleapis.com/v1/userinfo",
+                HttpMethod.POST, googleUser,
+                String.class
+        );
+
+        // response에서 유저정보 가져오기
+        String responseBody = response.getBody();
+        ObjectMapper objectMapper = new ObjectMapper();
+        JsonNode jsonNode = objectMapper.readTree(responseBody);
+
+        Long id = jsonNode.get("sub").asLong();
+        String email = jsonNode.get("email").asText();
+        String nickname = jsonNode.get("name").asText();
+
+        return new SocialUserDto(id, email, nickname, User.loginTypeEnum.GOOGLE);
     }
 
     public void isPwValid(User initUser) {

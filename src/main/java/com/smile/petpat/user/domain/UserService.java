@@ -9,6 +9,7 @@ public interface UserService {
     String loginUser(UserCommand command);
 
     String kakaoUserLogin(String code) throws JsonProcessingException;
+    String googleUserLogin(String code) throws JsonProcessingException;
 
     void userIdValidChk(String userEmail);
 

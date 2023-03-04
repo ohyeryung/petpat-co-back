@@ -27,7 +27,7 @@ public class UserStoreImpl implements UserStore {
                 .nickname(initUser.getNickname())
                 .password(passwordEncoder.encode(initUser.getPassword()))
                 .profileImgPath(initUser.getProfileImgPath())
-                .oauthType(User.oauthEnum.NORMAL)
+                .loginType(User.loginTypeEnum.NORMAL)
                 .build();
         return userRepository.save(user);
     }
@@ -45,7 +45,7 @@ public class UserStoreImpl implements UserStore {
                     .userEmail(socialUser.getUserEmail())
                     .nickname(socialUser.getNickname())
                     .password(password)
-                    .oauthType(socialUser.getOauthType())
+                    .loginType(socialUser.getLoginType())
                     .build();
 
             userRepository.save(user);
