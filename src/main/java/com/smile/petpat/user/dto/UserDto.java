@@ -16,7 +16,6 @@ public class UserDto {
         @NotEmpty
         private String userEmail;
         @NotEmpty
-//        @Pattern(regexp = )
         private String nickname;
         @NotEmpty
         @Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[$@$!%*#?&])[A-Za-z\\d$@$!%*#?&]{8,12}$",

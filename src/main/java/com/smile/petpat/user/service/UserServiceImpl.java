@@ -1,12 +1,14 @@
 package com.smile.petpat.user.service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.smile.petpat.jwt.TokenProvider;
 import com.smile.petpat.user.domain.*;
+import com.smile.petpat.user.dto.SocialUserDto;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.password.PasswordEncoder;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 
 @Service
 @RequiredArgsConstructor
@@ -15,6 +17,7 @@ public class UserServiceImpl implements UserService {
     private final UserReader userReader;
     private final UserStore userStore;
     private final UserAuth userAuth;
+    private final TokenProvider tokenProvider;
 
     // 회원가입
     @Override
@@ -28,11 +31,29 @@ public class UserServiceImpl implements UserService {
     // 로그인
     @Override
     @Transactional
-    public ResponseEntity<String> loginUser(UserCommand command) {
+    public String loginUser(UserCommand command) {
 
         User initUser = command.toLogin();
         userReader.getUser(initUser);
+
         return userAuth.getToken(initUser);
+    }
+
+    @Override
+    public String kakaoUserLogin(String code) throws JsonProcessingException {
+        String accessToken = userAuth.getKakaoAccessToken(code);
+        SocialUserDto kakaoUserInfo = userReader.getKakaoUserInfo(accessToken);
+        User kakaoUser = userStore.socialStore(kakaoUserInfo);
+
+        return userAuth.forceLogin(kakaoUser);
+    }
+
+    public String googleUserLogin(String code) throws JsonProcessingException{
+        String accessToken = userAuth.getGoogleAccessToken(code);
+        SocialUserDto googleUserInfo = userReader.getGoogleUserInfo(accessToken);
+        User googleUser = userStore.socialStore(googleUserInfo);
+
+        return userAuth.forceLogin(googleUser);
     }
 
     @Override
