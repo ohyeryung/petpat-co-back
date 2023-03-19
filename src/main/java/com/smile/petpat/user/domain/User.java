@@ -1,7 +1,6 @@
 package com.smile.petpat.user.domain;
 
 import lombok.*;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -27,7 +26,7 @@ public class User implements UserDetails {
     @Column(name = "PROFILE_IMG_PATH")
     private String profileImgPath;
     @Enumerated(value = EnumType.STRING)
-    @Column(name = "OAUTH_TYPE")
+    @Column(name = "LOGIN_TYPE")
     private loginTypeEnum loginType;
 
     // 후에 여러컬럼이나 테이블로 분리할지 생각해야함
@@ -51,7 +50,8 @@ public class User implements UserDetails {
     public enum loginTypeEnum{
         NORMAL("일반유저"),
         KAKAO("카카오유저"),
-        GOOGLE("구글유저");
+        GOOGLE("구글유저"),
+        GITHUB("깃허브유저");
 
         private String userType;
 

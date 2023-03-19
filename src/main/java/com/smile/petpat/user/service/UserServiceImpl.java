@@ -48,12 +48,22 @@ public class UserServiceImpl implements UserService {
         return userAuth.forceLogin(kakaoUser);
     }
 
+    @Override
     public String googleUserLogin(String code) throws JsonProcessingException{
         String accessToken = userAuth.getGoogleAccessToken(code);
         SocialUserDto googleUserInfo = userReader.getGoogleUserInfo(accessToken);
         User googleUser = userStore.socialStore(googleUserInfo);
 
         return userAuth.forceLogin(googleUser);
+    }
+
+    @Override
+    public String githubUserLogin(String code) throws JsonProcessingException {
+        String accessToken = userAuth.getGithubAccessToken(code);
+        SocialUserDto githubUserInfo = userReader.getGithubUserInfo(accessToken);
+        User githubUser = userStore.socialStore(githubUserInfo);
+
+        return userAuth.forceLogin(githubUser);
     }
 
     @Override

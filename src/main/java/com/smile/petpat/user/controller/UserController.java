@@ -3,12 +3,9 @@ package com.smile.petpat.user.controller;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.smile.petpat.jwt.TokenProvider;
 import com.smile.petpat.user.domain.UserCommand;
-import com.smile.petpat.user.dto.SocialUserDto;
 import com.smile.petpat.user.dto.UserDto;
 import com.smile.petpat.user.service.UserServiceImpl;
 import lombok.RequiredArgsConstructor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -61,6 +58,14 @@ public class UserController {
     @RequestMapping(value = "/google/callback", method = RequestMethod.GET)
     public void googleLogin(@RequestParam String code, HttpServletResponse response) throws JsonProcessingException {
         String token = userService.googleUserLogin(code);
+
+        response.addHeader("Authorization", "Bearer " + token);
+    }
+
+    // 깃허브 로그인
+    @RequestMapping(value = "/github/callback", method = RequestMethod.GET)
+    public void githubLogin(@RequestParam String code, HttpServletResponse response) throws JsonProcessingException {
+        String token = userService.githubUserLogin(code);
 
         response.addHeader("Authorization", "Bearer " + token);
     }

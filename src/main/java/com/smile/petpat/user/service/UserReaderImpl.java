@@ -28,6 +28,8 @@ public class UserReaderImpl implements UserReader {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
+    HttpHeaders headers = new HttpHeaders();
+
     @Override
     public void getUserByUserEmail(String userEmail) {
         userRepository.findByUserEmail(userEmail).ifPresent(
@@ -44,7 +46,6 @@ public class UserReaderImpl implements UserReader {
 
     @Override
     public SocialUserDto getKakaoUserInfo(String accessToken) throws JsonProcessingException {
-        HttpHeaders headers = new HttpHeaders();
         headers.add("Authorization", "Bearer " + accessToken);
         headers.add("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
 
@@ -71,7 +72,6 @@ public class UserReaderImpl implements UserReader {
     @Override
     public SocialUserDto getGoogleUserInfo(String accessToken) throws JsonProcessingException {
         // 헤더에 엑세스토큰 담기, Content-type 지정
-        HttpHeaders headers = new HttpHeaders();
         headers.add("Authorization", "Bearer " + accessToken);
         headers.add("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
 
@@ -94,6 +94,32 @@ public class UserReaderImpl implements UserReader {
         String nickname = jsonNode.get("name").asText();
 
         return new SocialUserDto(id, email, nickname, User.loginTypeEnum.GOOGLE);
+    }
+
+    @Override
+    public SocialUserDto getGithubUserInfo(String accessToken) throws JsonProcessingException {
+        headers.add("Authorization", "Bearer " + accessToken);
+        headers.add("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
+
+        // POST 요청 보내기
+        HttpEntity<MultiValueMap<String, String>> githubUser = new HttpEntity<>(headers);
+        RestTemplate restTemplate = new RestTemplate();
+        ResponseEntity<String> response = restTemplate.exchange(
+                "https://api.github.com/user",
+                HttpMethod.POST, githubUser,
+                String.class
+        );
+
+        // response에서 유저정보 가져오기
+        String responseBody = response.getBody();
+        ObjectMapper objectMapper = new ObjectMapper();
+        JsonNode jsonNode = objectMapper.readTree(responseBody);
+
+        Long id = jsonNode.get("id").asLong();
+        String email = jsonNode.get("email").asText();
+        String nickname = jsonNode.get("login").asText();
+
+        return new SocialUserDto(id, email, nickname, User.loginTypeEnum.GITHUB);
     }
 
     public void isPwValid(User initUser) {
