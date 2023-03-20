@@ -12,15 +12,12 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
-
-import java.util.Collection;
 
 @Component
 @RequiredArgsConstructor
@@ -40,6 +37,15 @@ public class UserAuthImpl implements UserAuth {
     @Value("${spring.security.oauth2.client.registration.google.redirect-uri}")
     private String googleRedirectUri;
 
+    @Value("${spring.security.oauth2.client.registration.github.client-id}")
+    private String githubClientId;
+    @Value("${spring.security.oauth2.client.registration.github.client-secret}")
+    private String githubClientSecret;
+    @Value("${spring.security.oauth2.client.registration.github.redirect-uri}")
+    private String githubRedirectUri;
+
+    HttpHeaders headers = new HttpHeaders();
+
     @Override
     public String getToken(User user) {
         return jwtTokenUtils.generateJwtToken(user);
@@ -48,7 +54,6 @@ public class UserAuthImpl implements UserAuth {
 
     @Override
     public String getKakaoAccessToken(String code) throws JsonProcessingException {
-        HttpHeaders headers = new HttpHeaders();
         headers.add("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
 
         MultiValueMap<String, String> body = new LinkedMultiValueMap<>();
@@ -75,7 +80,6 @@ public class UserAuthImpl implements UserAuth {
 
     @Override
     public String getGoogleAccessToken(String code) throws JsonProcessingException {
-        HttpHeaders headers = new HttpHeaders();
         headers.add("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
 
         MultiValueMap<String, String> body = new LinkedMultiValueMap<>();
@@ -91,6 +95,32 @@ public class UserAuthImpl implements UserAuth {
                 "https://oauth2.googleapis.com/token",
                 HttpMethod.POST,
                 googleTokenRequest,
+                String.class
+        );
+
+        String responseBody = response.getBody();
+        ObjectMapper objectMapper = new ObjectMapper();
+        JsonNode responseToken = objectMapper.readTree(responseBody);
+        return responseToken.get("access_token").asText();
+    }
+
+    @Override
+    public String getGithubAccessToken(String code) throws JsonProcessingException {
+        headers.add("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
+
+        MultiValueMap<String, String> body = new LinkedMultiValueMap<>();
+        body.add("grant_type", "authorization_code");
+        body.add("client_id", githubClientId);
+        body.add("client_secret", githubClientSecret);
+        body.add("redirect_uri", githubRedirectUri);
+        body.add("code", code);
+
+        HttpEntity<MultiValueMap<String, String>> githubTokenRequest = new HttpEntity<>(body, headers);
+        RestTemplate rt = new RestTemplate();
+        ResponseEntity<String> response = rt.exchange(
+                "https://github.com/login/oauth/access_token",
+                HttpMethod.POST,
+                githubTokenRequest,
                 String.class
         );
 
