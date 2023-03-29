@@ -36,12 +36,12 @@ public class RehomingResDto {
     private boolean isLiked;
     private boolean isBookmarked;
     private int viewCnt;
-    private Long likeCnt;
-    private Long bookmarkCnt;
+    private int likeCnt;
+    private int bookmarkCnt;
 
 
     // 회원 조회 시
-    public RehomingResDto(Rehoming rehoming, List<String> rehomingImg, boolean isLiked, boolean isBookmarked, Long likeCnt, Long bookmarkCnt) {
+    public RehomingResDto(Rehoming rehoming, List<String> rehomingImg, boolean isLiked, boolean isBookmarked, int likeCnt, int bookmarkCnt) {
         this.rehomingId = rehoming.getRehomingId();
         this.userId = rehoming.getUser().getId();
         this.nickname = rehoming.getUser().getNickname();
@@ -71,7 +71,7 @@ public class RehomingResDto {
     }
 
     // 비회원 조회 시
-    public RehomingResDto(Rehoming rehoming, List<String> rehomingImg, Long likeCnt, Long bookmarkCnt) {
+    public RehomingResDto(Rehoming rehoming, List<String> rehomingImg, int likeCnt, int bookmarkCnt) {
         this.rehomingId = rehoming.getRehomingId();
         this.userId = rehoming.getUser().getId();
         this.nickname = rehoming.getUser().getNickname();
