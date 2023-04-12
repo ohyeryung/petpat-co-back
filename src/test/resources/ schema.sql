@@ -20,7 +20,7 @@ create table tb_category_group
     POST_TYPE           varchar(255) not null
 );
 
-create table petpat.tb_pet_category
+create table tb_pet_category
 (
     PET_CATEGORY_ID   bigint       not null primary key,
     PET_CATEGORY_NAME varchar(255) not null,
@@ -29,7 +29,7 @@ create table petpat.tb_pet_category
         foreign key (CATEGORY_GROUP_ID) references petpat.tb_category_group (CATEGORY_GROUP_ID)
 );
 
-create table petpat.tb_trade_category
+create table tb_trade_category
 (
     TRADE_CATEGORY_ID   bigint auto_increment primary key,
     TRADE_CATEGORY_NAME varchar(255) not null,
@@ -53,7 +53,7 @@ create table tb_trade_category_detail
 -- IMAGE
 -- ------------------------------------------------------------
 
-create table petpat.tb_image
+create table tb_image
 (
     IMAGE_ID           bigint auto_increment primary key,
     FAKE_FILE_NAME     varchar(255) not null,
@@ -66,7 +66,7 @@ create table petpat.tb_image
 -- ------------------------------------------------------------
 -- POST
 -- ------------------------------------------------------------
-create table petpat.tb_rehoming
+create table tb_rehoming
 (
     REHOMING_ID       bigint auto_increment primary key,
     CREATED_AT        datetime(6)  null,
@@ -96,7 +96,7 @@ create table petpat.tb_rehoming
         foreign key (USER_ID) references petpat.tb_user (USER_ID)
 );
 
-create table petpat.tb_trade
+create table tb_trade
 (
     TRADE_ID              bigint auto_increment primary key,
     CREATED_AT            datetime(6)   null,
@@ -120,7 +120,7 @@ create table petpat.tb_trade
 -- LIKES
 -- ------------------------------------------------------------
 
-create table petpat.tb_likes
+create table tb_likes
 (
     LIKE_ID   bigint auto_increment primary key,
     POST_ID   bigint       null,
@@ -133,7 +133,7 @@ create table petpat.tb_likes
 -- BOOKMARK
 -- ------------------------------------------------------------
 
-create table petpat.tb_bookmark
+create table tb_bookmark
 (
     BOOKMARK_ID bigint auto_increment primary key,
     POST_ID     bigint       null,

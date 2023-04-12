@@ -36,8 +36,7 @@ public class TokenProvider{
     String JWT_SECRET;
 
     // 토큰을 헤더에 담음
-    public HttpHeaders headerToken(User user) {
-        String token = jwtTokenUtils.generateJwtToken(user);
+    public HttpHeaders headerToken(String token) {
 
         HttpHeaders headers = new HttpHeaders();
         headers.add(HttpHeaders.AUTHORIZATION, "Bearer " + token);
@@ -47,6 +46,7 @@ public class TokenProvider{
     // header에서 토큰 추출
     public String resolveToken(HttpServletRequest request) {
         String bearerToken = request.getHeader("Authorization");
+
         if (bearerToken != null && bearerToken.startsWith(TOKEN_PREFIX)) {
             return bearerToken.substring(TOKEN_PREFIX.length());
         }
