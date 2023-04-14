@@ -15,17 +15,10 @@ public class RehomingInfo {
     private Long userId;
     private String nickname;
     private String title;
-    private String description;
     private String petName;
-    private String petAge;
     private String category;
     private String type;
     private String gender;
-    private String cityName;
-    private String cityCountryName;
-    private String townShipName;
-    private String detailAdName;
-    private String fullAdName;
     private Long price;
     private PostStatus status;
     private PostType postType;
@@ -39,26 +32,18 @@ public class RehomingInfo {
 
     // 회원
     public RehomingInfo(Long rehomingId, Long userId, String nickname,
-                        String title, String description, String petName, String petAge,
-                        String category, String type, String gender, String cityName, String cityCountryName,
-                        String townShipName, String detailAdName, String fullAdName,
+                        String title, String petName,
+                        String category, String type, String gender,
                         Long price, PostStatus status, PostType postType, LocalDateTime createdAt, LocalDateTime updatedAt,
                         Long isLiked, Long isBookmarked, int viewCnt, Long likeCnt, Long bookmarkCnt) {
         this.rehomingId = rehomingId;
         this.userId = userId;
         this.nickname = nickname;
         this.title = title;
-        this.description = description;
         this.petName = petName;
-        this.petAge = petAge;
         this.category = category;
         this.type = type;
         this.gender = gender;
-        this.cityName = cityName;
-        this.cityCountryName = cityCountryName;
-        this.townShipName = townShipName;
-        this.detailAdName = detailAdName;
-        this.fullAdName = fullAdName;
         this.price = price;
         this.status = status;
         // this.rehomingImg = rehomingImg;
@@ -78,26 +63,18 @@ public class RehomingInfo {
 
     // 비회원
     public RehomingInfo(Long rehomingId, Long userId, String nickname,
-                        String title, String description, String petName, String petAge,
-                        String category, String type, String gender, String cityName, String cityCountryName,
-                        String townShipName, String detailAdName, String fullAdName,
+                        String title, String petName,
+                        String category, String type, String gender,
                         Long price, PostStatus status, PostType postType, LocalDateTime createdAt, LocalDateTime updatedAt,
                         int viewCnt, Long likeCnt, Long bookmarkCnt) {
         this.rehomingId = rehomingId;
         this.userId = userId;
         this.nickname = nickname;
         this.title = title;
-        this.description = description;
         this.petName = petName;
-        this.petAge = petAge;
         this.category = category;
         this.type = type;
         this.gender = gender;
-        this.cityName = cityName;
-        this.cityCountryName = cityCountryName;
-        this.townShipName = townShipName;
-        this.detailAdName = detailAdName;
-        this.fullAdName = fullAdName;
         this.price = price;
         this.status = status;
         // this.rehomingImg = rehomingImg;
