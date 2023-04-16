@@ -20,7 +20,7 @@ public interface RehomingService {
 
     RehomingResDto detailRehoming(Long postId);
 
-    RehomingResDto updateRehoming(User user, Long postId, RehomingCommand rehomingCommand, List<MultipartFile> rehomingImg);
+    RehomingResDto updateRehoming(User user, Long postId, RehomingCommand rehomingCommand);
 
     void deleteRehoming(User user, Long postId);
 
