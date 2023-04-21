@@ -20,8 +20,12 @@ public class ImageUploader {
         return imageRepository.saveAll(imageList);
     }
 
-    public Image toImageEntity(String fakeFileName, String originalFileName, String filePath, Long postId, PostType postType){
-        return new Image(originalFileName, fakeFileName, filePath, postId, postType);
+//    public Image toImageEntity(String fakeFileName, String originalFileName, String filePath, Long postId, PostType postType){
+//        return new Image(originalFileName, fakeFileName, filePath, postId, postType);
+//    }
+
+    public Image toImageEntity(String originalFileName, String fakeFileName, String filePath, Long postId, PostType postType, String repImgNY) {
+        return new Image(originalFileName, fakeFileName, filePath, postId, postType, repImgNY);
     }
 
     // 로컬 이미지 삭제 (db)
@@ -42,5 +46,10 @@ public class ImageUploader {
     public List<String> createImgList(Long postId, PostType postType) {
         List<Image> images = imageRepository.findAllByPostIdAndPostType(postId, postType);
         return images.stream().map(Image::getFilePath).collect(Collectors.toList());
+    }
+
+    public String repImg(Long postId, PostType postType) {
+        Image image = imageRepository.findTop1ByPostIdAndPostTypeOrderByImageIdAsc(postId, postType);
+        return image.getFilePath();
     }
 }
