@@ -14,11 +14,11 @@ public interface TradeService{
 
     void deleteTrade(Long tradeId,User user);
 
-    TradeInfo updateTrade(TradeCommand tradeCommand, User user, Long postId);
+    TradeInfo.TradeDetail updateTrade(TradeCommand tradeCommand, User user, Long postId);
 
-    TradeInfo tradeDetail(Long tradeId);
+    TradeInfo.TradeDetail tradeDetail(Long tradeId);
 
-    TradeInfo tradeDetailforUser(Long tradeId, User user);
+    TradeInfo.TradeDetail tradeDetailforUser(Long tradeId, User user);
 
     void updateStatusFinding(User user, Long postId);
 
