@@ -34,8 +34,21 @@ public class Trade extends Timestamped {
     @Column(name = "PRICE", nullable = false, length = 8)
     private Long price;
 
-    @Column(name = "LOCATION", nullable = false)
-    private String location;
+    @Column(name = "CITY_NAME", nullable = false)
+    private String cityName;
+
+    @Column(name = "CITY_COUNTRY_NAME", nullable = false)
+    private String cityCountryName;
+
+    @Column(name = "TOWNSHIP_NAME", nullable = false)
+    private String townShipName;
+
+    @Column(name = "DETAIL_AD_NAME")
+    private String detailAdName;
+
+    @Column(name = "FULL_AD_NAME", nullable = false)
+    private String fullAdName;
+
 
     @Column(name = "POST_TYPE" , nullable = false)
     @Enumerated(EnumType.STRING)
@@ -55,13 +68,17 @@ public class Trade extends Timestamped {
     public Trade() {
     }
 
-    public Trade(Long tradeId, User user, String title, String content, Long price, String location, PostType postType, PostStatus status, int viewCnt, TradeCategoryDetail tradeCategoryDetail) {
+    public Trade(Long tradeId, User user, String title, String content, Long price, String cityName, String cityCountryName, String townShipName, String detailAdName, String fullAdName, PostType postType, PostStatus status, int viewCnt, TradeCategoryDetail tradeCategoryDetail) {
         this.tradeId = tradeId;
         this.user = user;
         this.title = title;
         this.content = content;
         this.price = price;
-        this.location = location;
+        this.cityName = cityName;
+        this.cityCountryName = cityCountryName;
+        this.townShipName = townShipName;
+        this.detailAdName = detailAdName;
+        this.fullAdName = fullAdName;
         this.postType = postType;
         this.status = status;
         this.viewCnt = viewCnt;

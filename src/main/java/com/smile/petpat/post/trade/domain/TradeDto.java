@@ -7,6 +7,7 @@ import lombok.Setter;
 import lombok.ToString;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.persistence.Column;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.util.List;
@@ -29,24 +30,29 @@ public class TradeDto {
         private String content;
         @NotNull(message = "가격은 필수값입니다.")
         private Long price;
-        @NotBlank(message = "위치는 필수값입니다.")
-        private String location;
+        private String cityName;
+        private String cityCountryName;
+        private String townShipName;
+        private String detailAdName;
+        private String fullAdName;
        @NotNull(message = "카테고리는 필수값입니다.")
         private Long tradeCategoryDetailId;
 
         private List<MultipartFile> images;
 
-        public CommonTrade(){
+        public CommonTrade(){}
 
-        }
-
-        public CommonTrade(String title, String content, Long price, String location, Long tradeCategoryDetailId) {
+        public CommonTrade(String title, String content, Long price, String cityName, String cityCountryName, String townShipName, String detailAdName, String fullAdName, Long tradeCategoryDetailId, List<MultipartFile> images) {
             if(images.size()<1) new CustomException(BELOW_MIN_IMAGE_COUNT);
             if(images.size()>4) new CustomException(EXCEEDED_MAX_IMAGE_COUNT);
             this.title = title;
             this.content = content;
             this.price = price;
-            this.location = location;
+            this.cityName = cityName;
+            this.cityCountryName = cityCountryName;
+            this.townShipName = townShipName;
+            this.detailAdName = detailAdName;
+            this.fullAdName = fullAdName;
             this.tradeCategoryDetailId = tradeCategoryDetailId;
             this.images = images;
         }
@@ -56,7 +62,11 @@ public class TradeDto {
                  .title(title)
                  .content(content)
                  .price(price)
-                 .location(location)
+                 .cityName(cityName)
+                 .cityCountryName(cityCountryName)
+                 .townShipName(townShipName)
+                 .detailAdName(detailAdName)
+                 .fullAdName(fullAdName)
                  .tradeCategoryDetailId(tradeCategoryDetailId)
                  .images(images)
                  .build();

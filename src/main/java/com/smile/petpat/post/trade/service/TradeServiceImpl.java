@@ -35,28 +35,28 @@ public class TradeServiceImpl implements TradeService{
         Trade trade = tradeStore.store(initTrade);
         //2. 사진 등록
         imageUploadManager.uploadPostImage(tradeCommand.getImages(),trade.getTradeId(),trade.getPostType());
-
     }
 
     // 추후 querydsl로 변경예정
     @Override
     public List<TradeInfo> listTrade() {
         List<Trade> listTrade = tradeReader.readTradeList();
-        List<TradeInfo> tradeInfos = listTrade.stream().map(TradeInfo::new).collect(Collectors.toList());
+      //  List<TradeInfo> tradeInfos = listTrade.stream().map(TradeInfo.TradeDetail::new).collect(Collectors.toList());
+        List<TradeInfo> tradeInfos = null;
         return tradeInfos;
     }
 
     @Override
-    public TradeInfo tradeDetail(Long tradeId) {
+    public TradeInfo.TradeDetail tradeDetail(Long tradeId) {
         List<String> imgList = imageUploader.createImgList(tradeId, PostType.TRADE);
         Trade trade = tradeReader.readTradeById(tradeId);
         // 조회수 계산
         trade.updateViewCnt(trade);
-        return new TradeInfo(trade,imgList);
+        return new TradeInfo.TradeDetail();
     }
 
     @Override
-    public TradeInfo tradeDetailforUser(Long tradeId, User user) {
+    public TradeInfo.TradeDetail tradeDetailforUser(Long tradeId, User user) {
         Trade trade = tradeReader.readTradeById(tradeId);
         // 조회수 계산
         trade.updateViewCnt(trade);
@@ -67,7 +67,7 @@ public class TradeServiceImpl implements TradeService{
 
     @Override
     @Transactional
-    public TradeInfo updateTrade(TradeCommand tradeCommand, User user,Long tradeId) {
+    public TradeInfo.TradeDetail updateTrade(TradeCommand tradeCommand, User user, Long tradeId) {
         TradeCategoryDetail categoryDetail = tradeReader.readTradeCategoryDetailById(tradeCommand.getTradeCategoryDetailId());
         Trade initTrade = tradeCommand.toUpdateEntity(user,tradeId,categoryDetail);
         Trade trade = tradeStore.update(initTrade,user.getId(),tradeId);
@@ -83,13 +83,14 @@ public class TradeServiceImpl implements TradeService{
         imageUploadManager.removePostImage(tradeId, PostType.TRADE);
     }
 
-    private TradeInfo getTradeInfo(Long tradeId, User user, Trade trade) {
+    private TradeInfo.TradeDetail getTradeInfo(Long tradeId, User user, Trade trade) {
         List<String> imgList = imageUploader.createImgList(tradeId, PostType.TRADE);
-        return new TradeInfo(trade, imgList,
-                commonUtils.LikePostChk(tradeId, PostType.TRADE, user),
-                commonUtils.BookmarkPostChk(tradeId, PostType.TRADE, user),
-                commonUtils.getLikesCnt(tradeId, PostType.TRADE),
-                commonUtils.getBookmarkCnt(tradeId, PostType.TRADE));
+//        return new TradeInfo.TradeDetail(trade, imgList,
+//                commonUtils.LikePostChk(tradeId, PostType.TRADE, user),
+//                commonUtils.BookmarkPostChk(tradeId, PostType.TRADE, user),
+//                commonUtils.getLikesCnt(tradeId, PostType.TRADE),
+//                commonUtils.getBookmarkCnt(tradeId, PostType.TRADE));
+        return new TradeInfo.TradeDetail();
     }
 
 
