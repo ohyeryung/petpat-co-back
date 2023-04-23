@@ -1,7 +1,12 @@
 package com.smile.petpat.user.domain;
 
-import org.springframework.http.ResponseEntity;
+import com.fasterxml.jackson.core.JsonProcessingException;
 
 public interface UserAuth {
-    ResponseEntity<String> getToken(User user);
+    String getToken(User user);
+    String getKakaoAccessToken(String code) throws JsonProcessingException;
+    String getGoogleAccessToken(String code) throws JsonProcessingException;
+    String getGithubAccessToken(String code) throws JsonProcessingException;
+
+    String forceLogin(User socialUser);
 }

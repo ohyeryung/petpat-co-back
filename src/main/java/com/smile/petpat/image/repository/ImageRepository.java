@@ -9,4 +9,5 @@ import java.util.List;
 public interface ImageRepository extends JpaRepository<Image,Long> {
     List<Image> findAllByPostIdAndPostType(Long postId, PostType postType);
     void deleteByPostIdAndPostType(Long postId, PostType postType);
+    Image findTop1ByPostIdAndPostTypeOrderByImageIdAsc(Long postId, PostType postType);
 }

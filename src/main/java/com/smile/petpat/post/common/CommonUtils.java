@@ -60,12 +60,12 @@ public class CommonUtils {
     }
 
     // 좋아요 개수 count
-    public long getLikesCnt(Long postId, PostType postType) {
+    public int getLikesCnt(Long postId, PostType postType) {
         return likesRepository.findByPostIdAndPostType(postId, postType).size();
     }
 
     // 북마크 개수 count
-    public long getBookmarkCnt(Long postId, PostType postType) {
+    public int getBookmarkCnt(Long postId, PostType postType) {
         return bookmarkRepository.findByPostIdAndPostType(postId, postType).size();
     }
 }

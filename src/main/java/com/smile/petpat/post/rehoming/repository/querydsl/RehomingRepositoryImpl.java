@@ -3,8 +3,10 @@ package com.smile.petpat.post.rehoming.repository.querydsl;
 import com.querydsl.core.QueryResults;
 import com.querydsl.core.types.ExpressionUtils;
 import com.querydsl.core.types.Projections;
-import com.querydsl.jpa.JPAExpressions;
+import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import com.smile.petpat.image.domain.QImage;
+import com.smile.petpat.post.category.domain.PostType;
 import com.smile.petpat.post.rehoming.domain.RehomingInfo;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -13,6 +15,8 @@ import org.springframework.data.domain.Pageable;
 import javax.persistence.EntityManager;
 import java.util.List;
 
+import static com.querydsl.jpa.JPAExpressions.select;
+import static com.smile.petpat.image.domain.QImage.image;
 import static com.smile.petpat.post.common.bookmarks.domain.QBookmark.bookmark;
 import static com.smile.petpat.post.common.likes.domain.QLikes.likes;
 import static com.smile.petpat.post.rehoming.domain.QRehoming.rehoming;
@@ -33,36 +37,34 @@ public class RehomingRepositoryImpl implements RehomingRepositoryQuerydsl {
                         Projections.constructor(
                                 RehomingInfo.class,
                                 rehoming.rehomingId,
+                                Expressions.as(
+                                        select(image.filePath)
+                                                .from(image)
+                                                .where(image.postId.eq(rehoming.rehomingId),
+                                                        image.postType.eq(PostType.REHOMING),
+                                                        image.repImgNY.eq("Y"))
+                                                , "rehomingImg"),
                                 rehoming.user.id,
                                 rehoming.user.nickname,
                                 rehoming.title,
-                                rehoming.description,
                                 rehoming.petName,
-                                rehoming.petAge,
                                 rehoming.category.categoryGroupName,
                                 rehoming.type.petCategoryName,
                                 rehoming.gender,
-                                rehoming.cityName,
-                                rehoming.cityCountryName,
-                                rehoming.townShipName,
-                                rehoming.detailAdName,
-                                rehoming.fullAdName,
                                 rehoming.price,
                                 rehoming.status,
                                 rehoming.postType,
                                 rehoming.createdAt,
                                 rehoming.updatedAt,
                                 ExpressionUtils.as(
-                                        JPAExpressions
-                                                .select(likes.count())
+                                        select(likes.count())
                                                 .from(likes)
                                                 .where(
                                                         likes.user.id.eq(userId)
                                                                 .and(likes.postId.eq(rehoming.rehomingId))
                                                 ), "isLiked"),
                                 ExpressionUtils.as(
-                                        JPAExpressions
-                                                .select(bookmark.count())
+                                        select(bookmark.count())
                                                 .from(bookmark)
                                                 .where(
                                                         bookmark.user.id.eq(userId)
@@ -70,14 +72,12 @@ public class RehomingRepositoryImpl implements RehomingRepositoryQuerydsl {
                                                 ), "isBookmarked"),
                                 rehoming.viewCnt,
                                 ExpressionUtils.as(
-                                        JPAExpressions
-                                                .select(likes.count())
+                                        select(likes.count())
                                                 .from(likes)
                                                 .where(likes.postId.eq(rehoming.rehomingId)),
                                         "likeCnt"),
                                 ExpressionUtils.as(
-                                        JPAExpressions
-                                                .select(bookmark.count())
+                                        select(bookmark.count())
                                                 .from(bookmark)
                                                 .where(bookmark.postId.eq(rehoming.rehomingId)),
                                         "bookmarkCnt")
@@ -104,20 +104,20 @@ public class RehomingRepositoryImpl implements RehomingRepositoryQuerydsl {
                         Projections.constructor(
                                 RehomingInfo.class,
                                 rehoming.rehomingId,
+                                Expressions.as(
+                                        select(image.filePath)
+                                                .from(image)
+                                                .where(image.postId.eq(rehoming.rehomingId),
+                                                        image.postType.eq(PostType.REHOMING),
+                                                        image.repImgNY.eq("Y"))
+                                        , "rehomingImg"),
                                 rehoming.user.id,
                                 rehoming.user.nickname,
                                 rehoming.title,
-                                rehoming.description,
                                 rehoming.petName,
-                                rehoming.petAge,
                                 rehoming.category.categoryGroupName,
                                 rehoming.type.petCategoryName,
                                 rehoming.gender,
-                                rehoming.cityName,
-                                rehoming.cityCountryName,
-                                rehoming.townShipName,
-                                rehoming.detailAdName,
-                                rehoming.fullAdName,
                                 rehoming.price,
                                 rehoming.status,
                                 rehoming.postType,
@@ -125,14 +125,12 @@ public class RehomingRepositoryImpl implements RehomingRepositoryQuerydsl {
                                 rehoming.updatedAt,
                                 rehoming.viewCnt,
                                 ExpressionUtils.as(
-                                        JPAExpressions
-                                                .select(likes.count())
+                                        select(likes.count())
                                                 .from(likes)
                                                 .where(likes.postId.eq(rehoming.rehomingId)),
                                         "likeCnt"),
                                 ExpressionUtils.as(
-                                        JPAExpressions
-                                                .select(bookmark.count())
+                                        select(bookmark.count())
                                                 .from(bookmark)
                                                 .where(bookmark.postId.eq(rehoming.rehomingId)),
                                         "bookmarkCnt")
