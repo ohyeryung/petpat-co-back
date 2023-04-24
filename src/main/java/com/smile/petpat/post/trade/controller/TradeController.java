@@ -8,6 +8,8 @@ import com.smile.petpat.user.service.UserDetailsImpl;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
@@ -41,8 +43,17 @@ public class  TradeController {
      */
     @ApiOperation(value = "중고거래 게시물 목록 조회", notes = "중고거래 게시물 목록 조회")
     @RequestMapping(value = "",method = RequestMethod.GET)
-    public SuccessResponse listTrade(){
-       return SuccessResponse.success(tradeService.listTrade(),"ok");
+    public SuccessResponse listTrade(@AuthenticationPrincipal UserDetailsImpl userDetails,
+                                     @PageableDefault() Pageable pageable){
+
+        if(userDetails == null){
+            // 1. 로그인 안한 유저
+
+        }
+        // 2. 로그인 한 유저
+        return SuccessResponse.success(tradeService.listTrade(userDetails.getUser(),pageable),"ok");
+
+
     }
 
     /**

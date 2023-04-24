@@ -5,15 +5,17 @@ import com.smile.petpat.image.domain.ImageUploader;
 import com.smile.petpat.post.category.domain.PostType;
 import com.smile.petpat.post.category.domain.TradeCategoryDetail;
 import com.smile.petpat.post.common.CommonUtils;
+import com.smile.petpat.post.rehoming.dto.RehomingPagingDto;
 import com.smile.petpat.post.trade.domain.*;
 import com.smile.petpat.user.domain.User;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -37,13 +39,12 @@ public class TradeServiceImpl implements TradeService{
         imageUploadManager.uploadPostImage(tradeCommand.getImages(),trade.getTradeId(),trade.getPostType());
     }
 
-    // 추후 querydsl로 변경예정
+    // 중고거래 게시판 목록 반환(로그인한 유저)
     @Override
-    public List<TradeInfo> listTrade() {
-        List<Trade> listTrade = tradeReader.readTradeList();
-      //  List<TradeInfo> tradeInfos = listTrade.stream().map(TradeInfo.TradeDetail::new).collect(Collectors.toList());
-        List<TradeInfo> tradeInfos = null;
-        return tradeInfos;
+    public RehomingPagingDto listTrade(User user, Pageable pageable) {
+        Page<TradeInfo.TradeList> listTrade = tradeReader.readTradeList(user,pageable);
+        RehomingPagingDto dto= new RehomingPagingDto(listTrade);
+        return dto;
     }
 
     @Override
