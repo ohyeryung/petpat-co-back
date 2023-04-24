@@ -1,5 +1,8 @@
 package com.smile.petpat.post.common;
 
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
 public class CalculateTime {
@@ -12,9 +15,9 @@ public class CalculateTime {
         public static final int MONTH = 12;
     }
 
-    public static String calculateTime(Date date) {
+    public static String calculateTime(LocalDateTime dateTime) {
         long curTime = System.currentTimeMillis();
-        long regTime = date.getTime();
+        long regTime = Timestamp.valueOf(dateTime).getTime();
         long diffTime = (curTime - regTime) / 1000;
         String msg = null;
         if (diffTime < TIME_MAXIMUM.SEC) {
@@ -36,5 +39,10 @@ public class CalculateTime {
             msg = (diffTime) + "년 전";
         }
         return msg;
+    }
+
+
+    public static String dateformatForPost(LocalDateTime dateTime){
+        return dateTime.format(DateTimeFormatter.ofPattern("yyyy.MM.dd HH:mm"));
     }
 }
