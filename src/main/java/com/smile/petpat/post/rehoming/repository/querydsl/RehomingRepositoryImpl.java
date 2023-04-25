@@ -5,7 +5,6 @@ import com.querydsl.core.types.ExpressionUtils;
 import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import com.smile.petpat.image.domain.QImage;
 import com.smile.petpat.post.category.domain.PostType;
 import com.smile.petpat.post.rehoming.domain.RehomingInfo;
 import org.springframework.data.domain.Page;
@@ -42,7 +41,7 @@ public class RehomingRepositoryImpl implements RehomingRepositoryQuerydsl {
                                                 .from(image)
                                                 .where(image.postId.eq(rehoming.rehomingId),
                                                         image.postType.eq(PostType.REHOMING),
-                                                        image.repImgNY.eq("Y"))
+                                                        image.repImgNY.eq(true))
                                                 , "rehomingImg"),
                                 rehoming.user.id,
                                 rehoming.user.nickname,
@@ -51,11 +50,10 @@ public class RehomingRepositoryImpl implements RehomingRepositoryQuerydsl {
                                 rehoming.category.categoryGroupName,
                                 rehoming.type.petCategoryName,
                                 rehoming.gender,
-                                rehoming.price,
-                                rehoming.status,
-                                rehoming.postType,
                                 rehoming.createdAt,
                                 rehoming.updatedAt,
+                                rehoming.status,
+                                rehoming.postType,
                                 ExpressionUtils.as(
                                         select(likes.count())
                                                 .from(likes)
@@ -109,7 +107,7 @@ public class RehomingRepositoryImpl implements RehomingRepositoryQuerydsl {
                                                 .from(image)
                                                 .where(image.postId.eq(rehoming.rehomingId),
                                                         image.postType.eq(PostType.REHOMING),
-                                                        image.repImgNY.eq("Y"))
+                                                        image.repImgNY.eq(true))
                                         , "rehomingImg"),
                                 rehoming.user.id,
                                 rehoming.user.nickname,
@@ -118,7 +116,6 @@ public class RehomingRepositoryImpl implements RehomingRepositoryQuerydsl {
                                 rehoming.category.categoryGroupName,
                                 rehoming.type.petCategoryName,
                                 rehoming.gender,
-                                rehoming.price,
                                 rehoming.status,
                                 rehoming.postType,
                                 rehoming.createdAt,

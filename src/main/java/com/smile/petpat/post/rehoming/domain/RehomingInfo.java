@@ -21,7 +21,6 @@ public class RehomingInfo {
     private String category;
     private String type;
     private String gender;
-    private Long price;
     private PostStatus status;
     private PostType postType;
     private LocalDateTime createdAt;
@@ -36,7 +35,7 @@ public class RehomingInfo {
     public RehomingInfo(Long rehomingId, String rehomingImg, Long userId, String nickname,
                         String title, String petName,
                         String category, String type, String gender,
-                        Long price, PostStatus status, PostType postType, LocalDateTime createdAt, LocalDateTime updatedAt,
+                        PostStatus status, PostType postType, LocalDateTime createdAt, LocalDateTime updatedAt,
                         Long isLiked, Long isBookmarked, int viewCnt, Long likeCnt, Long bookmarkCnt) {
         this.rehomingId = rehomingId;
         this.rehomingImg = rehomingImg;
@@ -47,7 +46,6 @@ public class RehomingInfo {
         this.category = category;
         this.type = type;
         this.gender = gender;
-        this.price = price;
         this.status = status;
         this.postType = postType;
         this.createdAt = createdAt;
@@ -67,7 +65,7 @@ public class RehomingInfo {
     public RehomingInfo(Long rehomingId, String rehomingImg, Long userId, String nickname,
                         String title, String petName,
                         String category, String type, String gender,
-                        Long price, PostStatus status, PostType postType, LocalDateTime createdAt, LocalDateTime updatedAt,
+                        PostStatus status, PostType postType, LocalDateTime createdAt, LocalDateTime updatedAt,
                         int viewCnt, Long likeCnt, Long bookmarkCnt) {
         this.rehomingId = rehomingId;
         this.rehomingImg = rehomingImg;
@@ -78,7 +76,6 @@ public class RehomingInfo {
         this.category = category;
         this.type = type;
         this.gender = gender;
-        this.price = price;
         this.status = status;
         this.postType = postType;
         this.createdAt = createdAt;

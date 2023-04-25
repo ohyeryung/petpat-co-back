@@ -24,7 +24,7 @@ public class ImageUploader {
 //        return new Image(originalFileName, fakeFileName, filePath, postId, postType);
 //    }
 
-    public Image toImageEntity(String originalFileName, String fakeFileName, String filePath, Long postId, PostType postType, String repImgNY) {
+    public Image toImageEntity(String originalFileName, String fakeFileName, String filePath, Long postId, PostType postType, boolean repImgNY) {
         return new Image(originalFileName, fakeFileName, filePath, postId, postType, repImgNY);
     }
 

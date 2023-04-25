@@ -41,7 +41,7 @@ public class ImageUploadManager {
             String fakeFileName = imageUtils.createFileName(multipartFiles.get(i).getOriginalFilename());
             String originalFileName = multipartFiles.get(i).getOriginalFilename();
             String filePath = s3Uploader.uploadFile(multipartFiles.get(i));
-            String repImgNY = (i == 0) ? "Y" : "N"; // 제일 먼저 등록되는 이미지의 경우 대표이미지로 설정
+            boolean repImgNY = i == 0; // 제일 먼저 등록되는 이미지의 경우 대표이미지로 설정
 
             Image image = imageUploader.toImageEntity(fakeFileName, originalFileName, filePath, postId, postType, repImgNY);
             imageList.add(image);

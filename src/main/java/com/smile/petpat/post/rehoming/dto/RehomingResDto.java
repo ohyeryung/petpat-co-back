@@ -28,7 +28,6 @@ public class RehomingResDto {
     private String townShipName;
     private String detailAdName;
     private String fullAdName;
-    private Long price;
     private PostStatus status;
     private PostType postType;
     private LocalDateTime createdAt;
@@ -57,7 +56,6 @@ public class RehomingResDto {
         this.townShipName = rehoming.getTownShipName();
         this.detailAdName = rehoming.getDetailAdName();
         this.fullAdName = rehoming.getFullAdName();
-        this.price = rehoming.getPrice();
         this.status = rehoming.getStatus();
         this.rehomingImg = rehomingImg;
         this.postType = rehoming.getPostType();
@@ -87,7 +85,6 @@ public class RehomingResDto {
         this.townShipName = rehoming.getTownShipName();
         this.detailAdName = rehoming.getDetailAdName();
         this.fullAdName = rehoming.getFullAdName();
-        this.price = rehoming.getPrice();
         this.status = rehoming.getStatus();
         this.rehomingImg = rehomingImg;
         this.postType = rehoming.getPostType();

@@ -20,6 +20,7 @@ import java.util.List;
 public class RehomingCommand {
 
     private User user;
+    @NotNull(message = "이미지는 필수값입니다.")
     private List<MultipartFile> rehomingImg;
     @NotBlank(message = "제목은 필수값입니다.") private String title;
     @NotBlank(message = "설명은 필수값입니다.") private String description;
@@ -33,7 +34,6 @@ public class RehomingCommand {
     private String townShipName;
     private String detailAdName;
     private String fullAdName;
-    @NotNull(message = "책임비는 필수값입니다.") private Long price;
 
     public RehomingCommand toCommand() {
         return RehomingCommand.builder()
@@ -50,7 +50,6 @@ public class RehomingCommand {
                 .townShipName(townShipName)
                 .detailAdName(detailAdName)
                 .fullAdName(fullAdName)
-                .price(price)
                 .build();
     }
 
@@ -69,7 +68,6 @@ public class RehomingCommand {
                 .townShipName(townShipName)
                 .detailAdName(detailAdName)
                 .fullAdName(fullAdName)
-                .price(price)
                 .status(PostStatus.REHOMING_FINDING)
                 .postType(PostType.REHOMING)
                 .build();
@@ -91,7 +89,6 @@ public class RehomingCommand {
                 .townShipName(townShipName)
                 .detailAdName(detailAdName)
                 .fullAdName(fullAdName)
-                .price(price)
                 .status(status)
                 .build();
     }

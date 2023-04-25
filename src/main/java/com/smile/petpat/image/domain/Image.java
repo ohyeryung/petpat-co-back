@@ -32,11 +32,11 @@ public class Image {
     @Enumerated(EnumType.STRING)
     private PostType postType;
 
-    private String repImgNY;
+    private boolean repImgNY;
     public Image() {
     }
 
-    public Image(String originalFileName, String fakeFileName, String filePath, Long postId, PostType postType, String repImgNY) {
+    public Image(String originalFileName, String fakeFileName, String filePath, Long postId, PostType postType, boolean repImgNY) {
         this.originalFileName = originalFileName;
         this.fakeFileName = fakeFileName;
         this.filePath = filePath;
