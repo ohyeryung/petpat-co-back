@@ -1,4 +1,4 @@
-package com.smile.petpat.repository;
+package com.smile.petpat.post.trade.repository;
 
 import com.smile.petpat.post.category.domain.PostType;
 import com.smile.petpat.post.category.domain.TradeCategoryDetail;
@@ -62,13 +62,18 @@ class TradeRepositoryTest {
                 .title("테스트중고거래제목1")
                 .content("테스트중고거래내용1")
                 .price(1000L)
-                .location("테스트위치1")
+                .cityName("서울시")
+                .cityCountryName("양천구")
+                .townShipName("목동")
+                .detailAdName("103")
+                .fullAdName("서울시 양천구 목동 103")
                 .postType(PostType.TRADE)
                 .status(PostStatus.TRADE_FINDING)
                 .viewCnt(0)
                 .tradeCategoryDetail(tradeCategoryDetail)
                 .build();
         Trade saveTrade = tradeRepository.save(trade);
+
         // Then
         assertThat(tradeRepository.count()).isEqualTo(previousCount +1);
 

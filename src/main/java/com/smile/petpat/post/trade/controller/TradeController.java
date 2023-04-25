@@ -3,7 +3,7 @@ package com.smile.petpat.post.trade.controller;
 import com.smile.petpat.common.response.SuccessResponse;
 import com.smile.petpat.post.trade.domain.TradeCommand;
 import com.smile.petpat.post.trade.domain.TradeDto;
-import com.smile.petpat.post.trade.service.TradeServiceImpl;
+import com.smile.petpat.post.trade.service.TradeService;
 import com.smile.petpat.user.service.UserDetailsImpl;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -17,9 +17,9 @@ import javax.validation.Valid;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/trade")
-public class TradeController {
+public class  TradeController {
 
-    private final TradeServiceImpl tradeService;
+    private final TradeService tradeService;
 
     /**
      * 중고거래 게시물 등록
@@ -87,7 +87,7 @@ public class TradeController {
     }
 
 
-    @ApiOperation(value = "분양게시물 분양 중")
+    @ApiOperation(value = "중고거래 게시물 판매 중")
     @RequestMapping(value = "/statusFinding", method = RequestMethod.POST)
     public SuccessResponse updateStatusFinding(@AuthenticationPrincipal UserDetailsImpl userDetails,
                                                @RequestParam Long postId) {
@@ -95,7 +95,7 @@ public class TradeController {
         return SuccessResponse.success("OK");
     }
 
-    @ApiOperation(value = "분양게시물 예약 중")
+    @ApiOperation(value = "중고거래 게시물 예약 중")
     @RequestMapping(value = "/statusReserved", method = RequestMethod.POST)
     public SuccessResponse updateStatusReserved(@AuthenticationPrincipal UserDetailsImpl userDetails,
                                                 @RequestParam Long postId) {
@@ -103,7 +103,7 @@ public class TradeController {
         return SuccessResponse.success("OK");
     }
 
-    @ApiOperation(value = "분양게시물 예약 완료")
+    @ApiOperation(value = "중고거래 게시물 예약 완료")
     @RequestMapping(value = "/statusMatched", method = RequestMethod.POST)
     public SuccessResponse updateStatusMatched(@AuthenticationPrincipal UserDetailsImpl userDetails,
                                                @RequestParam Long postId) {
