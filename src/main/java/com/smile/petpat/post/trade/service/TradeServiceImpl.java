@@ -51,6 +51,7 @@ public class TradeServiceImpl implements TradeService{
     public TradeInfo.TradeDetail tradeDetail(Long tradeId) {
         List<String> imgList = imageUploader.createImgList(tradeId, PostType.TRADE);
         Trade trade = tradeReader.readTradeById(tradeId);
+
         // 조회수 계산
         trade.updateViewCnt(trade);
         return new TradeInfo.TradeDetail();
@@ -59,9 +60,11 @@ public class TradeServiceImpl implements TradeService{
     @Override
     public TradeInfo.TradeDetail tradeDetailforUser(Long tradeId, User user) {
         Trade trade = tradeReader.readTradeById(tradeId);
-        // 조회수 계산
         trade.updateViewCnt(trade);
-        return getTradeInfo(tradeId, user, trade);
+        TradeInfo.TradeDetail tradeDetail = tradeReader.readTradeDetail(user.getId(), tradeId);
+        List<String> imageList = imageUploader.createImgList(tradeId,trade.getPostType());
+        // 조회수 계산
+        return new TradeInfo.TradeDetail(tradeDetail,imageList);
 
     }
 

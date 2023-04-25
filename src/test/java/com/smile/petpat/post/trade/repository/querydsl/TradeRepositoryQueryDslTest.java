@@ -182,10 +182,10 @@ class TradeRepositoryQueryDslTest {
     public void trade_detail_read(){
         Long userId= 1L;
         Long tradeId=2L;
-        List<TradeInfo.TradeList> result = queryFactory
+        TradeInfo.TradeDetail result =  queryFactory
                 .select
                         (Projections.constructor
-                                (TradeInfo.TradeList.class,
+                                (TradeInfo.TradeDetail.class,
                                         trade.tradeId,
                                         trade.user.id,
                                         trade.user.nickname,
@@ -197,16 +197,6 @@ class TradeRepositoryQueryDslTest {
                                         trade.townShipName,
                                         trade.detailAdName,
                                         trade.fullAdName,
-                                        ExpressionUtils.as(
-                                                JPAExpressions
-                                                        .select(image.filePath)
-                                                        .from(image)
-                                                        .where(
-                                                                image.postId.eq(trade.tradeId)
-                                                                        .and(image.postType.eq(PostType.TRADE))
-                                                        )
-                                                        .orderBy(image.imageId.asc()).limit(1)
-                                                ,"image"),
                                         trade.postType,
                                         ExpressionUtils.as(
                                                 JPAExpressions
@@ -241,10 +231,9 @@ class TradeRepositoryQueryDslTest {
                                 )
                         )
                 .from(trade)
-                .fetch();
-        for (TradeInfo.TradeList TradeList : result) {
-            System.out.println("TradeInfo = " + TradeList.toString());
-        }
+                .where(trade.tradeId.eq(tradeId))
+                .fetchOne();
+        System.out.println(result.toString());
     }
 
 }

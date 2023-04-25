@@ -40,6 +40,12 @@ public class TradeReaderImpl implements TradeReader {
        );
     }
 
+    @Override
+    public TradeInfo.TradeDetail readTradeDetail(Long userId, Long tradeId) {
+        readTradeById(tradeId);
+        return tradeRepository.tradeDetail(userId,tradeId);
+    }
+
     public void userChk(Long tradeId,Long userId){
        Trade trade = readTradeById(tradeId);
        if(!trade.getUser().getId().equals(userId)) {

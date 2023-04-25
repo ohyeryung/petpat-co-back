@@ -9,4 +9,5 @@ public interface TradeReader {
     Page<TradeInfo.TradeList> readTradeList(User user, Pageable pageable);
     Trade readTradeById(Long tradeId);
     TradeCategoryDetail readTradeCategoryDetailById(Long tradeCategoryDetailId);
+    TradeInfo.TradeDetail readTradeDetail(Long userId, Long tradeId);
 }

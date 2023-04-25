@@ -10,4 +10,6 @@ public interface TradeRepositoryQueryDsl {
     List<TradeInfo.TradeList> tradeList(Long userId);
 
     Page<TradeInfo.TradeList> tradeList_Paging(Long userId, Pageable pageable);
+
+    TradeInfo.TradeDetail tradeDetail(Long userId, Long tradeId);
 }

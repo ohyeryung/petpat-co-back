@@ -17,6 +17,7 @@ public class TradeInfo {
 
     @Builder
     @Getter
+    @ToString
     public static class TradeDetail{
         private Long tradeId;
         private Long userId;
@@ -71,9 +72,10 @@ public class TradeInfo {
             this.createAt = createAt;
         }
 
-        public TradeDetail(Long tradeId, Long userId, String title, String content, Long price, String cityName, String cityCountryName, String townShipName, String detailAdName, String fullAdName, List<String> imageList, PostType postType, boolean isLiked, boolean isBookmarked, int viewCnt, Long likeCnt, Long bookmarkCnt, String tradeCategoryDetailName) {
+        public TradeDetail(Long tradeId, Long userId, String nickname, String title, String content, Long price, String cityName, String cityCountryName, String townShipName, String detailAdName, String fullAdName, PostType postType, Long isLiked, Long isBookmarked, int viewCnt, Long likeCnt, Long bookmarkCnt, String tradeCategoryDetailName) {
             this.tradeId = tradeId;
             this.userId = userId;
+            this.nickname = nickname;
             this.title = title;
             this.content = content;
             this.price = price;
@@ -82,15 +84,38 @@ public class TradeInfo {
             this.townShipName = townShipName;
             this.detailAdName = detailAdName;
             this.fullAdName = fullAdName;
-            this.imageList = imageList;
             this.postType = postType;
-            this.isLiked = isLiked;
-            this.isBookmarked = isBookmarked;
+            this.isLiked = booleanChk(isLiked);
+            this.isBookmarked = booleanChk(isBookmarked);
             this.viewCnt = viewCnt;
             this.likeCnt = likeCnt;
             this.bookmarkCnt = bookmarkCnt;
             this.tradeCategoryDetailName = tradeCategoryDetailName;
         }
+
+        public TradeDetail(TradeDetail tradeDetail, List<String> imageList) {
+            this.tradeId = tradeDetail.tradeId;
+            this.userId = tradeDetail.userId;
+            this.nickname = tradeDetail.nickname;
+            this.title = tradeDetail.title;
+            this.content = tradeDetail.content;
+            this.price = tradeDetail.price;
+            this.cityName = tradeDetail.cityName;
+            this.cityCountryName = tradeDetail.cityCountryName;
+            this.townShipName = tradeDetail.townShipName;
+            this.detailAdName = tradeDetail.detailAdName;
+            this.fullAdName = tradeDetail.fullAdName;
+            this.imageList = imageList;
+            this.postType = tradeDetail.postType;
+            this.isLiked = tradeDetail.isLiked;
+            this.isBookmarked = tradeDetail.isBookmarked;
+            this.viewCnt = tradeDetail.viewCnt;
+            this.likeCnt = tradeDetail.likeCnt;
+            this.bookmarkCnt = tradeDetail.bookmarkCnt;
+            this.tradeCategoryDetailName = tradeDetail.tradeCategoryDetailName;
+        }
+
+
 
 
     }
@@ -132,10 +157,10 @@ public class TradeInfo {
             this.bookmarkCnt = bookmarkCnt;
             this.createAt = CalculateTime.dateformatForPost(createAt);
         }
-        private Boolean booleanChk(Long chkValue) {
-            return chkValue == 0?false : true;
-        }
+
     }
 
-
+    public static  Boolean booleanChk(Long chkValue) {
+        return chkValue == 0?false : true;
+    }
 }
