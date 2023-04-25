@@ -8,4 +8,5 @@ public interface TradeReader {
     List<Trade> readTradeList();
     Trade readTradeById(Long tradeId);
     TradeCategoryDetail readTradeCategoryDetailById(Long tradeCategoryDetailId);
+    TradeInfo.TradeDetail readTradeDetail(Long userId, Long tradeId);
 }

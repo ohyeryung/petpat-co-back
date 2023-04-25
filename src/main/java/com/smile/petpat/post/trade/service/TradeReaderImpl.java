@@ -3,6 +3,7 @@ package com.smile.petpat.post.trade.service;
 import com.smile.petpat.post.category.domain.TradeCategoryDetail;
 import com.smile.petpat.post.category.repository.TradeCategoryDetailRepository;
 import com.smile.petpat.post.trade.domain.Trade;
+import com.smile.petpat.post.trade.domain.TradeInfo;
 import com.smile.petpat.post.trade.domain.TradeReader;
 import com.smile.petpat.post.trade.repository.TradeRepository;
 import lombok.RequiredArgsConstructor;
@@ -35,6 +36,12 @@ public class TradeReaderImpl implements TradeReader {
        return tradeCategoryDetailRepository.findByTradeCategoryDetailId(tradeCategoryDetailId).orElseThrow(
                () -> new IllegalArgumentException("존재하지 않는 중고거래 카테고리입니다.")
        );
+    }
+
+    @Override
+    public TradeInfo.TradeDetail readTradeDetail(Long userId, Long tradeId) {
+        readTradeById(tradeId);
+        return tradeRepository.tradeDetail(userId,tradeId);
     }
 
     public void userChk(Long tradeId,Long userId){
