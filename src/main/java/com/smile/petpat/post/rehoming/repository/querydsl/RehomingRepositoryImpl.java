@@ -41,7 +41,7 @@ public class RehomingRepositoryImpl implements RehomingRepositoryQuerydsl {
                                                 .from(image)
                                                 .where(image.postId.eq(rehoming.rehomingId),
                                                         image.postType.eq(PostType.REHOMING),
-                                                        image.repImgNY.eq("Y"))
+                                                        image.repImgNY.eq(true))
                                                 , "rehomingImg"),
                                 rehoming.user.id,
                                 rehoming.user.nickname,
@@ -107,7 +107,7 @@ public class RehomingRepositoryImpl implements RehomingRepositoryQuerydsl {
                                                 .from(image)
                                                 .where(image.postId.eq(rehoming.rehomingId),
                                                         image.postType.eq(PostType.REHOMING),
-                                                        image.repImgNY.eq("Y"))
+                                                        image.repImgNY.eq(true))
                                         , "rehomingImg"),
                                 rehoming.user.id,
                                 rehoming.user.nickname,
