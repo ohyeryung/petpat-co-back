@@ -3,13 +3,15 @@ package com.smile.petpat.post.trade.service;
 import com.smile.petpat.post.category.domain.TradeCategoryDetail;
 import com.smile.petpat.post.category.repository.TradeCategoryDetailRepository;
 import com.smile.petpat.post.trade.domain.Trade;
+import com.smile.petpat.post.trade.domain.TradeInfo;
 import com.smile.petpat.post.trade.domain.TradeReader;
 import com.smile.petpat.post.trade.repository.TradeRepository;
+import com.smile.petpat.user.domain.User;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
-
-import java.util.List;
 
 @RequiredArgsConstructor
 @Slf4j
@@ -19,8 +21,9 @@ public class TradeReaderImpl implements TradeReader {
     private final TradeCategoryDetailRepository tradeCategoryDetailRepository;
 
     @Override
-    public List<Trade> readTradeList() {
-        return tradeRepository.findAll();
+    public Page<TradeInfo.TradeList> readTradeList(User user, Pageable pageable) {
+       // return tradeRepository.findAll();
+        return tradeRepository.tradeList_Paging(user.getId(),pageable);
     }
 
     @Override

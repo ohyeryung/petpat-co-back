@@ -66,8 +66,8 @@ class TradeRepositoryQueryDslTest {
                                                 .where(
                                                         image.postId.eq(trade.tradeId)
                                                                 .and(image.postType.eq(PostType.TRADE))
+                                                                .and(image.repImgNY.eq("Y"))
                                                 )
-                                                .orderBy(image.imageId.asc()).limit(1)
                                         ,"image"),
                                 ExpressionUtils.as(
                                         JPAExpressions
@@ -129,8 +129,8 @@ class TradeRepositoryQueryDslTest {
                                                         .where(
                                                                 image.postId.eq(trade.tradeId)
                                                                         .and(image.postType.eq(PostType.TRADE))
+                                                                        .and(image.repImgNY.eq("Y"))
                                                         )
-                                                        .orderBy(image.imageId.asc())
                                                 ,"image"),
                                         ExpressionUtils.as(
                                                 JPAExpressions

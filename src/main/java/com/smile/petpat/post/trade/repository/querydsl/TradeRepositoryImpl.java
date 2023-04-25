@@ -138,7 +138,8 @@ public class TradeRepositoryImpl implements TradeRepositoryQueryDsl{
                                                         .select(bookmark.count())
                                                         .from(bookmark)
                                                         .where(bookmark.postId.eq(trade.tradeId)),
-                                                "bookmarkCnt")
+                                                "bookmarkCnt"),
+                                        trade.createdAt
                                 )
                         )
                 .from(trade)
