@@ -20,10 +20,6 @@ public class ImageUploader {
         return imageRepository.saveAll(imageList);
     }
 
-//    public Image toImageEntity(String fakeFileName, String originalFileName, String filePath, Long postId, PostType postType){
-//        return new Image(originalFileName, fakeFileName, filePath, postId, postType);
-//    }
-
     public Image toImageEntity(String originalFileName, String fakeFileName, String filePath, Long postId, PostType postType, boolean repImgNY) {
         return new Image(originalFileName, fakeFileName, filePath, postId, postType, repImgNY);
     }
@@ -37,14 +33,14 @@ public class ImageUploader {
     // 게시글 별 이미지 key 값 추출 메소드
     @Transactional
     public List<String> createKey(Long postId, PostType postType) {
-        List<Image> images = imageRepository.findAllByPostIdAndPostType(postId, postType);
+        List<Image> images = imageRepository.findAllByPostIdAndPostTypeOrderByPostId(postId, postType);
         return images.stream().map(Image::getFakeFileName).collect(Collectors.toList());
     }
 
     // 게시글 이미지 url 리스트 추출 method
     @Transactional
-    public List<String> createImgList(Long postId, PostType postType) {
-        List<Image> images = imageRepository.findAllByPostIdAndPostType(postId, postType);
+    public List<String> readImgList(Long postId, PostType postType) {
+        List<Image> images = imageRepository.findAllByPostIdAndPostTypeOrderByPostId(postId, postType);
         return images.stream().map(Image::getFilePath).collect(Collectors.toList());
     }
 
