@@ -32,7 +32,7 @@ public class Image {
     @Enumerated(EnumType.STRING)
     private PostType postType;
 
-    private boolean repImgNY;
+    @Column(name = "REPIMGNY") private boolean repImgNY;
     public Image() {
     }
 
