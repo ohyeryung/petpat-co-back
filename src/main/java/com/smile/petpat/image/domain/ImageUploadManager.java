@@ -21,19 +21,6 @@ public class ImageUploadManager {
 
     }
 
-    /* 게시글 이미지 등록 */
-//    public void uploadPostImage(List<MultipartFile> multipartFiles, Long postId, PostType postType) {
-//        List<Image> imageList = new ArrayList<>();
-//        multipartFiles.forEach(file -> {
-//            String fakeFileName = imageUtils.createFileName(file.getOriginalFilename());
-//            String originalFileName = file.getOriginalFilename();
-//            String filePath = s3Uploader.uploadFile(file);
-//            Image image = imageUploader.toImageEntity(fakeFileName, originalFileName, filePath, postId, postType);
-//            imageList.add(image);
-//        });
-//        imageUploader.savePostImage(imageList);
-//    }
-
     /* 게시글 이미지 등록 (대표이미지 설정) */
     public void uploadPostImage(List<MultipartFile> multipartFiles, Long postId, PostType postType) {
         List<Image> imageList = new ArrayList<>();
