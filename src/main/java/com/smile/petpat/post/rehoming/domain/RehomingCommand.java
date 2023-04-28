@@ -12,6 +12,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Getter
@@ -25,10 +27,12 @@ public class RehomingCommand {
     @NotBlank(message = "제목은 필수값입니다.") private String title;
     @NotBlank(message = "설명은 필수값입니다.") private String description;
     @NotBlank(message = "이름은 필수값입니다.") private String petName;
-    @NotBlank(message = "나이는 필수값입니다.") private String petAge;
+    // 생년월일
+    private String petAge;
+    // @NotBlank(message = "나이는 필수값입니다.") private String petAge;
     @NotNull(message = "카테고리는 필수값입니다.") private Long category;
     @NotNull(message = "종은 필수값입니다.") private Long type;
-    @NotBlank(message = "성별은 필수값입니다.") private String gender;
+    @NotNull(message = "성별은 필수값입니다.") private PetGender gender;
     private String cityName;
     private String cityCountryName;
     private String townShipName;
@@ -59,7 +63,7 @@ public class RehomingCommand {
                 .title(title)
                 .description(description)
                 .petName(petName)
-                .petAge(petAge)
+                .petAge(getPetAge())
                 .category(category)
                 .type(type)
                 .gender(gender)
@@ -80,7 +84,7 @@ public class RehomingCommand {
                 .title(title)
                 .description(description)
                 .petName(petName)
-                .petAge(petAge)
+                .petAge(getPetAge())
                 .category(category)
                 .type(type)
                 .gender(gender)
@@ -91,5 +95,17 @@ public class RehomingCommand {
                 .fullAdName(fullAdName)
                 .status(status)
                 .build();
+    }
+
+    public LocalDate getPetAge() {
+
+        if (this.petAge == null || petAge.equals("")) {
+            return null;
+        }
+        return LocalDate.parse(petAge, DateTimeFormatter.ofPattern("yyyyMMdd"));
+    }
+
+    public enum PetGender {
+        BOY, GIRL
     }
 }
