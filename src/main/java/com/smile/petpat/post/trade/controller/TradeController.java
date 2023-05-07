@@ -45,15 +45,11 @@ public class  TradeController {
     @RequestMapping(value = "",method = RequestMethod.GET)
     public SuccessResponse listTrade(@AuthenticationPrincipal UserDetailsImpl userDetails,
                                      @PageableDefault() Pageable pageable){
-
         if(userDetails == null){
             // 1. 로그인 안한 유저
-
         }
         // 2. 로그인 한 유저
         return SuccessResponse.success(tradeService.listTrade(userDetails.getUser(),pageable),"ok");
-
-
     }
 
     /**
@@ -96,7 +92,6 @@ public class  TradeController {
         tradeService.deleteTrade(tradeId,userDetails.getUser());
         return SuccessResponse.success("ok");
     }
-
 
     @ApiOperation(value = "중고거래 게시물 판매 중")
     @RequestMapping(value = "/statusFinding", method = RequestMethod.POST)
