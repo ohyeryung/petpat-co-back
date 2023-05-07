@@ -107,8 +107,8 @@ public class TradeRepositoryImpl implements TradeRepositoryQueryDsl{
                                                         .where(
                                                                 image.postId.eq(trade.tradeId)
                                                                         .and(image.postType.eq(PostType.TRADE))
+                                                                        .and(image.repImgNY.eq(true))
                                                         )
-                                                        .orderBy(image.imageId.asc()).limit(1)
                                                 ,"image"),
                                         ExpressionUtils.as(
                                                 JPAExpressions
@@ -139,6 +139,7 @@ public class TradeRepositoryImpl implements TradeRepositoryQueryDsl{
                                                         .from(bookmark)
                                                         .where(bookmark.postId.eq(trade.tradeId)),
                                                 "bookmarkCnt"),
+                                        trade.status,
                                         trade.createdAt
                                 )
                         )
@@ -201,7 +202,9 @@ public class TradeRepositoryImpl implements TradeRepositoryQueryDsl{
                                                         .from(bookmark)
                                                         .where(bookmark.postId.eq(trade.tradeId)),
                                                 "bookmarkCnt"),
-                                        trade.tradeCategoryDetail.tradeCategoryDetailName
+                                        trade.tradeCategoryDetail.tradeCategoryDetailName,
+                                        trade.status,
+                                        trade.createdAt
                                 )
                         )
                 .from(trade)
