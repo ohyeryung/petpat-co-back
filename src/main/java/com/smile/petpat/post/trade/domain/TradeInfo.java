@@ -3,6 +3,8 @@ package com.smile.petpat.post.trade.domain;
 import com.smile.petpat.image.domain.Image;
 import com.smile.petpat.post.category.domain.PostType;
 import com.smile.petpat.post.common.CalculateTime;
+import com.smile.petpat.post.common.status.PostStatus;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.ToString;
@@ -15,9 +17,9 @@ import java.util.List;
 public class TradeInfo {
 
 
-    @Builder
     @Getter
     @ToString
+    @AllArgsConstructor
     public static class TradeDetail{
         private Long tradeId;
         private Long userId;
@@ -38,8 +40,8 @@ public class TradeInfo {
         private Long likeCnt;
         private Long bookmarkCnt;
         private String tradeCategoryDetailName;
-
-        private LocalDateTime createAt;
+        private PostStatus status;
+        private String createAt;
 
         public TradeDetail(){
             
@@ -48,7 +50,7 @@ public class TradeInfo {
         public TradeDetail(Long tradeId, Long userId, String nickname, String title, String content, Long price,
                            String cityName, String cityCountryName, String townShipName, String detailAdName,
                            String fullAdName, List<String> imageList, PostType postType, boolean isLiked,
-                           boolean isBookmarked, int viewCnt, Long likeCnt, Long bookmarkCnt, String tradeCategoryDetailName, LocalDateTime createAt
+                           boolean isBookmarked, int viewCnt, Long likeCnt, Long bookmarkCnt, String tradeCategoryDetailName, PostStatus status,LocalDateTime createAt
         ) {
             this.tradeId = tradeId;
             this.userId = userId;
@@ -69,10 +71,14 @@ public class TradeInfo {
             this.likeCnt = likeCnt;
             this.bookmarkCnt = bookmarkCnt;
             this.tradeCategoryDetailName = tradeCategoryDetailName;
-            this.createAt = createAt;
+            this.status =status;
+            this.createAt = CalculateTime.dateformatForPost(createAt);
         }
 
-        public TradeDetail(Long tradeId, Long userId, String nickname, String title, String content, Long price, String cityName, String cityCountryName, String townShipName, String detailAdName, String fullAdName, PostType postType, Long isLiked, Long isBookmarked, int viewCnt, Long likeCnt, Long bookmarkCnt, String tradeCategoryDetailName) {
+        public TradeDetail(Long tradeId, Long userId, String nickname, String title, String content, Long price,
+                           String cityName, String cityCountryName, String townShipName, String detailAdName,
+                           String fullAdName, PostType postType, Long isLiked, Long isBookmarked, int viewCnt,
+                           Long likeCnt, Long bookmarkCnt, String tradeCategoryDetailName,PostStatus status,LocalDateTime createAt) {
             this.tradeId = tradeId;
             this.userId = userId;
             this.nickname = nickname;
@@ -91,6 +97,8 @@ public class TradeInfo {
             this.likeCnt = likeCnt;
             this.bookmarkCnt = bookmarkCnt;
             this.tradeCategoryDetailName = tradeCategoryDetailName;
+            this.status = status;
+            this.createAt = CalculateTime.dateformatForPost(createAt);
         }
 
         public TradeDetail(TradeDetail tradeDetail, List<String> imageList) {
@@ -113,6 +121,8 @@ public class TradeInfo {
             this.likeCnt = tradeDetail.likeCnt;
             this.bookmarkCnt = tradeDetail.bookmarkCnt;
             this.tradeCategoryDetailName = tradeDetail.tradeCategoryDetailName;
+            this.status=tradeDetail.status;
+            this.createAt = tradeDetail.createAt;
         }
 
 
@@ -121,6 +131,7 @@ public class TradeInfo {
     }
     @Getter
     @ToString
+    @AllArgsConstructor
     public static class TradeList{
         private Long tradeId;
         private String nickname;
@@ -135,6 +146,8 @@ public class TradeInfo {
         private Long likeCnt;
         private Long bookmarkCnt;
 
+        private PostStatus status;
+
         private String createAt;
 
         public TradeList(){
@@ -142,7 +155,9 @@ public class TradeInfo {
         }
 
 
-        public TradeList(Long tradeId, String nickname, String title, Long price, String cityName, String cityCountryName, String imagePath, Long isLiked, Long isBookmarked, int viewCnt, Long likeCnt, Long bookmarkCnt, LocalDateTime createAt) {
+        public TradeList(Long tradeId, String nickname, String title, Long price, String cityName, String cityCountryName,
+                         String imagePath, Long isLiked, Long isBookmarked, int viewCnt, Long likeCnt, Long bookmarkCnt,
+                         PostStatus status, LocalDateTime createAt) {
             this.tradeId = tradeId;
             this.nickname = nickname;
             this.title = title;
@@ -155,6 +170,7 @@ public class TradeInfo {
             this.viewCnt = viewCnt;
             this.likeCnt = likeCnt;
             this.bookmarkCnt = bookmarkCnt;
+            this.status = status;
             this.createAt = CalculateTime.dateformatForPost(createAt);
         }
 

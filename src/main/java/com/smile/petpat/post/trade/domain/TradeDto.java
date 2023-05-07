@@ -18,6 +18,8 @@ import static com.smile.petpat.common.response.ErrorCode.EXCEEDED_MAX_IMAGE_COUN
 
 @Getter
 public class TradeDto {
+    private static final int MIN_IMAGE_COUNT_IDX =0;
+    private static final int MAX_IMAGE_COUNT_IDX =5;
 
     @Getter
     @Setter
@@ -43,8 +45,8 @@ public class TradeDto {
         public CommonTrade(){}
 
         public CommonTrade(String title, String content, Long price, String cityName, String cityCountryName, String townShipName, String detailAdName, String fullAdName, Long tradeCategoryDetailId, List<MultipartFile> images) {
-            if(images.size()<1) new CustomException(BELOW_MIN_IMAGE_COUNT);
-            if(images.size()>4) new CustomException(EXCEEDED_MAX_IMAGE_COUNT);
+            if(!images.get(MIN_IMAGE_COUNT_IDX).getName().isEmpty()) throw new CustomException(BELOW_MIN_IMAGE_COUNT);
+            if(images.get(MAX_IMAGE_COUNT_IDX).isEmpty()) throw new CustomException(EXCEEDED_MAX_IMAGE_COUNT);
             this.title = title;
             this.content = content;
             this.price = price;
