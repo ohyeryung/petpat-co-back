@@ -1,5 +1,7 @@
 package com.smile.petpat.post.rehoming.service;
 
+import com.smile.petpat.common.exception.CustomException;
+import com.smile.petpat.common.response.ErrorCode;
 import com.smile.petpat.image.domain.ImageUploadManager;
 import com.smile.petpat.image.domain.ImageUploader;
 import com.smile.petpat.post.category.domain.CategoryGroup;
@@ -15,6 +17,7 @@ import com.smile.petpat.post.rehoming.dto.RehomingPagingDto;
 import com.smile.petpat.post.rehoming.dto.RehomingResDto;
 import com.smile.petpat.post.rehoming.repository.RehomingRepository;
 import com.smile.petpat.user.domain.User;
+import com.smile.petpat.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
@@ -23,6 +26,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -34,11 +38,15 @@ public class RehomingServiceImpl implements RehomingService {
     private final RehomingStore rehomingStore;
     private final CommonUtils commonUtils;
     private final RehomingRepository rehomingRepository;
+    private final UserRepository userRepository;
 
     // 1. 분양 글 등록
     @Override
     @Transactional
     public void registerRehoming(User user, RehomingCommand rehomingCommand) {
+        // userChk
+        userChk(user.getId());
+
         // 1-1. 게시물 등록
         CategoryGroup category = rehomingReader.readCategoryById(rehomingCommand.getCategory());
         PetCategory type = rehomingReader.readPetTypeById(rehomingCommand.getType());
@@ -47,7 +55,6 @@ public class RehomingServiceImpl implements RehomingService {
         // 1-2. 이미지 등록
         Long postId = rehoming.getRehomingId();
         imageUploadManager.uploadPostImage(rehomingCommand.getRehomingImg(), postId, PostType.REHOMING);
-
     }
 
     // 2-1. 분양 글 목록 조회 (회원)
@@ -79,7 +86,7 @@ public class RehomingServiceImpl implements RehomingService {
         Rehoming rehoming = rehomingReader.readRehomingById(postId);
         // 조회수 계산
         rehoming.updateViewCnt(rehoming);
-        List<String> imgList = imageUploader.createImgList(postId, PostType.REHOMING);
+        List<String> imgList = imageUploader.readImgList(postId, PostType.REHOMING);
         return new RehomingResDto(rehoming, imgList,
                 commonUtils.getLikesCnt(postId, PostType.REHOMING),
                 commonUtils.getBookmarkCnt(postId, PostType.REHOMING));
@@ -117,7 +124,7 @@ public class RehomingServiceImpl implements RehomingService {
     }
 
     private RehomingResDto getResDto(User user, Long postId, Rehoming rehoming) {
-        List<String> imgList = imageUploader.createImgList(postId, PostType.REHOMING);
+        List<String> imgList = imageUploader.readImgList(postId, PostType.REHOMING);
         return new RehomingResDto(rehoming, imgList,
                 commonUtils.LikePostChk(postId, PostType.REHOMING, user),
                 commonUtils.BookmarkPostChk(postId, PostType.REHOMING, user),
@@ -152,5 +159,12 @@ public class RehomingServiceImpl implements RehomingService {
         Rehoming rehoming = rehomingReader.readRehomingById(postId);
         rehomingReader.userChk(user.getId(), rehoming);
         rehoming.isMatched();
+    }
+
+    public void userChk(Long userId) {
+        Optional<User> findById = userRepository.findById(userId);
+        if (findById.isEmpty()) {
+            throw new CustomException(ErrorCode.ILLEGAL_USER_NOT_EXIST);
+        }
     }
 }
