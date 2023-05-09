@@ -20,7 +20,7 @@ public class RehomingInfo {
     private String petName;
     private String category;
     private String type;
-    private String gender;
+    private RehomingCommand.PetGender gender;
     private PostStatus status;
     private PostType postType;
     private LocalDateTime createdAt;
@@ -34,7 +34,7 @@ public class RehomingInfo {
     // 회원
     public RehomingInfo(Long rehomingId, String rehomingImg, Long userId, String nickname,
                         String title, String petName,
-                        String category, String type, String gender,
+                        String category, String type, RehomingCommand.PetGender gender,
                         PostStatus status, PostType postType, LocalDateTime createdAt, LocalDateTime updatedAt,
                         Long isLiked, Long isBookmarked, int viewCnt, Long likeCnt, Long bookmarkCnt) {
         this.rehomingId = rehomingId;
@@ -64,7 +64,7 @@ public class RehomingInfo {
     // 비회원
     public RehomingInfo(Long rehomingId, String rehomingImg, Long userId, String nickname,
                         String title, String petName,
-                        String category, String type, String gender,
+                        String category, String type, RehomingCommand.PetGender gender,
                         PostStatus status, PostType postType, LocalDateTime createdAt, LocalDateTime updatedAt,
                         int viewCnt, Long likeCnt, Long bookmarkCnt) {
         this.rehomingId = rehomingId;
