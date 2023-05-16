@@ -28,7 +28,11 @@ public class SuccessResponse<T> {
     }
 
     public static <T> SuccessResponse<T> success(T data) {
-        return success(data, null);
+        return success(data, "");
+    }
+
+    public static <T> SuccessResponse<T> noDataSuccess(String message) {
+        return success(null, message);
     }
 
     public enum Result {

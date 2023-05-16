@@ -8,12 +8,15 @@ import com.smile.petpat.user.service.UserDetailsImpl;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+
+@Slf4j
 @Api(tags = {"post_rehoming_api"})
 @RestController
 @RequiredArgsConstructor
@@ -32,7 +35,7 @@ public class RehomingController {
                                   @ModelAttribute @Valid RehomingCommand rehomingDto) {
         RehomingCommand rehomingCommand = rehomingDto.toCommand();
         rehomingService.registerRehoming(userDetails.getUser(), rehomingCommand);
-        return SuccessResponse.success("OK");
+        return SuccessResponse.noDataSuccess("OK");
     }
 
     /**
@@ -88,7 +91,7 @@ public class RehomingController {
     public SuccessResponse deleteRehoming(@AuthenticationPrincipal UserDetailsImpl userDetails,
                                           @RequestParam Long postId) {
         rehomingService.deleteRehoming(userDetails.getUser(), postId);
-        return SuccessResponse.success("OK");
+        return SuccessResponse.noDataSuccess("OK");
     }
 
     /**
@@ -100,7 +103,7 @@ public class RehomingController {
     public SuccessResponse updateStatusFinding(@AuthenticationPrincipal UserDetailsImpl userDetails,
                                                 @RequestParam Long postId) {
         rehomingService.updateStatusFinding(userDetails.getUser(), postId);
-        return SuccessResponse.success("OK");
+        return SuccessResponse.noDataSuccess("OK");
     }
 
     @ApiOperation(value = "분양게시물 예약 중")
@@ -108,7 +111,7 @@ public class RehomingController {
     public SuccessResponse updateStatusReserved(@AuthenticationPrincipal UserDetailsImpl userDetails,
                                                 @RequestParam Long postId) {
         rehomingService.updateStatusReserved(userDetails.getUser(), postId);
-        return SuccessResponse.success("OK");
+        return SuccessResponse.noDataSuccess("OK");
     }
 
     @ApiOperation(value = "분양게시물 예약 완료")
@@ -116,6 +119,6 @@ public class RehomingController {
     public SuccessResponse updateStatusMatched(@AuthenticationPrincipal UserDetailsImpl userDetails,
                                                @RequestParam Long postId) {
         rehomingService.updateStatusMatched(userDetails.getUser(), postId);
-        return SuccessResponse.success("OK");
+        return SuccessResponse.noDataSuccess("OK");
     }
 }
