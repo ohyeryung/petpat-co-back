@@ -7,6 +7,7 @@ import org.springframework.validation.Errors;
 import org.springframework.validation.FieldError;
 
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,17 +24,22 @@ public class ErrorResponse {
 
     public ErrorResponse() {}
 
+    public ErrorResponse(HttpStatus status, String message) {
+        this.httpStatus = status;
+        this.message = message;
+    }
+
     static public ErrorResponse create() {
         return new ErrorResponse();
     }
 
+    public ErrorResponse message(String message) {
+        this.message = message;
+        return this;
+    }
 
     public ErrorResponse httpStatus(HttpStatus httpStatus) {
         this.httpStatus = httpStatus;
-        return this;
-    }
-    public ErrorResponse message(String message) {
-        this.message = message;
         return this;
     }
     public ErrorResponse errors(Errors errors) {
