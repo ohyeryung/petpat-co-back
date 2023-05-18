@@ -1,5 +1,7 @@
 package com.smile.petpat.post.rehoming.domain;
 
+import com.smile.petpat.common.exception.CustomException;
+import com.smile.petpat.common.response.ErrorCode;
 import com.smile.petpat.post.category.domain.CategoryGroup;
 import com.smile.petpat.post.category.domain.PetCategory;
 import com.smile.petpat.post.category.domain.PostType;
@@ -27,9 +29,7 @@ public class RehomingCommand {
     @NotBlank(message = "제목은 필수값입니다.") private String title;
     @NotBlank(message = "설명은 필수값입니다.") private String description;
     @NotBlank(message = "이름은 필수값입니다.") private String petName;
-    // 생년월일
     private String petAge;
-    // @NotBlank(message = "나이는 필수값입니다.") private String petAge;
     @NotNull(message = "카테고리는 필수값입니다.") private Long category;
     @NotNull(message = "종은 필수값입니다.") private Long type;
     @NotNull(message = "성별은 필수값입니다.") private PetGender gender;
@@ -40,6 +40,12 @@ public class RehomingCommand {
     private String fullAdName;
 
     public RehomingCommand toCommand() {
+        if (rehomingImg.size() > 5) {
+            throw new CustomException(ErrorCode.EXCEEDED_MAX_IMAGE_COUNT);
+        }
+        else if (rehomingImg.get(0).isEmpty()) {
+            throw new CustomException(ErrorCode.BELOW_MIN_IMAGE_COUNT);
+        }
         return RehomingCommand.builder()
                 .rehomingImg(rehomingImg)
                 .title(title)
