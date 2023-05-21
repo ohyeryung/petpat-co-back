@@ -80,7 +80,7 @@ Spring Boot로 만들어 보는 반려동물 커뮤니티 🐾
 
 
 ## ERD
-<img alt="petpat_erd" src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FTIzJk%2Fbtsf6DpjhRc%2Fj7pU9msaB70CqESlAtwsiK%2Fimg.png" width="650" height="400">
+<img alt="petpat_erd" src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2Fnz6jX%2FbtsgKoYdS7Y%2FXeDhpHIKsABClUYMJR91r0%2Fimg.png" width="650" height="400">
 
 
 ## API 
