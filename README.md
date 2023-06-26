@@ -79,6 +79,10 @@ Spring Boot로 만들어 보는 반려동물 커뮤니티 🐾
 <img src="https://img.shields.io/badge/Github-181717?style=for-the-badge&logo=github&logoColor=white">
 
 
+## ERD
+<img alt="petpat_erd" src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2Fnz6jX%2FbtsgKoYdS7Y%2FXeDhpHIKsABClUYMJR91r0%2Fimg.png" width="650" height="400">
+
+
 ## API 
 - [API 명세서](https://docs.google.com/spreadsheets/d/1GQ8mQJfZzy7_0CFoN61FxM25Lsl5OUadt8TldtZNUP4/edit#gid=193839811)
 
