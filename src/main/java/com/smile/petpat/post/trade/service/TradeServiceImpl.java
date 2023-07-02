@@ -49,7 +49,7 @@ public class TradeServiceImpl implements TradeService{
 
     @Override
     public TradeInfo.TradeDetail tradeDetail(Long tradeId) {
-        List<String> imgList = imageUploader.createImgList(tradeId, PostType.TRADE);
+        List<String> imgList = imageUploader.readImgList(tradeId, PostType.TRADE);
         Trade trade = tradeReader.readTradeById(tradeId);
 
         // 조회수 계산
@@ -62,7 +62,7 @@ public class TradeServiceImpl implements TradeService{
         Trade trade = tradeReader.readTradeById(tradeId);
         trade.updateViewCnt(trade);
         TradeInfo.TradeDetail tradeDetail = tradeReader.readTradeDetail(user.getId(), tradeId);
-        List<String> imageList = imageUploader.createImgList(tradeId,trade.getPostType());
+        List<String> imageList = imageUploader.readImgList(tradeId,trade.getPostType());
         // 조회수 계산
         return new TradeInfo.TradeDetail(tradeDetail,imageList);
 
@@ -88,12 +88,7 @@ public class TradeServiceImpl implements TradeService{
     }
 
     private TradeInfo.TradeDetail getTradeInfo(Long tradeId, User user, Trade trade) {
-        List<String> imgList = imageUploader.createImgList(tradeId, PostType.TRADE);
-//        return new TradeInfo.TradeDetail(trade, imgList,
-//                commonUtils.LikePostChk(tradeId, PostType.TRADE, user),
-//                commonUtils.BookmarkPostChk(tradeId, PostType.TRADE, user),
-//                commonUtils.getLikesCnt(tradeId, PostType.TRADE),
-//                commonUtils.getBookmarkCnt(tradeId, PostType.TRADE));
+        List<String> imgList = imageUploader.readImgList(tradeId, PostType.TRADE);
         return new TradeInfo.TradeDetail();
     }
 
