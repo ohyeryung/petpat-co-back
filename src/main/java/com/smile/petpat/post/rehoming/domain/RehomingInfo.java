@@ -4,8 +4,10 @@ import com.smile.petpat.post.category.domain.PostType;
 import com.smile.petpat.post.common.status.PostStatus;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @NoArgsConstructor
@@ -18,8 +20,7 @@ public class RehomingInfo {
     private String petName;
     private String category;
     private String type;
-    private String gender;
-    private Long price;
+    private RehomingCommand.PetGender gender;
     private PostStatus status;
     private PostType postType;
     private LocalDateTime createdAt;
@@ -31,12 +32,13 @@ public class RehomingInfo {
     private Long bookmarkCnt;
 
     // 회원
-    public RehomingInfo(Long rehomingId, Long userId, String nickname,
+    public RehomingInfo(Long rehomingId, String rehomingImg, Long userId, String nickname,
                         String title, String petName,
-                        String category, String type, String gender,
-                        Long price, PostStatus status, PostType postType, LocalDateTime createdAt, LocalDateTime updatedAt,
+                        String category, String type, RehomingCommand.PetGender gender,
+                        PostStatus status, PostType postType, LocalDateTime createdAt, LocalDateTime updatedAt,
                         Long isLiked, Long isBookmarked, int viewCnt, Long likeCnt, Long bookmarkCnt) {
         this.rehomingId = rehomingId;
+        this.rehomingImg = rehomingImg;
         this.userId = userId;
         this.nickname = nickname;
         this.title = title;
@@ -44,9 +46,7 @@ public class RehomingInfo {
         this.category = category;
         this.type = type;
         this.gender = gender;
-        this.price = price;
         this.status = status;
-        // this.rehomingImg = rehomingImg;
         this.postType = postType;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
@@ -62,12 +62,13 @@ public class RehomingInfo {
     }
 
     // 비회원
-    public RehomingInfo(Long rehomingId, Long userId, String nickname,
+    public RehomingInfo(Long rehomingId, String rehomingImg, Long userId, String nickname,
                         String title, String petName,
-                        String category, String type, String gender,
-                        Long price, PostStatus status, PostType postType, LocalDateTime createdAt, LocalDateTime updatedAt,
+                        String category, String type, RehomingCommand.PetGender gender,
+                        PostStatus status, PostType postType, LocalDateTime createdAt, LocalDateTime updatedAt,
                         int viewCnt, Long likeCnt, Long bookmarkCnt) {
         this.rehomingId = rehomingId;
+        this.rehomingImg = rehomingImg;
         this.userId = userId;
         this.nickname = nickname;
         this.title = title;
@@ -75,9 +76,7 @@ public class RehomingInfo {
         this.category = category;
         this.type = type;
         this.gender = gender;
-        this.price = price;
         this.status = status;
-        // this.rehomingImg = rehomingImg;
         this.postType = postType;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;

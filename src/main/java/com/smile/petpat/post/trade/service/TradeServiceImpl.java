@@ -5,15 +5,17 @@ import com.smile.petpat.image.domain.ImageUploader;
 import com.smile.petpat.post.category.domain.PostType;
 import com.smile.petpat.post.category.domain.TradeCategoryDetail;
 import com.smile.petpat.post.common.CommonUtils;
+import com.smile.petpat.post.rehoming.dto.RehomingPagingDto;
 import com.smile.petpat.post.trade.domain.*;
 import com.smile.petpat.user.domain.User;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -35,39 +37,41 @@ public class TradeServiceImpl implements TradeService{
         Trade trade = tradeStore.store(initTrade);
         //2. 사진 등록
         imageUploadManager.uploadPostImage(tradeCommand.getImages(),trade.getTradeId(),trade.getPostType());
-
     }
 
-    // 추후 querydsl로 변경예정
+    // 중고거래 게시판 목록 반환(로그인한 유저)
     @Override
-    public List<TradeInfo> listTrade() {
-        List<Trade> listTrade = tradeReader.readTradeList();
-        List<TradeInfo> tradeInfos = listTrade.stream().map(TradeInfo::new).collect(Collectors.toList());
-        return tradeInfos;
+    public RehomingPagingDto listTrade(User user, Pageable pageable) {
+        Page<TradeInfo.TradeList> listTrade = tradeReader.readTradeList(user,pageable);
+        RehomingPagingDto dto= new RehomingPagingDto(listTrade);
+        return dto;
     }
 
     @Override
-    public TradeInfo tradeDetail(Long tradeId) {
-        List<String> imgList = imageUploader.createImgList(tradeId, PostType.TRADE);
+    public TradeInfo.TradeDetail tradeDetail(Long tradeId) {
+        List<String> imgList = imageUploader.readImgList(tradeId, PostType.TRADE);
         Trade trade = tradeReader.readTradeById(tradeId);
+
         // 조회수 계산
         trade.updateViewCnt(trade);
-        return new TradeInfo(trade,imgList);
+        return new TradeInfo.TradeDetail();
     }
 
     @Override
-    public TradeInfo tradeDetailforUser(Long tradeId, User user) {
+    public TradeInfo.TradeDetail tradeDetailforUser(Long tradeId, User user) {
         Trade trade = tradeReader.readTradeById(tradeId);
-        // 조회수 계산
         trade.updateViewCnt(trade);
-        return getTradeInfo(tradeId, user, trade);
+        TradeInfo.TradeDetail tradeDetail = tradeReader.readTradeDetail(user.getId(), tradeId);
+        List<String> imageList = imageUploader.readImgList(tradeId,trade.getPostType());
+        // 조회수 계산
+        return new TradeInfo.TradeDetail(tradeDetail,imageList);
 
     }
 
 
     @Override
     @Transactional
-    public TradeInfo updateTrade(TradeCommand tradeCommand, User user,Long tradeId) {
+    public TradeInfo.TradeDetail updateTrade(TradeCommand tradeCommand, User user, Long tradeId) {
         TradeCategoryDetail categoryDetail = tradeReader.readTradeCategoryDetailById(tradeCommand.getTradeCategoryDetailId());
         Trade initTrade = tradeCommand.toUpdateEntity(user,tradeId,categoryDetail);
         Trade trade = tradeStore.update(initTrade,user.getId(),tradeId);
@@ -83,13 +87,9 @@ public class TradeServiceImpl implements TradeService{
         imageUploadManager.removePostImage(tradeId, PostType.TRADE);
     }
 
-    private TradeInfo getTradeInfo(Long tradeId, User user, Trade trade) {
-        List<String> imgList = imageUploader.createImgList(tradeId, PostType.TRADE);
-        return new TradeInfo(trade, imgList,
-                commonUtils.LikePostChk(tradeId, PostType.TRADE, user),
-                commonUtils.BookmarkPostChk(tradeId, PostType.TRADE, user),
-                commonUtils.getLikesCnt(tradeId, PostType.TRADE),
-                commonUtils.getBookmarkCnt(tradeId, PostType.TRADE));
+    private TradeInfo.TradeDetail getTradeInfo(Long tradeId, User user, Trade trade) {
+        List<String> imgList = imageUploader.readImgList(tradeId, PostType.TRADE);
+        return new TradeInfo.TradeDetail();
     }
 
 

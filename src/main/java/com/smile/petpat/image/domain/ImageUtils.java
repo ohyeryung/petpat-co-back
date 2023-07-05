@@ -1,7 +1,10 @@
 package com.smile.petpat.image.domain;
 
+import com.smile.petpat.common.exception.CustomException;
+import com.smile.petpat.common.response.ErrorCode;
 import org.springframework.stereotype.Component;
 
+import java.util.Set;
 import java.util.UUID;
 
 @Component
@@ -12,22 +15,22 @@ public class ImageUtils {
         return UUID.randomUUID().toString().concat(getFileExtension(fileName));
     }
 
-    public String getFileExtension(String fileName) {
+    /* 파일 확장명 체크 로직 */
+    public String getFileExtension(String fileName) throws CustomException {
         try {
             int idx = fileName.lastIndexOf(".");
-            String fileExtension = fileName.substring(idx+1);
-            // 파일 확장자 체크로직
-            switch (fileExtension) {
-                case "gif" : break;
-                case "png" : break;
-                case "jpg" : break;
-                case "jpeg" : break;
-                default: throw new IllegalArgumentException("파일 타입을 확인해주세요");
+            if (idx == -1 || idx == fileName.length() - 1) {
+                throw new CustomException(ErrorCode.WRONG_TYPE_IMAGE);
             }
-            return fileName.substring(fileName.lastIndexOf("."));
-        } catch (StringIndexOutOfBoundsException e) {
-            throw new IllegalArgumentException("파일 타입을 확인해주세요");
-        }
+            String fileExtension = fileName.substring(idx + 1);
 
+            Set<String> validExtensions = Set.of("gif", "png", "jpg", "jpeg");
+            if (!validExtensions.contains(fileExtension)) {
+                throw new CustomException(ErrorCode.WRONG_TYPE_IMAGE);
+            }
+            return "." + fileExtension;
+        } catch (IndexOutOfBoundsException e) {
+            throw new CustomException(ErrorCode.WRONG_TYPE_IMAGE);
+        }
     }
 }

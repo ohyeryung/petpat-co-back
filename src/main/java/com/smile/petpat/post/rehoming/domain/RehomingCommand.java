@@ -1,5 +1,7 @@
 package com.smile.petpat.post.rehoming.domain;
 
+import com.smile.petpat.common.exception.CustomException;
+import com.smile.petpat.common.response.ErrorCode;
 import com.smile.petpat.post.category.domain.CategoryGroup;
 import com.smile.petpat.post.category.domain.PetCategory;
 import com.smile.petpat.post.category.domain.PostType;
@@ -12,6 +14,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Getter
@@ -20,22 +24,28 @@ import java.util.List;
 public class RehomingCommand {
 
     private User user;
+    @NotNull(message = "이미지는 필수값입니다.")
     private List<MultipartFile> rehomingImg;
     @NotBlank(message = "제목은 필수값입니다.") private String title;
     @NotBlank(message = "설명은 필수값입니다.") private String description;
     @NotBlank(message = "이름은 필수값입니다.") private String petName;
-    @NotBlank(message = "나이는 필수값입니다.") private String petAge;
+    private String petAge;
     @NotNull(message = "카테고리는 필수값입니다.") private Long category;
     @NotNull(message = "종은 필수값입니다.") private Long type;
-    @NotBlank(message = "성별은 필수값입니다.") private String gender;
+    @NotNull(message = "성별은 필수값입니다.") private PetGender gender;
     private String cityName;
     private String cityCountryName;
     private String townShipName;
     private String detailAdName;
     private String fullAdName;
-    @NotNull(message = "책임비는 필수값입니다.") private Long price;
 
     public RehomingCommand toCommand() {
+        if (rehomingImg.size() > 5) {
+            throw new CustomException(ErrorCode.EXCEEDED_MAX_IMAGE_COUNT);
+        }
+        else if (rehomingImg.get(0).isEmpty()) {
+            throw new CustomException(ErrorCode.BELOW_MIN_IMAGE_COUNT);
+        }
         return RehomingCommand.builder()
                 .rehomingImg(rehomingImg)
                 .title(title)
@@ -50,7 +60,6 @@ public class RehomingCommand {
                 .townShipName(townShipName)
                 .detailAdName(detailAdName)
                 .fullAdName(fullAdName)
-                .price(price)
                 .build();
     }
 
@@ -60,7 +69,7 @@ public class RehomingCommand {
                 .title(title)
                 .description(description)
                 .petName(petName)
-                .petAge(petAge)
+                .petAge(getPetAge())
                 .category(category)
                 .type(type)
                 .gender(gender)
@@ -69,7 +78,6 @@ public class RehomingCommand {
                 .townShipName(townShipName)
                 .detailAdName(detailAdName)
                 .fullAdName(fullAdName)
-                .price(price)
                 .status(PostStatus.REHOMING_FINDING)
                 .postType(PostType.REHOMING)
                 .build();
@@ -82,7 +90,7 @@ public class RehomingCommand {
                 .title(title)
                 .description(description)
                 .petName(petName)
-                .petAge(petAge)
+                .petAge(getPetAge())
                 .category(category)
                 .type(type)
                 .gender(gender)
@@ -91,8 +99,19 @@ public class RehomingCommand {
                 .townShipName(townShipName)
                 .detailAdName(detailAdName)
                 .fullAdName(fullAdName)
-                .price(price)
                 .status(status)
                 .build();
+    }
+
+    public LocalDate getPetAge() {
+
+        if (this.petAge == null || petAge.equals("")) {
+            return null;
+        }
+        return LocalDate.parse(petAge, DateTimeFormatter.ofPattern("yyyyMMdd"));
+    }
+
+    public enum PetGender {
+        BOY, GIRL
     }
 }

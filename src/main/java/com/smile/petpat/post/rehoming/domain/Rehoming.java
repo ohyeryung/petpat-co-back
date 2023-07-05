@@ -11,6 +11,8 @@ import lombok.Getter;
 import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Getter
 @Entity
@@ -36,8 +38,8 @@ public class Rehoming extends Timestamped {
     @Column(name = "PET_NAME", nullable = false)
     private String petName;
 
-    @Column(name = "PET_AGE", nullable = false)
-    private String petAge;
+    @Column(name = "PET_AGE")
+    private LocalDate petAge;
 
     @ManyToOne
     @JoinColumn(name = "CATEGORY_GROUP_ID", nullable = false)
@@ -48,7 +50,7 @@ public class Rehoming extends Timestamped {
     private PetCategory type;
 
     @Column(name = "GENDER", nullable = false)
-    private String gender;
+    private RehomingCommand.PetGender gender;
 
     @Column(name = "CITY_NAME", nullable = false)
     private String cityName;
@@ -64,10 +66,6 @@ public class Rehoming extends Timestamped {
 
     @Column(name = "FULL_AD_NAME", nullable = false)
     private String fullAdName;
-
-    @Column(name = "PRICE", length = 8)
-    private Long price;
-
     @Column(name = "STATUS")
     @Enumerated(EnumType.STRING)
     private PostStatus status;
@@ -90,10 +88,10 @@ public class Rehoming extends Timestamped {
         this.status = PostStatus.REHOMING_MATCHED;
     }
 
-    public Rehoming(Long rehomingId, User user, String title, String description, String petName, String petAge,
-                    CategoryGroup category, PetCategory type, String gender, String cityName,
+    public Rehoming(Long rehomingId, User user, String title, String description, String petName, LocalDate petAge,
+                    CategoryGroup category, PetCategory type, RehomingCommand.PetGender gender, String cityName,
                     String cityCountryName, String townShipName, String detailAdName, String fullAdName,
-                    Long price, PostStatus status, PostType postType, int viewCnt) {
+                    PostStatus status, PostType postType, int viewCnt) {
         this.rehomingId = rehomingId;
         this.user = user;
         this.title = title;
@@ -108,7 +106,6 @@ public class Rehoming extends Timestamped {
         this.townShipName = townShipName;
         this.detailAdName = detailAdName;
         this.fullAdName = fullAdName;
-        this.price = price;
         this.status = status;
         this.postType = postType;
         this.viewCnt = viewCnt;
@@ -132,7 +129,6 @@ public class Rehoming extends Timestamped {
         this.townShipName = initRehoming.getTownShipName();
         this.detailAdName = initRehoming.getDetailAdName();
         this.fullAdName = initRehoming.getFullAdName();
-        this.price = initRehoming.getPrice();
         this.status = initRehoming.getStatus();
     }
 

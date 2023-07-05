@@ -1,24 +1,25 @@
 package com.smile.petpat.post.trade.service;
 
+import com.smile.petpat.post.rehoming.dto.RehomingPagingDto;
 import com.smile.petpat.post.trade.domain.TradeCommand;
 import com.smile.petpat.post.trade.domain.TradeInfo;
 import com.smile.petpat.user.domain.User;
-
-import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 public interface TradeService{
 
     void registerTrade(TradeCommand tradeCommand, User user);
 
-    List<TradeInfo> listTrade();
+    RehomingPagingDto listTrade(User user, Pageable pageable);
 
     void deleteTrade(Long tradeId,User user);
 
-    TradeInfo updateTrade(TradeCommand tradeCommand, User user, Long postId);
+    TradeInfo.TradeDetail updateTrade(TradeCommand tradeCommand, User user, Long postId);
 
-    TradeInfo tradeDetail(Long tradeId);
+    TradeInfo.TradeDetail tradeDetail(Long tradeId);
 
-    TradeInfo tradeDetailforUser(Long tradeId, User user);
+    TradeInfo.TradeDetail tradeDetailforUser(Long tradeId, User user);
 
     void updateStatusFinding(User user, Long postId);
 

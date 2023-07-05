@@ -2,6 +2,7 @@ package com.smile.petpat.image.domain;
 
 import com.smile.petpat.post.category.domain.PostType;
 import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 
@@ -31,14 +32,16 @@ public class Image {
     @Enumerated(EnumType.STRING)
     private PostType postType;
 
+    @Column(name = "REPIMGNY") private boolean repImgNY;
     public Image() {
     }
 
-    public Image(String originalFileName, String fakeFileName, String filePath, Long postId, PostType postType) {
+    public Image(String originalFileName, String fakeFileName, String filePath, Long postId, PostType postType, boolean repImgNY) {
         this.originalFileName = originalFileName;
         this.fakeFileName = fakeFileName;
         this.filePath = filePath;
         this.postId = postId;
         this.postType = postType;
+        this.repImgNY = repImgNY;
     }
 }

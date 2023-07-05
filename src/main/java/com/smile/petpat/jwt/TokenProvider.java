@@ -2,27 +2,37 @@ package com.smile.petpat.jwt;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
+import com.auth0.jwt.exceptions.TokenExpiredException;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.auth0.jwt.interfaces.JWTVerifier;
-import com.smile.petpat.common.exception.CustomException;
-import com.smile.petpat.user.domain.User;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.smile.petpat.common.response.ErrorResponse;
 import com.smile.petpat.user.service.UserDetailsServiceImpl;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.*;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.util.Date;
+import java.util.Optional;
 
-import static com.smile.petpat.common.response.ErrorCode.ILLEGAL_INVALID_TOKEN;
+import static javax.servlet.http.HttpServletResponse.SC_BAD_REQUEST;
+import static javax.servlet.http.HttpServletResponse.SC_UNAUTHORIZED;
+import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 
+
+@Slf4j
 @Component
 @RequiredArgsConstructor
 public class TokenProvider{
@@ -46,6 +56,7 @@ public class TokenProvider{
     // header에서 토큰 추출
     public String resolveToken(HttpServletRequest request) {
         String bearerToken = request.getHeader("Authorization");
+        log.info("token : {}", bearerToken);
 
         if (bearerToken != null && bearerToken.startsWith(TOKEN_PREFIX)) {
             return bearerToken.substring(TOKEN_PREFIX.length());
@@ -53,42 +64,61 @@ public class TokenProvider{
         return null;
     }
 
-    public Authentication getAuthentication(String token) {
-        UserDetails userDetails = userDetailsService.loadUserByUsername(decodeUsername(token));
+    public Authentication getAuthentication(String token, HttpServletResponse response) throws IOException {
+        UserDetails userDetails = userDetailsService.loadUserByUsername(decodeUsername(token, response));
         return new UsernamePasswordAuthenticationToken(
                 // The credentials that prove the principal is correct.
                 userDetails, "", userDetails.getAuthorities());
     }
 
     // 토큰에서 회원 정보 추출
-    public String decodeUsername(String token) {
-        DecodedJWT decodedJWT = isValidToken(token)
-                .orElseThrow(() -> new CustomException(ILLEGAL_INVALID_TOKEN));
+    public String decodeUsername(String token, HttpServletResponse response) throws IOException {
+        DecodedJWT decodedJWT = isValidToken(token, response)
+                .orElseThrow(() -> new IllegalArgumentException("유효한 토큰이 아닙니다."));
 
         Date now = new Date();
         if (decodedJWT.getExpiresAt().before(now)) {
-            throw new CustomException(ILLEGAL_INVALID_TOKEN);
+            throw new IllegalArgumentException("만료된 토큰");
         }
 
-        String username = decodedJWT
+        return decodedJWT
                 .getClaim(JwtTokenUtils.CLAIM_USERID)
                 .asString();
-
-        return username;
     }
 
     // 토큰 유효성 검사
-    public Optional<DecodedJWT> isValidToken(String token) {
+    public Optional<DecodedJWT> isValidToken(String token, HttpServletResponse response) throws IOException {
         DecodedJWT jwt = null;
         try {
             JWTVerifier verifier = JWT
                     .require(generateAlgorithm(JWT_SECRET))
                     .build();
             jwt = verifier.verify(token);
-        } catch (Exception e) {
+        } catch (TokenExpiredException e) {
             logger.error(e.getMessage());
+            tokenExpired(response);
         }
         return Optional.ofNullable(jwt);
+    }
+
+    // 토큰이 null일 경우 error 처리
+    public void tokenNullChk(HttpServletResponse response) throws IOException {
+        log.info("TokenProvider : JWT Token이 존재하지 않습니다.");
+        response.setStatus(SC_BAD_REQUEST);
+        response.setContentType(APPLICATION_JSON_VALUE);
+        response.setCharacterEncoding("utf-8");
+        ErrorResponse errorResponse = new ErrorResponse(HttpStatus.BAD_REQUEST, "JWT Token이 존재하지 않습니다.");
+        new ObjectMapper().writeValue(response.getWriter(), errorResponse);
+    }
+
+    // 만료된 토큰인 경우 error 처리
+    public void tokenExpired(HttpServletResponse response) throws IOException {
+        log.info("TokenProvider : JWT Token이 만료되었습니다.");
+        response.setStatus(SC_UNAUTHORIZED);
+        response.setContentType(APPLICATION_JSON_VALUE);
+        response.setCharacterEncoding("utf-8");
+        ErrorResponse errorResponse = new ErrorResponse(HttpStatus.UNAUTHORIZED, "만료된 토큰입니다! ><");
+        new ObjectMapper().writeValue(response.getWriter(), errorResponse);
     }
 
     private static Algorithm generateAlgorithm(String secretKey) {

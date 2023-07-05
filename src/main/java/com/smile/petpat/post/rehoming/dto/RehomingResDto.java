@@ -3,9 +3,11 @@ package com.smile.petpat.post.rehoming.dto;
 import com.smile.petpat.post.category.domain.PostType;
 import com.smile.petpat.post.common.status.PostStatus;
 import com.smile.petpat.post.rehoming.domain.Rehoming;
+import com.smile.petpat.post.rehoming.domain.RehomingCommand;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -19,16 +21,15 @@ public class RehomingResDto {
     private String title;
     private String description;
     private String petName;
-    private String petAge;
+    private LocalDate petAge;
     private String category;
     private String type;
-    private String gender;
+    private RehomingCommand.PetGender gender;
     private String cityName;
     private String cityCountryName;
     private String townShipName;
     private String detailAdName;
     private String fullAdName;
-    private Long price;
     private PostStatus status;
     private PostType postType;
     private LocalDateTime createdAt;
@@ -57,7 +58,6 @@ public class RehomingResDto {
         this.townShipName = rehoming.getTownShipName();
         this.detailAdName = rehoming.getDetailAdName();
         this.fullAdName = rehoming.getFullAdName();
-        this.price = rehoming.getPrice();
         this.status = rehoming.getStatus();
         this.rehomingImg = rehomingImg;
         this.postType = rehoming.getPostType();
@@ -87,7 +87,6 @@ public class RehomingResDto {
         this.townShipName = rehoming.getTownShipName();
         this.detailAdName = rehoming.getDetailAdName();
         this.fullAdName = rehoming.getFullAdName();
-        this.price = rehoming.getPrice();
         this.status = rehoming.getStatus();
         this.rehomingImg = rehomingImg;
         this.postType = rehoming.getPostType();

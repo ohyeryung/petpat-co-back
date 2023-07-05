@@ -19,7 +19,11 @@ public class TradeCommand {
     private String title;
     private String content;
     private Long price;
-    private String location;
+    private String cityName;
+    private String cityCountryName;
+    private String townShipName;
+    private String detailAdName;
+    private String fullAdName;
     private PostType postType;
     private PostStatus postStatus;
     private Long tradeCategoryDetailId;
@@ -29,12 +33,16 @@ public class TradeCommand {
 
     }
 
-    public TradeCommand(User user, String title, String content, Long price, String location, PostType postType, PostStatus postStatus, Long tradeCategoryDetailId, List<MultipartFile> images) {
+    public TradeCommand(User user, String title, String content, Long price, String cityName, String cityCountryName, String townShipName, String detailAdName, String fullAdName, PostType postType, PostStatus postStatus, Long tradeCategoryDetailId, List<MultipartFile> images) {
         this.user = user;
         this.title = title;
         this.content = content;
         this.price = price;
-        this.location = location;
+        this.cityName = cityName;
+        this.cityCountryName = cityCountryName;
+        this.townShipName = townShipName;
+        this.detailAdName = detailAdName;
+        this.fullAdName = fullAdName;
         this.postType = postType;
         this.postStatus = postStatus;
         this.tradeCategoryDetailId = tradeCategoryDetailId;
@@ -47,7 +55,11 @@ public class TradeCommand {
                 .title(title)
                 .content(content)
                 .price(price)
-                .location(location)
+                .cityName(cityName)
+                .cityCountryName(cityCountryName)
+                .townShipName(townShipName)
+                .detailAdName(detailAdName)
+                .fullAdName(fullAdName)
                 .postType(PostType.TRADE)
                 .status(PostStatus.TRADE_FINDING)
                 .tradeCategoryDetail(tradeCategoryDetail)
@@ -61,7 +73,11 @@ public class TradeCommand {
                 .title(title)
                 .content(content)
                 .price(price)
-                .location(location)
+                .cityName(cityName)
+                .cityCountryName(cityCountryName)
+                .townShipName(townShipName)
+                .detailAdName(detailAdName)
+                .fullAdName(fullAdName)
                 .postType(PostType.TRADE)
                 .status(PostStatus.TRADE_FINDING)
                 .tradeCategoryDetail(tradeCategoryDetail)
