@@ -4,12 +4,11 @@ import com.smile.petpat.post.rehoming.dto.RehomingPagingDto;
 import com.smile.petpat.post.trade.domain.TradeCommand;
 import com.smile.petpat.post.trade.domain.TradeInfo;
 import com.smile.petpat.user.domain.User;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 public interface TradeService{
 
-    void registerTrade(TradeCommand tradeCommand, User user);
+    Long registerTrade(TradeCommand tradeCommand, User user);
 
     RehomingPagingDto listTrade(User user, Pageable pageable);
 

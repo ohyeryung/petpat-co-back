@@ -48,7 +48,7 @@ class TradeTest {
     }
     @DisplayName("거래 게시물을 등록한다.")
     @Test
-    void test(){
+    void createTrade(){
         //given
         TradeCategoryDetail tradeCategoryDetail1 = getTradeCategoryDetail(1L);
         Trade saveTrade = initTrade(tradeCategoryDetail1);
