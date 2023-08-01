@@ -13,7 +13,6 @@ import javax.persistence.*;
 @Entity
 @Getter
 @Table(name = "TB_TRADE")
-@Builder
 public class Trade extends Timestamped {
 
     @Id
@@ -68,6 +67,25 @@ public class Trade extends Timestamped {
     public Trade() {
     }
 
+    // 중고거래 게시물 등록
+    @Builder
+    public Trade(User user, String title, String content, Long price, String cityName, String cityCountryName, String townShipName, String detailAdName, String fullAdName, TradeCategoryDetail tradeCategoryDetail) {
+        this.user = user;
+        this.title = title;
+        this.content = content;
+        this.price = price;
+        this.cityName = cityName;
+        this.cityCountryName = cityCountryName;
+        this.townShipName = townShipName;
+        this.detailAdName = detailAdName;
+        this.fullAdName = fullAdName;
+        this.postType = PostType.TRADE;
+        this.status = PostStatus.TRADE_FINDING;
+        this.viewCnt = 0;
+        this.tradeCategoryDetail = tradeCategoryDetail;
+    }
+
+    @Builder
     public Trade(Long tradeId, User user, String title, String content, Long price, String cityName, String cityCountryName, String townShipName, String detailAdName, String fullAdName, PostType postType, PostStatus status, int viewCnt, TradeCategoryDetail tradeCategoryDetail) {
         this.tradeId = tradeId;
         this.user = user;

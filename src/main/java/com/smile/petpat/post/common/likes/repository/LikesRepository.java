@@ -13,11 +13,11 @@ import java.util.List;
 @Repository
 public interface LikesRepository extends JpaRepository<Likes, Long> {
     @Query(value = "SELECT * FROM TB_LIKES a WHERE a.post_id =:postId And a.post_type =:postType AND a.user_id =:userId",nativeQuery = true)
-    Likes findUserLikeQuery(@Param("postId") Long postId, String postType, @Param("userId") Long userId);
+    Likes findUserLikeQuery(@Param("postId") Long postId, @Param("postType") String postType, @Param("userId") Long userId);
 
     @Modifying
     @Query(value = "DELETE FROM TB_LIKES WHERE post_id =:postId AND post_type =:postType AND user_id =:userId",nativeQuery = true)
-    void deleteByUser_UserIdAndPost_PostIdAndPostType(@Param("postId") Long postId, String postType, @Param("userId") Long userId);
+    void deleteByUser_UserIdAndPost_PostIdAndPostType(@Param("postId") Long postId, @Param("postType") String postType, @Param("userId") Long userId);
 
     List<Likes> findByPostIdAndPostType(Long postId, PostType postType);
 
