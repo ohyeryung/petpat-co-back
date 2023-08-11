@@ -66,7 +66,7 @@ class TradeRepositoryQueryDslTest {
                                                 .where(
                                                         image.postId.eq(trade.tradeId)
                                                                 .and(image.postType.eq(PostType.TRADE))
-                                                                .and(image.repImgNY.eq("Y"))
+                                                                .and(image.repImgNY.eq(true))
                                                 )
                                         ,"image"),
                                 ExpressionUtils.as(
@@ -129,7 +129,7 @@ class TradeRepositoryQueryDslTest {
                                                         .where(
                                                                 image.postId.eq(trade.tradeId)
                                                                         .and(image.postType.eq(PostType.TRADE))
-                                                                        .and(image.repImgNY.eq("Y"))
+                                                                        .and(image.repImgNY.eq(true))
                                                         )
                                                 ,"image"),
                                         ExpressionUtils.as(

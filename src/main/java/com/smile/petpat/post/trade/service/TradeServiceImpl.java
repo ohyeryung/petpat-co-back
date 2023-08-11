@@ -30,13 +30,15 @@ public class TradeServiceImpl implements TradeService{
 
     @Override
     @Transactional
-    public void registerTrade(TradeCommand tradeCommand, User user) {
+    public Long registerTrade(TradeCommand tradeCommand, User user) {
         //1. 게시물 등록
         TradeCategoryDetail categoryDetail = tradeReader.readTradeCategoryDetailById(tradeCommand.getTradeCategoryDetailId());
         Trade initTrade = tradeCommand.toRegisterEntity(user,categoryDetail);
         Trade trade = tradeStore.store(initTrade);
         //2. 사진 등록
         imageUploadManager.uploadPostImage(tradeCommand.getImages(),trade.getTradeId(),trade.getPostType());
+
+        return trade.getTradeId();
     }
 
     // 중고거래 게시판 목록 반환(로그인한 유저)
