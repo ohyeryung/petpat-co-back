@@ -1,5 +1,6 @@
 package com.smile.petpat.user.domain;
 
+import com.smile.petpat.user.dto.UserDto;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -45,6 +46,19 @@ public class User implements UserDetails {
     }
 
     public User(User socialUser) {
+    }
+
+
+
+     //유저 프로필 변경
+    public void modifyProfile(UserCommand userCommand){
+        this.nickname = userCommand.getNickname();
+        this.profileImgPath = userCommand.getProfileImgPath();
+        this.userEmail = userCommand.getUserEmail();
+    }
+
+    public void modifyPassword(String password){
+        this.password =  password;
     }
 
     public enum loginTypeEnum{
