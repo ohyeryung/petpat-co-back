@@ -23,6 +23,7 @@ public class ProfileDto {
     @Setter
     public static class TradeResponse{
 
+
     }
 
     @Getter
@@ -34,7 +35,12 @@ public class ProfileDto {
 
     @Getter
     @Setter
+    @AllArgsConstructor
     public static class CommentResponse{
-
+        private Long QnAId;
+        private Long commentId;
+        private String title;
+        private String commentContent;
+        private LocalDateTime createdAt;
     }
 }

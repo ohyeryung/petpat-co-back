@@ -20,12 +20,17 @@ public class QnaCommand {
         this.user = user;
     }
 
+    /*
+    Entity 안에서는 @Builder 사용불가
+    임시 대체
+     */
     public Qna toEntity(){
-        return Qna.builder()
-                .title(title)
-                .content(content)
-                .user(user)
-                .build();
+     return new Qna(title,content,user);
+//        return Qna.builder()
+//                .title(title)
+//                .content(content)
+//                .user(user)
+//                .build();
     }
 
 }

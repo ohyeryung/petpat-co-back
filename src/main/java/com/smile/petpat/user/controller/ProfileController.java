@@ -62,4 +62,22 @@ public class ProfileController {
                                          @PageableDefault Pageable pageable){
         return SuccessResponse.success(profileService.getMyRehoming(userDetails.getUser(),pageable));
     }
+
+    /**
+     * 내가 쓴 판매 글 조회
+     */
+    @RequestMapping(value = "/trade", method = RequestMethod.GET)
+    public SuccessResponse getMyTrade(@AuthenticationPrincipal UserDetailsImpl userDetails,
+                                      @PageableDefault Pageable pageable){
+        return SuccessResponse.success("");
+    }
+
+    /**
+     * 내가 남긴 댓글 조회
+     */
+    @RequestMapping(value = "/comment",method = RequestMethod.GET)
+    public SuccessResponse getMyComment(@AuthenticationPrincipal UserDetailsImpl userDetails,
+                                        @PageableDefault Pageable pageable){
+        return SuccessResponse.success(profileService.getMyComment(userDetails.getUser(),pageable));
+    }
 }

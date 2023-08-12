@@ -7,10 +7,12 @@ import lombok.Builder;
 import lombok.Getter;
 import org.springframework.data.annotation.Reference;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Getter
 @Table(name = "TB_QNA")
 @Entity
-@Builder
 public class Qna {
 
     @Id
@@ -30,6 +32,9 @@ public class Qna {
     @Column(name = "VIEW_CNT")
     private Long viewCnt;
 
+    @OneToMany(mappedBy = "qna", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Comment> comments = new ArrayList<>();
+
     public Qna() {
     }
 
@@ -39,5 +44,11 @@ public class Qna {
         this.content = content;
         this.user = user;
         this.viewCnt = viewCnt;
+    }
+
+    public Qna(String title, String content, User user) {
+        this.title = title;
+        this.content = content;
+        this.user = user;
     }
 }

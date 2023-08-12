@@ -12,6 +12,8 @@ import javax.persistence.EntityManager;
 
 import static com.smile.petpat.post.rehoming.domain.QRehoming.rehoming;
 import static com.smile.petpat.user.domain.QUser.user;
+import static com.smile.petpat.post.qna.domain.QQna.qna;
+import static com.smile.petpat.post.qna.domain.QComment.comment;
 
 public class UserRepositoryImpl implements ProfileRepositoryQuerydsl {
     private final JPAQueryFactory queryFactory;
@@ -35,6 +37,30 @@ public class UserRepositoryImpl implements ProfileRepositoryQuerydsl {
                 .leftJoin(rehoming.user,user)
                 .where(rehoming.user.id.eq(userId))
                 .orderBy(rehoming.createdAt.desc())
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
+                .fetchResults();
+        return new PageImpl<>(results.getResults(),pageable,results.getTotal());
+    }
+
+    @Override
+    public Page<ProfileDto.CommentResponse> getMyComment(Long userId, Pageable pageable){
+        QueryResults<ProfileDto.CommentResponse> results = queryFactory
+                .select(
+                        Projections.constructor(
+                                ProfileDto.CommentResponse.class,
+                                qna.qnaId,
+                                comment.commentId,
+                                qna.title,
+                                comment.content,
+                                comment.createdAt
+                                )
+                )
+                .from(comment)
+                .leftJoin(comment.user, user)
+                .leftJoin(comment.qna, qna)
+                .where(comment.user.id.eq(userId))
+                .orderBy(comment.createdAt.desc())
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
                 .fetchResults();

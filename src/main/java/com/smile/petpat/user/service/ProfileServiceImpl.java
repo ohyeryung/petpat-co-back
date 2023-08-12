@@ -19,7 +19,7 @@ public class ProfileServiceImpl implements ProfileService {
     }
 
     @Override
-    public ProfileDto.TradeResponse getMyTrade() {
+    public ProfileDto.TradeResponse getMyTrade(User user,Pageable pageable           ) {
         return null;
     }
 
@@ -29,7 +29,8 @@ public class ProfileServiceImpl implements ProfileService {
     }
 
     @Override
-    public ProfileDto.CommentResponse getMyComment() {
-        return null;
+    public Page<ProfileDto.CommentResponse> getMyComment(User user, Pageable pageable) {
+
+        return profileRepository.getMyComment(user.getId(),pageable);
     }
 }
