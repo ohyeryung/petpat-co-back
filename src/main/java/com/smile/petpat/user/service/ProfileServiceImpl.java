@@ -13,6 +13,12 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class ProfileServiceImpl implements ProfileService {
     private final UserRepository profileRepository;
+
+    @Override
+    public ProfileDto.ProfileResponse getProfile(User user) {
+        return new ProfileDto.ProfileResponse(user);
+    }
+
     @Override
     public Page<ProfileDto.RehomingResponse> getMyRehoming(User user, Pageable pageable) {
         return profileRepository.getMyRehoming(user.getId(),pageable);

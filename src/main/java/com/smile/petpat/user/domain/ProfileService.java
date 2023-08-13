@@ -5,6 +5,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 public interface ProfileService {
+    //내 프로필 조회
+    ProfileDto.ProfileResponse getProfile(User user);
     //내가 작성한 분양 게시글
     Page<ProfileDto.RehomingResponse> getMyRehoming(User user, Pageable pageable);
     //내가 남긴 판매 게시글

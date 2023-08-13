@@ -1,5 +1,6 @@
 package com.smile.petpat.user.dto;
 
+import com.smile.petpat.user.domain.User;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -42,5 +43,22 @@ public class ProfileDto {
         private String title;
         private String commentContent;
         private LocalDateTime createdAt;
+    }
+
+    @Getter
+    @Setter
+    public static class ProfileResponse{
+        private Long userId;
+        private String userEmail;
+        private String nickname;
+        private String profileImgUrl;
+
+        public ProfileResponse(User user){
+            this.userId = user.getId();
+            this.userEmail = user.getUserEmail();
+            this.nickname = user.getNickname();
+            this.profileImgUrl = user.getProfileImgPath();
+
+        }
     }
 }

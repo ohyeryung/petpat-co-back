@@ -21,6 +21,15 @@ public class ProfileController {
     private final ProfileService profileService;
 
     /**
+     * 프로필 조회
+     * @return 성공 시 200 Success 반환
+     */
+    @RequestMapping(value = "",method = RequestMethod.GET)
+    public SuccessResponse getProfile(@AuthenticationPrincipal UserDetailsImpl userDetails){
+        return SuccessResponse.success(profileService.getProfile(userDetails.getUser()));
+    }
+
+    /**
      * 프로필 수정
      * @return 성공 시 200 Success 반환
      */
