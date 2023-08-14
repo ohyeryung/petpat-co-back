@@ -39,10 +39,6 @@ public class UserModifyImpl implements UserModify {
 
         UserCommand userCommand = new UserCommand(request,filepath);
         user.modifyProfile(userCommand);
-        /**
-         * 변경감지 사용
-        loginUser.modifyProfile(userCommand);
-         */
         return userRepository.save(user);
     }
 

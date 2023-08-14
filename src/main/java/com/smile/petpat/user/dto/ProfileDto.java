@@ -15,6 +15,7 @@ public class ProfileDto {
     @AllArgsConstructor
     public static class RehomingResponse{
         private Long rehomingId;
+        private String rehomingImgUrl;
         private String title;
         private LocalDateTime createdAt;
         private Integer viewCnt;

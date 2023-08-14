@@ -2,7 +2,9 @@ package com.smile.petpat.user.repository.querydsl;
 
 import com.querydsl.core.QueryResults;
 import com.querydsl.core.types.Projections;
+import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import com.smile.petpat.post.category.domain.PostType;
 import com.smile.petpat.user.dto.ProfileDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -10,6 +12,8 @@ import org.springframework.data.domain.Pageable;
 
 import javax.persistence.EntityManager;
 
+import static com.querydsl.jpa.JPAExpressions.select;
+import static com.smile.petpat.image.domain.QImage.image;
 import static com.smile.petpat.post.rehoming.domain.QRehoming.rehoming;
 import static com.smile.petpat.user.domain.QUser.user;
 import static com.smile.petpat.post.qna.domain.QQna.qna;
@@ -28,6 +32,13 @@ public class UserRepositoryImpl implements ProfileRepositoryQuerydsl {
                         Projections.constructor(
                                 ProfileDto.RehomingResponse.class,
                                 rehoming.rehomingId,
+                                Expressions.as(
+                                        select(image.filePath)
+                                                .from(image)
+                                                .where(image.postId.eq(rehoming.rehomingId),
+                                                        image.postType.eq(PostType.REHOMING),
+                                                        image.repImgNY.eq(true))
+                                        , "rehomingImg"),
                                 rehoming.title,
                                 rehoming.createdAt,
                                 rehoming.viewCnt
