@@ -12,7 +12,7 @@ public interface ProfileService {
     //내가 남긴 판매 게시글
     Page<ProfileDto.TradeResponse> getMyTrade(User user, Pageable pageable);
     //내가 남긴 질문 게시글
-    ProfileDto.QnaResponse getMyQna();
+    Page<ProfileDto.QnaResponse> getMyQna(User user, Pageable pageable);
     //내가 남긴 댓글
     Page<ProfileDto.CommentResponse> getMyComment(User user, Pageable pageable);
     //내가 좋아요 한 글

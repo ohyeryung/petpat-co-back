@@ -2,6 +2,8 @@ package com.smile.petpat.post.qna.domain;
 
 
 import javax.persistence.*;
+
+import com.smile.petpat.config.comm.Timestamped;
 import com.smile.petpat.user.domain.User;
 import lombok.Builder;
 import lombok.Getter;
@@ -13,7 +15,7 @@ import java.util.List;
 @Getter
 @Table(name = "TB_QNA")
 @Entity
-public class Qna {
+public class Qna extends Timestamped {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

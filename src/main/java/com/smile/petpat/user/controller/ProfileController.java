@@ -80,6 +80,15 @@ public class ProfileController {
                                       @PageableDefault Pageable pageable){
         return SuccessResponse.success(profileService.getMyTrade(userDetails.getUser(),pageable));
     }
+    /**
+     * 내가 쓴 질문 게시글
+     */
+    @RequestMapping(value = "/qna",method = RequestMethod.GET)
+    public SuccessResponse getMyQna(@AuthenticationPrincipal UserDetailsImpl userDetails,
+                                    @PageableDefault Pageable pageable){
+        return SuccessResponse.success("");
+    }
+
 
     /**
      * 내가 남긴 댓글 조회

@@ -111,5 +111,30 @@ public class UserRepositoryImpl implements ProfileRepositoryQuerydsl {
         return new PageImpl<>(results.getResults(),pageable,results.getTotal());
     }
 
+    //내가 쓴 질문게시글 조회
+    @Override
+    public Page<ProfileDto.QnaResponse> getMyQna(Long userId, Pageable pageable) {
+        QueryResults<ProfileDto.QnaResponse> results = queryFactory
+                .select(
+                        Projections.constructor(
+                                ProfileDto.QnaResponse.class,
+                                qna.qnaId,
+                                qna.title,
+                                qna.createdAt,
+                                qna.viewCnt,
+                                qna.comments.size()
+                        )
+                )
+                .from(qna)
+                .leftJoin(qna.user,user)
+                .where(qna.user.id.eq(userId))
+                .orderBy(qna.createdAt.desc())
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
+                .fetchResults();
+        return new PageImpl<>(results.getResults(),pageable,results.getTotal());
+
+    }
+
 
 }

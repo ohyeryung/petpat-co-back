@@ -34,8 +34,13 @@ public class ProfileDto {
 
     @Getter
     @Setter
+    @AllArgsConstructor
     public static class QnaResponse{
-
+        private Long QnaId;
+        private String title;
+        private LocalDateTime createdAt;
+        private int viewCnt;
+        private int commentCnt;
     }
 
 

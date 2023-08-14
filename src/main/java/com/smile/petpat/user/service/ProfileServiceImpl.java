@@ -30,8 +30,9 @@ public class ProfileServiceImpl implements ProfileService {
     }
 
     @Override
-    public ProfileDto.QnaResponse getMyQna() {
-        return null;
+    public Page<ProfileDto.QnaResponse> getMyQna(User user, Pageable pageable) {
+
+        return profileRepository.getMyQna(user.getId(),pageable);
     }
 
     @Override
