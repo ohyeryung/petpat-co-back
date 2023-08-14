@@ -25,12 +25,11 @@ public class QnaCommand {
     임시 대체
      */
     public Qna toEntity(){
-     return new Qna(title,content,user);
-//        return Qna.builder()
-//                .title(title)
-//                .content(content)
-//                .user(user)
-//                .build();
+        return Qna.builder()
+                .title(title)
+                .content(content)
+                .user(user)
+                .build();
     }
 
 }

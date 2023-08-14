@@ -10,7 +10,7 @@ public interface ProfileService {
     //내가 작성한 분양 게시글
     Page<ProfileDto.RehomingResponse> getMyRehoming(User user, Pageable pageable);
     //내가 남긴 판매 게시글
-    ProfileDto.TradeResponse getMyTrade(User user, Pageable pageable);
+    Page<ProfileDto.TradeResponse> getMyTrade(User user, Pageable pageable);
     //내가 남긴 질문 게시글
     ProfileDto.QnaResponse getMyQna();
     //내가 남긴 댓글

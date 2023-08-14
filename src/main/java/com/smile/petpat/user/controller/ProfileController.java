@@ -78,7 +78,7 @@ public class ProfileController {
     @RequestMapping(value = "/trade", method = RequestMethod.GET)
     public SuccessResponse getMyTrade(@AuthenticationPrincipal UserDetailsImpl userDetails,
                                       @PageableDefault Pageable pageable){
-        return SuccessResponse.success("");
+        return SuccessResponse.success(profileService.getMyTrade(userDetails.getUser(),pageable));
     }
 
     /**

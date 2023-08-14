@@ -18,6 +18,7 @@ import static com.smile.petpat.post.rehoming.domain.QRehoming.rehoming;
 import static com.smile.petpat.user.domain.QUser.user;
 import static com.smile.petpat.post.qna.domain.QQna.qna;
 import static com.smile.petpat.post.qna.domain.QComment.comment;
+import static com.smile.petpat.post.trade.domain.QTrade.trade;
 
 public class UserRepositoryImpl implements ProfileRepositoryQuerydsl {
     private final JPAQueryFactory queryFactory;
@@ -25,6 +26,7 @@ public class UserRepositoryImpl implements ProfileRepositoryQuerydsl {
         this.queryFactory = new JPAQueryFactory(em);
     }
 
+   //내 분양글 조회
     @Override
     public Page<ProfileDto.RehomingResponse> getMyRehoming(Long userId, Pageable pageable) {
         QueryResults<ProfileDto.RehomingResponse> results = queryFactory
@@ -54,6 +56,7 @@ public class UserRepositoryImpl implements ProfileRepositoryQuerydsl {
         return new PageImpl<>(results.getResults(),pageable,results.getTotal());
     }
 
+    //내가 남긴 댓글 조회
     @Override
     public Page<ProfileDto.CommentResponse> getMyComment(Long userId, Pageable pageable){
         QueryResults<ProfileDto.CommentResponse> results = queryFactory
@@ -78,9 +81,35 @@ public class UserRepositoryImpl implements ProfileRepositoryQuerydsl {
         return new PageImpl<>(results.getResults(),pageable,results.getTotal());
     }
 
-//    public ProfileRepositoryImpl(JPAQueryFactory queryFactory) {
-//        this.queryFactory = queryFactory;
-//    }
-    //내가 작성한 분양 게시글 조회
+    //내 판매글 조회
+    @Override
+    public Page<ProfileDto.TradeResponse> getMyTrade(Long userId, Pageable pageable) {
+        QueryResults<ProfileDto.TradeResponse> results = queryFactory
+                .select(
+                        Projections.constructor(
+                                ProfileDto.TradeResponse.class,
+                                trade.tradeId,
+                                Expressions.as(
+                                        select(image.filePath)
+                                                .from(image)
+                                                .where(image.postId.eq(trade.tradeId),
+                                                        image.postType.eq(PostType.TRADE),
+                                                        image.repImgNY.eq(true))
+                                        , "tradeImgUrl"),
+                                trade.title,
+                                trade.createdAt,
+                                trade.viewCnt
+                                )
+                )
+                .from(trade)
+                .leftJoin(trade.user,user)
+                .where(trade.user.id.eq(userId))
+                .orderBy(trade.createdAt.desc())
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
+                .fetchResults();
+        return new PageImpl<>(results.getResults(),pageable,results.getTotal());
+    }
+
 
 }

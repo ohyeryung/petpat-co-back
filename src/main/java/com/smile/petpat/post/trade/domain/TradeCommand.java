@@ -57,6 +57,7 @@ public class TradeCommand {
                 .townShipName(townShipName)
                 .detailAdName(detailAdName)
                 .fullAdName(fullAdName)
+                .postType(PostType.TRADE)
                 .tradeCategoryDetail(tradeCategoryDetail)
                 .build();
     }

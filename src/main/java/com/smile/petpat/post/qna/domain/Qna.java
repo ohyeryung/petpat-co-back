@@ -45,7 +45,7 @@ public class Qna {
         this.user = user;
         this.viewCnt = viewCnt;
     }
-
+    @Builder
     public Qna(String title, String content, User user) {
         this.title = title;
         this.content = content;

@@ -18,14 +18,18 @@ public class ProfileDto {
         private String rehomingImgUrl;
         private String title;
         private LocalDateTime createdAt;
-        private Integer viewCnt;
+        private int viewCnt;
     }
 
     @Getter
     @Setter
+    @AllArgsConstructor
     public static class TradeResponse{
-
-
+        private Long tradeId;
+        private String tradeImgUrl;
+        private String title;
+        private LocalDateTime createdAt;
+        private int viewCnt;
     }
 
     @Getter

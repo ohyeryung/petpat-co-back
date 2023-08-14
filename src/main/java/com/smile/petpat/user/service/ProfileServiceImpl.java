@@ -25,8 +25,8 @@ public class ProfileServiceImpl implements ProfileService {
     }
 
     @Override
-    public ProfileDto.TradeResponse getMyTrade(User user,Pageable pageable           ) {
-        return null;
+    public Page<ProfileDto.TradeResponse> getMyTrade(User user, Pageable pageable) {
+        return profileRepository.getMyTrade(user.getId(),pageable);
     }
 
     @Override
