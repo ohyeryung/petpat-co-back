@@ -15,7 +15,8 @@ public interface ProfileService {
     Page<ProfileDto.QnaResponse> getMyQna(User user, Pageable pageable);
     //내가 남긴 댓글
     Page<ProfileDto.CommentResponse> getMyComment(User user, Pageable pageable);
-    //내가 좋아요 한 글
     //내가 북마크 한 글
     Object getPostsByBookmark(User user, Pageable pageable, String postType);
+    //내가 좋아요 한 글
+    Object getPostsByLike(User user, Pageable pageable, String postType);
 }

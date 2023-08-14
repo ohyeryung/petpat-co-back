@@ -112,4 +112,10 @@ public class ProfileController {
     /**
      * 내가 좋아요한 글 조회
      */
+    @RequestMapping(value = "/like", method = RequestMethod.GET)
+    public SuccessResponse getPostsByLike(@AuthenticationPrincipal UserDetailsImpl userDetails,
+                                          @PageableDefault Pageable pageable,
+                                          @RequestParam String postType){
+        return SuccessResponse.success(profileService.getPostsByLike(userDetails.getUser(),pageable,postType));
+    }
 }

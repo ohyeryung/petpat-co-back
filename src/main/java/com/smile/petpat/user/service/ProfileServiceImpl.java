@@ -56,4 +56,18 @@ public class ProfileServiceImpl implements ProfileService {
         }
     }
 
+    @Override
+    public Object getPostsByLike(User user, Pageable pageable, String postType) {
+        if (postType.equals("TRADE")) {
+            Page<ProfileDto.TradeResponse> results = profileRepository.getTradeByLike(user.getId(), pageable);
+            return results;
+        } else if (postType.equals("QNA")) {
+            Page<ProfileDto.QnaResponse> results = profileRepository.getQnAByLike(user.getId(), pageable);
+            return results;
+        } else {
+            Page<ProfileDto.RehomingResponse> results = profileRepository.getRehomingByLike(user.getId(), pageable);
+            return results;
+        }
+    }
+
 }
