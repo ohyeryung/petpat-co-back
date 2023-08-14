@@ -17,4 +17,5 @@ public interface ProfileService {
     Page<ProfileDto.CommentResponse> getMyComment(User user, Pageable pageable);
     //내가 좋아요 한 글
     //내가 북마크 한 글
+    Object getPostsByBookmark(User user, Pageable pageable, String postType);
 }

@@ -40,4 +40,20 @@ public class ProfileServiceImpl implements ProfileService {
 
         return profileRepository.getMyComment(user.getId(),pageable);
     }
+
+
+    @Override
+    public Object getPostsByBookmark(User user, Pageable pageable, String postType) {
+        if (postType.equals("TRADE")) {
+            Page<ProfileDto.TradeResponse> results = profileRepository.getTradeByBookmark(user.getId(), pageable);
+            return results;
+        } else if (postType.equals("QNA")) {
+            Page<ProfileDto.QnaResponse> results = profileRepository.getQnAByBookmark(user.getId(), pageable);
+            return results;
+        } else {
+            Page<ProfileDto.RehomingResponse> results = profileRepository.getRehomingByBookmark(user.getId(), pageable);
+            return results;
+        }
+    }
+
 }

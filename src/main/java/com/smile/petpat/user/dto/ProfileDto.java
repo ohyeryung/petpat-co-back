@@ -39,7 +39,7 @@ public class ProfileDto {
         private Long QnaId;
         private String title;
         private LocalDateTime createdAt;
-        private int viewCnt;
+        private Long viewCnt;
         private int commentCnt;
     }
 

@@ -9,4 +9,8 @@ public interface ProfileRepositoryQuerydsl {
     Page<ProfileDto.CommentResponse> getMyComment(Long userId, Pageable pageable);
     Page<ProfileDto.TradeResponse> getMyTrade(Long userId, Pageable pageable);
     Page<ProfileDto.QnaResponse> getMyQna(Long userId, Pageable pageable);
+
+    Page<ProfileDto.RehomingResponse> getRehomingByBookmark(Long userId, Pageable pageable);
+    Page<ProfileDto.TradeResponse> getTradeByBookmark(Long userId, Pageable pageable);
+    Page<ProfileDto.QnaResponse> getQnAByBookmark(Long userId, Pageable pageable);
 }

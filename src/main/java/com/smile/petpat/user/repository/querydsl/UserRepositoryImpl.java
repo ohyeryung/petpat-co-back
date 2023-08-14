@@ -19,6 +19,7 @@ import static com.smile.petpat.user.domain.QUser.user;
 import static com.smile.petpat.post.qna.domain.QQna.qna;
 import static com.smile.petpat.post.qna.domain.QComment.comment;
 import static com.smile.petpat.post.trade.domain.QTrade.trade;
+import static com.smile.petpat.post.common.bookmarks.domain.QBookmark.bookmark;
 
 public class UserRepositoryImpl implements ProfileRepositoryQuerydsl {
     private final JPAQueryFactory queryFactory;
@@ -134,6 +135,96 @@ public class UserRepositoryImpl implements ProfileRepositoryQuerydsl {
                 .fetchResults();
         return new PageImpl<>(results.getResults(),pageable,results.getTotal());
 
+    }
+
+    @Override
+    public Page<ProfileDto.RehomingResponse> getRehomingByBookmark(Long userId, Pageable pageable) {
+        QueryResults<ProfileDto.RehomingResponse> results = queryFactory
+                .select(
+                        Projections.constructor(
+                                ProfileDto.RehomingResponse.class,
+                                rehoming.rehomingId,
+                                Expressions.as(
+                                        select(image.filePath)
+                                                .from(image)
+                                                .where(image.postId.eq(rehoming.rehomingId),
+                                                        image.postType.eq(PostType.REHOMING),
+                                                        image.repImgNY.eq(true))
+                                        , "rehomingImg"),
+                                rehoming.title,
+                                rehoming.createdAt,
+                                rehoming.viewCnt
+                        )
+                )
+                .from(rehoming)
+                .leftJoin(rehoming.user,user)
+                .leftJoin(bookmark)
+                    .on(bookmark.postId.eq(rehoming.rehomingId))
+                .where(bookmark.user.id.eq(userId)
+                        ,bookmark.postType.eq(PostType.REHOMING))
+                .orderBy(rehoming.createdAt.desc())
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
+                .fetchResults();
+        return new PageImpl<>(results.getResults(),pageable,results.getTotal());
+    }
+
+    @Override
+    public Page<ProfileDto.TradeResponse> getTradeByBookmark(Long userId, Pageable pageable) {
+        QueryResults<ProfileDto.TradeResponse> results = queryFactory
+                .select(
+                        Projections.constructor(
+                                ProfileDto.TradeResponse.class,
+                                trade.tradeId,
+                                Expressions.as(
+                                        select(image.filePath)
+                                                .from(image)
+                                                .where(image.postId.eq(trade.tradeId),
+                                                        image.postType.eq(PostType.TRADE),
+                                                        image.repImgNY.eq(true))
+                                        , "tradeImgUrl"),
+                                trade.title,
+                                trade.createdAt,
+                                trade.viewCnt
+                        )
+                )
+                .from(trade)
+                .leftJoin(trade.user,user)
+                .leftJoin(bookmark)
+                .on(bookmark.postId.eq(trade.tradeId))
+                .where(bookmark.user.id.eq(userId)
+                        ,bookmark.postType.eq(PostType.TRADE))
+                .orderBy(trade.createdAt.desc())
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
+                .fetchResults();
+        return new PageImpl<>(results.getResults(),pageable,results.getTotal());
+    }
+
+    @Override
+    public Page<ProfileDto.QnaResponse> getQnAByBookmark(Long userId, Pageable pageable) {
+        QueryResults<ProfileDto.QnaResponse> results = queryFactory
+                .select(
+                        Projections.constructor(
+                                ProfileDto.QnaResponse.class,
+                                qna.qnaId,
+                                qna.title,
+                                qna.createdAt,
+                                qna.viewCnt,
+                                qna.comments.size()
+                        )
+                )
+                .from(qna)
+                .leftJoin(qna.user,user)
+                .leftJoin(bookmark)
+                .on(bookmark.postId.eq(qna.qnaId))
+                .where(bookmark.user.id.eq(userId)
+                        ,bookmark.postType.eq(PostType.QNA))
+                .orderBy(qna.createdAt.desc())
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
+                .fetchResults();
+        return new PageImpl<>(results.getResults(),pageable,results.getTotal());
     }
 
 

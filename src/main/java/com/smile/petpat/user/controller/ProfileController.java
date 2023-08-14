@@ -2,6 +2,7 @@ package com.smile.petpat.user.controller;
 
 import com.smile.petpat.common.response.SuccessResponse;
 import com.smile.petpat.user.domain.ProfileService;
+import com.smile.petpat.user.domain.User;
 import com.smile.petpat.user.domain.UserModify;
 import com.smile.petpat.user.dto.UserDto;
 import com.smile.petpat.user.service.UserDetailsImpl;
@@ -86,7 +87,7 @@ public class ProfileController {
     @RequestMapping(value = "/qna",method = RequestMethod.GET)
     public SuccessResponse getMyQna(@AuthenticationPrincipal UserDetailsImpl userDetails,
                                     @PageableDefault Pageable pageable){
-        return SuccessResponse.success("");
+        return SuccessResponse.success(profileService.getMyQna(userDetails.getUser(),pageable));
     }
 
 
@@ -98,4 +99,17 @@ public class ProfileController {
                                         @PageableDefault Pageable pageable){
         return SuccessResponse.success(profileService.getMyComment(userDetails.getUser(),pageable));
     }
+
+    /**
+     * 내가 북마크한 글 조회
+     */
+    @RequestMapping(value = "/bookmark",method = RequestMethod.GET)
+    public SuccessResponse getPostsByBookmark(@AuthenticationPrincipal UserDetailsImpl userDetails,
+                                                 @PageableDefault Pageable pageable,
+                                                 @RequestParam String postType){
+        return SuccessResponse.success(profileService.getPostsByBookmark(userDetails.getUser(),pageable,postType));
+    }
+    /**
+     * 내가 좋아요한 글 조회
+     */
 }
