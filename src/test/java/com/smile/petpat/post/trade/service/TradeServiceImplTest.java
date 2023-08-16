@@ -97,8 +97,13 @@ class TradeServiceImplTest {
     }
     @DisplayName("로그인한 유저가 보는 중고거래 목록 화면조회입니다.")
     @Test
-    void selectTradeListForLogin(){
+    void selectTradeListForLogin() throws IOException {
 
+        // given
+        List<MultipartFile> multipartFileList = getMultipartFiles();
+        TradeCommand tradeCommand = initTradeCommand(1L,multipartFileList);
+
+        Long tradeId = tradeService.registerTrade(tradeCommand, user1);
     }
 
     @DisplayName("중고거래 게시물 상세조회 하기")

@@ -34,6 +34,6 @@ class PostTypeTest {
         // when // then
         assertThatThrownBy(() -> PostType.find(description))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("게시글 타입을 찾을 수 없습니다.");
+                .hasMessage("게시글 타입을 찾을 수 없습니다..");
     }
 }
