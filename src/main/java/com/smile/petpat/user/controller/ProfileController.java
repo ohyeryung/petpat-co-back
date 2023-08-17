@@ -118,4 +118,12 @@ public class ProfileController {
                                           @RequestParam String postType){
         return SuccessResponse.success(profileService.getPostsByLike(userDetails.getUser(),pageable,postType));
     }
+
+    /**
+     * 나의 최근 거래
+     */
+    @RequestMapping(value = "/recent",method = RequestMethod.GET)
+    public SuccessResponse getMyRecentDeal(@AuthenticationPrincipal UserDetailsImpl userDetails){
+        return SuccessResponse.success(profileService.getMyRecentDeal());
+    }
 }

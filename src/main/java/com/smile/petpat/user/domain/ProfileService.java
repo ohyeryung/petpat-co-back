@@ -19,4 +19,6 @@ public interface ProfileService {
     Object getPostsByBookmark(User user, Pageable pageable, String postType);
     //내가 좋아요 한 글
     Object getPostsByLike(User user, Pageable pageable, String postType);
+
+    ProfileDto.RecentDealResponse getMyRecentDeal();
 }

@@ -16,4 +16,6 @@ public interface ProfileRepositoryQuerydsl {
     Page<ProfileDto.RehomingResponse> getRehomingByLike(Long userId, Pageable pageable);
     Page<ProfileDto.TradeResponse> getTradeByLike(Long userId, Pageable pageable);
     Page<ProfileDto.QnaResponse> getQnAByLike(Long userId, Pageable pageable);
+
+    ProfileDto.RecentDealResponse getMyRecentDeal(Long userId);
 }

@@ -68,7 +68,16 @@ public class ProfileDto {
             this.userEmail = user.getUserEmail();
             this.nickname = user.getNickname();
             this.profileImgUrl = user.getProfileImgPath();
-
         }
+    }
+    @Getter
+    @Setter
+    @AllArgsConstructor
+    public static class RecentDealResponse{
+        private Long id;
+        private String title;
+        private String sellerName;
+        private LocalDateTime dealDate;
+        private String dealImage;
     }
 }

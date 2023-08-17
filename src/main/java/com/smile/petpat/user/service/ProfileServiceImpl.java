@@ -70,4 +70,9 @@ public class ProfileServiceImpl implements ProfileService {
         }
     }
 
+    @Override
+    public ProfileDto.RecentDealResponse getMyRecentDeal() {
+        return null;
+    }
+
 }

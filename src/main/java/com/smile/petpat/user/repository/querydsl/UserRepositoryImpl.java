@@ -1,6 +1,7 @@
 package com.smile.petpat.user.repository.querydsl;
 
 import com.querydsl.core.QueryResults;
+import com.querydsl.core.Tuple;
 import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -12,15 +13,17 @@ import org.springframework.data.domain.Pageable;
 
 import javax.persistence.EntityManager;
 
+import java.util.List;
+
 import static com.querydsl.jpa.JPAExpressions.select;
 import static com.smile.petpat.image.domain.QImage.image;
-import static com.smile.petpat.post.rehoming.domain.QRehoming.rehoming;
-import static com.smile.petpat.user.domain.QUser.user;
-import static com.smile.petpat.post.qna.domain.QQna.qna;
-import static com.smile.petpat.post.qna.domain.QComment.comment;
-import static com.smile.petpat.post.trade.domain.QTrade.trade;
 import static com.smile.petpat.post.common.bookmarks.domain.QBookmark.bookmark;
 import static com.smile.petpat.post.common.likes.domain.QLikes.likes;
+import static com.smile.petpat.post.qna.domain.QComment.comment;
+import static com.smile.petpat.post.qna.domain.QQna.qna;
+import static com.smile.petpat.post.rehoming.domain.QRehoming.rehoming;
+import static com.smile.petpat.post.trade.domain.QTrade.trade;
+import static com.smile.petpat.user.domain.QUser.user;
 
 public class UserRepositoryImpl implements ProfileRepositoryQuerydsl {
     private final JPAQueryFactory queryFactory;
@@ -316,6 +319,11 @@ public class UserRepositoryImpl implements ProfileRepositoryQuerydsl {
                 .limit(pageable.getPageSize())
                 .fetchResults();
         return new PageImpl<>(results.getResults(),pageable,results.getTotal());
+    }
+
+    @Override
+    public ProfileDto.RecentDealResponse getMyRecentDeal(Long userId) {
+        return null;
     }
 
 
