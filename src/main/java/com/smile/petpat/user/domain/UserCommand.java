@@ -1,5 +1,6 @@
 package com.smile.petpat.user.domain;
 
+import com.smile.petpat.user.dto.UserDto;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.ToString;
@@ -25,6 +26,12 @@ public class UserCommand {
         this.userEmail = userEmail;
         this.nickname = nickname;
         this.password = password;
+        this.profileImgPath = profileImgPath;
+    }
+
+    public UserCommand(UserDto.ModifyUserRequest request, String profileImgPath){
+        this.userEmail = request.getEmail();
+        this.nickname = request.getUsername();
         this.profileImgPath = profileImgPath;
     }
 

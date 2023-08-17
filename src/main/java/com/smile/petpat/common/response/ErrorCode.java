@@ -13,6 +13,8 @@ public enum ErrorCode {
     ILLEGAL_PASSWORD_NOT_VALID (HttpStatus.BAD_REQUEST, "비밀번호가 일치하지 않습니다."),
     INVALID_PASSWORD_PATTERN(HttpStatus.BAD_REQUEST,  "비밀번호는 8자 이상 12자 이하의 길이의 영문자, 숫자, 특수문자(!@#$%^&*)만 사용 가능합니다."),
 
+    ILLEGAL_PASSWORD_NOT_CORRECT(HttpStatus.BAD_REQUEST, "비밀번호가 일치하지 않습니다."),
+
     // IMAGE
     FAILED_UPLOAD_IMAGE(HttpStatus.BAD_REQUEST,  "이미지 업로드에 실패했습니다."),
     BELOW_MIN_IMAGE_COUNT(HttpStatus.BAD_REQUEST, "최소 1개이상의 이미지를 등록해야합니다."),
