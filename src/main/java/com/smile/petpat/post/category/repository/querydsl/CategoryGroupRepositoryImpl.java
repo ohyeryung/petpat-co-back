@@ -4,6 +4,7 @@ import com.querydsl.core.QueryResults;
 import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import com.smile.petpat.post.category.dto.PostCategoryDto;
 import com.smile.petpat.post.category.dto.PostCategoryInfo;
 import javax.persistence.EntityManager;
 
@@ -23,22 +24,22 @@ public class CategoryGroupRepositoryImpl implements CategoryRepositoryQuerydsl {
 
 
     @Override
-    public List<PostCategoryInfo.TradeCategoryDetailResponse> getTradeCategoryAndCnt(Long tradeCategoryId) {
+    public List<PostCategoryDto.TradeCategoryDetailResponse> getTradeCategoryAndCnt(Long tradeCategoryId) {
 
-//        List<PostCategoryInfo.TradeCategoryResponse> result2 = queryFactory
+//        List<PostCategoryDto.TradeCategoryResponse> result2 = queryFactory
 //                .select(
 //                        Projections.constructor(
-//                                PostCategoryInfo.TradeCategoryResponse.class,
+//                                PostCategoryDto.TradeCategoryResponse.class,
 //                                tradeCategory.tradeCategoryId,
 //                                tradeCategory.tradeCategoryName,
 //                                qu
 //                        )
 //                )
 
-        QueryResults<PostCategoryInfo.TradeCategoryDetailResponse> results = queryFactory
+        QueryResults<PostCategoryDto.TradeCategoryDetailResponse> results = queryFactory
                 .select(
                         Projections.constructor(
-                                PostCategoryInfo.TradeCategoryDetailResponse.class,
+                                PostCategoryDto.TradeCategoryDetailResponse.class,
                                 tradeCategoryDetail.tradeCategoryDetailId,
                                 tradeCategoryDetail.tradeCategoryDetailName,
                                 Expressions.as(

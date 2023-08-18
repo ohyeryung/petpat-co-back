@@ -1,8 +1,11 @@
 package com.smile.petpat.post.category.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+
+import java.util.List;
 
 @Getter
 public class PostCategoryDto {
@@ -13,5 +16,21 @@ public class PostCategoryDto {
     public static class RequestRegisterCategoryGroup{
         private String categoryGroupName;
         private String postType;
+    }
+
+    @Getter
+    @AllArgsConstructor
+    public static class TradeCategoryResponse{
+        private Long tradeCategoryId;
+        private String tradeCategoryName;
+        List<TradeCategoryDetailResponse> tradeCategoryDetailList;
+    }
+
+    @Getter
+    @AllArgsConstructor
+    public static class TradeCategoryDetailResponse{
+        private Long tradeCategoryDetailId;
+        private String tradeCategoryDetailName;
+        private Long tradeCategoryDetailCnt;
     }
 }

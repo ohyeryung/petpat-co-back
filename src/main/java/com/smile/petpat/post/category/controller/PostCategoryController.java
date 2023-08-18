@@ -63,11 +63,21 @@ public class PostCategoryController {
 
     /**
      * 거래게시글 카테고리 조회
-     * @
+     * @return 성공 시 200 Success와 함께 CategoryGroup에 해당하는 TradeCategory와 TradeCategoryDetail과 그 해당하는 품목 수 조회
      */
     @RequestMapping(value = "/trade/category/{petType}",method = RequestMethod.GET)
     public SuccessResponse getTradeCategoryAndCnt(@PathVariable Long petType){
         return SuccessResponse.success(postCategoryService.getTradeCategoryAndCnt(petType));
     }
+
+    /**
+     * 거래게시글 카테고리 조회
+     * @return 성공 시 200 Success와 함께 CategoryGroup에 해당하는 PetCategory와 그 해당하는 개체 수 조회
+     */
+    @RequestMapping(value = "/rehoming/category/{petType}",method = RequestMethod.GET)
+    public SuccessResponse getRehomingCategoryAndCnt(@PathVariable Long petType){
+        return SuccessResponse.success(postCategoryService.getTradeCategoryAndCnt(petType));
+    }
+
 
 }

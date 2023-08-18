@@ -60,20 +60,6 @@ public class PostCategoryInfo {
         }
     }
 
-    @Getter
-    @AllArgsConstructor
-    public static class TradeCategoryResponse{
-        private Long tradeCategoryId;
-        private String tradeCategoryName;
-        List<TradeCategoryDetailResponse> tradeCategoryDetailList;
-    }
 
-    @Getter
-    @AllArgsConstructor
-    public static class TradeCategoryDetailResponse{
-        private Long tradeCategoryDetailId;
-        private String tradeCategoryDetailName;
-        private Long tradeCategoryDetailCnt;
-    }
 
 }

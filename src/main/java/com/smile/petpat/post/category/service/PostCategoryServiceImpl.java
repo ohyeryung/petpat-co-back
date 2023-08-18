@@ -66,9 +66,7 @@ public class PostCategoryServiceImpl implements PostCategoryService{
 
     @Override
     public List<TradeCategoryResponse> getTradeCategoryAndCnt(Long tradeCategoryId) {
-//
         List<TradeCategoryResponse> responses = new ArrayList<>();
-
         CategoryGroup categoryGroup = categoryRepository.findById(tradeCategoryId)
                 .orElseThrow(
                         ()->new IllegalArgumentException("존재하지않는 중고거래 카테고리그룹입니다.")
