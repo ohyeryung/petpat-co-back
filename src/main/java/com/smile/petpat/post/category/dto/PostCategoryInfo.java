@@ -3,10 +3,13 @@ package com.smile.petpat.post.category.dto;
 import com.smile.petpat.post.category.domain.PetCategory;
 import com.smile.petpat.post.category.domain.TradeCategory;
 import com.smile.petpat.post.category.domain.TradeCategoryDetail;
+import com.smile.petpat.post.trade.domain.Trade;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+
+import java.util.List;
 
 public class PostCategoryInfo {
 
@@ -55,6 +58,22 @@ public class PostCategoryInfo {
             this.tradeCategoryDetailId = tradeCategoryDetail.getTradeCategoryDetailId();
             this.tradeCategoryDetailName = tradeCategoryDetail.getTradeCategoryDetailName();
         }
+    }
+
+    @Getter
+    @AllArgsConstructor
+    public static class TradeCategoryResponse{
+        private Long tradeCategoryId;
+        private String tradeCategoryName;
+        List<TradeCategoryDetailResponse> tradeCategoryDetailList;
+    }
+
+    @Getter
+    @AllArgsConstructor
+    public static class TradeCategoryDetailResponse{
+        private Long tradeCategoryDetailId;
+        private String tradeCategoryDetailName;
+        private Long tradeCategoryDetailCnt;
     }
 
 }

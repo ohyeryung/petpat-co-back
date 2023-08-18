@@ -1,13 +1,11 @@
 package com.smile.petpat.post.category.service;
 
 import com.smile.petpat.post.category.domain.*;
-import com.smile.petpat.post.category.repository.PetCategoryRepository;
-import com.smile.petpat.post.category.repository.PostCategoryGroupRepository;
-import com.smile.petpat.post.category.repository.TradeCategoryDetailRepository;
-import com.smile.petpat.post.category.repository.TradeCategoryRepository;
+import com.smile.petpat.post.category.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -21,6 +19,7 @@ public class PostCategoryServiceImpl implements PostCategoryService{
     private final PetCategoryRepository petCategoryRepository;
     private final TradeCategoryRepository tradeCategoryRepository;
     private final TradeCategoryDetailRepository tradeCategoryDetailRepository;
+    private final CategoryGroupRepository categoryRepository;
 
     @Override
     public List<CategoryGroup> getCategoryGroup(String postTypeDescription) {
@@ -63,5 +62,27 @@ public class PostCategoryServiceImpl implements PostCategoryService{
         List<TradeCategoryDetailRes> tradeCategoryDetailInfo = tradeCategoryDetailList.stream()
                 .map(TradeCategoryDetailRes::new).collect(Collectors.toList());
         return tradeCategoryDetailInfo;
+    }
+
+    @Override
+    public List<TradeCategoryResponse> getTradeCategoryAndCnt(Long tradeCategoryId) {
+//
+        List<TradeCategoryResponse> responses = new ArrayList<>();
+
+        CategoryGroup categoryGroup = categoryRepository.findById(tradeCategoryId)
+                .orElseThrow(
+                        ()->new IllegalArgumentException("존재하지않는 중고거래 카테고리그룹입니다.")
+                );
+        List<TradeCategory> tradeCategories = tradeCategoryRepository.findAllByCategoryGroup(categoryGroup);
+
+        for(TradeCategory tradeCategory1 : tradeCategories){
+            TradeCategoryResponse tradeCategoryResponse = new TradeCategoryResponse(
+                    tradeCategory1.getTradeCategoryId(),
+                    tradeCategory1.getTradeCategoryName(),
+                    categoryRepository.getTradeCategoryAndCnt(tradeCategory1.getTradeCategoryId())
+            );
+            responses.add(tradeCategoryResponse);
+        }
+        return responses;
     }
 }

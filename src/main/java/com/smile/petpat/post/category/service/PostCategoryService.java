@@ -1,7 +1,6 @@
 package com.smile.petpat.post.category.service;
 
 import com.smile.petpat.post.category.domain.CategoryGroup;
-import com.smile.petpat.post.category.domain.TradeCategory;
 
 import java.util.List;
 
@@ -12,4 +11,5 @@ public interface PostCategoryService {
     List<PetCategoryRes> getPetCategory(Long categoryGroup);
     List<TradeCategoryRes> getTradeCategory(Long categoryGroup);
     List<TradeCategoryDetailRes> getTradeCategoryDetail(Long tradeCategory);
+    List<TradeCategoryResponse> getTradeCategoryAndCnt(Long tradeCategoryId);
 }

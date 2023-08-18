@@ -28,7 +28,6 @@ public class RestApiExceptionHandler {
     }
     @ExceptionHandler(value = {IllegalArgumentException.class})
     public ResponseEntity<ErrorResponse> handleIllegalArgumentException(IllegalArgumentException ex) {
-
         ErrorResponse response = ErrorResponse.create()
                 .message(ex.getMessage())
                 .httpStatus(HttpStatus.BAD_REQUEST);
@@ -39,6 +38,8 @@ public class RestApiExceptionHandler {
     @ExceptionHandler(value = {NullPointerException.class})
     public ResponseEntity<ErrorResponse> handleNullPointException(NullPointerException ex) {
         log.error("handleNullPointException : {}", ex.getMessage());
+
+        ex.printStackTrace();
 
         ErrorResponse response = ErrorResponse.create()
                 .message(ex.getMessage())
@@ -54,6 +55,8 @@ public class RestApiExceptionHandler {
     protected ResponseEntity<ErrorResponse> handleBindException(BindException ex) {
         log.error("handleBindException : {}", ex.getMessage());
 
+
+
         String message = ex.getMessage();
         String defaultMsg = message.substring(message.lastIndexOf("[")+1, message.lastIndexOf("]")); // "[" 또는 "]" 기준으로 메시지 추출
 
@@ -67,6 +70,7 @@ public class RestApiExceptionHandler {
     @ExceptionHandler(value = { CustomException.class })
     protected ResponseEntity<ErrorResponse> handleCustomException(CustomException ex) {
         log.error("handleCustomException", ex);
+
 
         ErrorCode errorCode = ex.getErrorCode();
         String message = ex.getMessage();

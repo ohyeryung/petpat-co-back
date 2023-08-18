@@ -11,13 +11,7 @@ public class PostCategoryDto {
     @Setter
     @ToString
     public static class RequestRegisterCategoryGroup{
-
         private String categoryGroupName;
         private String postType;
-
-
-
-
-
     }
 }
