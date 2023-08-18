@@ -33,4 +33,12 @@ public class PostCategoryDto {
         private String tradeCategoryDetailName;
         private Long tradeCategoryDetailCnt;
     }
+
+    @Getter
+    @AllArgsConstructor
+    public static class RehomingCategoryResponse{
+        private Long petCategoryId;
+        private String petCategoryName;
+        private Long petCategoryCnt;
+    }
 }

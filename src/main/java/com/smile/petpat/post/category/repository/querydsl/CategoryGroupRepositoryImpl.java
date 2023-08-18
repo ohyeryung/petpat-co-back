@@ -13,6 +13,9 @@ import java.util.List;
 import static com.querydsl.jpa.JPAExpressions.select;
 import static com.smile.petpat.post.category.domain.QTradeCategoryDetail.tradeCategoryDetail;
 import static com.smile.petpat.post.trade.domain.QTrade.trade;
+import static com.smile.petpat.post.rehoming.domain.QRehoming.rehoming;
+import static com.smile.petpat.post.category.domain.QPetCategory.petCategory;
+
 
 public class CategoryGroupRepositoryImpl implements CategoryRepositoryQuerydsl {
 
@@ -25,17 +28,6 @@ public class CategoryGroupRepositoryImpl implements CategoryRepositoryQuerydsl {
 
     @Override
     public List<PostCategoryDto.TradeCategoryDetailResponse> getTradeCategoryAndCnt(Long tradeCategoryId) {
-
-//        List<PostCategoryDto.TradeCategoryResponse> result2 = queryFactory
-//                .select(
-//                        Projections.constructor(
-//                                PostCategoryDto.TradeCategoryResponse.class,
-//                                tradeCategory.tradeCategoryId,
-//                                tradeCategory.tradeCategoryName,
-//                                qu
-//                        )
-//                )
-
         QueryResults<PostCategoryDto.TradeCategoryDetailResponse> results = queryFactory
                 .select(
                         Projections.constructor(
@@ -52,6 +44,28 @@ public class CategoryGroupRepositoryImpl implements CategoryRepositoryQuerydsl {
                 )
                 .from(tradeCategoryDetail)
                 .where(tradeCategoryDetail.tradeCategory.tradeCategoryId.eq(tradeCategoryId))
+                .fetchResults();
+        return results.getResults();
+    }
+
+    @Override
+    public List<PostCategoryDto.RehomingCategoryResponse> getRehomingCategoryAndCnt(Long categoryGroupId) {
+        QueryResults<PostCategoryDto.RehomingCategoryResponse> results= queryFactory
+                .select(
+                        Projections.constructor(
+                                PostCategoryDto.RehomingCategoryResponse.class,
+                                petCategory.petCategoryId,
+                                petCategory.petCategoryName,
+                                Expressions.as(
+                                        select(rehoming.count())
+                                                .from(rehoming)
+                                                .where(rehoming.type.petCategoryId.eq(petCategory.petCategoryId))
+                                        ,"petCategoryCnt"
+                                )
+                        )
+                )
+                .from(petCategory)
+                .where(petCategory.categoryGroup.categoryGroupId.eq(categoryGroupId))
                 .fetchResults();
         return results.getResults();
     }

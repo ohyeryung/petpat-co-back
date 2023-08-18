@@ -76,7 +76,7 @@ public class PostCategoryController {
      */
     @RequestMapping(value = "/rehoming/category/{petType}",method = RequestMethod.GET)
     public SuccessResponse getRehomingCategoryAndCnt(@PathVariable Long petType){
-        return SuccessResponse.success(postCategoryService.getTradeCategoryAndCnt(petType));
+        return SuccessResponse.success(postCategoryService.getRehomingCategoryAndCnt(petType));
     }
 
 

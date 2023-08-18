@@ -1,6 +1,7 @@
 package com.smile.petpat.post.category.service;
 
 import com.smile.petpat.post.category.domain.*;
+import com.smile.petpat.post.category.dto.PostCategoryDto;
 import com.smile.petpat.post.category.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -65,8 +66,8 @@ public class PostCategoryServiceImpl implements PostCategoryService{
     }
 
     @Override
-    public List<TradeCategoryResponse> getTradeCategoryAndCnt(Long tradeCategoryId) {
-        List<TradeCategoryResponse> responses = new ArrayList<>();
+    public List<PostCategoryDto.TradeCategoryResponse> getTradeCategoryAndCnt(Long tradeCategoryId) {
+        List<PostCategoryDto.TradeCategoryResponse> responses = new ArrayList<>();
         CategoryGroup categoryGroup = categoryRepository.findById(tradeCategoryId)
                 .orElseThrow(
                         ()->new IllegalArgumentException("존재하지않는 중고거래 카테고리그룹입니다.")
@@ -74,7 +75,7 @@ public class PostCategoryServiceImpl implements PostCategoryService{
         List<TradeCategory> tradeCategories = tradeCategoryRepository.findAllByCategoryGroup(categoryGroup);
 
         for(TradeCategory tradeCategory1 : tradeCategories){
-            TradeCategoryResponse tradeCategoryResponse = new TradeCategoryResponse(
+            PostCategoryDto.TradeCategoryResponse tradeCategoryResponse = new PostCategoryDto.TradeCategoryResponse(
                     tradeCategory1.getTradeCategoryId(),
                     tradeCategory1.getTradeCategoryName(),
                     categoryRepository.getTradeCategoryAndCnt(tradeCategory1.getTradeCategoryId())
@@ -82,5 +83,10 @@ public class PostCategoryServiceImpl implements PostCategoryService{
             responses.add(tradeCategoryResponse);
         }
         return responses;
+    }
+
+    @Override
+    public List<PostCategoryDto.RehomingCategoryResponse> getRehomingCategoryAndCnt(Long categoryGroupId) {
+        return categoryRepository.getRehomingCategoryAndCnt(categoryGroupId);
     }
 }

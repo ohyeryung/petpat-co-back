@@ -6,4 +6,5 @@ import java.util.List;
 
 public interface CategoryRepositoryQuerydsl {
     List<PostCategoryDto.TradeCategoryDetailResponse> getTradeCategoryAndCnt(Long tradeCategoryId);
+    List<PostCategoryDto.RehomingCategoryResponse> getRehomingCategoryAndCnt(Long categoryGroupId);
 }
