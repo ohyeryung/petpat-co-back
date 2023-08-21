@@ -1,5 +1,7 @@
 package com.smile.petpat.user.service;
 
+import com.smile.petpat.common.exception.CustomException;
+import com.smile.petpat.common.response.ErrorCode;
 import com.smile.petpat.user.domain.ProfileService;
 import com.smile.petpat.user.domain.User;
 import com.smile.petpat.user.dto.ProfileDto;
@@ -73,6 +75,14 @@ public class ProfileServiceImpl implements ProfileService {
     @Override
     public ProfileDto.RecentDealResponse getMyRecentDeal() {
         return null;
+    }
+
+    @Override
+    public void deleteUser(User user) {
+        profileRepository.findById(user.getId()).orElseThrow(
+                ()-> new CustomException(ErrorCode.ILLEGAL_USER_NOT_EXIST)
+        );
+        profileRepository.deleteById(user.getId());
     }
 
 }

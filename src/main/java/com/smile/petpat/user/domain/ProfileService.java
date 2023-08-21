@@ -21,4 +21,6 @@ public interface ProfileService {
     Object getPostsByLike(User user, Pageable pageable, String postType);
 
     ProfileDto.RecentDealResponse getMyRecentDeal();
+
+    void deleteUser(User user);
 }

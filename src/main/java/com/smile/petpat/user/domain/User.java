@@ -2,6 +2,8 @@ package com.smile.petpat.user.domain;
 
 import com.smile.petpat.user.dto.UserDto;
 import lombok.*;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -12,6 +14,8 @@ import java.util.Collection;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 @Table(name = "TB_USER")
+@SQLDelete(sql = "UPDATE TB_USER SET DELETED = true, NICKNAME =CONCAT('del_',FLOOR(RAND()*1000000)) WHERE USER_ID=? ")
+@Where(clause = "DELETED = false")
 public class User implements UserDetails {
 
     @Id
@@ -29,6 +33,9 @@ public class User implements UserDetails {
     @Enumerated(value = EnumType.STRING)
     @Column(name = "LOGIN_TYPE")
     private loginTypeEnum loginType;
+
+    @Column(name = "DELETED")
+    private Boolean deleted = Boolean.FALSE;
 
     // 후에 여러컬럼이나 테이블로 분리할지 생각해야함
     @Column(name = "LOCATION")
@@ -78,6 +85,8 @@ public class User implements UserDetails {
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return null;
     }
+
+
 
     @Override
     public String getUsername() {
