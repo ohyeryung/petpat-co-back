@@ -1,7 +1,6 @@
 package com.smile.petpat.user.repository.querydsl;
 
 import com.querydsl.core.QueryResults;
-import com.querydsl.core.Tuple;
 import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -12,8 +11,6 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 
 import javax.persistence.EntityManager;
-
-import java.util.List;
 
 import static com.querydsl.jpa.JPAExpressions.select;
 import static com.smile.petpat.image.domain.QImage.image;

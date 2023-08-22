@@ -3,10 +3,13 @@ package com.smile.petpat.post.category.dto;
 import com.smile.petpat.post.category.domain.PetCategory;
 import com.smile.petpat.post.category.domain.TradeCategory;
 import com.smile.petpat.post.category.domain.TradeCategoryDetail;
+import com.smile.petpat.post.trade.domain.Trade;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+
+import java.util.List;
 
 public class PostCategoryInfo {
 
@@ -56,5 +59,8 @@ public class PostCategoryInfo {
             this.tradeCategoryDetailName = tradeCategoryDetail.getTradeCategoryDetailName();
         }
     }
+
+
+
 
 }

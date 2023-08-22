@@ -126,4 +126,13 @@ public class ProfileController {
     public SuccessResponse getMyRecentDeal(@AuthenticationPrincipal UserDetailsImpl userDetails){
         return SuccessResponse.success(profileService.getMyRecentDeal());
     }
+
+    /**
+     * 회원 탈퇴
+     */
+    @RequestMapping(value = "",method = RequestMethod.DELETE)
+    public SuccessResponse deleteUser(@AuthenticationPrincipal UserDetailsImpl userDetails){
+        profileService.deleteUser(userDetails.getUser());
+        return SuccessResponse.noDataSuccess("삭제 완료!");
+    }
 }
