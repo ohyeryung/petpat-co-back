@@ -24,6 +24,7 @@ import org.springframework.web.client.RestTemplate;
 public class UserAuthImpl implements UserAuth {
 
     private final JwtTokenUtils jwtTokenUtils;
+    private final HttpHeaders headers;
 
     @Value("${spring.security.oauth2.client.registration.kakao.client-id}")
     private String kakaoClientId;
@@ -44,7 +45,7 @@ public class UserAuthImpl implements UserAuth {
     @Value("${spring.security.oauth2.client.registration.github.redirect-uri}")
     private String githubRedirectUri;
 
-    HttpHeaders headers = new HttpHeaders();
+
 
     @Override
     public String getToken(User user) {
