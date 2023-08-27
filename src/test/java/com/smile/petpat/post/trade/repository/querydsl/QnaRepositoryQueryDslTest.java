@@ -32,7 +32,7 @@ import static com.smile.petpat.post.trade.domain.QTrade.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
-class TradeRepositoryQueryDslTest {
+class QnaRepositoryQueryDslTest {
     static {
         System.setProperty("com.amazonaws.sdk.disableEc2Metadata", "true");
     }
