@@ -22,7 +22,7 @@ public class ImageUtils {
             if (idx == -1 || idx == fileName.length() - 1) {
                 throw new CustomException(ErrorCode.WRONG_TYPE_IMAGE);
             }
-            String fileExtension = fileName.substring(idx + 1);
+            String fileExtension = fileName.substring(idx + 1).toLowerCase();
 
             Set<String> validExtensions = Set.of("gif", "png", "jpg", "jpeg");
             if (!validExtensions.contains(fileExtension)) {
