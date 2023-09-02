@@ -45,13 +45,24 @@ public class UserAuthImpl implements UserAuth {
     @Value("${spring.security.oauth2.client.registration.github.redirect-uri}")
     private String githubRedirectUri;
 
-
-
     @Override
     public String getToken(User user) {
         return jwtTokenUtils.generateJwtToken(user);
     }
 
+    @Override
+    public String saveRefreshTokenToRedis(User user){
+        return  jwtTokenUtils.generateRefreshToken(user.getUserEmail());
+    }
+
+    @Override
+    public HttpHeaders generateHeaderTokens(User user) {
+        String accessToken = getToken(user);
+        String refreshToken = saveRefreshTokenToRedis(user);
+        headers.set(HttpHeaders.AUTHORIZATION,accessToken);
+        headers.set("RefreshToken",refreshToken);
+        return headers;
+    }
 
     @Override
     public String getKakaoAccessToken(String code) throws JsonProcessingException {

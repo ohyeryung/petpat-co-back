@@ -39,11 +39,9 @@ public class UserController {
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public ResponseEntity<String> userLogin(@Validated @RequestBody UserDto.LoginUserRequest request){
         UserCommand command = request.toCommand();
-        String token = userService.loginUser(command);
+        HttpHeaders httpHeaders = userService.loginUser(command);
 
-        HttpHeaders headers = tokenProvider.headerToken(token);
-
-        return ResponseEntity.status(HttpStatus.OK).headers(headers).body(null);
+        return ResponseEntity.status(HttpStatus.OK).headers(httpHeaders).body(null);
     }
 
     // 카카오 로그인
