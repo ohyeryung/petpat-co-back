@@ -25,6 +25,7 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public User registerUser(UserCommand command) {
         userReader.getUserByUserEmail(command.getUserEmail());
+        userReader.getUserByNickName(command.getNickname());
         return userStore.store(command.toEntity());
     }
 

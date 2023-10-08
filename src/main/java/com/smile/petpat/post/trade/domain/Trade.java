@@ -67,8 +67,8 @@ public class Trade extends Timestamped {
     public Trade() {
     }
 
-    // 중고거래 게시물 등록
-    @Builder
+
+     // 중고거래 게시물 등록
     public Trade(User user, String title, String content, Long price, String cityName, String cityCountryName, String townShipName, String detailAdName, String fullAdName, TradeCategoryDetail tradeCategoryDetail) {
         this.user = user;
         this.title = title;

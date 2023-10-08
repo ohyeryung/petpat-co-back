@@ -45,6 +45,17 @@ public class UserReaderImpl implements UserReader {
                 .orElseThrow(() -> new CustomException(ILLEGAL_USER_NOT_EXIST));
         isPwValid(pwd,foundUser.getPassword());
         return foundUser;
+    public void getUserByNickName(String nickName) {
+        userRepository.findByNickname(nickName).ifPresent(
+                user -> {
+                    throw new CustomException(ILLEGAL_NICKNAME_DUPLICATION);
+                }
+        );
+    }
+
+    @Override
+    public void getUser(User initUser) {
+        isPwValid(initUser);
     }
 
     @Override
