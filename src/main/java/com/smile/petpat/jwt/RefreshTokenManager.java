@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 
 import java.security.SecureRandom;
 import java.util.Base64;
+import java.util.Optional;
 
 @Component
 @Slf4j
@@ -32,6 +33,13 @@ public class RefreshTokenManager {
             refreshTokenRepository.save(new RefreshToken(refreshToken,userEmail));
         }
         return refreshToken;
+    }
+
+    public String isValidRefreshToken(String refreshToken){
+
+        return  refreshTokenRepository.findByEmail(refreshToken).orElseThrow(
+                () -> new IllegalArgumentException("유효하지 않은 refreshToken 입니다.")
+        ).getUserEmail();
     }
 
 

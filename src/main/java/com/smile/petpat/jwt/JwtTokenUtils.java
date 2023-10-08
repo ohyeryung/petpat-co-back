@@ -7,7 +7,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import java.security.SecureRandom;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -16,7 +15,6 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class JwtTokenUtils {
 
-    private final RefreshTokenManager refreshTokenManager;
     private static final int DAY = 24 * 60 * 60;
     // JWT 토큰의 유효기간: 3일 (단위: milliseconds)
     private static final int JWT_TOKEN_VALID_MILLI_SEC = 3 * DAY * 1000;
@@ -27,25 +25,23 @@ public class JwtTokenUtils {
     @Value("${jwt.secretkey}")
     String JWT_SECRET;
 
-    public String generateJwtToken(User user) {
+    public String generateJwtToken(String userEmail) {
         String token = null;
 
         token = JWT.create()
                 .withIssuer(ISSUER)
-                .withPayload(createClaims(user))
+                .withPayload(createClaims(userEmail))
                 .withExpiresAt(new Date(System.currentTimeMillis() + JWT_TOKEN_VALID_MILLI_SEC))
                 .sign(generateAlgorithm(JWT_SECRET));
 
         return token;
     }
 
-    public String generateRefreshToken(String userEmail){
-      return   refreshTokenManager.saveRefreshToken(userEmail);
-    }
 
-    private Map<String, Object> createClaims(User user) {
+
+    private Map<String, Object> createClaims(String userEmail) {
         Map<String, Object> claims = new HashMap<>();
-        claims.put(CLAIM_USERID, user.getUserEmail());
+        claims.put(CLAIM_USERID, userEmail);
 
         return claims;
     }

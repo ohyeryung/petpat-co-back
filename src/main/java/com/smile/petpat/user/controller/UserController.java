@@ -6,14 +6,17 @@ import com.smile.petpat.user.domain.UserCommand;
 import com.smile.petpat.user.dto.UserDto;
 import com.smile.petpat.user.service.UserServiceImpl;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+@Slf4j
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/user")
@@ -37,8 +40,8 @@ public class UserController {
 
     // 로그인
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public ResponseEntity<String> userLogin(@Validated @RequestBody UserDto.LoginUserRequest request){
-        UserCommand command = request.toCommand();
+    public ResponseEntity<String> userLogin(@Validated @RequestBody UserDto.LoginUserRequest loginUserRequest, HttpServletRequest request){
+        UserCommand command = loginUserRequest.toCommand();
         HttpHeaders httpHeaders = userService.loginUser(command);
 
         return ResponseEntity.status(HttpStatus.OK).headers(httpHeaders).body(null);

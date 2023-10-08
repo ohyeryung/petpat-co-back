@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.smile.petpat.jwt.JwtTokenUtils;
+import com.smile.petpat.jwt.RefreshTokenManager;
 import com.smile.petpat.user.domain.User;
 import com.smile.petpat.user.domain.UserAuth;
 import lombok.RequiredArgsConstructor;
@@ -24,6 +25,7 @@ import org.springframework.web.client.RestTemplate;
 public class UserAuthImpl implements UserAuth {
 
     private final JwtTokenUtils jwtTokenUtils;
+    private final RefreshTokenManager refreshTokenManager;
     private final HttpHeaders headers;
 
     @Value("${spring.security.oauth2.client.registration.kakao.client-id}")
@@ -47,19 +49,19 @@ public class UserAuthImpl implements UserAuth {
 
     @Override
     public String getToken(User user) {
-        return jwtTokenUtils.generateJwtToken(user);
+        return jwtTokenUtils.generateJwtToken(user.getUserEmail());
     }
 
     @Override
     public String saveRefreshTokenToRedis(User user){
-        return  jwtTokenUtils.generateRefreshToken(user.getUserEmail());
+      return refreshTokenManager.saveRefreshToken(user.getUserEmail());
     }
 
     @Override
     public HttpHeaders generateHeaderTokens(User user) {
         String accessToken = getToken(user);
         String refreshToken = saveRefreshTokenToRedis(user);
-        headers.set(HttpHeaders.AUTHORIZATION,accessToken);
+        headers.set(HttpHeaders.AUTHORIZATION,"Bearer " + accessToken);
         headers.set("RefreshToken",refreshToken);
         return headers;
     }
@@ -149,7 +151,7 @@ public class UserAuthImpl implements UserAuth {
         SecurityContextHolder.getContext().setAuthentication(authentication);
         User user = (User) authentication.getPrincipal();
 
-        return jwtTokenUtils.generateJwtToken(user);
+        return jwtTokenUtils.generateJwtToken(user.getUserEmail());
     }
 
 }
