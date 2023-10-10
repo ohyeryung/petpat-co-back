@@ -6,6 +6,8 @@ import com.smile.petpat.user.domain.User;
 import com.smile.petpat.user.domain.UserModify;
 import com.smile.petpat.user.dto.UserDto;
 import com.smile.petpat.user.service.UserDetailsImpl;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
@@ -14,6 +16,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 @Slf4j
+@Tag(name = "ProfileController", description = "마이페이지 관련 API 입니다.")
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/profile")
@@ -25,6 +28,7 @@ public class ProfileController {
      * 프로필 조회
      * @return 성공 시 200 Success 반환
      */
+    @Operation(summary = "프로필 조회", description = "프로필 조회")
     @RequestMapping(value = "",method = RequestMethod.GET)
     public SuccessResponse getProfile(@AuthenticationPrincipal UserDetailsImpl userDetails){
         return SuccessResponse.success(profileService.getProfile(userDetails.getUser()));
@@ -34,6 +38,7 @@ public class ProfileController {
      * 프로필 수정
      * @return 성공 시 200 Success 반환
      */
+    @Operation(summary = "프로필 수정", description = "프로필 수정")
     @RequestMapping(value="",method = RequestMethod.PUT)
     public SuccessResponse modifyProfile(@ModelAttribute UserDto.ModifyUserRequest request,
                                          @AuthenticationPrincipal UserDetailsImpl userDetails){
@@ -45,6 +50,7 @@ public class ProfileController {
      * 비밀번호 확인
      * @return 성공 시 200 Success 반환
      */
+    @Operation(summary = "비밀번호 확인", description = "비밀번호 확인")
     @RequestMapping(value ="/password",method = RequestMethod.POST)
     public SuccessResponse checkPassword(@RequestBody UserDto.CheckPasswordRequest request,
                                          @AuthenticationPrincipal UserDetailsImpl userDetails){
@@ -57,6 +63,7 @@ public class ProfileController {
      * 비밀번호 수정
      * @return 성공 시 200 Success 반환
      */
+    @Operation(summary = "비밀번호 수정", description = "비밀번호 수정")
     @RequestMapping(value ="/password",method = RequestMethod.PUT)
     public SuccessResponse modifyPassword(@RequestBody UserDto.ModifyPasswordRequest request,
                                           @AuthenticationPrincipal UserDetailsImpl userDetails){
@@ -67,6 +74,7 @@ public class ProfileController {
     /**
      * 내가 쓴 분양 글 조회
      */
+    @Operation(summary = "내가 쓴 분양 글 조회", description = "내가 쓴 분양 글 조회")
     @RequestMapping(value = "/rehoming", method = RequestMethod.GET)
     public SuccessResponse getMyRehoming(@AuthenticationPrincipal UserDetailsImpl userDetails,
                                          @PageableDefault Pageable pageable){
@@ -76,6 +84,7 @@ public class ProfileController {
     /**
      * 내가 쓴 판매 글 조회
      */
+    @Operation(summary = "내가 쓴 판매 글 조회", description = "내가 쓴 판매 글 조회")
     @RequestMapping(value = "/trade", method = RequestMethod.GET)
     public SuccessResponse getMyTrade(@AuthenticationPrincipal UserDetailsImpl userDetails,
                                       @PageableDefault Pageable pageable){
@@ -84,6 +93,7 @@ public class ProfileController {
     /**
      * 내가 쓴 질문 게시글
      */
+    @Operation(summary = "내가 쓴 질문 게시글", description = "내가 쓴 질문 게시글")
     @RequestMapping(value = "/qna",method = RequestMethod.GET)
     public SuccessResponse getMyQna(@AuthenticationPrincipal UserDetailsImpl userDetails,
                                     @PageableDefault Pageable pageable){
@@ -94,6 +104,7 @@ public class ProfileController {
     /**
      * 내가 남긴 댓글 조회
      */
+    @Operation(summary = "내가 남긴 댓글 조회", description = "내가 남긴 댓글 조회")
     @RequestMapping(value = "/comment",method = RequestMethod.GET)
     public SuccessResponse getMyComment(@AuthenticationPrincipal UserDetailsImpl userDetails,
                                         @PageableDefault Pageable pageable){
@@ -103,6 +114,7 @@ public class ProfileController {
     /**
      * 내가 북마크한 글 조회
      */
+    @Operation(summary = "내가 북마크한 글 조회", description = "내가 북마크한 글 조회")
     @RequestMapping(value = "/bookmark",method = RequestMethod.GET)
     public SuccessResponse getPostsByBookmark(@AuthenticationPrincipal UserDetailsImpl userDetails,
                                                  @PageableDefault Pageable pageable,
@@ -112,6 +124,7 @@ public class ProfileController {
     /**
      * 내가 좋아요한 글 조회
      */
+    @Operation(summary = "내가 좋아요한 글 조회", description = "내가 좋아요한 글 조회")
     @RequestMapping(value = "/like", method = RequestMethod.GET)
     public SuccessResponse getPostsByLike(@AuthenticationPrincipal UserDetailsImpl userDetails,
                                           @PageableDefault Pageable pageable,
@@ -122,6 +135,7 @@ public class ProfileController {
     /**
      * 나의 최근 거래
      */
+    @Operation(summary = "나의 최근 거래", description = "나의 최근 거래")
     @RequestMapping(value = "/recent",method = RequestMethod.GET)
     public SuccessResponse getMyRecentDeal(@AuthenticationPrincipal UserDetailsImpl userDetails){
         return SuccessResponse.success(profileService.getMyRecentDeal());
@@ -130,6 +144,7 @@ public class ProfileController {
     /**
      * 회원 탈퇴
      */
+    @Operation(summary = "회원 탈퇴", description = "회원 탈퇴")
     @RequestMapping(value = "",method = RequestMethod.DELETE)
     public SuccessResponse deleteUser(@AuthenticationPrincipal UserDetailsImpl userDetails){
         profileService.deleteUser(userDetails.getUser());
