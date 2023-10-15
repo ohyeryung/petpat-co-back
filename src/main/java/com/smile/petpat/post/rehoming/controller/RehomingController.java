@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
@@ -98,7 +99,7 @@ public class RehomingController {
      * 분양 게시물 상태값 변경
      * @return 성공 시 200 Success 및 게시물 타입 및 번호 반환
      */
-    @Operation(summary = "분양게시물 상태변경 [분양 중]", description="분양게시물 상태변경 [분양 중]")
+    @Operation(summary = "분양게시물 상태변경 [분양 중]", description= "분양게시물 상태변경 [분양 중]")
     @RequestMapping(value = "/statusFinding", method = RequestMethod.POST)
     public SuccessResponse updateStatusFinding(@AuthenticationPrincipal UserDetailsImpl userDetails,
                                                 @RequestParam Long postId) {
@@ -106,7 +107,7 @@ public class RehomingController {
         return SuccessResponse.noDataSuccess("OK");
     }
 
-    @Operation(summary = "분양게시물 상태변경 [예약 중]", description="분양게시물 상태변경 [예약 중]")
+    @Operation(summary = "분양게시물 상태변경 [예약 중]", description= "분양게시물 상태변경 [예약 중]")
     @RequestMapping(value = "/statusReserved", method = RequestMethod.POST)
     public SuccessResponse updateStatusReserved(@AuthenticationPrincipal UserDetailsImpl userDetails,
                                                 @RequestParam Long postId) {
@@ -114,11 +115,25 @@ public class RehomingController {
         return SuccessResponse.noDataSuccess("OK");
     }
 
-    @Operation(summary = "분양게시물 상태변경 [예약 완료]", description="분양게시물 상태변경 [예약 완료]")
+    @Operation(summary = "분양게시물 상태변경 [예약 완료]", description= "분양게시물 상태변경 [예약 완료]")
     @RequestMapping(value = "/statusMatched", method = RequestMethod.POST)
     public SuccessResponse updateStatusMatched(@AuthenticationPrincipal UserDetailsImpl userDetails,
                                                @RequestParam Long postId) {
         rehomingService.updateStatusMatched(userDetails.getUser(), postId);
         return SuccessResponse.noDataSuccess("OK");
+    }
+
+    @Operation(summary = "분양게시물 카테고리별 목록 조회", description = "분양게시물 카테고리별 목록 조회")
+    @RequestMapping(value = "/category", method = RequestMethod.GET)
+    public ResponseEntity<?> getCategoryList(@AuthenticationPrincipal UserDetailsImpl userDetails,
+                                             @RequestParam("categoryId") Long categoryId, @RequestParam("typeId") Long typeId,
+                                             @PageableDefault Pageable pageable) {
+        RehomingPagingDto rehomingPagingDto;
+        if (userDetails != null) {
+            rehomingPagingDto = rehomingService.getCategoryListForMember(userDetails.getUser(), categoryId, typeId, pageable);
+        }
+        else rehomingPagingDto = rehomingService.getCategoryList(categoryId, typeId, pageable);
+        return ResponseEntity.ok(rehomingPagingDto);
+
     }
 }
