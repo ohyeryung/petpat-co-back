@@ -6,7 +6,6 @@ import com.smile.petpat.post.qna.domain.QnaDto;
 import com.smile.petpat.post.qna.service.QnaService;
 import com.smile.petpat.post.rehoming.dto.RehomingPagingDto;
 import com.smile.petpat.user.service.UserDetailsImpl;
-import com.sun.net.httpserver.Authenticator;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -45,9 +44,23 @@ public class QnaController {
     @ApiOperation(value = "QNA 목록 조회", notes = "QNA 목록 조회")
     @RequestMapping(value = "",method = RequestMethod.GET)
     public SuccessResponse listQna(@AuthenticationPrincipal UserDetailsImpl userDetails,
-                                   @PageableDefault() Pageable pageable){
+                                    @PageableDefault() Pageable pageable){
         return SuccessResponse.success(qnaService.listQna(userDetails.getUser(), pageable), "ok");
 
     }
+
+//    /**
+//     * Qna 게시물 상세 조회
+//     * @return 성공 시 200 Success 및 해당 게시물 반환
+//     */
+//    @ApiOperation(value = "Qna 상세 조회", notes = "Qna 상세 조회")
+//    @RequestMapping(value = "/detail", method = RequestMethod.GET)
+//    public SuccessResponse detailQna(@RequestParam Long qnaId,
+//                                  @AuthenticationPrincipal UserDetailsImpl userDetails) {
+//        if (userDetails == null) {
+//            return SuccessResponse.success(qnaService.detailQna(qnaId), "OK");
+//        }
+//        return SuccessResponse.success(qnaService.detailQnaForUser(qnaId, userDetails.getUser()), "OK");
+//    }
 
 }

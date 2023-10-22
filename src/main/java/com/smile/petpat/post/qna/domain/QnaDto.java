@@ -1,5 +1,6 @@
 package com.smile.petpat.post.qna.domain;
 
+import com.smile.petpat.post.qna.domain.QnaCommand;
 import com.smile.petpat.user.domain.User;
 import lombok.Getter;
 import lombok.Setter;

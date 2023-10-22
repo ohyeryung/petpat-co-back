@@ -28,7 +28,7 @@ public class QnaReaderImpl implements QnaReader {
 
     @Override
     public Page<QnaInfo.QnaList> readQnaList(User user, Pageable pageable) {
-        return qnaRepository.qnaListPaging(user.getId(),pageable);
+        return qnaRepository.qnaList(user.getId(), pageable);
     }
 
     @Override

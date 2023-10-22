@@ -17,7 +17,6 @@ public class QnaServiceImpl implements QnaService{
 
     private final QnaStore qnaStore;
     private final QnaReader qnaReader;
-    private final QnaRepository qnaRepository;
     private final ImageUploadManager imageUploadManager;
 
     @Override
