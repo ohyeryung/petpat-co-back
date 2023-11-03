@@ -6,6 +6,8 @@ import javax.persistence.*;
 import com.smile.petpat.config.comm.Timestamped;
 import com.smile.petpat.post.category.domain.PostType;
 import com.smile.petpat.user.domain.User;
+import java.util.ArrayList;
+import java.util.List;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -37,6 +39,9 @@ public class Qna extends Timestamped {
     @Column(name = "VIEW_CNT")
     private int viewCnt;
 
+    @OneToMany(mappedBy = "qna", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Comment> comments = new ArrayList<>();
+
     public Qna() {
     }
 
@@ -48,5 +53,11 @@ public class Qna extends Timestamped {
         this.postType = postType;
         this.viewCnt = viewCnt;
 
+    }
+    @Builder
+    public Qna(String title, String content, User user) {
+        this.title = title;
+        this.content = content;
+        this.user = user;
     }
 }
