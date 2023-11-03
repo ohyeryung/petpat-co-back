@@ -12,7 +12,6 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.List;
 
 @Getter
-@Builder
 @ToString
 public class TradeCommand {
     private User user;
@@ -32,8 +31,8 @@ public class TradeCommand {
     public TradeCommand(){
 
     }
-
-    public TradeCommand(User user, String title, String content, Long price, String cityName, String cityCountryName, String townShipName, String detailAdName, String fullAdName, PostType postType, PostStatus postStatus, Long tradeCategoryDetailId, List<MultipartFile> images) {
+    @Builder
+    public TradeCommand(User user, String title, String content, Long price, String cityName, String cityCountryName, String townShipName, String detailAdName, String fullAdName, Long tradeCategoryDetailId, List<MultipartFile> images) {
         this.user = user;
         this.title = title;
         this.content = content;
@@ -43,8 +42,6 @@ public class TradeCommand {
         this.townShipName = townShipName;
         this.detailAdName = detailAdName;
         this.fullAdName = fullAdName;
-        this.postType = postType;
-        this.postStatus = postStatus;
         this.tradeCategoryDetailId = tradeCategoryDetailId;
         this.images = images;
     }
@@ -61,7 +58,6 @@ public class TradeCommand {
                 .detailAdName(detailAdName)
                 .fullAdName(fullAdName)
                 .postType(PostType.TRADE)
-                .status(PostStatus.TRADE_FINDING)
                 .tradeCategoryDetail(tradeCategoryDetail)
                 .build();
     }

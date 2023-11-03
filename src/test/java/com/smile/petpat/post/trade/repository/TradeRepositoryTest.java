@@ -67,9 +67,6 @@ class TradeRepositoryTest {
                 .townShipName("목동")
                 .detailAdName("103")
                 .fullAdName("서울시 양천구 목동 103")
-                .postType(PostType.TRADE)
-                .status(PostStatus.TRADE_FINDING)
-                .viewCnt(0)
                 .tradeCategoryDetail(tradeCategoryDetail)
                 .build();
         Trade saveTrade = tradeRepository.save(trade);

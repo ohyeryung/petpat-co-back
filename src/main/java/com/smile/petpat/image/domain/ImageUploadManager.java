@@ -16,16 +16,24 @@ public class ImageUploadManager {
     private final ImageUploader imageUploader;
     private final ImageUtils imageUtils;
 
-    /* User 프로필 등록 */
-    public void saveProfileImage() {
+    /** User 프로필 등록 */
+    public String saveProfileImage(MultipartFile multipartFile,String originImgPath) {
+//        String fakeFileName = imageUtils.createFileName(multipartFile.getOriginalFilename());
+//        String originFileName = multipartFile.getOriginalFilename();
+//        String filepath = s3Uploader.uploadFile(multipartFile);
 
+        //기존 프로필 이미지 삭제
+        if(originImgPath!="") {  //기존 프로필 이미지가 있는 경우
+            s3Uploader.deleteImage(originImgPath);
+        }
+        return s3Uploader.uploadFile(multipartFile);
     }
 
     /* 게시글 이미지 등록 (대표이미지 설정) */
     public void uploadPostImage(List<MultipartFile> multipartFiles, Long postId, PostType postType) {
         List<Image> imageList = new ArrayList<>();
         for (int i = 0; i < multipartFiles.size(); i++) {
-            String fakeFileName = imageUtils.createFileName(multipartFiles.get(i).getOriginalFilename());
+            String fakeFileName = imageUtils.generateRandomFileName(multipartFiles.get(i).getOriginalFilename());
             String originalFileName = multipartFiles.get(i).getOriginalFilename();
             String filePath = s3Uploader.uploadFile(multipartFiles.get(i));
             boolean repImgNY = i == 0; // 제일 먼저 등록되는 이미지의 경우 대표이미지로 설정

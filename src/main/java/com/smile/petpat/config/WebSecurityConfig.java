@@ -12,6 +12,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
@@ -64,7 +67,7 @@ public class WebSecurityConfig {
                 .requestCache().disable()
                 .formLogin().disable()
                 .httpBasic().disable()
-                .cors().disable()
+                .cors().configurationSource(corsConfigurationSource()).and()
                 .csrf().disable()
         ;
 
@@ -72,11 +75,48 @@ public class WebSecurityConfig {
                 // 세션을 사용하지 않기 때문에 STATELESS로 설정
                 .addFilterBefore(new JwtAuthenticationFilter(tokenProvider), UsernamePasswordAuthenticationFilter.class)
                 .authorizeRequests()
-                .antMatchers("/api/v1/user/**","h2-console/**","/api/v1/rehoming/**","/swagger-ui.html"
-                        ,"/swagger-ui/**", "/swagger-ui")
+                .antMatchers("/api/v1/user/**","h2-console/**","/api/v1/rehoming/**"
+                        ,"/swagger-ui/**","/v3/api-docs/**")
                 .permitAll()
                 .anyRequest().authenticated();
 
         return http.build();
     }
+
+    //    cors 해결
+//    @Bean
+//    public CorsConfigurationSource corsConfigurationSource(){
+//        CorsConfiguration configuration = new CorsConfiguration();
+//        configuration.addAllowedOrigin("http://localhost:3000"); // local 테스트 시
+//        configuration.addAllowedOrigin("http://121.173.199.79:3000");
+//        configuration.addAllowedMethod("*");
+//        configuration.addAllowedMethod("GET");
+//        configuration.addAllowedMethod("POST");
+//        configuration.addAllowedMethod("PUT");
+//        configuration.addAllowedMethod("PATCH");
+//        configuration.addAllowedHeader("*");
+//        configuration.addExposedHeader("Authorization");
+//        configuration.setAllowCredentials(true);
+//        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+//        source.registerCorsConfiguration("/**", configuration);
+//        return source;
+//    }
+
+    public CorsConfigurationSource corsConfigurationSource(){
+        CorsConfiguration corsConfiguration = new CorsConfiguration();
+        corsConfiguration.addAllowedOrigin("http://localhost:3000"); // local 테스트 시
+        corsConfiguration.addAllowedOrigin("http://121.173.199.79:3000");
+        corsConfiguration.addAllowedMethod("*");
+        corsConfiguration.addAllowedHeader("*");
+        corsConfiguration.addExposedHeader("Authorization");
+        corsConfiguration.setAllowCredentials(true);
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", corsConfiguration);
+        return source;
+    }
+
+
+
+
+
 }
