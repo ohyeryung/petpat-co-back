@@ -14,7 +14,6 @@ public class QnaInfo {
 
     @Getter
     @ToString
-    @AllArgsConstructor
     public static class QnaList{
         private Long qnaId;
         private String nickname;
@@ -29,6 +28,15 @@ public class QnaInfo {
            
         }
 
+        public QnaList(Long qnaId, String nickname, String title, String imagePath, PostType postType, int viewCnt, String createAt) {
+            this.qnaId = qnaId;
+            this.nickname = nickname;
+            this.title = title;
+            this.imagePath = imagePath;
+            this.postType = postType;
+            this.viewCnt = viewCnt;
+            this.createAt = createAt;
+        }
 
         public QnaList(Long qnaId, String nickname, String title,
                        String imagePath, PostType postType,

@@ -34,7 +34,6 @@ public class QnaRepositoryImpl implements QnaRepositoryQueryDsl {
                                         qna.qnaId,
                                         qna.user.nickname,
                                         qna.title,
-                                        qna.postType,
                                         ExpressionUtils.as(
                                                 JPAExpressions
                                                         .select(image.filePath)
@@ -45,6 +44,7 @@ public class QnaRepositoryImpl implements QnaRepositoryQueryDsl {
                                                         )
                                                         .orderBy(image.imageId.asc()).limit(1)
                                                 ,"image"),
+                                        qna.postType,
                                         qna.viewCnt,
                                         qna.createdAt
                                 )
