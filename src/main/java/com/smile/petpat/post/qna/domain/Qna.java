@@ -8,6 +8,8 @@ import com.smile.petpat.post.category.domain.PostType;
 import com.smile.petpat.user.domain.User;
 import java.util.ArrayList;
 import java.util.List;
+
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -15,6 +17,7 @@ import lombok.Getter;
 @Getter
 @Table(name = "TB_QNA")
 @Builder
+@AllArgsConstructor
 public class Qna extends Timestamped {
 
     @Id
