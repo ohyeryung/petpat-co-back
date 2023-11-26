@@ -77,7 +77,7 @@ public class  TradeController {
                                        @PathVariable Long postId
     ){
         TradeCommand tradeCommand = tradeDto.toCommand();
-        return SuccessResponse.success(tradeService.updateTrade(tradeCommand,userDetails.getUser(),postId));
+        return SuccessResponse.success(tradeService.updateTrade(userDetails.getUser(),postId,tradeCommand));
     }
 
     /**

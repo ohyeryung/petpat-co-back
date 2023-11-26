@@ -25,6 +25,10 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -52,8 +56,23 @@ class TradeServiceImplTest {
     private ImageRepository imageRepository;
 
     User user1;
+
+    List<MultipartFile> initImageList;
+
+    List<MultipartFile> updateImageList;
+
+    // 생성자에서 초기화 작업 수행
+    public TradeServiceImplTest() {
+        try {
+            // 테스트에 사용할 리소스 초기화
+            initImageList   = getMultipartFiles("logo-1.png","logo-2.png");
+            updateImageList = getMultipartFiles("logo-3.png","logo-4.png");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
     @BeforeEach
-    void beforeEach(){
+    void beforeEach() throws IOException {
         user1 = User
                 .builder()
                 .userEmail("test0001@email.com")
@@ -62,6 +81,8 @@ class TradeServiceImplTest {
                 .profileImgPath("http://testUserProfile1.jpg")
                 .build();
         userRepository.save(user1);
+
+
     }
 
     @AfterEach
@@ -75,10 +96,9 @@ class TradeServiceImplTest {
 
     @DisplayName("중고거래 게시물을 등록한다.")
     @Test
-    void createTest() throws IOException {
+    void createTest(){
         // given
-        List<MultipartFile> multipartFileList = getMultipartFiles();
-        TradeCommand tradeCommand = initTradeCommand(1L,multipartFileList);
+        TradeCommand tradeCommand = initTradeCommand(1L,initImageList);
 
         // when
         Long tradeId = tradeService.registerTrade(tradeCommand, user1);
@@ -91,27 +111,52 @@ class TradeServiceImplTest {
         assertThat(trade.getTradeId()).isNotNull();
         assertThat(trade.getTitle()).isEqualTo("제목테스트");
         assertThat(trade.getContent()).isEqualTo("내용 테스트");
-        assertThat(imageList.stream().map(Image::getFakeFileName).collect(Collectors.toList())).hasSize(2)
+        assertThat(imageList.stream().map(Image::getOriginalFileName).collect(Collectors.toList())).hasSize(2)
                 .containsExactlyInAnyOrder("logo-1.png","logo-2.png");
+
+    }
+    @DisplayName("중고거래 게시물을 수정한다.")
+    @Test
+    void updateTrade()  {
+        // given
+        TradeCommand tradeCommand = initTradeCommand(1L,initImageList);
+        Long tradeId = tradeService.registerTrade(tradeCommand, user1);
+
+        // when
+        tradeService.updateTrade(user1,tradeId,initUpdateTradeCommand(2L,updateImageList));
+        System.out.println(updateImageList.get(0).getOriginalFilename());
+        Trade trade = tradeRepository.findById(tradeId).orElseThrow(
+                () -> new IllegalArgumentException("존재하지 않는 아이디입니다.")
+        );
+        List<Image> imageList = imageRepository.findAllByPostIdAndPostTypeOrderByPostId(tradeId, PostType.TRADE);
+        // then
+        System.out.println(imageList.get(0).getFakeFileName());
+        System.out.println(imageList.get(1).getFakeFileName());
+        assertThat(trade.getTradeId()).isEqualTo(1L);
+        assertThat(trade.getTitle()).isEqualTo("제목수정테스트");
+        assertThat(trade.getContent()).isEqualTo("내용수정테스트");
+        assertThat(trade.getTradeCategoryDetail().getTradeCategoryDetailName()).isEqualTo("소프트 사료");
+        assertThat(imageList.stream().map(Image::getOriginalFileName).collect(Collectors.toList())).hasSize(2)
+                .containsExactlyInAnyOrder("logo-3.png","logo-4.png");
+
+
 
     }
     @DisplayName("로그인한 유저가 보는 중고거래 목록 화면조회입니다.")
     @Test
-    void selectTradeListForLogin() throws IOException {
+    void selectTradeListForLogin() {
 
         // given
-        List<MultipartFile> multipartFileList = getMultipartFiles();
-        TradeCommand tradeCommand = initTradeCommand(1L,multipartFileList);
+        TradeCommand tradeCommand = initTradeCommand(1L,initImageList);
 
         Long tradeId = tradeService.registerTrade(tradeCommand, user1);
     }
 
     @DisplayName("중고거래 게시물 상세조회 하기")
     @Test
-    void selectTradeDetail() throws IOException {
+    void selectTradeDetail()  {
         // given
-        List<MultipartFile> multipartFileList = getMultipartFiles();
-        TradeCommand tradeCommand = initTradeCommand(1L,multipartFileList);
+        TradeCommand tradeCommand = initTradeCommand(1L,initImageList);
 
         // when
         Long tradeId = tradeService.registerTrade(tradeCommand, user1);
@@ -125,15 +170,38 @@ class TradeServiceImplTest {
 
     }
 
-    private List<MultipartFile> getMultipartFiles() throws IOException {
+    // 파일 찾기
+    private List<MultipartFile> getMultipartFiles(String filename1, String filename2) throws IOException {
+
         return List.of(
                 new MockMultipartFile("image", "logo-1.png", "image/png",
-                        new FileInputStream(getClass().getResource("/images/logo-1.png").getFile())),
+                        new FileInputStream(decodePath(getClass().getResource("/images/"+filename1).getFile()))),
                 new MockMultipartFile("image2","logo-2.png", "image/png",
-                        new FileInputStream(getClass().getResource("/images/logo-2.png").getFile()))
+                        new FileInputStream(decodePath(getClass().getResource("/images/"+filename2).getFile())))
         );
     }
 
+    // URL 디코딩 수행
+    private static String decodePath(String encodedPath) {
+        return URLDecoder.decode(encodedPath, StandardCharsets.UTF_8);
+    }
+
+    private TradeCommand initUpdateTradeCommand(Long tradeCategoryDetailId,List<MultipartFile> multipartFileList){
+
+        return TradeCommand.builder()
+                .user(user1)
+                .title("제목수정테스트")
+                .content("내용수정테스트")
+                .price(11000L)
+                .cityName("수원시")
+                .cityCountryName("수원구")
+                .townShipName("수지구")
+                .detailAdName("수원로 230")
+                .fullAdName("수원시 수원구 수지구 수원로 230")
+                .tradeCategoryDetailId(tradeCategoryDetailId)
+                .images(multipartFileList)
+                .build();
+    }
     private TradeCommand initTradeCommand(Long tradeCategoryDetailId,List<MultipartFile> multipartFileList){
 
         return TradeCommand.builder()

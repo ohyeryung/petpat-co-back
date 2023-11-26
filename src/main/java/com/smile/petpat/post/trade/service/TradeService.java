@@ -14,7 +14,7 @@ public interface TradeService{
 
     void deleteTrade(Long tradeId,User user);
 
-    TradeInfo.TradeDetail updateTrade(TradeCommand tradeCommand, User user, Long postId);
+    TradeInfo.TradeDetail updateTrade(User user, Long postId,TradeCommand tradeCommand);
 
     TradeInfo.TradeDetail tradeDetail(Long tradeId);
 

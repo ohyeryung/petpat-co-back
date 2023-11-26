@@ -14,6 +14,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -71,12 +72,17 @@ public class TradeServiceImpl implements TradeService{
     }
 
 
+    // 게시물 수정
     @Override
     @Transactional
-    public TradeInfo.TradeDetail updateTrade(TradeCommand tradeCommand, User user, Long tradeId) {
+    public TradeInfo.TradeDetail updateTrade( User user,Long tradeId,TradeCommand tradeCommand) {
+        Trade trade = tradeReader.userChk(tradeId, user.getId());
         TradeCategoryDetail categoryDetail = tradeReader.readTradeCategoryDetailById(tradeCommand.getTradeCategoryDetailId());
         Trade initTrade = tradeCommand.toUpdateEntity(user,tradeId,categoryDetail);
-        Trade trade = tradeStore.update(initTrade,user.getId(),tradeId);
+        trade.update(initTrade);
+
+        List<MultipartFile> images = tradeCommand.getImages();
+        imageUploadManager.updateImage(images,tradeId,PostType.TRADE);
         return getTradeInfo(tradeId, user, trade);
     }
 

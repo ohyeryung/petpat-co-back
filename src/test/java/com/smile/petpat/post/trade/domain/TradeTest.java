@@ -40,6 +40,7 @@ class TradeTest {
                     .nickname("닉네임테스트1")
                     .password("passwordtest1234@")
                     .profileImgPath("http://testUserProfile1.jpg")
+                    .loginType(User.loginTypeEnum.NORMAL)
                     .build();
             userRepository.save(user1);
 
