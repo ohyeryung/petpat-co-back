@@ -42,6 +42,20 @@ public class TradeServiceImpl implements TradeService{
         return trade.getTradeId();
     }
 
+    // 게시물 수정
+    @Override
+    @Transactional
+    public TradeInfo.TradeDetail updateTrade( User user,Long tradeId,TradeCommand tradeCommand) {
+        Trade trade = tradeReader.userChk(tradeId, user.getId());
+        TradeCategoryDetail categoryDetail = tradeReader.readTradeCategoryDetailById(tradeCommand.getTradeCategoryDetailId());
+        Trade initTrade = tradeCommand.toUpdateEntity(user,tradeId,categoryDetail);
+        trade.update(initTrade);
+
+        List<MultipartFile> images = tradeCommand.getImages();
+        imageUploadManager.updateImage(images,tradeId,PostType.TRADE);
+        return getTradeInfo(tradeId, user, trade);
+    }
+
     // 중고거래 게시판 목록 반환(로그인한 유저)
     @Override
     public RehomingPagingDto listTrade(User user, Pageable pageable) {
@@ -71,20 +85,6 @@ public class TradeServiceImpl implements TradeService{
 
     }
 
-
-    // 게시물 수정
-    @Override
-    @Transactional
-    public TradeInfo.TradeDetail updateTrade( User user,Long tradeId,TradeCommand tradeCommand) {
-        Trade trade = tradeReader.userChk(tradeId, user.getId());
-        TradeCategoryDetail categoryDetail = tradeReader.readTradeCategoryDetailById(tradeCommand.getTradeCategoryDetailId());
-        Trade initTrade = tradeCommand.toUpdateEntity(user,tradeId,categoryDetail);
-        trade.update(initTrade);
-
-        List<MultipartFile> images = tradeCommand.getImages();
-        imageUploadManager.updateImage(images,tradeId,PostType.TRADE);
-        return getTradeInfo(tradeId, user, trade);
-    }
 
     @Override
     @Transactional
