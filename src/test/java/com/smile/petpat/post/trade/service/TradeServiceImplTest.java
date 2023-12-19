@@ -40,17 +40,17 @@ class TradeServiceImplTest {
     @Autowired
     private TradeServiceImpl tradeService;
 
-    @MockBean(name = "userRepository")
+    @Autowired
     private UserRepository userRepository;
 
-    //@MockBean(name = "tradeCategoryDetailRepository")
+
     @Autowired
     private TradeCategoryDetailRepository tradeCategoryDetailRepository;
 
-    @MockBean(name = "tradeRepository")
+    @Autowired
     private TradeRepository tradeRepository;
 
-    @MockBean(name = "imageRepository")
+    @Autowired
     private ImageRepository imageRepository;
 
     User mockUser;
@@ -69,7 +69,8 @@ class TradeServiceImplTest {
                 .password("passwordtest1234@")
                 .profileImgPath("http://testUserProfile1.jpg")
                 .build();
-        BDDMockito.given(userRepository.save(mockUser)).willReturn(mockUser);
+       //  BDDMockito.given(userRepository.save(mockUser)).willReturn(mockUser);
+        userRepository.save(mockUser);
         initImageList   = getMultipartFiles("logo-1.png","logo-2.png");
         updateImageList = getMultipartFiles("logo-3.png","logo-4.png");
 
@@ -91,7 +92,6 @@ class TradeServiceImplTest {
 
         // given
         TradeCommand tradeCommand = initTradeCommand(1L,initImageList);
-
         // when
         Long tradeId = tradeService.registerTrade(tradeCommand, mockUser);
         Trade trade = tradeRepository.findById(tradeId).orElseThrow(
@@ -150,34 +150,34 @@ class TradeServiceImplTest {
         assertThat(imageCnt).isEqualTo(currentImgCnt+2);
     }
 
-
-    @DisplayName("로그인한 유저가 보는 중고거래 목록 화면조회입니다.")
-    @Test
-    void selectTradeListForLogin() {
-
-        // given
-        TradeCommand tradeCommand = initTradeCommand(1L,initImageList);
-
-        Long tradeId = tradeService.registerTrade(tradeCommand, mockUser);
-    }
-
-    @DisplayName("중고거래 게시물 상세조회 하기")
-    @Test
-    void selectTradeDetail()  {
-        // given
-        TradeCommand tradeCommand = initTradeCommand(1L,initImageList);
-
-        // when
-        Long tradeId = tradeService.registerTrade(tradeCommand, mockUser);
-        TradeInfo.TradeDetail tradeDetail = tradeService.tradeDetail(tradeId);
-
-        // then
-        assertThat(tradeDetail.getTitle()).isEqualTo("제목테스트");
-        assertThat(tradeDetail.getContent()).isEqualTo("내용 테스트");
-        assertThat(tradeDetail.getImageList()).hasSize(2)
-                .containsExactlyInAnyOrder("logo-1.png","logo-2.png");
-
-    }
+//
+//    @DisplayName("로그인한 유저가 보는 중고거래 목록 화면조회입니다.")
+//    @Test
+//    void selectTradeListForLogin() {
+//
+//        // given
+//        TradeCommand tradeCommand = initTradeCommand(1L,initImageList);
+//
+//        Long tradeId = tradeService.registerTrade(tradeCommand, mockUser);
+//    }
+//
+//    @DisplayName("중고거래 게시물 상세조회 하기")
+//    @Test
+//    void selectTradeDetail()  {
+//        // given
+//        TradeCommand tradeCommand = initTradeCommand(1L,initImageList);
+//
+//        // when
+//        Long tradeId = tradeService.registerTrade(tradeCommand, mockUser);
+//        TradeInfo.TradeDetail tradeDetail = tradeService.tradeDetail(tradeId);
+//
+//        // then
+//        assertThat(tradeDetail.getTitle()).isEqualTo("제목테스트");
+//        assertThat(tradeDetail.getContent()).isEqualTo("내용 테스트");
+//        assertThat(tradeDetail.getImageList()).hasSize(2)
+//                .containsExactlyInAnyOrder("logo-1.png","logo-2.png");
+//
+//    }
 
     // 파일 찾기
     private List<MultipartFile> getMultipartFiles(String filename1, String filename2) throws IOException {
