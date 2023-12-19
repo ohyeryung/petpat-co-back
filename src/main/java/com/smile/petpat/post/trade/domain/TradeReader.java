@@ -10,4 +10,5 @@ public interface TradeReader {
     Trade readTradeById(Long tradeId);
     TradeCategoryDetail readTradeCategoryDetailById(Long tradeCategoryDetailId);
     TradeInfo.TradeDetail readTradeDetail(Long userId, Long tradeId);
+    Trade userChk(Long tradeId,Long userId);
 }

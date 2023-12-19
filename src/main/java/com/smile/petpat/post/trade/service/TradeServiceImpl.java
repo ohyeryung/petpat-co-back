@@ -14,6 +14,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -39,6 +40,20 @@ public class TradeServiceImpl implements TradeService{
         imageUploadManager.uploadPostImage(tradeCommand.getImages(),trade.getTradeId(),trade.getPostType());
 
         return trade.getTradeId();
+    }
+
+    // 게시물 수정
+    @Override
+    @Transactional
+    public TradeInfo.TradeDetail updateTrade( User user,Long tradeId,TradeCommand tradeCommand) {
+        Trade trade = tradeReader.userChk(tradeId, user.getId());
+        TradeCategoryDetail categoryDetail = tradeReader.readTradeCategoryDetailById(tradeCommand.getTradeCategoryDetailId());
+        Trade initTrade = tradeCommand.toUpdateEntity(user,tradeId,categoryDetail);
+        trade.update(initTrade);
+
+        List<MultipartFile> images = tradeCommand.getImages();
+        imageUploadManager.updateImage(images,tradeId,PostType.TRADE);
+        return getTradeInfo(tradeId, user, trade);
     }
 
     // 중고거래 게시판 목록 반환(로그인한 유저)
@@ -70,15 +85,6 @@ public class TradeServiceImpl implements TradeService{
 
     }
 
-
-    @Override
-    @Transactional
-    public TradeInfo.TradeDetail updateTrade(TradeCommand tradeCommand, User user, Long tradeId) {
-        TradeCategoryDetail categoryDetail = tradeReader.readTradeCategoryDetailById(tradeCommand.getTradeCategoryDetailId());
-        Trade initTrade = tradeCommand.toUpdateEntity(user,tradeId,categoryDetail);
-        Trade trade = tradeStore.update(initTrade,user.getId(),tradeId);
-        return getTradeInfo(tradeId, user, trade);
-    }
 
     @Override
     @Transactional

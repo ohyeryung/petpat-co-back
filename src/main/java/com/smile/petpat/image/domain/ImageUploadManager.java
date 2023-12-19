@@ -3,6 +3,7 @@ package com.smile.petpat.image.domain;
 import com.smile.petpat.post.category.domain.PostType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
@@ -30,6 +31,7 @@ public class ImageUploadManager {
     }
 
     /* 게시글 이미지 등록 (대표이미지 설정) */
+    @Transactional
     public void uploadPostImage(List<MultipartFile> multipartFiles, Long postId, PostType postType) {
         List<Image> imageList = new ArrayList<>();
         for (int i = 0; i < multipartFiles.size(); i++) {
@@ -38,7 +40,7 @@ public class ImageUploadManager {
             String filePath = s3Uploader.uploadFile(multipartFiles.get(i));
             boolean repImgNY = i == 0; // 제일 먼저 등록되는 이미지의 경우 대표이미지로 설정
 
-            Image image = imageUploader.toImageEntity(fakeFileName, originalFileName, filePath, postId, postType, repImgNY);
+            Image image = imageUploader.toImageEntity(originalFileName, fakeFileName,  filePath, postId, postType, repImgNY);
             imageList.add(image);
         }
         imageUploader.savePostImage(imageList);
