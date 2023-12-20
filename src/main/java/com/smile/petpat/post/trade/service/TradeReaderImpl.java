@@ -22,7 +22,6 @@ public class TradeReaderImpl implements TradeReader {
 
     @Override
     public Page<TradeInfo.TradeList> readTradeList(User user, Pageable pageable) {
-       // return tradeRepository.findAll();
         return tradeRepository.tradeList_Paging(user.getId(),pageable);
     }
 

@@ -4,13 +4,12 @@ import com.smile.petpat.image.domain.Image;
 import com.smile.petpat.post.category.domain.PostType;
 import com.smile.petpat.post.common.CalculateTime;
 import com.smile.petpat.post.common.status.PostStatus;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.ToString;
+import lombok.*;
+import org.springframework.data.domain.Page;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -133,48 +132,58 @@ public class TradeInfo {
     @ToString
     @AllArgsConstructor
     public static class TradeList{
+
+
         private Long tradeId;
-        private String nickname;
+        private String imagePath;
         private String title;
         private Long price;
-        private String cityName;
-        private String cityCountryName;
-        private String imagePath;
+        private String region;
         private boolean isLiked;
-        private boolean isBookmarked;
         private int viewCnt;
-        private Long likeCnt;
-        private Long bookmarkCnt;
-
         private PostStatus status;
 
-        private String createAt;
 
         public TradeList(){
            
         }
 
 
-        public TradeList(Long tradeId, String nickname, String title, Long price, String cityName, String cityCountryName,
-                         String imagePath, Long isLiked, Long isBookmarked, int viewCnt, Long likeCnt, Long bookmarkCnt,
-                         PostStatus status, LocalDateTime createAt) {
+        public TradeList(Long tradeId, String imagePath, String title, Long price, String cityName, String cityCountryName,
+                         Long isLiked, int viewCnt, PostStatus status) {
             this.tradeId = tradeId;
-            this.nickname = nickname;
+            this.imagePath = imagePath;
             this.title = title;
             this.price = price;
-            this.cityName = cityName;
-            this.cityCountryName = cityCountryName;
-            this.imagePath = imagePath;
+            this.region = cityName + " " + cityCountryName;
             this.isLiked = booleanChk(isLiked);
-            this.isBookmarked = booleanChk(isBookmarked);
             this.viewCnt = viewCnt;
-            this.likeCnt = likeCnt;
-            this.bookmarkCnt = bookmarkCnt;
             this.status = status;
-            this.createAt = CalculateTime.dateformatForPost(createAt);
+        }
+
+
+    }
+    @Getter
+    @NoArgsConstructor
+    public static class TradePagingListInfo{
+        private int contentCnt;
+        private List<?> content = new ArrayList<>();
+        private int pageSize;
+        private int page;
+        private int totalPage;
+
+        public TradePagingListInfo(Page<?> pageList) {
+            this.contentCnt = (int) pageList.getTotalElements();
+            this.content = pageList.getContent();
+            this.pageSize = pageList.getSize();
+            this.page = pageList.getPageable().getPageNumber();
+            this.totalPage = pageList.getTotalPages();
+
         }
 
     }
+
+
 
     public static  Boolean booleanChk(Long chkValue) {
         return chkValue == 0?false : true;

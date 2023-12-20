@@ -1,6 +1,5 @@
 package com.smile.petpat.post.trade.service;
 
-import com.smile.petpat.post.rehoming.dto.RehomingPagingDto;
 import com.smile.petpat.post.trade.domain.TradeCommand;
 import com.smile.petpat.post.trade.domain.TradeInfo;
 import com.smile.petpat.user.domain.User;
@@ -10,7 +9,7 @@ public interface TradeService{
 
     Long registerTrade(TradeCommand tradeCommand, User user);
 
-    RehomingPagingDto listTrade(User user, Pageable pageable);
+    TradeInfo.TradePagingListInfo listTrade(User user, Pageable pageable);
 
     void deleteTrade(Long tradeId,User user);
 
