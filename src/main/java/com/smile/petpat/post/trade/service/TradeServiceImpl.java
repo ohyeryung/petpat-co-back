@@ -5,7 +5,6 @@ import com.smile.petpat.image.domain.ImageUploader;
 import com.smile.petpat.post.category.domain.PostType;
 import com.smile.petpat.post.category.domain.TradeCategoryDetail;
 import com.smile.petpat.post.common.CommonUtils;
-import com.smile.petpat.post.rehoming.dto.RehomingPagingDto;
 import com.smile.petpat.post.trade.domain.*;
 import com.smile.petpat.user.domain.User;
 import lombok.RequiredArgsConstructor;
@@ -58,10 +57,9 @@ public class TradeServiceImpl implements TradeService{
 
     // 중고거래 게시판 목록 반환(로그인한 유저)
     @Override
-    public RehomingPagingDto listTrade(User user, Pageable pageable) {
+    public TradeInfo.TradePagingListInfo listTrade(User user, Pageable pageable) {
         Page<TradeInfo.TradeList> listTrade = tradeReader.readTradeList(user,pageable);
-        RehomingPagingDto dto= new RehomingPagingDto(listTrade);
-        return dto;
+        return new TradeInfo.TradePagingListInfo(listTrade);
     }
 
     @Override

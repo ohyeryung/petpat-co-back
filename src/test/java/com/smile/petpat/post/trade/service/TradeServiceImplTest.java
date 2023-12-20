@@ -88,7 +88,7 @@ class TradeServiceImplTest {
 
     @DisplayName("중고거래 게시물을 등록한다.")
     @Test
-    void createTest(){
+    void createTrade(){
 
         // given
         TradeCommand tradeCommand = initTradeCommand(1L,initImageList);
