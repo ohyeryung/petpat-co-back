@@ -65,9 +65,14 @@ public class TokenProvider{
     }
 
     public Authentication getAuthentication(String token, HttpServletResponse response) throws IOException {
-        UserDetails userDetails = userDetailsService.loadUserByUsername(decodeUsername(token, response));
+        if (token != null) {
+            UserDetails userDetails = userDetailsService.loadUserByUsername(decodeUsername(token, response));
+            return new UsernamePasswordAuthenticationToken(
+                    // The credentials that prove the principal is correct.
+                    userDetails, "", userDetails.getAuthorities());
+        }
+        UserDetails userDetails = userDetailsService.makeGuest();
         return new UsernamePasswordAuthenticationToken(
-                // The credentials that prove the principal is correct.
                 userDetails, "", userDetails.getAuthorities());
     }
 
