@@ -29,8 +29,8 @@ public class RehomingReaderImpl implements RehomingReader {
     }
 
     @Override
-    public void userChk(String userEmail, Rehoming rehoming) {
-        if (!rehoming.getUser().getUserEmail().equals(userEmail)) {
+    public void userChk(Long userId, Rehoming rehoming) {
+        if (!rehoming.getUser().getId().equals(userId)) {
             throw new IllegalArgumentException("본인 글만 수정/삭제가 가능합니다.");
         }
     }
