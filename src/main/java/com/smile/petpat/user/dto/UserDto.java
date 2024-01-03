@@ -1,7 +1,6 @@
 package com.smile.petpat.user.dto;
 
 import com.smile.petpat.user.domain.UserCommand;
-import com.smile.petpat.user.domain.UserRole;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.web.multipart.MultipartFile;
@@ -26,15 +25,12 @@ public class UserDto {
         @NotEmpty
         private String profileImgPath;
 
-        private UserRole userRole;
-
         public UserCommand toCommand(){
             return UserCommand.builder()
                     .userEmail(userEmail)
                     .nickname(nickname)
                     .password(password)
                     .profileImgPath(profileImgPath)
-                    .userRole(userRole)
                     .build();
         }
     }

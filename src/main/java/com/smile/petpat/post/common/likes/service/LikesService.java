@@ -5,5 +5,5 @@ import com.smile.petpat.user.domain.User;
 import java.util.HashMap;
 
 public interface LikesService {
-    HashMap<String, String> likePost(Long postId, String postType, String userEmail);
+    HashMap<String, String> likePost(Long postId, String postType, User user);
 }

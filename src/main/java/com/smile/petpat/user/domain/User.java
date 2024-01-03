@@ -1,18 +1,14 @@
 package com.smile.petpat.user.domain;
 
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import com.smile.petpat.user.dto.UserDto;
+import lombok.*;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.util.Collection;
-import java.util.Collections;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -41,23 +37,24 @@ public class User implements UserDetails {
     @Column(name = "DELETED")
     private Boolean deleted = Boolean.FALSE;
 
-    @Enumerated(value = EnumType.STRING)
-    @Column(name = "USER_ROLE", length = 20)
-    private UserRole userRole;
+    // 후에 여러컬럼이나 테이블로 분리할지 생각해야함
+    @Column(name = "LOCATION")
+    private String location;
 
     @Builder
-    public User(Long id, String userEmail, String nickname, String password,  String profileImgPath, loginTypeEnum loginType, UserRole userRole) {
+    public User(Long id, String userEmail, String nickname, String password,  String profileImgPath, loginTypeEnum loginType,  String location) {
         this.id = id;
         this.userEmail = userEmail;
         this.nickname = nickname;
         this.password = password;
         this.profileImgPath = profileImgPath;
         this.loginType = loginType;
-        this.userRole = userRole;
+        this.location = location;
     }
 
     public User(User socialUser) {
     }
+
 
 
      //유저 프로필 변경
@@ -86,9 +83,9 @@ public class User implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        SimpleGrantedAuthority authority = new SimpleGrantedAuthority(this.userRole.getCode());
-        return Collections.singletonList(authority);
+        return null;
     }
+
 
 
     @Override

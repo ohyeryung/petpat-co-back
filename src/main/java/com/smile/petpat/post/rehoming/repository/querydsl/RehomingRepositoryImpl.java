@@ -35,7 +35,7 @@ public class RehomingRepositoryImpl implements RehomingRepositoryQuerydsl {
 
     // 분양 글 목록 조회 (회원)
     @Override
-    public Page<RehomingInfo> rehomingListForMember(String userEmail, Pageable pageable) {
+    public Page<RehomingInfo> rehomingListForMember(Long userId, Pageable pageable) {
         QueryResults<RehomingInfo> results = queryFactory
                 .select(
                         Projections.constructor(
@@ -64,14 +64,14 @@ public class RehomingRepositoryImpl implements RehomingRepositoryQuerydsl {
                                         select(likes.count())
                                                 .from(likes)
                                                 .where(
-                                                        likes.user.userEmail.eq(userEmail)
+                                                        likes.user.id.eq(userId)
                                                                 .and(likes.postId.eq(rehoming.rehomingId))
                                                 ), "isLiked"),
                                 ExpressionUtils.as(
                                         select(bookmark.count())
                                                 .from(bookmark)
                                                 .where(
-                                                        bookmark.user.userEmail.eq(userEmail)
+                                                        bookmark.user.id.eq(userId)
                                                                 .and(bookmark.postId.eq(rehoming.rehomingId))
                                                 ), "isBookmarked"),
                                 rehoming.viewCnt,
@@ -154,7 +154,7 @@ public class RehomingRepositoryImpl implements RehomingRepositoryQuerydsl {
 
     // 분양 글 카테고리별 목록 조회 (회원)
     @Override
-    public Page<RehomingInfo> rehomingCategoryListForMember(String userEmail, Long categoryId, Long typeId, Pageable pageable) {
+    public Page<RehomingInfo> rehomingCategoryListForMember(Long userId, Long categoryId, Long typeId, Pageable pageable) {
 
         QueryResults<RehomingInfo> results = queryFactory
                 .select(
@@ -184,14 +184,14 @@ public class RehomingRepositoryImpl implements RehomingRepositoryQuerydsl {
                                         select(likes.count())
                                                 .from(likes)
                                                 .where(
-                                                        likes.user.userEmail.eq(userEmail)
+                                                        likes.user.id.eq(userId)
                                                                 .and(likes.postId.eq(rehoming.rehomingId))
                                                 ), "isLiked"),
                                 ExpressionUtils.as(
                                         select(bookmark.count())
                                                 .from(bookmark)
                                                 .where(
-                                                        bookmark.user.userEmail.eq(userEmail)
+                                                        bookmark.user.id.eq(userId)
                                                                 .and(bookmark.postId.eq(rehoming.rehomingId))
                                                 ), "isBookmarked"),
                                 rehoming.viewCnt,
