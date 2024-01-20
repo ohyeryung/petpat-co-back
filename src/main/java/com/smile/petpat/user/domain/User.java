@@ -20,7 +20,7 @@ import java.util.Collections;
 @Table(name = "TB_USER")
 @SQLDelete(sql = "UPDATE TB_USER SET DELETED = true, NICKNAME =CONCAT('del_',FLOOR(RAND()*1000000)) WHERE USER_ID=? ")
 @Where(clause = "DELETED = false")
-public class User implements UserDetails {
+public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -84,35 +84,6 @@ public class User implements UserDetails {
         }
     }
 
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        SimpleGrantedAuthority authority = new SimpleGrantedAuthority(this.userRole.getCode());
-        return Collections.singletonList(authority);
-    }
 
 
-    @Override
-    public String getUsername() {
-        return null;
-    }
-
-    @Override
-    public boolean isAccountNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isAccountNonLocked() {
-        return true;
-    }
-
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return true;
-    }
 }
