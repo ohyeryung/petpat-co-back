@@ -21,11 +21,8 @@ public class UserDetailsServiceImpl{
     public UserDetails loadUserByUsername(String userEmail) throws UsernameNotFoundException {
         User user =  userRepository.findByUserEmail(userEmail)
                 .orElseThrow(() -> new UsernameNotFoundException("Can't find " + userEmail));;
-        return new org.springframework.security.core.userdetails.User(
-                user.getUserEmail(), // 사용자 이름 (이메일)
-                user.getPassword(), // 비밀번호
-                user.getAuthorities() // 권한 목록
-     );
+
+        return new UserDetailsImpl(user);
     }
 
     // TODO : 비회원으로 API 호출 시 makeGuest() 함수가 두 번씩 호출됨, 추후 수정 필요
@@ -40,10 +37,6 @@ public class UserDetailsServiceImpl{
                 .userRole(UserRole.ROLE_GUEST)
                 .build();
 
-        return  new org.springframework.security.core.userdetails.User(
-                user.getUserEmail(), // 사용자 이름 (이메일)
-                user.getPassword(), // 비밀번호
-                user.getAuthorities() // 권한 목록
-        );
+        return  new UserDetailsImpl(user);
     }
 }
