@@ -1,5 +1,6 @@
 package com.smile.petpat.post.trade.domain;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.smile.petpat.image.domain.Image;
 import com.smile.petpat.post.category.domain.PostType;
 import com.smile.petpat.post.common.CalculateTime;
@@ -26,11 +27,7 @@ public class TradeInfo {
         private String title;
         private String content;
         private Long price;
-        private String cityName;
-        private String cityCountryName;
-        private String townShipName;
-        private String detailAdName;
-        private String fullAdName;
+        private String region;
         private List<String> imageList;
         private PostType postType;
         private boolean isLiked;
@@ -57,11 +54,7 @@ public class TradeInfo {
             this.title = title;
             this.content = content;
             this.price = price;
-            this.cityName = cityName;
-            this.cityCountryName = cityCountryName;
-            this.townShipName = townShipName;
-            this.detailAdName = detailAdName;
-            this.fullAdName = fullAdName;
+            this.region = cityName + " " + cityCountryName;
             this.imageList = imageList;
             this.postType = postType;
             this.isLiked = isLiked;
@@ -84,11 +77,7 @@ public class TradeInfo {
             this.title = title;
             this.content = content;
             this.price = price;
-            this.cityName = cityName;
-            this.cityCountryName = cityCountryName;
-            this.townShipName = townShipName;
-            this.detailAdName = detailAdName;
-            this.fullAdName = fullAdName;
+            this.region = cityName + " " + cityCountryName;
             this.postType = postType;
             this.isLiked = booleanChk(isLiked);
             this.isBookmarked = booleanChk(isBookmarked);
@@ -107,11 +96,7 @@ public class TradeInfo {
             this.title = tradeDetail.title;
             this.content = tradeDetail.content;
             this.price = tradeDetail.price;
-            this.cityName = tradeDetail.cityName;
-            this.cityCountryName = tradeDetail.cityCountryName;
-            this.townShipName = tradeDetail.townShipName;
-            this.detailAdName = tradeDetail.detailAdName;
-            this.fullAdName = tradeDetail.fullAdName;
+            this.region = tradeDetail.getRegion();
             this.imageList = imageList;
             this.postType = tradeDetail.postType;
             this.isLiked = tradeDetail.isLiked;
@@ -123,9 +108,6 @@ public class TradeInfo {
             this.status=tradeDetail.status;
             this.createAt = tradeDetail.createAt;
         }
-
-
-
 
     }
     @Getter
