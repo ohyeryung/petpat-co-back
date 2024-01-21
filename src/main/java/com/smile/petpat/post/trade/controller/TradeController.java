@@ -92,6 +92,17 @@ public class  TradeController {
         tradeService.deleteTrade(tradeId,userDetails.getUser());
         return SuccessResponse.success("ok");
     }
+    /**
+     * 인기있는 중고거래 게시물 3개 추출
+     * @return 성공 시 200 Success 반환
+     */
+    @Operation(summary = "인기있는 중고거래 게시물", description = "인기있는 중고거래 게시물")
+    @RequestMapping(value = "/trending",method = RequestMethod.GET)
+    public SuccessResponse fetchTrendingTrade(@AuthenticationPrincipal UserDetailsImpl userDetails
+    ){
+
+        return SuccessResponse.success( tradeService.fetchTrendingTrade(userDetails.getUser()));
+    }
 
     @Operation(summary = "중고거래 게시물 판매 중")
     @RequestMapping(value = "/statusFinding", method = RequestMethod.POST)

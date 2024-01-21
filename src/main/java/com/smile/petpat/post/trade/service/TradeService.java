@@ -5,6 +5,8 @@ import com.smile.petpat.post.trade.domain.TradeInfo;
 import com.smile.petpat.user.domain.User;
 import org.springframework.data.domain.Pageable;
 
+import java.util.List;
+
 public interface TradeService{
 
     Long registerTrade(TradeCommand tradeCommand, User user);
@@ -26,4 +28,5 @@ public interface TradeService{
     void updateStatusMatched(User user, Long postId);
 
 
+    List<TradeInfo.TradeList> fetchTrendingTrade(User user);
 }

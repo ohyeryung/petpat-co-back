@@ -23,7 +23,7 @@ public class LikesController {
 
     @RequestMapping(value = "/{postType}/{postId}", method = RequestMethod.POST)
     public SuccessResponse<HashMap<String, String>> isLikePost(@PathVariable String postType, @PathVariable Long postId,
-                                  @AuthenticationPrincipal User userDetails){
+                                  @AuthenticationPrincipal UserDetailsImpl userDetails){
         return SuccessResponse.success(likeService.likePost(postId, postType, userDetails.getUsername()), "OK");
     }
 }
