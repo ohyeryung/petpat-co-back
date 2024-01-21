@@ -4,6 +4,7 @@ import com.smile.petpat.common.response.SuccessResponse;
 import com.smile.petpat.post.rehoming.domain.RehomingCommand;
 import com.smile.petpat.post.rehoming.dto.RehomingPagingDto;
 import com.smile.petpat.post.rehoming.service.RehomingServiceImpl;
+import com.smile.petpat.user.service.UserDetailsImpl;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -35,7 +36,7 @@ public class RehomingController {
     @PreAuthorize("hasRole('USER')")
     @Operation(summary = "분양게시글 등록", description = "분양게시글 등록")
     @RequestMapping(value = "",method = RequestMethod.POST)
-    public SuccessResponse registerRehoming(@AuthenticationPrincipal User userDetails,
+    public SuccessResponse registerRehoming(@AuthenticationPrincipal UserDetailsImpl userDetails,
                                   @ModelAttribute @Valid RehomingCommand rehomingDto) {
         RehomingCommand rehomingCommand = rehomingDto.toCommand();
         rehomingService.registerRehoming(userDetails.getUsername(), rehomingCommand);

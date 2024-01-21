@@ -93,6 +93,11 @@ public class TradeServiceImpl implements TradeService{
         imageUploadManager.removePostImage(tradeId, PostType.TRADE);
     }
 
+    @Override
+    public List<TradeInfo.TradeList> fetchTrendingTrade(User user) {
+       return tradeReader.fetchTrendingTrade(user.getId());
+    }
+
     private TradeInfo.TradeDetail getTradeInfo(Long tradeId, User user, Trade trade) {
         List<String> imgList = imageUploader.readImgList(tradeId, PostType.TRADE);
         return new TradeInfo.TradeDetail();

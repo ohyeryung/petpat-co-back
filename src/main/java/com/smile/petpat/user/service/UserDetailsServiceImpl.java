@@ -31,7 +31,7 @@ public class UserDetailsServiceImpl{
 
         Random random = new Random();
         User user = User.builder()
-                .userEmail("guest"+ random.nextInt() +"@gmail.com")
+                .userEmail("guest"+ random.nextInt() +"@guest.com")
                 .password("guest")
                 .nickname("guest" + random.nextInt())
                 .userRole(UserRole.ROLE_GUEST)

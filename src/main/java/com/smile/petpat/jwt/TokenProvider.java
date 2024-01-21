@@ -94,6 +94,7 @@ public class TokenProvider{
 
     // 토큰 유효성 검사
     public Optional<DecodedJWT> isValidToken(String token, HttpServletResponse response) throws IOException {
+        log.info("만료된냐? , {} ", token);
         DecodedJWT jwt = null;
         try {
             JWTVerifier verifier = JWT

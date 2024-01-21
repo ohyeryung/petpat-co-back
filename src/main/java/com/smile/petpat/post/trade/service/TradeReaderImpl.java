@@ -2,6 +2,7 @@ package com.smile.petpat.post.trade.service;
 
 import com.smile.petpat.post.category.domain.TradeCategoryDetail;
 import com.smile.petpat.post.category.repository.TradeCategoryDetailRepository;
+import com.smile.petpat.post.common.WeekRange;
 import com.smile.petpat.post.trade.domain.Trade;
 import com.smile.petpat.post.trade.domain.TradeInfo;
 import com.smile.petpat.post.trade.domain.TradeReader;
@@ -12,6 +13,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 @RequiredArgsConstructor
 @Slf4j
@@ -52,5 +55,14 @@ public class TradeReaderImpl implements TradeReader {
            throw new IllegalArgumentException("권한이 없습니다.");
        }
        return trade;
+    }
+
+    @Override
+    public List<TradeInfo.TradeList> fetchTrendingTrade(Long userId) {
+        WeekRange weekRange = new WeekRange();
+        log.info("start -> {} ",weekRange.getStartOfWeek());
+        log.info("end   -> {} ",weekRange.getEndOfWeek());
+       return tradeRepository.fetchTrendingTrade(userId,weekRange.getStartOfWeek(),weekRange.getEndOfWeek());
+
     }
 }
