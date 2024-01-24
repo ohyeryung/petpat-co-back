@@ -12,10 +12,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -50,7 +48,7 @@ public class RehomingController {
     @PreAuthorize("hasRole('USER')")
     @Operation(summary = "분양게시글 목록 조회", description = "분양게시글 목록 조회")
     @RequestMapping(value = "", method = RequestMethod.GET)
-    public SuccessResponse listRehoming(@AuthenticationPrincipal User userDetails,
+    public SuccessResponse listRehoming(@AuthenticationPrincipal UserDetailsImpl userDetails,
                                         @PageableDefault Pageable pageable) {
         RehomingPagingDto rehomingInfos;
         rehomingInfos = rehomingService.listRehomingForMember(userDetails.getUsername(), pageable);
@@ -74,7 +72,7 @@ public class RehomingController {
     @Operation(summary = "분양게시글 상세 조회", description = "분양게시글 상세 조회")
     @RequestMapping(value = "/detail", method = RequestMethod.GET)
     public SuccessResponse detail(@RequestParam Long postId,
-                                  @AuthenticationPrincipal User userDetails) {
+                                  @AuthenticationPrincipal UserDetailsImpl userDetails) {
         return SuccessResponse.success(rehomingService.detailRehomingForMember(postId, userDetails.getUsername()), "OK");
     }
 
@@ -92,7 +90,7 @@ public class RehomingController {
     @PreAuthorize("hasRole('USER')")
     @Operation(summary = "분양게시물 수정", description = "분양게시물 수정")
     @RequestMapping(value = "", method = RequestMethod.PUT)
-    public SuccessResponse updateRehoming(@AuthenticationPrincipal User userDetails,
+    public SuccessResponse updateRehoming(@AuthenticationPrincipal UserDetailsImpl userDetails,
                                           @RequestParam Long postId,
                                           @ModelAttribute @Valid RehomingCommand rehomingDto) {
         RehomingCommand rehomingCommand = rehomingDto.toCommand();
@@ -106,7 +104,7 @@ public class RehomingController {
     @PreAuthorize("hasRole('USER')")
     @Operation(summary = "분양게시물 삭제", description = "분양 게시물 삭제")
     @RequestMapping(value = "",method = RequestMethod.DELETE)
-    public SuccessResponse deleteRehoming(@AuthenticationPrincipal User userDetails,
+    public SuccessResponse deleteRehoming(@AuthenticationPrincipal UserDetailsImpl userDetails,
                                           @RequestParam Long postId) {
         rehomingService.deleteRehoming(userDetails.getUsername(), postId);
         return SuccessResponse.noDataSuccess("OK");
@@ -119,7 +117,7 @@ public class RehomingController {
     @PreAuthorize("hasRole('USER')")
     @Operation(summary = "분양게시물 상태변경 [분양 중]", description= "분양게시물 상태변경 [분양 중]")
     @RequestMapping(value = "/statusFinding", method = RequestMethod.POST)
-    public SuccessResponse updateStatusFinding(@AuthenticationPrincipal User userDetails,
+    public SuccessResponse updateStatusFinding(@AuthenticationPrincipal UserDetailsImpl userDetails,
                                                 @RequestParam Long postId) {
         rehomingService.updateStatusFinding(userDetails.getUsername(), postId);
         return SuccessResponse.noDataSuccess("OK");
@@ -128,7 +126,7 @@ public class RehomingController {
     @PreAuthorize("hasRole('USER')")
     @Operation(summary = "분양게시물 상태변경 [예약 중]", description= "분양게시물 상태변경 [예약 중]")
     @RequestMapping(value = "/statusReserved", method = RequestMethod.POST)
-    public SuccessResponse updateStatusReserved(@AuthenticationPrincipal User userDetails,
+    public SuccessResponse updateStatusReserved(@AuthenticationPrincipal UserDetailsImpl userDetails,
                                                 @RequestParam Long postId) {
         rehomingService.updateStatusReserved(userDetails.getUsername(), postId);
         return SuccessResponse.noDataSuccess("OK");
@@ -137,7 +135,7 @@ public class RehomingController {
     @PreAuthorize("hasRole('USER')")
     @Operation(summary = "분양게시물 상태변경 [예약 완료]", description= "분양게시물 상태변경 [예약 완료]")
     @RequestMapping(value = "/statusMatched", method = RequestMethod.POST)
-    public SuccessResponse updateStatusMatched(@AuthenticationPrincipal User userDetails,
+    public SuccessResponse updateStatusMatched(@AuthenticationPrincipal UserDetailsImpl userDetails,
                                                @RequestParam Long postId) {
         rehomingService.updateStatusMatched(userDetails.getUsername(), postId);
         return SuccessResponse.noDataSuccess("OK");
@@ -146,7 +144,7 @@ public class RehomingController {
     @PreAuthorize("hasRole('USER')")
     @Operation(summary = "분양게시물 카테고리별 목록 조회", description = "분양게시물 카테고리별 목록 조회")
     @RequestMapping(value = "/category", method = RequestMethod.GET)
-    public ResponseEntity<?> getCategoryList(@AuthenticationPrincipal User userDetails,
+    public ResponseEntity<?> getCategoryList(@AuthenticationPrincipal UserDetailsImpl userDetails,
                                              @RequestParam("categoryId") Long categoryId, @RequestParam("typeId") Long typeId,
                                              @PageableDefault Pageable pageable) {
         RehomingPagingDto rehomingPagingDto;
