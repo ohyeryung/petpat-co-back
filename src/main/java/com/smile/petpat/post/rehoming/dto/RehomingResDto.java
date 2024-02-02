@@ -15,6 +15,7 @@ import java.util.List;
 @NoArgsConstructor
 public class RehomingResDto {
     private Long rehomingId;
+    private PostType postType;
     private Long userId;
     private String nickname;
     private List<String> rehomingImg;
@@ -25,13 +26,8 @@ public class RehomingResDto {
     private String category;
     private String type;
     private RehomingCommand.PetGender gender;
-    private String cityName;
-    private String cityCountryName;
-    private String townShipName;
-    private String detailAdName;
-    private String fullAdName;
+    private String region;
     private PostStatus status;
-    private PostType postType;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     private boolean isLiked;
@@ -44,6 +40,7 @@ public class RehomingResDto {
     // 회원 조회 시
     public RehomingResDto(Rehoming rehoming, List<String> rehomingImg, boolean isLiked, boolean isBookmarked, int likeCnt, int bookmarkCnt) {
         this.rehomingId = rehoming.getRehomingId();
+        this.postType = rehoming.getPostType();
         this.userId = rehoming.getUser().getId();
         this.nickname = rehoming.getUser().getNickname();
         this.title = rehoming.getTitle();
@@ -53,14 +50,9 @@ public class RehomingResDto {
         this.category = rehoming.getCategory().getCategoryGroupName();
         this.type = rehoming.getType().getPetCategoryName();
         this.gender = rehoming.getGender();
-        this.cityName = rehoming.getCityName();
-        this.cityCountryName = rehoming.getCityCountryName();
-        this.townShipName = rehoming.getTownShipName();
-        this.detailAdName = rehoming.getDetailAdName();
-        this.fullAdName = rehoming.getFullAdName();
+        this.region = rehoming.getCityName() + " " + rehoming.getCityCountryName() + " " + rehoming.getTownShipName();
         this.status = rehoming.getStatus();
         this.rehomingImg = rehomingImg;
-        this.postType = rehoming.getPostType();
         this.createdAt = rehoming.getCreatedAt();
         this.updatedAt = rehoming.getUpdatedAt();
         this.isLiked = isLiked;
@@ -73,6 +65,7 @@ public class RehomingResDto {
     // 비회원 조회 시
     public RehomingResDto(Rehoming rehoming, List<String> rehomingImg, int likeCnt, int bookmarkCnt) {
         this.rehomingId = rehoming.getRehomingId();
+        this.postType = rehoming.getPostType();
         this.userId = rehoming.getUser().getId();
         this.nickname = rehoming.getUser().getNickname();
         this.title = rehoming.getTitle();
@@ -82,14 +75,9 @@ public class RehomingResDto {
         this.category = rehoming.getCategory().getCategoryGroupName();
         this.type = rehoming.getType().getPetCategoryName();
         this.gender = rehoming.getGender();
-        this.cityName = rehoming.getCityName();
-        this.cityCountryName = rehoming.getCityCountryName();
-        this.townShipName = rehoming.getTownShipName();
-        this.detailAdName = rehoming.getDetailAdName();
-        this.fullAdName = rehoming.getFullAdName();
+        this.region = rehoming.getCityName() + " " + rehoming.getCityCountryName() + " " + rehoming.getTownShipName();
         this.status = rehoming.getStatus();
         this.rehomingImg = rehomingImg;
-        this.postType = rehoming.getPostType();
         this.createdAt = rehoming.getCreatedAt();
         this.updatedAt = rehoming.getUpdatedAt();
         this.isLiked = false;
