@@ -8,7 +8,7 @@ import org.springframework.data.domain.Pageable;
 public interface QnaReader {
     Qna readQnaById(Long qnaId);
 
-    void userChk(Long userId, Long qnaId);
+    Qna userChk(Long userId, Long qnaId);
 
     Page<QnaInfo.QnaList> readQnaList(User user, Pageable pageable);
 }

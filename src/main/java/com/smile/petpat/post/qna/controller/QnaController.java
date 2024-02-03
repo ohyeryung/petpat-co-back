@@ -74,7 +74,11 @@ public class QnaController {
     @Operation(summary = "Qna 게시물 수정", description = "Qna 게시물 수정")
 
     @RequestMapping(value = "/{postId}",method = RequestMethod.PUT)
-    public void qnaModify(@PathVariable String postId){
+    public SuccessResponse updateQna(@RequestBody QnaDto.CommonQna qnaDto,
+                                        @AuthenticationPrincipal UserDetailsImpl userDetails,
+                                        @PathVariable Long postId){
+        QnaCommand qnaCommand = qnaDto.toCommand();
+        return SuccessResponse.success(qnaService.updateQna(userDetails.getUser(), postId, qnaCommand));
 
     }
 
