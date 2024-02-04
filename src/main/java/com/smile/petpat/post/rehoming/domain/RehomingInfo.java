@@ -11,19 +11,11 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class RehomingInfo {
     private Long rehomingId;
-    private String rehomingImg;
-    private Long userId;
-    private String profileImgPath;
-    private String nickname;
-    private String title;
-    private String petName;
-    private String category;
-    private String type;
-    private RehomingCommand.PetGender gender;
-    private PostStatus status;
     private PostType postType;
-    private LocalDateTime createdAt;
-    private LocalDateTime updatedAt;
+    private String rehomingImg;
+    private String title;
+    private String region;
+    private PostStatus status;
     private boolean isLiked;
     private boolean isBookmarked;
     private int viewCnt;
@@ -31,25 +23,16 @@ public class RehomingInfo {
     private Long bookmarkCnt;
 
     // 회원
-    public RehomingInfo(Long rehomingId, String rehomingImg, Long userId,
-                        String profileImgPath, String nickname, String title, String petName,
-                        String category, String type, RehomingCommand.PetGender gender,
-                        PostStatus status, PostType postType, LocalDateTime createdAt, LocalDateTime updatedAt,
+    public RehomingInfo(Long rehomingId, PostType postType, String rehomingImg,
+                        String title, String cityName, String cityCountryName,
+                        String townShipName, PostStatus status,
                         Long isLiked, Long isBookmarked, int viewCnt, Long likeCnt, Long bookmarkCnt) {
         this.rehomingId = rehomingId;
-        this.rehomingImg = rehomingImg;
-        this.userId = userId;
-        this.profileImgPath = profileImgPath;
-        this.nickname = nickname;
-        this.title = title;
-        this.petName = petName;
-        this.category = category;
-        this.type = type;
-        this.gender = gender;
-        this.status = status;
         this.postType = postType;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
+        this.rehomingImg = rehomingImg;
+        this.title = title;
+        this.region = cityName + " " + cityCountryName + " " + townShipName;
+        this.status = status;
         this.isLiked = booleanChk(isLiked);
         this.isBookmarked = booleanChk(isBookmarked);
         this.viewCnt = viewCnt;
@@ -62,25 +45,17 @@ public class RehomingInfo {
     }
 
     // 비회원
-    public RehomingInfo(Long rehomingId, String rehomingImg, Long userId,
-                        String profileImgPath, String nickname, String title, String petName,
-                        String category, String type, RehomingCommand.PetGender gender,
-                        PostStatus status, PostType postType, LocalDateTime createdAt, LocalDateTime updatedAt,
+    public RehomingInfo(Long rehomingId, PostType postType,
+                        String rehomingImg, String title,
+                        String cityName, String cityCountryName,
+                        String townShipName, PostStatus status,
                         int viewCnt, Long likeCnt, Long bookmarkCnt) {
         this.rehomingId = rehomingId;
-        this.rehomingImg = rehomingImg;
-        this.userId = userId;
-        this.profileImgPath = profileImgPath;
-        this.nickname = nickname;
-        this.title = title;
-        this.petName = petName;
-        this.category = category;
-        this.type = type;
-        this.gender = gender;
-        this.status = status;
         this.postType = postType;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
+        this.rehomingImg = rehomingImg;
+        this.title = title;
+        this.region = cityName + " " + cityCountryName+ " " + townShipName;
+        this.status = status;
         this.isLiked = false;
         this.isBookmarked = false;
         this.viewCnt = viewCnt;
