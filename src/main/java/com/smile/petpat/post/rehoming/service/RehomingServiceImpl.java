@@ -80,8 +80,7 @@ public class RehomingServiceImpl implements RehomingService {
         rehoming.updateViewCnt(rehoming);
         List<String> imgList = imageUploader.readImgList(postId, PostType.REHOMING);
         return new RehomingResDto(rehoming, imgList,
-                commonUtils.getLikesCnt(postId, PostType.REHOMING),
-                commonUtils.getBookmarkCnt(postId, PostType.REHOMING));
+                commonUtils.getLikesCnt(postId, PostType.REHOMING));
     }
 
     // 4. 분양 글 수정
@@ -121,8 +120,7 @@ public class RehomingServiceImpl implements RehomingService {
         return new RehomingResDto(rehoming, imgList,
                 commonUtils.LikePostChk(postId, PostType.REHOMING, userEmail),
                 commonUtils.BookmarkPostChk(postId, PostType.REHOMING, userEmail),
-                commonUtils.getLikesCnt(postId, PostType.REHOMING),
-                commonUtils.getBookmarkCnt(postId, PostType.REHOMING));
+                commonUtils.getLikesCnt(postId, PostType.REHOMING));
     }
 
     // 6. 분양 게시글 상태값 변경
