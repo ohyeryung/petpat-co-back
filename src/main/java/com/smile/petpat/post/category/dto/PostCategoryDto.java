@@ -1,5 +1,7 @@
 package com.smile.petpat.post.category.dto;
 
+import com.smile.petpat.post.category.domain.CategoryGroup;
+import com.smile.petpat.post.category.domain.PetCategory;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -41,4 +43,26 @@ public class PostCategoryDto {
         private String petCategoryName;
         private Long petCategoryCnt;
     }
+
+    @Getter
+    @AllArgsConstructor
+    public static class RehomingCategoryList {
+        private Long categoryGroupId;
+        private String categoryGroupName;
+        private Long petCategoryId;
+        private String petCategoryName;
+    }
+
+    @Getter
+    @AllArgsConstructor
+    public static class TradeCategoryList {
+        private Long categoryGroupId;
+        private String categoryGroupName;
+        private Long tradeCategoryId;
+        private String tradeCategoryName;
+        private Long tradeCategoryDetailId;
+        private String tradeCategoryDetailName;
+
+    }
+
 }

@@ -89,4 +89,34 @@ public class PostCategoryServiceImpl implements PostCategoryService{
     public List<PostCategoryDto.RehomingCategoryResponse> getRehomingCategoryAndCnt(Long categoryGroupId) {
         return categoryRepository.getRehomingCategoryAndCnt(categoryGroupId);
     }
+
+    @Override
+    public List<PostCategoryDto.RehomingCategoryList> getRehomingCategoryList() {
+        return postCategoryGroupRepository.findAllByPostType(PostType.REHOMING).stream()
+                .flatMap(categoryGroup -> petCategoryRepository.findAllByCategoryGroup(categoryGroup).stream()
+                        .map(petCategory -> new PostCategoryDto.RehomingCategoryList(
+                                categoryGroup.getCategoryGroupId(),
+                                categoryGroup.getCategoryGroupName(),
+                                petCategory.getPetCategoryId(),
+                                petCategory.getPetCategoryName()
+                        )))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<PostCategoryDto.TradeCategoryList> getTradeCategoryList() {
+        return postCategoryGroupRepository.findAllByPostType(PostType.TRADE).stream()
+                .flatMap(categoryGroup -> tradeCategoryRepository.findAllByCategoryGroup(categoryGroup).stream()
+                        .flatMap(tradeCategory -> tradeCategoryDetailRepository.findAllByTradeCategory(tradeCategory).stream()
+                                .map(tradeCategoryDetail -> new PostCategoryDto.TradeCategoryList(
+                                        categoryGroup.getCategoryGroupId(),
+                                        categoryGroup.getCategoryGroupName(),
+                                        tradeCategory.getTradeCategoryId(),
+                                        tradeCategory.getTradeCategoryName(),
+                                        tradeCategoryDetail.getTradeCategoryDetailId(),
+                                        tradeCategoryDetail.getTradeCategoryDetailName()
+                                ))))
+                .collect(Collectors.toList());
+    }
+
 }
