@@ -45,6 +45,7 @@ public class QnaServiceImpl implements QnaService{
         return new QnaInfo.QnaPagingListInfo(listQna);
     }
 
+    @Override
     @Transactional
     public QnaInfo.QnaDetail updateQna(User user, Long postId, QnaCommand qnaCommand) {
         Qna qna = qnaReader.userChk(postId, user.getId());
@@ -55,6 +56,13 @@ public class QnaServiceImpl implements QnaService{
         imageUploadManager.updateImage(images, postId, PostType.QNA);
         return getQnaInfo(postId, user, qna);
 
+    }
+
+    @Override
+    @Transactional
+    public void deleteQna(Long postId, User user) {
+        qnaStore.delete(postId, user.getId());
+        imageUploadManager.removePostImage(postId, PostType.QNA);
     }
 
     private QnaInfo.QnaDetail getQnaInfo(Long postId, User user, Qna qna) {

@@ -12,4 +12,5 @@ public interface QnaService {
     QnaInfo.QnaPagingListInfo listQna(User user, Pageable pageable);
     QnaInfo.QnaDetail updateQna(User user, Long tradeId, QnaCommand qnaCommand);
 
+    void deleteQna(Long postId, User user);
 }

@@ -88,7 +88,10 @@ public class QnaController {
      */
     @Operation(summary = "Qna 게시물 삭제", description = "Qna 게시물 삭제")
     @RequestMapping(value = "/{postId}",method = RequestMethod.DELETE)
-    public void qnaRemove(@PathVariable String postId){
+    public SuccessResponse deleteQna(@AuthenticationPrincipal UserDetailsImpl userDetails,
+                                     @RequestParam Long postId){
+        qnaService.deleteQna(postId, userDetails.getUser());
+        return SuccessResponse.noDataSuccess("OK");
 
     }
 }
