@@ -108,6 +108,7 @@ public class TradeRepositoryImpl implements TradeRepositoryQueryDsl{
                                         trade.price,
                                         trade.cityName,
                                         trade.cityCountryName,
+                                        trade.townShipName,
 
                                         ExpressionUtils.as(
                                                 JPAExpressions

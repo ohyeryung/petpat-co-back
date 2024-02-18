@@ -6,9 +6,8 @@ import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.smile.petpat.post.category.domain.PostType;
-import com.smile.petpat.post.category.domain.QCategoryGroup;
-import com.smile.petpat.post.category.domain.QPetCategory;
 import com.smile.petpat.post.rehoming.domain.RehomingInfo;
+import com.smile.petpat.post.rehoming.dto.RehomingResDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -17,10 +16,7 @@ import javax.persistence.EntityManager;
 import java.util.List;
 
 import static com.querydsl.jpa.JPAExpressions.select;
-import static com.querydsl.jpa.JPAExpressions.type;
 import static com.smile.petpat.image.domain.QImage.image;
-import static com.smile.petpat.post.category.domain.QCategoryGroup.categoryGroup;
-import static com.smile.petpat.post.category.domain.QPetCategory.petCategory;
 import static com.smile.petpat.post.common.bookmarks.domain.QBookmark.bookmark;
 import static com.smile.petpat.post.common.likes.domain.QLikes.likes;
 import static com.smile.petpat.post.rehoming.domain.QRehoming.rehoming;
@@ -41,6 +37,7 @@ public class RehomingRepositoryImpl implements RehomingRepositoryQuerydsl {
                         Projections.constructor(
                                 RehomingInfo.class,
                                 rehoming.rehomingId,
+                                rehoming.postType,
                                 Expressions.as(
                                         select(image.filePath)
                                                 .from(image)
@@ -48,18 +45,11 @@ public class RehomingRepositoryImpl implements RehomingRepositoryQuerydsl {
                                                         image.postType.eq(PostType.REHOMING),
                                                         image.repImgNY.eq(true))
                                                 , "rehomingImg"),
-                                rehoming.user.id,
-                                rehoming.user.profileImgPath,
-                                rehoming.user.nickname,
                                 rehoming.title,
-                                rehoming.petName,
-                                rehoming.category.categoryGroupName,
-                                rehoming.type.petCategoryName,
-                                rehoming.gender,
+                                rehoming.cityName,
+                                rehoming.cityCountryName,
+                                rehoming.townShipName,
                                 rehoming.status,
-                                rehoming.postType,
-                                rehoming.createdAt,
-                                rehoming.updatedAt,
                                 ExpressionUtils.as(
                                         select(likes.count())
                                                 .from(likes)
@@ -84,7 +74,9 @@ public class RehomingRepositoryImpl implements RehomingRepositoryQuerydsl {
                                         select(bookmark.count())
                                                 .from(bookmark)
                                                 .where(bookmark.postId.eq(rehoming.rehomingId)),
-                                        "bookmarkCnt")
+                                        "bookmarkCnt"),
+                                rehoming.createdAt,
+                                rehoming.updatedAt
                         )
                 )
                 .from(rehoming)
@@ -108,6 +100,7 @@ public class RehomingRepositoryImpl implements RehomingRepositoryQuerydsl {
                         Projections.constructor(
                                 RehomingInfo.class,
                                 rehoming.rehomingId,
+                                rehoming.postType,
                                 Expressions.as(
                                         select(image.filePath)
                                                 .from(image)
@@ -115,18 +108,11 @@ public class RehomingRepositoryImpl implements RehomingRepositoryQuerydsl {
                                                         image.postType.eq(PostType.REHOMING),
                                                         image.repImgNY.eq(true))
                                         , "rehomingImg"),
-                                rehoming.user.id,
-                                rehoming.user.profileImgPath,
-                                rehoming.user.nickname,
                                 rehoming.title,
-                                rehoming.petName,
-                                rehoming.category.categoryGroupName,
-                                rehoming.type.petCategoryName,
-                                rehoming.gender,
+                                rehoming.cityName,
+                                rehoming.cityCountryName,
+                                rehoming.townShipName,
                                 rehoming.status,
-                                rehoming.postType,
-                                rehoming.createdAt,
-                                rehoming.updatedAt,
                                 rehoming.viewCnt,
                                 ExpressionUtils.as(
                                         select(likes.count())
@@ -137,7 +123,9 @@ public class RehomingRepositoryImpl implements RehomingRepositoryQuerydsl {
                                         select(bookmark.count())
                                                 .from(bookmark)
                                                 .where(bookmark.postId.eq(rehoming.rehomingId)),
-                                        "bookmarkCnt")
+                                        "bookmarkCnt"),
+                                rehoming.createdAt,
+                                rehoming.updatedAt
                         )
                 )
                 .from(rehoming)
@@ -161,6 +149,7 @@ public class RehomingRepositoryImpl implements RehomingRepositoryQuerydsl {
                         Projections.constructor(
                                 RehomingInfo.class,
                                 rehoming.rehomingId,
+                                rehoming.postType,
                                 Expressions.as(
                                         select(image.filePath)
                                                 .from(image)
@@ -168,18 +157,11 @@ public class RehomingRepositoryImpl implements RehomingRepositoryQuerydsl {
                                                         image.postType.eq(PostType.REHOMING),
                                                         image.repImgNY.eq(true))
                                         , "rehomingImg"),
-                                rehoming.user.id,
-                                rehoming.user.profileImgPath,
-                                rehoming.user.nickname,
                                 rehoming.title,
-                                rehoming.petName,
-                                rehoming.category.categoryGroupName,
-                                rehoming.type.petCategoryName,
-                                rehoming.gender,
+                                rehoming.cityName,
+                                rehoming.cityCountryName,
+                                rehoming.townShipName,
                                 rehoming.status,
-                                rehoming.postType,
-                                rehoming.createdAt,
-                                rehoming.updatedAt,
                                 ExpressionUtils.as(
                                         select(likes.count())
                                                 .from(likes)
@@ -204,7 +186,9 @@ public class RehomingRepositoryImpl implements RehomingRepositoryQuerydsl {
                                         select(bookmark.count())
                                                 .from(bookmark)
                                                 .where(bookmark.postId.eq(rehoming.rehomingId)),
-                                        "bookmarkCnt")
+                                        "bookmarkCnt"),
+                                rehoming.createdAt,
+                                rehoming.updatedAt
                         )
                 )
                 .from(rehoming)
@@ -230,6 +214,7 @@ public class RehomingRepositoryImpl implements RehomingRepositoryQuerydsl {
                         Projections.constructor(
                                 RehomingInfo.class,
                                 rehoming.rehomingId,
+                                rehoming.postType,
                                 Expressions.as(
                                         select(image.filePath)
                                                 .from(image)
@@ -237,18 +222,11 @@ public class RehomingRepositoryImpl implements RehomingRepositoryQuerydsl {
                                                         image.postType.eq(PostType.REHOMING),
                                                         image.repImgNY.eq(true))
                                         , "rehomingImg"),
-                                rehoming.user.id,
-                                rehoming.user.profileImgPath,
-                                rehoming.user.nickname,
                                 rehoming.title,
-                                rehoming.petName,
-                                rehoming.category.categoryGroupName,
-                                rehoming.type.petCategoryName,
-                                rehoming.gender,
+                                rehoming.cityName,
+                                rehoming.cityCountryName,
+                                rehoming.townShipName,
                                 rehoming.status,
-                                rehoming.postType,
-                                rehoming.createdAt,
-                                rehoming.updatedAt,
                                 rehoming.viewCnt,
                                 ExpressionUtils.as(
                                         select(likes.count())
@@ -259,7 +237,9 @@ public class RehomingRepositoryImpl implements RehomingRepositoryQuerydsl {
                                         select(bookmark.count())
                                                 .from(bookmark)
                                                 .where(bookmark.postId.eq(rehoming.rehomingId)),
-                                        "bookmarkCnt")
+                                        "bookmarkCnt"),
+                                rehoming.createdAt,
+                                rehoming.updatedAt
                         )
                 )
                 .from(rehoming)
@@ -274,6 +254,56 @@ public class RehomingRepositoryImpl implements RehomingRepositoryQuerydsl {
         long total = results.getTotal();
 
         return new PageImpl<>(content, pageable, total);
+    }
+
+    @Override
+    public RehomingResDto readRehomingDetailForMember(String userEmail, Long rehomingId) {
+        return queryFactory
+                .select(
+                        Projections.constructor(
+                                RehomingResDto.class,
+                                rehoming.rehomingId,
+                                rehoming.postType,
+                                rehoming.user.id,
+                                rehoming.user.nickname,
+                                rehoming.title,
+                                rehoming.content,
+                                rehoming.petName,
+                                rehoming.petAge,
+                                rehoming.category,
+                                rehoming.type,
+                                rehoming.gender,
+                                rehoming.cityName,
+                                rehoming.cityCountryName,
+                                rehoming.townShipName,
+                                ExpressionUtils.as(
+                                        select(likes.count())
+                                                .from(likes)
+                                                .where(
+                                                        likes.user.userEmail.eq(userEmail)
+                                                                .and(likes.postId.eq(rehoming.rehomingId))
+                                                ), "isLiked"),
+                                ExpressionUtils.as(
+                                        select(bookmark.count())
+                                                .from(bookmark)
+                                                .where(
+                                                        bookmark.user.userEmail.eq(userEmail)
+                                                                .and(bookmark.postId.eq(rehoming.rehomingId))
+                                                ), "isBookmarked"),
+                                rehoming.viewCnt,
+                                ExpressionUtils.as(
+                                        select(likes.count())
+                                                .from(likes)
+                                                .where(likes.postId.eq(rehoming.rehomingId)),
+                                        "likeCnt"),
+                                rehoming.status,
+                                rehoming.createdAt,
+                                rehoming.updatedAt
+                        )
+                )
+                .from(rehoming)
+                .where(rehoming.rehomingId.eq(rehomingId))
+                .fetchOne();
     }
 
 }

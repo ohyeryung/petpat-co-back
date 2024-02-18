@@ -41,4 +41,22 @@ public class PostCategoryDto {
         private String petCategoryName;
         private Long petCategoryCnt;
     }
+
+    @Getter
+    @AllArgsConstructor
+    public static class RehomingCategoryList {
+        private Long categoryGroupId;
+        private String categoryGroupName;
+        private Long petCategoryId;
+        private String petCategoryName;
+    }
+
+    @Getter
+    @AllArgsConstructor
+    public static class TradeCategoryList {
+        private Long categoryGroupId;
+        private String categoryGroupName;
+        private List<TradeCategoryResponse> tradeCategoryResponseList;
+    }
+
 }
