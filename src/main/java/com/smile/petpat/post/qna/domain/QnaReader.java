@@ -11,4 +11,7 @@ public interface QnaReader {
     Qna userChk(Long userId, Long qnaId);
 
     Page<QnaInfo.QnaList> readQnaList(User user, Pageable pageable);
+
+    QnaInfo.QnaDetail readQnaDetailForUser(Long userId, Long postId);
+    QnaInfo.QnaDetail readQnaDetail(Long postId);
 }
