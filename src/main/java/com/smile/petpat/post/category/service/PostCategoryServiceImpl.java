@@ -92,18 +92,19 @@ public class PostCategoryServiceImpl implements PostCategoryService{
         return categoryRepository.getRehomingCategoryAndCnt(categoryGroupId);
     }
 
-    @Override
     public List<PostCategoryDto.RehomingCategoryList> getRehomingCategoryList() {
         return postCategoryGroupRepository.findAllByPostType(PostType.REHOMING).stream()
-                .flatMap(categoryGroup -> petCategoryRepository.findAllByCategoryGroup(categoryGroup).stream()
-                        .map(petCategory -> new PostCategoryDto.RehomingCategoryList(
-                                categoryGroup.getCategoryGroupId(),
-                                categoryGroup.getCategoryGroupName(),
-                                petCategory.getPetCategoryId(),
-                                petCategory.getPetCategoryName()
-                        )))
+                .map(categoryGroup -> {
+                    List<PostCategoryDto.RehomingCategoryResponse> petCategoryList = categoryRepository.getRehomingCategoryAndCnt(categoryGroup.getCategoryGroupId());
+                    return new PostCategoryDto.RehomingCategoryList(
+                            categoryGroup.getCategoryGroupId(),
+                            categoryGroup.getCategoryGroupName(),
+                            petCategoryList
+                    );
+                })
                 .collect(Collectors.toList());
     }
+
     @Override
     public List<PostCategoryDto.TradeCategoryList> getTradeCategoryList() {
         return postCategoryGroupRepository.findAllByPostType(PostType.TRADE).stream()
@@ -114,5 +115,4 @@ public class PostCategoryServiceImpl implements PostCategoryService{
                 ))
                 .collect(Collectors.toList());
     }
-
 }

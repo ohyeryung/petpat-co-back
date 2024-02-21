@@ -47,8 +47,7 @@ public class PostCategoryDto {
     public static class RehomingCategoryList {
         private Long firstCategoryId;
         private String firstCategoryName;
-        private Long secondCategoryId;
-        private String secondCategoryName;
+        private List<RehomingCategoryResponse> secondCategoryList;
     }
 
     @Getter
