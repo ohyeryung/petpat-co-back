@@ -1,10 +1,13 @@
 package com.smile.petpat.post.rehoming.service;
 
 import com.smile.petpat.post.rehoming.domain.RehomingCommand;
+import com.smile.petpat.post.rehoming.domain.RehomingInfo;
 import com.smile.petpat.post.rehoming.dto.RehomingPagingDto;
 import com.smile.petpat.post.rehoming.dto.RehomingResDto;
 import com.smile.petpat.user.domain.User;
 import org.springframework.data.domain.Pageable;
+
+import java.util.List;
 
 public interface RehomingService {
     void registerRehoming(String userEmail, RehomingCommand rehomingCommand);
@@ -30,4 +33,5 @@ public interface RehomingService {
     RehomingPagingDto getCategoryListForMember(String userEmail, Long categoryId, Long typeId, Pageable pageable);
     RehomingPagingDto getCategoryList(Long categoryId, Long typeId, Pageable pageable);
 
+    List<RehomingInfo> fetchTrendingRehoming(User user);
 }

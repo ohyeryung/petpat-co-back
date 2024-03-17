@@ -13,7 +13,6 @@ import com.smile.petpat.post.rehoming.dto.RehomingResDto;
 import com.smile.petpat.post.rehoming.repository.RehomingRepository;
 import com.smile.petpat.user.domain.User;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -22,7 +21,6 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.transaction.Transactional;
 import java.util.List;
 
-@Slf4j
 @RequiredArgsConstructor
 @Service
 public class RehomingServiceImpl implements RehomingService {
@@ -163,5 +161,10 @@ public class RehomingServiceImpl implements RehomingService {
     @Override
     public RehomingPagingDto getCategoryList(Long categoryId, Long typeId, Pageable pageable) {
         return new RehomingPagingDto(rehomingRepository.rehomingCategoryList(categoryId, typeId, pageable));
+    }
+
+    @Override
+    public List<RehomingInfo> fetchTrendingRehoming(User user) {
+        return rehomingReader.fetchTrendingRehoming(user.getId());
     }
 }

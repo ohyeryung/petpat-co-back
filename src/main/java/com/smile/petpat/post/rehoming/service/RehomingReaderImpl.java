@@ -4,15 +4,16 @@ import com.smile.petpat.post.category.domain.CategoryGroup;
 import com.smile.petpat.post.category.domain.PetCategory;
 import com.smile.petpat.post.category.repository.PetCategoryRepository;
 import com.smile.petpat.post.category.repository.PostCategoryGroupRepository;
+import com.smile.petpat.post.common.WeekRange;
 import com.smile.petpat.post.rehoming.domain.Rehoming;
+import com.smile.petpat.post.rehoming.domain.RehomingInfo;
 import com.smile.petpat.post.rehoming.domain.RehomingReader;
-import com.smile.petpat.post.rehoming.dto.RehomingResDto;
 import com.smile.petpat.post.rehoming.repository.RehomingRepository;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
-@Slf4j
+import java.util.List;
+
 @RequiredArgsConstructor
 @Component
 public class RehomingReaderImpl implements RehomingReader {
@@ -44,14 +45,15 @@ public class RehomingReaderImpl implements RehomingReader {
     }
 
     @Override
-    public RehomingResDto readRehomingDetailForMember(String userEmail, Long rehomingId) {
-        return null;
-    }
-
-    @Override
     public CategoryGroup readCategoryById(Long categoryId) {
         return categoryGroupRepository.findByCategoryGroupId(categoryId).orElseThrow(
                 () -> new IllegalArgumentException("존재하지 않는 카테고리입니다.")
         );
+    }
+
+    @Override
+    public List<RehomingInfo> fetchTrendingRehoming(Long userId) {
+        WeekRange weekRange = new WeekRange();
+        return rehomingRepository.fetchTrendingRehoming(userId, weekRange.getStartOfWeek(), weekRange.getEndOfWeek());
     }
 }

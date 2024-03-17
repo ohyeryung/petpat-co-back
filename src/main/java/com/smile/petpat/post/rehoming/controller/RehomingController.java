@@ -2,13 +2,13 @@ package com.smile.petpat.post.rehoming.controller;
 
 import com.smile.petpat.common.response.SuccessResponse;
 import com.smile.petpat.post.rehoming.domain.RehomingCommand;
+import com.smile.petpat.post.rehoming.domain.RehomingInfo;
 import com.smile.petpat.post.rehoming.dto.RehomingPagingDto;
 import com.smile.petpat.post.rehoming.service.RehomingServiceImpl;
 import com.smile.petpat.user.service.UserDetailsImpl;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
@@ -17,8 +17,8 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
-@Slf4j
 @Tag(name = "RehomingController", description = "분양 API 입니다.")
 @RestController
 @RequiredArgsConstructor
@@ -162,5 +162,15 @@ public class RehomingController {
         rehomingPagingDto = rehomingService.getCategoryList(categoryId, typeId, pageable);
         return ResponseEntity.ok(rehomingPagingDto);
 
+    }
+
+    /**
+     * 인기있는 중고거래 게시물 3개 추출
+     * @return 성공 시 200 Success 반환
+     */
+    @Operation(summary = "인기있는 분양 게시물", description = "인기있는 분양 게시물")
+    @RequestMapping(value = "/trending",method = RequestMethod.GET)
+    public ResponseEntity<List<RehomingInfo>> fetchTrendingRehoming(@AuthenticationPrincipal UserDetailsImpl userDetails) {
+        return ResponseEntity.ok(rehomingService.fetchTrendingRehoming(userDetails.getUser()));
     }
 }
