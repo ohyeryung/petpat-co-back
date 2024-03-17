@@ -197,7 +197,9 @@ public class TradeRepositoryImpl implements TradeRepositoryQueryDsl{
                  .select
                          (Projections.constructor
                                  (TradeInfo.TradeList.class,
-                                         trade.tradeId,
+                                         ExpressionUtils.as(
+                                           trade.tradeId,"postId"
+                                         ),
                                          ExpressionUtils.as(
                                                  JPAExpressions
                                                          .select(image.filePath)
@@ -207,11 +209,12 @@ public class TradeRepositoryImpl implements TradeRepositoryQueryDsl{
                                                                          .and(image.postType.eq(PostType.TRADE))
                                                                          .and(image.repImgNY.eq(true))
                                                          )
-                                                 ,"image"),
+                                                 ,"imagePath"),
                                          trade.title,
                                          trade.price,
                                          trade.cityName,
                                          trade.cityCountryName,
+                                         trade.townShipName,
                                          ExpressionUtils.as(
                                                  JPAExpressions
                                                          .select(likes.count())

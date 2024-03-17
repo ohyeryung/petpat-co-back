@@ -143,6 +143,8 @@ public class TradeInfo {
         }
 
 
+
+
     }
     @Getter
     @NoArgsConstructor
