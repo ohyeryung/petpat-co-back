@@ -35,12 +35,23 @@ public class RehomingResDto {
     private boolean isBookmarked;
     private int viewCnt;
     private int likeCnt;
+    private boolean dhppl;
+    private boolean covidEnteritis;
+    private boolean kennelCough;
+    private boolean influenza;
+    private boolean rabies;
+    private boolean comprehensiveVaccine;
+    private boolean fpv;
+    private boolean felv;
+    private boolean isNeutralized;
 
     public RehomingResDto(Long postId, PostType postType, Long userId, String nickname,
                           String title, String content, String petName, LocalDate petAge,
                           String category, String type, RehomingCommand.PetGender gender, 
                           String cityName, String cityCountryName, String townShipName, PostStatus status,
-                          LocalDateTime createdAt, LocalDateTime updatedAt, Long isLiked, Long isBookmarked, int viewCnt, int likeCnt) {
+                          LocalDateTime createdAt, LocalDateTime updatedAt, Long isLiked, Long isBookmarked, int viewCnt, int likeCnt,
+                          boolean dhppl, boolean covidEnteritis, boolean kennelCough, boolean influenza, boolean rabies,
+                          boolean comprehensiveVaccine, boolean fpv, boolean felv, boolean isNeutralized) {
         this.postId = postId;
         this.postType = postType;
         this.userId = userId;
@@ -60,6 +71,15 @@ public class RehomingResDto {
         this.status = status;
         this.createdAt = CalculateTime.dateformatForPost(createdAt);
         this.updatedAt = CalculateTime.dateformatForPost(updatedAt);
+        this.dhppl = dhppl;
+        this.covidEnteritis = covidEnteritis;
+        this.kennelCough = kennelCough;
+        this.influenza = influenza;
+        this.rabies = rabies;
+        this.comprehensiveVaccine = comprehensiveVaccine;
+        this.fpv = fpv;
+        this.felv = felv;
+        this.isNeutralized = isNeutralized;
     }
     public static  Boolean booleanChk(Long chkValue) {
         return chkValue != 0;
@@ -85,6 +105,16 @@ public class RehomingResDto {
         this.status = rehomingResDto.status;
         this.createdAt = rehomingResDto.createdAt;
         this.updatedAt = rehomingResDto.updatedAt;
+        this.dhppl = rehomingResDto.isDhppl();
+        this.covidEnteritis = rehomingResDto.isCovidEnteritis();
+        this.kennelCough = rehomingResDto.isKennelCough();
+        this.influenza = rehomingResDto.isInfluenza();
+        this.rabies = rehomingResDto.isRabies();
+        this.comprehensiveVaccine = rehomingResDto.isComprehensiveVaccine();
+        this.fpv = rehomingResDto.isFpv();
+        this.felv = rehomingResDto.isFelv();
+        this.isNeutralized = rehomingResDto.isNeutralized();
+
     }
 
     // 회원 조회 시
@@ -109,6 +139,15 @@ public class RehomingResDto {
         this.isBookmarked = isBookmarked;
         this.viewCnt = rehoming.getViewCnt();
         this.likeCnt = likeCnt;
+        this.dhppl = rehoming.isDhppl();
+        this.covidEnteritis = rehoming.isCovidEnteritis();
+        this.kennelCough = rehoming.isKennelCough();
+        this.influenza = rehoming.isInfluenza();
+        this.rabies = rehoming.isRabies();
+        this.comprehensiveVaccine = rehoming.isComprehensiveVaccine();
+        this.fpv = rehoming.isFpv();
+        this.felv = rehoming.isFelv();
+        this.isNeutralized = rehoming.isNeutralized();
     }
 
     // 비회원 조회 시
@@ -133,5 +172,14 @@ public class RehomingResDto {
         this.isBookmarked = false;
         this.viewCnt = rehoming.getViewCnt();
         this.likeCnt = likeCnt;
+        this.dhppl = rehoming.isDhppl();
+        this.covidEnteritis = rehoming.isCovidEnteritis();
+        this.kennelCough = rehoming.isKennelCough();
+        this.influenza = rehoming.isInfluenza();
+        this.rabies = rehoming.isRabies();
+        this.comprehensiveVaccine = rehoming.isComprehensiveVaccine();
+        this.fpv = rehoming.isFpv();
+        this.felv = rehoming.isFelv();
+        this.isNeutralized = rehoming.isNeutralized();
     }
 }

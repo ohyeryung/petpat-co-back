@@ -76,6 +76,33 @@ public class Rehoming extends Timestamped {
     @Column(name = "VIEW_CNT")
     private int viewCnt;
 
+    @Column(name = "DHPPL_VACCINE")
+    private boolean dhppl;
+
+    @Column(name = "COVID_ENTERITIS_VACCINE")
+    private boolean covidEnteritis;
+
+    @Column(name = "KENNEL_COUGH_VACCINE")
+    private boolean kennelCough;
+
+    @Column(name = "INFLUENZA_VACCINE")
+    private boolean influenza;
+
+    @Column(name = "RABIES_VACCINE")
+    private boolean rabies;
+
+    @Column(name = "COMPREHENSIVE_VACCINE")
+    private boolean comprehensiveVaccine;
+
+    @Column(name = "FELINE_PARVOVIRUS_VACCINE")
+    private boolean fpv;
+
+    @Column(name = "FELINE_LEUKEMIA_VIRUS_VACCINE")
+    private boolean felv;
+
+    @Column(name = "IS_NEUTRALIZED")
+    private boolean isNeutralized;
+
     public void isFinding() {
         this.status = PostStatus.REHOMING_FINDING;
     }
@@ -91,7 +118,9 @@ public class Rehoming extends Timestamped {
     public Rehoming(Long rehomingId, User user, String title, String content, String petName, LocalDate petAge,
                     CategoryGroup category, PetCategory type, RehomingCommand.PetGender gender, String cityName,
                     String cityCountryName, String townShipName, String detailAdName, String fullAdName,
-                    PostStatus status, PostType postType, int viewCnt) {
+                    PostStatus status, PostType postType, int viewCnt,
+                    boolean dhppl, boolean covidEnteritis, boolean kennelCough, boolean influenza, boolean rabies,
+                    boolean comprehensiveVaccine, boolean fpv, boolean felv, boolean isNeutralized) {
         this.rehomingId = rehomingId;
         this.user = user;
         this.title = title;
@@ -109,6 +138,15 @@ public class Rehoming extends Timestamped {
         this.status = status;
         this.postType = postType;
         this.viewCnt = viewCnt;
+        this.dhppl = dhppl;
+        this.covidEnteritis = covidEnteritis;
+        this.kennelCough = kennelCough;
+        this.influenza = influenza;
+        this.rabies = rabies;
+        this.comprehensiveVaccine = comprehensiveVaccine;
+        this.fpv = fpv;
+        this.felv = felv;
+        this.isNeutralized = isNeutralized;
     }
 
     public Rehoming() {
@@ -130,6 +168,15 @@ public class Rehoming extends Timestamped {
         this.detailAdName = initRehoming.getDetailAdName();
         this.fullAdName = initRehoming.getFullAdName();
         this.status = initRehoming.getStatus();
+        this.dhppl = initRehoming.isDhppl();
+        this.covidEnteritis = initRehoming.isCovidEnteritis();
+        this.kennelCough = initRehoming.isKennelCough();
+        this.influenza = initRehoming.isInfluenza();
+        this.rabies = initRehoming.isRabies();
+        this.comprehensiveVaccine = initRehoming.isComprehensiveVaccine();
+        this.fpv = initRehoming.isFpv();
+        this.felv = initRehoming.isFelv();
+        this.isNeutralized = initRehoming.isNeutralized();
     }
 
     // 조회수 증가

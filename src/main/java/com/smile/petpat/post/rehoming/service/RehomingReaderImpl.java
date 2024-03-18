@@ -10,10 +10,12 @@ import com.smile.petpat.post.rehoming.domain.RehomingInfo;
 import com.smile.petpat.post.rehoming.domain.RehomingReader;
 import com.smile.petpat.post.rehoming.repository.RehomingRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+@Slf4j
 @RequiredArgsConstructor
 @Component
 public class RehomingReaderImpl implements RehomingReader {
@@ -54,6 +56,8 @@ public class RehomingReaderImpl implements RehomingReader {
     @Override
     public List<RehomingInfo> fetchTrendingRehoming(Long userId) {
         WeekRange weekRange = new WeekRange();
+        log.info("startOfWeek : {}", weekRange.getStartOfWeek());
+        log.info("endOfWeek() : {} ", weekRange.getEndOfWeek());
         return rehomingRepository.fetchTrendingRehoming(userId, weekRange.getStartOfWeek(), weekRange.getEndOfWeek());
     }
 }

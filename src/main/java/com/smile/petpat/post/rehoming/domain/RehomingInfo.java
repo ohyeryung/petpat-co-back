@@ -24,13 +24,24 @@ public class RehomingInfo {
     private Long bookmarkCnt;
     private String createdAt;
     private String updatedAt;
+    private boolean dhppl;
+    private boolean covidEnteritis;
+    private boolean kennelCough;
+    private boolean influenza;
+    private boolean rabies;
+    private boolean comprehensiveVaccine;
+    private boolean fpv;
+    private boolean felv;
+    private boolean isNeutralized;
 
     // 회원
     public RehomingInfo(Long postId, PostType postType, String imagePath,
                         String title, String cityName, String cityCountryName,
                         String townShipName, PostStatus status,
                         Long isLiked, Long isBookmarked, int viewCnt, Long likeCnt, Long bookmarkCnt,
-                        LocalDateTime createdAt, LocalDateTime updatedAt) {
+                        LocalDateTime createdAt, LocalDateTime updatedAt,
+                        boolean dhppl, boolean covidEnteritis, boolean kennelCough, boolean influenza, boolean rabies,
+                        boolean comprehensiveVaccine, boolean fpv, boolean felv, boolean isNeutralized) {
         this.postId = postId;
         this.postType = postType;
         this.imagePath = imagePath;
@@ -44,6 +55,15 @@ public class RehomingInfo {
         this.bookmarkCnt = bookmarkCnt;
         this.createdAt = CalculateTime.dateformatForPost(createdAt);
         this.updatedAt = CalculateTime.dateformatForPost(updatedAt);
+        this.dhppl = dhppl;
+        this.covidEnteritis = covidEnteritis;
+        this.kennelCough = kennelCough;
+        this.influenza = influenza;
+        this.rabies = rabies;
+        this.comprehensiveVaccine = comprehensiveVaccine;
+        this.fpv = fpv;
+        this.felv = felv;
+        this.isNeutralized = isNeutralized;
     }
 
     private Boolean booleanChk(Long chkValue) {
@@ -56,7 +76,9 @@ public class RehomingInfo {
                         String cityName, String cityCountryName,
                         String townShipName, PostStatus status,
                         int viewCnt, Long likeCnt, Long bookmarkCnt,
-                        LocalDateTime createdAt, LocalDateTime updatedAt) {
+                        LocalDateTime createdAt, LocalDateTime updatedAt,
+                        boolean dhppl, boolean covidEnteritis, boolean kennelCough, boolean influenza, boolean rabies,
+                        boolean comprehensiveVaccine, boolean fpv, boolean felv, boolean isNeutralized) {
         this.postId = postId;
         this.postType = postType;
         this.imagePath = imagePath;
@@ -70,5 +92,14 @@ public class RehomingInfo {
         this.bookmarkCnt = bookmarkCnt;
         this.createdAt = CalculateTime.dateformatForPost(createdAt);
         this.updatedAt = CalculateTime.dateformatForPost(updatedAt);
+        this.dhppl = dhppl;
+        this.covidEnteritis = covidEnteritis;
+        this.kennelCough = kennelCough;
+        this.influenza = influenza;
+        this.rabies = rabies;
+        this.comprehensiveVaccine = comprehensiveVaccine;
+        this.fpv = fpv;
+        this.felv = felv;
+        this.isNeutralized = isNeutralized;
     }
 }

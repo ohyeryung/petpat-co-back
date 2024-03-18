@@ -12,6 +12,7 @@ import lombok.Getter;
 import lombok.ToString;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.persistence.Column;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
@@ -38,6 +39,15 @@ public class RehomingCommand {
     private String townShipName;
     private String detailAdName;
     private String fullAdName;
+    private boolean dhppl;
+    private boolean covidEnteritis;
+    private boolean kennelCough;
+    private boolean influenza;
+    private boolean rabies;
+    private boolean comprehensiveVaccine;
+    private boolean fpv;
+    private boolean felv;
+    private boolean isNeutralized;
 
     public RehomingCommand toCommand() {
         if (rehomingImg.size() > 5) {
@@ -60,6 +70,15 @@ public class RehomingCommand {
                 .townShipName(townShipName)
                 .detailAdName(detailAdName)
                 .fullAdName(fullAdName)
+                .dhppl(dhppl)
+                .covidEnteritis(covidEnteritis)
+                .kennelCough(kennelCough)
+                .influenza(influenza)
+                .rabies(rabies)
+                .comprehensiveVaccine(comprehensiveVaccine)
+                .fpv(fpv)
+                .felv(felv)
+                .isNeutralized(isNeutralized)
                 .build();
     }
 
@@ -80,6 +99,15 @@ public class RehomingCommand {
                 .fullAdName(fullAdName)
                 .status(PostStatus.REHOMING_FINDING)
                 .postType(PostType.REHOMING)
+                .dhppl(dhppl)
+                .covidEnteritis(covidEnteritis)
+                .kennelCough(kennelCough)
+                .influenza(influenza)
+                .rabies(rabies)
+                .comprehensiveVaccine(comprehensiveVaccine)
+                .fpv(fpv)
+                .felv(felv)
+                .isNeutralized(isNeutralized)
                 .build();
     }
 
@@ -100,6 +128,15 @@ public class RehomingCommand {
                 .detailAdName(detailAdName)
                 .fullAdName(fullAdName)
                 .status(status)
+                .dhppl(dhppl)
+                .covidEnteritis(covidEnteritis)
+                .kennelCough(kennelCough)
+                .influenza(influenza)
+                .rabies(rabies)
+                .comprehensiveVaccine(comprehensiveVaccine)
+                .fpv(fpv)
+                .felv(felv)
+                .isNeutralized(isNeutralized)
                 .build();
     }
 
