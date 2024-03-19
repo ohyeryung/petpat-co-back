@@ -78,16 +78,7 @@ public class RehomingRepositoryImpl implements RehomingRepositoryQuerydsl {
                                                 .where(bookmark.postId.eq(rehoming.rehomingId)),
                                         "bookmarkCnt"),
                                 rehoming.createdAt,
-                                rehoming.updatedAt,
-                                rehoming.dhppl,
-                                rehoming.covidEnteritis,
-                                rehoming.kennelCough,
-                                rehoming.influenza,
-                                rehoming.rabies,
-                                rehoming.comprehensiveVaccine,
-                                rehoming.fpv,
-                                rehoming.felv,
-                                rehoming.isNeutralized
+                                rehoming.updatedAt
                         )
                 )
                 .from(rehoming)
@@ -136,16 +127,7 @@ public class RehomingRepositoryImpl implements RehomingRepositoryQuerydsl {
                                                 .where(bookmark.postId.eq(rehoming.rehomingId)),
                                         "bookmarkCnt"),
                                 rehoming.createdAt,
-                                rehoming.updatedAt,
-                                rehoming.dhppl,
-                                rehoming.covidEnteritis,
-                                rehoming.kennelCough,
-                                rehoming.influenza,
-                                rehoming.rabies,
-                                rehoming.comprehensiveVaccine,
-                                rehoming.fpv,
-                                rehoming.felv,
-                                rehoming.isNeutralized
+                                rehoming.updatedAt
                         )
                 )
                 .from(rehoming)
@@ -208,16 +190,7 @@ public class RehomingRepositoryImpl implements RehomingRepositoryQuerydsl {
                                                 .where(bookmark.postId.eq(rehoming.rehomingId)),
                                         "bookmarkCnt"),
                                 rehoming.createdAt,
-                                rehoming.updatedAt,
-                                rehoming.dhppl,
-                                rehoming.covidEnteritis,
-                                rehoming.kennelCough,
-                                rehoming.influenza,
-                                rehoming.rabies,
-                                rehoming.comprehensiveVaccine,
-                                rehoming.fpv,
-                                rehoming.felv,
-                                rehoming.isNeutralized
+                                rehoming.updatedAt
                         )
                 )
                 .from(rehoming)
@@ -268,16 +241,7 @@ public class RehomingRepositoryImpl implements RehomingRepositoryQuerydsl {
                                                 .where(bookmark.postId.eq(rehoming.rehomingId)),
                                         "bookmarkCnt"),
                                 rehoming.createdAt,
-                                rehoming.updatedAt,
-                                rehoming.dhppl,
-                                rehoming.covidEnteritis,
-                                rehoming.kennelCough,
-                                rehoming.influenza,
-                                rehoming.rabies,
-                                rehoming.comprehensiveVaccine,
-                                rehoming.fpv,
-                                rehoming.felv,
-                                rehoming.isNeutralized
+                                rehoming.updatedAt
                         )
                 )
                 .from(rehoming)
@@ -401,16 +365,7 @@ public class RehomingRepositoryImpl implements RehomingRepositoryQuerydsl {
                                                 .where(bookmark.postId.eq(rehoming.rehomingId)),
                                         "bookmarkCnt"),
                                 rehoming.createdAt,
-                                rehoming.updatedAt,
-                                rehoming.dhppl,
-                                rehoming.covidEnteritis,
-                                rehoming.kennelCough,
-                                rehoming.influenza,
-                                rehoming.rabies,
-                                rehoming.comprehensiveVaccine,
-                                rehoming.fpv,
-                                rehoming.felv,
-                                rehoming.isNeutralized
+                                rehoming.updatedAt
 
                         )
                 )
