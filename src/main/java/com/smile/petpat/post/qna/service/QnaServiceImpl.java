@@ -39,9 +39,15 @@ public class QnaServiceImpl implements QnaService{
         imageUploadManager.uploadPostImage(qnaCommand.getImages(), qna.getQnaId(), qna.getPostType());
     }
 
+//    @Override
+//    public QnaInfo.QnaPagingListInfo listQna(User user, Pageable pageable) {
+//        Page<QnaInfo.QnaList> listQna = qnaReader.readQnaList(user, pageable);
+//        return new QnaInfo.QnaPagingListInfo(listQna);
+//    }
+
     @Override
-    public QnaInfo.QnaPagingListInfo listQna(User user, Pageable pageable) {
-        Page<QnaInfo.QnaList> listQna = qnaReader.readQnaList(user, pageable);
+    public QnaInfo.QnaPagingListInfo listQna(Pageable pageable) {
+        Page<QnaInfo.QnaList> listQna = qnaReader.readQnaList(pageable);
         return new QnaInfo.QnaPagingListInfo(listQna);
     }
 
@@ -61,20 +67,7 @@ public class QnaServiceImpl implements QnaService{
 
     @Override
     @Transactional
-    public QnaInfo.QnaDetail detailQnaForUser(Long postId, User user) {
-        Qna qna = qnaReader.readQnaById(postId);
-        qna.updateViewCnt(qna);
-
-        QnaInfo.QnaDetail qnaDetail = qnaReader.readQnaDetailForUser(user.getId(), postId);
-        List<String> imageList = imageUploader.readImgList(postId, qna.getPostType());
-        return new QnaInfo.QnaDetail(qnaDetail, imageList);
-
-    }
-
-    @Override
-    @Transactional
     public QnaInfo.QnaDetail detailQna(Long postId) {
-        List<String> imgList = imageUploader.readImgList(postId, PostType.QNA);
         Qna qna = qnaReader.readQnaById(postId);
 
         // 조회수 계산
