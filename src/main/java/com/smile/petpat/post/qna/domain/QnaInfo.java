@@ -74,7 +74,7 @@ public class QnaInfo {
         }
 
         public QnaDetail(Long qnaId, Long userId, String nickname, String title, String content, List<String> imageList, PostType postType,
-                         LocalDateTime createAt
+                         int viewCnt, LocalDateTime createAt
         ) {
             this.qnaId = qnaId;
             this.userId = userId;
@@ -87,8 +87,8 @@ public class QnaInfo {
             this.createAt = CalculateTime.dateformatForPost(createAt);
         }
 
-        public QnaDetail(Long qnaId, Long userId, String nickname, String title, String content, PostType postType, Long isLiked, Long isBookmarked, int viewCnt,
-                           Long likeCnt, Long bookmarkCnt, String qnaCategoryDetailName,PostStatus status,LocalDateTime createAt) {
+        public QnaDetail(Long qnaId, Long userId, String nickname, String title, String content, PostType postType, int viewCnt,
+                           LocalDateTime createAt) {
             this.qnaId = qnaId;
             this.userId = userId;
             this.nickname = nickname;
