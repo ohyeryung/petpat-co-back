@@ -20,8 +20,8 @@ public class ImageUploader {
         return imageRepository.saveAll(imageList);
     }
 
-    public Image toImageEntity(String originalFileName, String fakeFileName, String filePath, Long postId, PostType postType, boolean repImgNY) {
-        return new Image(originalFileName, fakeFileName, filePath, postId, postType, repImgNY);
+    public Image toImageEntity(String originalFileName, String fakeFileName, String filePath, Long postId, PostType postType, boolean repImgNY,ImagePriority imagePriority) {
+        return new Image(originalFileName, fakeFileName, filePath, postId, postType, repImgNY,imagePriority);
     }
 
     // 로컬 이미지 삭제 (db)

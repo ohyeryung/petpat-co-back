@@ -32,16 +32,20 @@ public class Image {
     @Enumerated(EnumType.STRING)
     private PostType postType;
 
+    @Column(name = "IMAGE_PRIORITY")
+    private ImagePriority priority;
+
     @Column(name = "REPIMGNY") private boolean repImgNY;
     public Image() {
     }
 
-    public Image(String originalFileName, String fakeFileName, String filePath, Long postId, PostType postType, boolean repImgNY) {
+    public Image(String originalFileName, String fakeFileName, String filePath, Long postId, PostType postType, boolean repImgNY,ImagePriority imagePriority) {
         this.originalFileName = originalFileName;
         this.fakeFileName = fakeFileName;
         this.filePath = filePath;
         this.postId = postId;
         this.postType = postType;
         this.repImgNY = repImgNY;
+        this.priority =imagePriority;
     }
 }
