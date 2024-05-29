@@ -38,11 +38,11 @@ public class ImageUploadManager {
             String fakeFileName = imageUtils.generateRandomFileName(multipartFiles.get(i).getOriginalFilename());
             String originalFileName = multipartFiles.get(i).getOriginalFilename();
             String filePath = s3Uploader.uploadFile(multipartFiles.get(i), fakeFileName);
-            boolean repImgNY = i == 0; // 제일 먼저 등록되는 이미지의 경우 대표이미지로 설정
 
+            //이미지 리스트의 순서에 따라 이미지의 우선순위 결정
             ImagePriority priority = ImagePriority.fromIndexToPriority(i+1);
 
-            Image image = imageUploader.toImageEntity(originalFileName, fakeFileName,  filePath, postId, postType, repImgNY,priority);
+            Image image = imageUploader.toImageEntity(originalFileName, fakeFileName,  filePath, postId, postType,priority);
             imageList.add(image);
         }
         imageUploader.savePostImage(imageList);
