@@ -5,6 +5,7 @@ import com.querydsl.core.types.ExpressionUtils;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import com.smile.petpat.image.domain.ImagePriority;
 import com.smile.petpat.post.category.domain.PostType;
 import com.smile.petpat.post.rehoming.domain.RehomingInfo;
 import com.smile.petpat.post.trade.domain.TradeInfo;
@@ -101,7 +102,7 @@ public class TradeRepositoryImpl implements TradeRepositoryQueryDsl{
                                                         .where(
                                                                 image.postId.eq(trade.tradeId)
                                                                         .and(image.postType.eq(PostType.TRADE))
-                                                                        .and(image.repImgNY.eq(true))
+                                                                        .and(image.priority.eq(ImagePriority.PRIORITY_1))
                                                         )
                                                 ,"image"),
                                         trade.title,
@@ -207,7 +208,7 @@ public class TradeRepositoryImpl implements TradeRepositoryQueryDsl{
                                                          .where(
                                                                  image.postId.eq(trade.tradeId)
                                                                          .and(image.postType.eq(PostType.TRADE))
-                                                                         .and(image.repImgNY.eq(true))
+                                                                         .and(image.priority.eq(ImagePriority.PRIORITY_1))
                                                          )
                                                  ,"imagePath"),
                                          trade.title,

@@ -6,6 +6,7 @@ import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import com.smile.petpat.image.domain.ImagePriority;
 import com.smile.petpat.post.category.domain.PostType;
 import com.smile.petpat.post.rehoming.domain.RehomingInfo;
 import com.smile.petpat.post.rehoming.dto.RehomingResDto;
@@ -45,7 +46,7 @@ public class RehomingRepositoryImpl implements RehomingRepositoryQuerydsl {
                                                 .from(image)
                                                 .where(image.postId.eq(rehoming.rehomingId),
                                                         image.postType.eq(PostType.REHOMING),
-                                                        image.repImgNY.eq(true))
+                                                        image.priority.eq(ImagePriority.PRIORITY_1))
                                                 , "rehomingImg"),
                                 rehoming.title,
                                 rehoming.cityName,
@@ -108,7 +109,7 @@ public class RehomingRepositoryImpl implements RehomingRepositoryQuerydsl {
                                                 .from(image)
                                                 .where(image.postId.eq(rehoming.rehomingId),
                                                         image.postType.eq(PostType.REHOMING),
-                                                        image.repImgNY.eq(true))
+                                                        image.priority.eq(ImagePriority.PRIORITY_1))
                                         , "rehomingImg"),
                                 rehoming.title,
                                 rehoming.cityName,
@@ -157,7 +158,7 @@ public class RehomingRepositoryImpl implements RehomingRepositoryQuerydsl {
                                                 .from(image)
                                                 .where(image.postId.eq(rehoming.rehomingId),
                                                         image.postType.eq(PostType.REHOMING),
-                                                        image.repImgNY.eq(true))
+                                                        image.priority.eq(ImagePriority.PRIORITY_1))
                                         , "rehomingImg"),
                                 rehoming.title,
                                 rehoming.cityName,
@@ -222,7 +223,7 @@ public class RehomingRepositoryImpl implements RehomingRepositoryQuerydsl {
                                                 .from(image)
                                                 .where(image.postId.eq(rehoming.rehomingId),
                                                         image.postType.eq(PostType.REHOMING),
-                                                        image.repImgNY.eq(true))
+                                                        image.priority.eq(ImagePriority.PRIORITY_1))
                                         , "rehomingImg"),
                                 rehoming.title,
                                 rehoming.cityName,
@@ -332,7 +333,7 @@ public class RehomingRepositoryImpl implements RehomingRepositoryQuerydsl {
                                                 .where(
                                                         image.postId.eq(rehoming.rehomingId)
                                                                 .and(image.postType.eq(PostType.REHOMING))
-                                                                .and(image.repImgNY.eq(true))
+                                                                .and(image.priority.eq(ImagePriority.PRIORITY_1))
                                                 ), "image"),
                                 rehoming.title,
                                 rehoming.cityName,

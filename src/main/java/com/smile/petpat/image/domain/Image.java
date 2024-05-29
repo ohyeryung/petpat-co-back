@@ -33,7 +33,6 @@ public class Image {
     private PostType postType;
 
     @Column(name = "IMAGE_PRIORITY")
-    @Enumerated(EnumType.STRING)
     private ImagePriority priority;
 
     public Image() {
