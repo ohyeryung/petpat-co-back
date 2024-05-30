@@ -56,42 +56,32 @@ public class ImageUploadManager {
         uploadPostImage(multipartFiles, postId, postType);
     }
 
-    /* 이미지 파일 수정 - 대표이미지 삭제 & 우선순위 삽입 버전 */
+    /** 이미지 파일 수정 - 대표이미지 삭제 & 우선순위 삽입 버전 */
     @Transactional
-    public void updateImageNew(List<MultipartFile> newImages,List<String> deletedImgs,Long postId, PostType postType) {
-
-        if(newImages.size()==0 && deletedImgs.size()==0) return;
-
+    public void updateImageNew(List<MultipartFile> newImages,List<String> deletedImgUrls,Long postId, PostType postType) {
+        //삭제되거나 추가되는 이미지가 없으면 return
+        if(newImages.size()==0 && deletedImgUrls.size()==0) return;
 
         //삭제되는 이미지 삭제
-        for(String deletedImg : deletedImgs){
-            s3Uploader.deleteImage(imageUploader.getFakeFileName(deletedImg));
-            imageUploader.deleteImgByImgUrl(deletedImg);
+        for(String deletedImgUrl : deletedImgUrls){
+            s3Uploader.deleteImage(imageUploader.getFakeFileNameByImageUrl(deletedImgUrl));
+            imageUploader.deleteImgByImgUrl(deletedImgUrl);
         }
 
-        //새로운 이미지 추가
+        //기존의 ImageList 에 추가되는 image 삽입
         List<Image> imageList = imageUploader.getImagesByPostTypeAndPostId(postType,postId);
-        System.out.println("newImages.size() == " + newImages.size());
-        for(int i=0; i< newImages.size(); i++){
-            String fakeFileName = imageUtils.generateRandomFileName(newImages.get(i).getOriginalFilename());
-            String originalFileName = newImages.get(i).getOriginalFilename();
-            String filePath = s3Uploader.uploadFile(newImages.get(i), fakeFileName);
-            System.out.println("originalFileName = " + originalFileName);
-            System.out.println("fakeFileName = " + fakeFileName);
-            System.out.println("filePath = " + filePath);
+        for(MultipartFile newImage : newImages){
+            String fakeFileName = imageUtils.generateRandomFileName(newImage.getOriginalFilename());
+            String originalFileName = newImage.getOriginalFilename();
+            String filePath = s3Uploader.uploadFile(newImage, fakeFileName);
 
-//            ImagePriority priority = ImagePriority.fromIndexToPriority(imageList.size()+i+1);
-
-            Image image = imageUploader.toImageEntity(originalFileName, fakeFileName,  filePath, postId, postType);
+            Image image = imageUploader.toImageEntity(originalFileName, fakeFileName, filePath, postId, postType);
             imageList.add(image);
         }
 
-
-//        imageUploader.savePostImage(imageList);
-
+        //ImageList 의 배열순서에 따라 우선순위 부여
         ImagePriority.setPriority(imageList);
         imageUploader.savePostImage(imageList);
-
     }
 
     /* 게시글 삭제 이미지도 삭제 */

@@ -54,7 +54,7 @@ public class ImageUploader {
     }
 
     //이미지 url로 image의 FakeFileName 추출
-    public String getFakeFileName(String imageUrl){
+    public String getFakeFileNameByImageUrl(String imageUrl){
         return imageRepository.findByFilePath(imageUrl).getFakeFileName();
     }
 
@@ -64,8 +64,8 @@ public class ImageUploader {
     }
 
     //로컬DB 이미지 삭제 by ImageUrl
-    public void deleteImgByImgUrl(String imgUrl){
-        imageRepository.deleteByFilePath(imgUrl);
+    public void deleteImgByImgUrl(String filePath){
+        imageRepository.deleteByFilePath(filePath);
     }
 
 }

@@ -27,10 +27,13 @@ public enum ImagePriority {
     }
 
     public static List<Image> setPriority(List<Image> images){
+        if(images.size()>5) throw new IllegalArgumentException("사진은 최대 5장까지 저장 가능합니다");
+
         for(int i=0; i<images.size(); i++){
             ImagePriority priority = ImagePriority.fromIndexToPriority(i+1);
             images.get(i).setImagePriority(priority);
         }
+
         return images;
     }
 }
