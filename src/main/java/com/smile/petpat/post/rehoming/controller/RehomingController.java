@@ -4,6 +4,7 @@ import com.smile.petpat.common.response.SuccessResponse;
 import com.smile.petpat.post.rehoming.domain.RehomingCommand;
 import com.smile.petpat.post.rehoming.domain.RehomingInfo;
 import com.smile.petpat.post.rehoming.dto.RehomingPagingDto;
+import com.smile.petpat.post.rehoming.dto.RehomingUpdateReqDto;
 import com.smile.petpat.post.rehoming.service.RehomingServiceImpl;
 import com.smile.petpat.user.service.UserDetailsImpl;
 import io.swagger.v3.oas.annotations.Operation;
@@ -92,9 +93,8 @@ public class RehomingController {
     @RequestMapping(value = "", method = RequestMethod.PUT)
     public SuccessResponse updateRehoming(@AuthenticationPrincipal UserDetailsImpl userDetails,
                                           @RequestParam Long postId,
-                                          @ModelAttribute @Valid RehomingCommand rehomingDto) {
-        RehomingCommand rehomingCommand = rehomingDto.toCommand();
-        return SuccessResponse.success(rehomingService.updateRehoming(userDetails.getUsername(), postId, rehomingCommand), "OK");
+                                          @ModelAttribute @Valid RehomingUpdateReqDto rehomingDto) {
+        return SuccessResponse.success(rehomingService.updateRehoming(userDetails.getUsername(), postId, rehomingDto), "OK");
     }
 
     /**

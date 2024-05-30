@@ -15,13 +15,16 @@ public class ImageUploader {
     private final ImageRepository imageRepository;
 
     // 이미지 등록
-    @Transactional
     public List<Image> savePostImage(List<Image> imageList){
         return imageRepository.saveAll(imageList);
     }
 
     public Image toImageEntity(String originalFileName, String fakeFileName, String filePath, Long postId, PostType postType,ImagePriority imagePriority) {
         return new Image(originalFileName, fakeFileName, filePath, postId, postType,imagePriority);
+    }
+
+    public Image toImageEntity(String originalFileName, String fakeFileName, String filePath, Long postId, PostType postType ) {
+        return new Image(originalFileName, fakeFileName, filePath, postId, postType);
     }
 
     // 로컬 이미지 삭제 (db)
@@ -37,6 +40,7 @@ public class ImageUploader {
         return images.stream().map(Image::getFakeFileName).collect(Collectors.toList());
     }
 
+
     // 게시글 이미지 url 리스트 추출 method
     @Transactional
     public List<String> readImgList(Long postId, PostType postType) {
@@ -48,4 +52,20 @@ public class ImageUploader {
         Image image = imageRepository.findTop1ByPostIdAndPostTypeOrderByImageIdAsc(postId, postType);
         return image.getFilePath();
     }
+
+    //이미지 url로 image의 FakeFileName 추출
+    public String getFakeFileName(String imageUrl){
+        return imageRepository.findByFilePath(imageUrl).getFakeFileName();
+    }
+
+    //해당 postType 과 postId에 해당하는 이미지 모두 추출
+    public List<Image> getImagesByPostTypeAndPostId(PostType postType,Long postId){
+        return imageRepository.findAllByPostIdAndPostTypeOrderByPostId(postId,postType);
+    }
+
+    //로컬DB 이미지 삭제 by ImageUrl
+    public void deleteImgByImgUrl(String imgUrl){
+        imageRepository.deleteByFilePath(imgUrl);
+    }
+
 }

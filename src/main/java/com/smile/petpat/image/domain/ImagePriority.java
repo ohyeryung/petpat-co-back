@@ -1,5 +1,7 @@
 package com.smile.petpat.image.domain;
 
+import java.util.List;
+
 public enum ImagePriority {
     PRIORITY_1(1),
     PRIORITY_2(2),
@@ -22,5 +24,13 @@ public enum ImagePriority {
             if(p.getPriority()==index) return p;
         }
         throw new IllegalArgumentException("Invalid index "+ index);
+    }
+
+    public static List<Image> setPriority(List<Image> images){
+        for(int i=0; i<images.size(); i++){
+            ImagePriority priority = ImagePriority.fromIndexToPriority(i+1);
+            images.get(i).setImagePriority(priority);
+        }
+        return images;
     }
 }

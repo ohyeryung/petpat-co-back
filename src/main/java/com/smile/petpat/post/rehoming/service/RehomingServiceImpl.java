@@ -10,6 +10,7 @@ import com.smile.petpat.post.common.status.PostStatus;
 import com.smile.petpat.post.rehoming.domain.*;
 import com.smile.petpat.post.rehoming.dto.RehomingPagingDto;
 import com.smile.petpat.post.rehoming.dto.RehomingResDto;
+import com.smile.petpat.post.rehoming.dto.RehomingUpdateReqDto;
 import com.smile.petpat.post.rehoming.repository.RehomingRepository;
 import com.smile.petpat.user.domain.User;
 import lombok.RequiredArgsConstructor;
@@ -83,20 +84,26 @@ public class RehomingServiceImpl implements RehomingService {
 
     // 4. 분양 글 수정
     @Override
-    public RehomingResDto updateRehoming(String userEmail, Long postId, RehomingCommand rehomingCommand) {
+    public RehomingResDto updateRehoming(String userEmail, Long postId, RehomingUpdateReqDto rehomingUpdateReqDto) {
         // 4-1. 게시글 존재 유무 판단
         Rehoming rehoming = rehomingReader.readRehomingById(postId);
         rehomingReader.userChk(userEmail, rehoming);
+
         // 4-2. 게시글 수정
-        CategoryGroup category = rehomingReader.readCategoryById(rehomingCommand.getCategory());
-        PetCategory type = rehomingReader.readPetTypeById(rehomingCommand.getType());
+        CategoryGroup category = rehomingReader.readCategoryById(rehomingUpdateReqDto.getCategory());
+        PetCategory type = rehomingReader.readPetTypeById(rehomingUpdateReqDto.getType());
         PostStatus status = rehoming.getStatus();
         User user = commonUtils.userChk(userEmail);
-        Rehoming initRehoming = rehomingCommand.toUpdateEntity(user, postId, category, type, status);
+        Rehoming initRehoming = rehomingUpdateReqDto.toUpdateEntity(user, postId, category, type, status);
         rehoming.update(initRehoming);
+
         // 4-3. 이미지 수정
-        List<MultipartFile> rehomingImg = rehomingCommand.getRehomingImg();
-        imageUploadManager.updateImage(rehomingImg, postId, PostType.REHOMING);
+        List<MultipartFile> rehomingImg = rehomingUpdateReqDto.getNewImages();
+        List<String> deletedImg = rehomingUpdateReqDto.getDeletedImgUrl();
+
+
+        imageUploadManager.updateImageNew(rehomingImg,deletedImg, postId, PostType.REHOMING);
+
         return getResDto(userEmail, postId, rehoming);
     }
 

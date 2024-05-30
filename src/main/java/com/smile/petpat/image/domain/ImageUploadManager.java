@@ -49,11 +49,49 @@ public class ImageUploadManager {
     }
 
     /* 이미지 파일 수정 */
-    public void updateImage(List<MultipartFile> multipartFiles, Long postId, PostType postType) {
+    public void updateImage(List<MultipartFile> multipartFiles,Long postId, PostType postType) {
         List<String> fakeFiles = imageUploader.createKey(postId, postType);
         s3Uploader.deleteS3(fakeFiles, postId, postType);
         imageUploader.deleteImg(postId, postType);
         uploadPostImage(multipartFiles, postId, postType);
+    }
+
+    /* 이미지 파일 수정 - 대표이미지 삭제 & 우선순위 삽입 버전 */
+    @Transactional
+    public void updateImageNew(List<MultipartFile> newImages,List<String> deletedImgs,Long postId, PostType postType) {
+
+        if(newImages.size()==0 && deletedImgs.size()==0) return;
+
+
+        //삭제되는 이미지 삭제
+        for(String deletedImg : deletedImgs){
+            s3Uploader.deleteImage(imageUploader.getFakeFileName(deletedImg));
+            imageUploader.deleteImgByImgUrl(deletedImg);
+        }
+
+        //새로운 이미지 추가
+        List<Image> imageList = imageUploader.getImagesByPostTypeAndPostId(postType,postId);
+        System.out.println("newImages.size() == " + newImages.size());
+        for(int i=0; i< newImages.size(); i++){
+            String fakeFileName = imageUtils.generateRandomFileName(newImages.get(i).getOriginalFilename());
+            String originalFileName = newImages.get(i).getOriginalFilename();
+            String filePath = s3Uploader.uploadFile(newImages.get(i), fakeFileName);
+            System.out.println("originalFileName = " + originalFileName);
+            System.out.println("fakeFileName = " + fakeFileName);
+            System.out.println("filePath = " + filePath);
+
+//            ImagePriority priority = ImagePriority.fromIndexToPriority(imageList.size()+i+1);
+
+            Image image = imageUploader.toImageEntity(originalFileName, fakeFileName,  filePath, postId, postType);
+            imageList.add(image);
+        }
+
+
+//        imageUploader.savePostImage(imageList);
+
+        ImagePriority.setPriority(imageList);
+        imageUploader.savePostImage(imageList);
+
     }
 
     /* 게시글 삭제 이미지도 삭제 */

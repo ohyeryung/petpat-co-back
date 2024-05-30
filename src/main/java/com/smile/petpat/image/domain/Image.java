@@ -2,13 +2,14 @@ package com.smile.petpat.image.domain;
 
 import com.smile.petpat.post.category.domain.PostType;
 import lombok.Getter;
-import lombok.Setter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
 @Entity
 @Getter
 @Table(name = "TB_IMAGE")
+@NoArgsConstructor
 public class Image {
 
     @Id
@@ -35,7 +36,12 @@ public class Image {
     @Column(name = "IMAGE_PRIORITY")
     private ImagePriority priority;
 
-    public Image() {
+    public Image(String originalFileName, String fakeFileName, String filePath, Long postId, PostType postType) {
+        this.originalFileName = originalFileName;
+        this.fakeFileName = fakeFileName;
+        this.filePath = filePath;
+        this.postId = postId;
+        this.postType = postType;
     }
 
     public Image(String originalFileName, String fakeFileName, String filePath, Long postId, PostType postType, ImagePriority imagePriority) {
@@ -45,5 +51,10 @@ public class Image {
         this.postId = postId;
         this.postType = postType;
         this.priority =imagePriority;
+    }
+
+    public Image setImagePriority(ImagePriority imagePriority){
+        this.priority = imagePriority;
+        return this;
     }
 }

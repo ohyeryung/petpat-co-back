@@ -56,6 +56,7 @@ public class S3Uploader {
         }
     }
 
+
     // S3 이미지 삭제 s3
     public void deleteImage(String fileName){
         amazonS3.deleteObject(bucket, fileName);
