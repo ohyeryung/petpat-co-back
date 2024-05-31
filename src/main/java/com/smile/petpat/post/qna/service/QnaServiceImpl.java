@@ -50,12 +50,13 @@ public class QnaServiceImpl implements QnaService{
     @Override
     @Transactional
     public QnaInfo.QnaDetail updateQna(User user, Long postId, QnaCommand qnaCommand) {
+        //이미지를 제외한 Qna 게시글 수정
         Qna qna = qnaReader.userChk(postId, user.getId());
         Qna initQna = qnaCommand.toUpdateEntity(user, postId);
         qna.update(initQna);
 
-        List<MultipartFile> images = qnaCommand.getImages();
-        imageUploadManager.updateImage(images, postId, PostType.QNA);
+        //이미지 수정
+        imageUploadManager.updateImage(qnaCommand.getImages(),qnaCommand.getDeletedImgUrls(), postId,PostType.QNA);
         return getQnaInfo(postId, user, qna);
 
     }

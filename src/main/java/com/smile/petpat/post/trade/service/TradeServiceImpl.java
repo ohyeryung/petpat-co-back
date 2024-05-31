@@ -52,7 +52,7 @@ public class TradeServiceImpl implements TradeService{
         trade.update(initTrade);
 
         //이미지 수정
-        imageUploadManager.updateImageNew(tradeCommand.getImages(),tradeCommand.getDeletedImgUrls()
+        imageUploadManager.updateImage(tradeCommand.getImages(),tradeCommand.getDeletedImgUrls()
                             ,tradeId,PostType.TRADE);
         return getTradeInfo(tradeId, user, trade);
     }

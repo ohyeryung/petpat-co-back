@@ -23,8 +23,6 @@ public class ImageUploadManager {
     /** User 프로필 등록 */
     public String saveProfileImage(MultipartFile multipartFile,String originImgPath) {
         String fakeFileName = imageUtils.generateRandomFileName(multipartFile.getOriginalFilename());
-//        String originFileName = multipartFile.getOriginalFilename();
-//        String filepath = s3Uploader.uploadFile(multipartFile);
 
         //기존 프로필 이미지 삭제
         if(originImgPath!="") {  //기존 프로필 이미지가 있는 경우
@@ -51,17 +49,9 @@ public class ImageUploadManager {
         imageService.savePostImage(imageList);
     }
 
-    /* 이미지 파일 수정 */
-    public void updateImage(List<MultipartFile> multipartFiles,Long postId, PostType postType) {
-        List<String> fakeFiles = imageService.createKey(postId, postType);
-        s3Uploader.deleteS3(fakeFiles, postId, postType);
-        imageService.deleteImg(postId, postType);
-        uploadPostImage(multipartFiles, postId, postType);
-    }
-
-    /* 이미지 파일 수정 - 대표이미지 삭제 & 우선순위 삽입 버전 */
+    /* 이미지 파일 수정 - 대표이미지 삭제 & 우선순위 삽입 */
     @Transactional
-    public void updateImageNew(List<MultipartFile> newImages,List<String> deletedImgUrls,Long postId, PostType postType) {
+    public void updateImage(List<MultipartFile> newImages,List<String> deletedImgUrls,Long postId, PostType postType) {
         //삭제되거나 추가되는 이미지가 없으면 return
         //TODO: newImages에 아무것도 보내지 않았을 때 빈 Multipartfile이 1개 포함되는 문제
         //  우선 newImages.get(0)이 비어있는 지로 수정되는 이미지가 있는지 판별
