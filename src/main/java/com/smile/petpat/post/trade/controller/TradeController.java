@@ -72,10 +72,9 @@ public class  TradeController {
      */
     @Operation(summary = "중고거래 게시물 수정", description = "중고거래 게시물 수정")
     @RequestMapping(value = "/{postId}",method = RequestMethod.PUT)
-    public SuccessResponse updateTrade(@RequestBody TradeDto.CommonTrade tradeDto,
+    public SuccessResponse updateTrade(@ModelAttribute TradeDto.TradeUpdateDto tradeDto,
                                        @AuthenticationPrincipal UserDetailsImpl userDetails,
-                                       @PathVariable Long postId
-    ){
+                                       @PathVariable Long postId){
         TradeCommand tradeCommand = tradeDto.toCommand();
         return SuccessResponse.success(tradeService.updateTrade(userDetails.getUser(),postId,tradeCommand));
     }

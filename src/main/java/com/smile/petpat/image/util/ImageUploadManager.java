@@ -3,8 +3,6 @@ package com.smile.petpat.image.util;
 import com.smile.petpat.image.domain.Image;
 import com.smile.petpat.image.domain.ImagePriority;
 import com.smile.petpat.image.service.ImageService;
-import com.smile.petpat.image.util.ImageUtils;
-import com.smile.petpat.image.util.S3Uploader;
 import com.smile.petpat.post.category.domain.PostType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;

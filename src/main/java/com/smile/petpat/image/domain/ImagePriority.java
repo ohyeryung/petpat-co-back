@@ -1,7 +1,5 @@
 package com.smile.petpat.image.domain;
 
-import java.util.List;
-
 public enum ImagePriority {
     PRIORITY_1(1),
     PRIORITY_2(2),

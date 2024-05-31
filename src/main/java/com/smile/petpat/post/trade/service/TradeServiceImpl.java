@@ -45,13 +45,15 @@ public class TradeServiceImpl implements TradeService{
     @Override
     @Transactional
     public TradeInfo.TradeDetail updateTrade( User user,Long tradeId,TradeCommand tradeCommand) {
+        //이미지를 제외한 게시글 수정
         Trade trade = tradeReader.userChk(tradeId, user.getId());
         TradeCategoryDetail categoryDetail = tradeReader.readTradeCategoryDetailById(tradeCommand.getTradeCategoryDetailId());
         Trade initTrade = tradeCommand.toUpdateEntity(user,tradeId,categoryDetail);
         trade.update(initTrade);
 
-        List<MultipartFile> images = tradeCommand.getImages();
-        imageUploadManager.updateImage(images,tradeId,PostType.TRADE);
+        //이미지 수정
+        imageUploadManager.updateImageNew(tradeCommand.getImages(),tradeCommand.getDeletedImgUrls()
+                            ,tradeId,PostType.TRADE);
         return getTradeInfo(tradeId, user, trade);
     }
 
