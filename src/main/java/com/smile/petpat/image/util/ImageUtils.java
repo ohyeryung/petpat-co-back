@@ -4,15 +4,20 @@ import com.smile.petpat.common.exception.CustomException;
 import com.smile.petpat.common.response.ErrorCode;
 import com.smile.petpat.image.domain.Image;
 import com.smile.petpat.image.domain.ImagePriority;
+import com.smile.petpat.post.category.domain.PostType;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.*;
 
 
 @Component
+@RequiredArgsConstructor
 public class ImageUtils {
     private static final Set<String> VALID_EXTENSIONS = new HashSet<>(Arrays.asList("gif", "png", "jpg", "jpeg",
                                                                                     "GIF", "PNG", "JPG", "JPEG"));
+    private  final S3Uploader s3Uploader;
 
     /* 파일명 난수화 */
     public String generateRandomFileName(String fileName) {
@@ -48,6 +53,14 @@ public class ImageUtils {
         }
 
         return images;
+    }
+    /*MultipartFile 을 Image Entity 형태로 변경*/
+    Image toImageEntity(Long postId, PostType postType, MultipartFile multipartFile) {
+        String fakeFileName = generateRandomFileName(multipartFile.getOriginalFilename());
+        String originalFileName = multipartFile.getOriginalFilename();
+        String filePath = s3Uploader.uploadFile(multipartFile, fakeFileName);
+
+        return new Image(originalFileName, fakeFileName,  filePath, postId, postType);
     }
 
 

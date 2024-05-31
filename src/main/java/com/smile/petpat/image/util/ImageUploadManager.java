@@ -35,19 +35,16 @@ public class ImageUploadManager {
     @Transactional
     public void uploadPostImage(List<MultipartFile> multipartFiles, Long postId, PostType postType) {
         List<Image> imageList = new ArrayList<>();
-        for (int i = 0; i < multipartFiles.size(); i++) {
-            String fakeFileName = imageUtils.generateRandomFileName(multipartFiles.get(i).getOriginalFilename());
-            String originalFileName = multipartFiles.get(i).getOriginalFilename();
-            String filePath = s3Uploader.uploadFile(multipartFiles.get(i), fakeFileName);
-
-            //이미지 리스트의 순서에 따라 이미지의 우선순위 결정
-            ImagePriority priority = ImagePriority.fromIndexToPriority(i+1);
-
-            Image image = new Image(originalFileName, fakeFileName,  filePath, postId, postType,priority);
-            imageList.add(image);
+        for (MultipartFile multipartFile : multipartFiles) {
+            imageList.add(imageUtils.toImageEntity(postId, postType, multipartFile));
         }
+
+        //ImageList 의 배열순서에 따라 우선순위 부여
+        imageUtils.setPriority(imageList);
         imageService.savePostImage(imageList);
     }
+
+
 
     /* 이미지 파일 수정 - 대표이미지 삭제 & 우선순위 삽입 */
     @Transactional
@@ -69,12 +66,7 @@ public class ImageUploadManager {
         //기존의 ImageList 에 추가되는 image 삽입
         List<Image> imageList = imageService.getImagesByPostTypeAndPostId(postType,postId);
         for(MultipartFile newImage : newImages){
-            String fakeFileName = imageUtils.generateRandomFileName(newImage.getOriginalFilename());
-            String originalFileName = newImage.getOriginalFilename();
-            String filePath = s3Uploader.uploadFile(newImage, fakeFileName);
-
-            Image image = new Image(originalFileName, fakeFileName, filePath, postId, postType);
-            imageList.add(image);
+            imageList.add(imageUtils.toImageEntity(postId, postType, newImage));
         }
 
         //ImageList 의 배열순서에 따라 우선순위 부여

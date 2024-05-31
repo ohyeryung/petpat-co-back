@@ -25,15 +25,10 @@ import static com.smile.petpat.common.response.ErrorCode.FAILED_UPLOAD_IMAGE;
 @Slf4j
 @RequiredArgsConstructor
 @Component
-@Service
 public class S3Uploader {
-
-    private final AmazonS3Client amazonS3Client;
-    private final AmazonS3 amazonS3;
-    private final ImageUtils imageUtils;
-
+    private  final AmazonS3 amazonS3;
     @Value("${cloud.aws.s3.bucket}")
-    private String bucket;
+    private  String bucket;
 
     public String uploadFile(MultipartFile file, String fakeFileName){
 
