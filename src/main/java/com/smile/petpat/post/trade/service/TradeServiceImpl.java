@@ -1,7 +1,7 @@
 package com.smile.petpat.post.trade.service;
 
-import com.smile.petpat.image.domain.ImageUploadManager;
-import com.smile.petpat.image.domain.ImageUploader;
+import com.smile.petpat.image.util.ImageUploadManager;
+import com.smile.petpat.image.service.ImageService;
 import com.smile.petpat.post.category.domain.PostType;
 import com.smile.petpat.post.category.domain.TradeCategoryDetail;
 import com.smile.petpat.post.common.CommonUtils;
@@ -25,7 +25,7 @@ public class TradeServiceImpl implements TradeService{
     private final TradeStore  tradeStore;
     private final TradeReader tradeReader;
     private final ImageUploadManager imageUploadManager;
-    private final ImageUploader imageUploader;
+    private final ImageService imageService;
     private final CommonUtils commonUtils;
 
     @Override
@@ -64,7 +64,7 @@ public class TradeServiceImpl implements TradeService{
 
     @Override
     public TradeInfo.TradeDetail tradeDetail(Long tradeId) {
-        List<String> imgList = imageUploader.readImgList(tradeId, PostType.TRADE);
+        List<String> imgList = imageService.readImgList(tradeId, PostType.TRADE);
         Trade trade = tradeReader.readTradeById(tradeId);
 
         // 조회수 계산
@@ -77,7 +77,7 @@ public class TradeServiceImpl implements TradeService{
         Trade trade = tradeReader.readTradeById(tradeId);
         trade.updateViewCnt(trade);
         TradeInfo.TradeDetail tradeDetail = tradeReader.readTradeDetail(user.getId(), tradeId);
-        List<String> imageList = imageUploader.readImgList(tradeId,trade.getPostType());
+        List<String> imageList = imageService.readImgList(tradeId,trade.getPostType());
         // 조회수 계산
         return new TradeInfo.TradeDetail(tradeDetail,imageList);
 
@@ -99,7 +99,7 @@ public class TradeServiceImpl implements TradeService{
     }
 
     private TradeInfo.TradeDetail getTradeInfo(Long tradeId, User user, Trade trade) {
-        List<String> imgList = imageUploader.readImgList(tradeId, PostType.TRADE);
+        List<String> imgList = imageService.readImgList(tradeId, PostType.TRADE);
         return new TradeInfo.TradeDetail();
     }
 

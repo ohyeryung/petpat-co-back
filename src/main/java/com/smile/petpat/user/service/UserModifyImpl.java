@@ -2,7 +2,7 @@ package com.smile.petpat.user.service;
 
 import com.smile.petpat.common.exception.CustomException;
 import com.smile.petpat.common.response.ErrorCode;
-import com.smile.petpat.image.domain.ImageUploadManager;
+import com.smile.petpat.image.util.ImageUploadManager;
 import com.smile.petpat.user.domain.User;
 import com.smile.petpat.user.domain.UserCommand;
 import com.smile.petpat.user.domain.UserModify;

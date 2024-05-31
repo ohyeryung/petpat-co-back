@@ -1,13 +1,12 @@
-package com.smile.petpat.image.domain;
+package com.smile.petpat.image.util;
 
 import com.smile.petpat.common.exception.CustomException;
 import com.smile.petpat.common.response.ErrorCode;
+import com.smile.petpat.image.domain.Image;
+import com.smile.petpat.image.domain.ImagePriority;
 import org.springframework.stereotype.Component;
 
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
 
 @Component
@@ -39,4 +38,17 @@ public class ImageUtils {
             throw new CustomException(ErrorCode.WRONG_TYPE_IMAGE);
         }
     }
+    /* 이미지 우선순위 부여 로직 & 사진 최대 갯수 체크*/
+    public static List<Image> setPriority(List<Image> images){
+        if(images.size()>5) throw new IllegalArgumentException("사진은 최대 5장까지 저장 가능합니다");
+
+        for(int i=0; i<images.size(); i++){
+            ImagePriority priority = ImagePriority.fromIndexToPriority(i+1);
+            images.get(i).setImagePriority(priority);
+        }
+
+        return images;
+    }
+
+
 }

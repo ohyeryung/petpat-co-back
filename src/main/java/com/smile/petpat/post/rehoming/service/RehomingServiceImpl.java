@@ -1,7 +1,7 @@
 package com.smile.petpat.post.rehoming.service;
 
-import com.smile.petpat.image.domain.ImageUploadManager;
-import com.smile.petpat.image.domain.ImageUploader;
+import com.smile.petpat.image.util.ImageUploadManager;
+import com.smile.petpat.image.service.ImageService;
 import com.smile.petpat.post.category.domain.CategoryGroup;
 import com.smile.petpat.post.category.domain.PetCategory;
 import com.smile.petpat.post.category.domain.PostType;
@@ -26,7 +26,7 @@ import java.util.List;
 @Service
 public class RehomingServiceImpl implements RehomingService {
     private final ImageUploadManager imageUploadManager;
-    private final ImageUploader imageUploader;
+    private final ImageService imageService;
     private final RehomingReader rehomingReader;
     private final RehomingStore rehomingStore;
     private final CommonUtils commonUtils;
@@ -77,7 +77,7 @@ public class RehomingServiceImpl implements RehomingService {
         Rehoming rehoming = rehomingReader.readRehomingById(postId);
         // 조회수 계산
         rehoming.updateViewCnt(rehoming);
-        List<String> imgList = imageUploader.readImgList(postId, PostType.REHOMING);
+        List<String> imgList = imageService.readImgList(postId, PostType.REHOMING);
         return new RehomingResDto(rehoming, imgList,
                 commonUtils.getLikesCnt(postId, PostType.REHOMING));
     }
@@ -120,7 +120,7 @@ public class RehomingServiceImpl implements RehomingService {
     }
 
     private RehomingResDto getResDto(String userEmail, Long postId, Rehoming rehoming) {
-        List<String> imgList = imageUploader.readImgList(postId, PostType.REHOMING);
+        List<String> imgList = imageService.readImgList(postId, PostType.REHOMING);
         return new RehomingResDto(rehoming, imgList,
                 commonUtils.LikePostChk(postId, PostType.REHOMING, userEmail),
                 commonUtils.BookmarkPostChk(postId, PostType.REHOMING, userEmail),
