@@ -44,15 +44,6 @@ public class Image {
         this.postType = postType;
     }
 
-    public Image(String originalFileName, String fakeFileName, String filePath, Long postId, PostType postType, ImagePriority imagePriority) {
-        this.originalFileName = originalFileName;
-        this.fakeFileName = fakeFileName;
-        this.filePath = filePath;
-        this.postId = postId;
-        this.postType = postType;
-        this.priority =imagePriority;
-    }
-
     public Image setImagePriority(ImagePriority imagePriority){
         this.priority = imagePriority;
         return this;
