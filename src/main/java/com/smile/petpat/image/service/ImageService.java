@@ -3,10 +3,12 @@ package com.smile.petpat.image.service;
 import com.smile.petpat.image.domain.Image;
 import com.smile.petpat.image.repository.ImageRepository;
 import com.smile.petpat.post.category.domain.PostType;
+import com.smile.petpat.post.rehoming.dto.RehomingResDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -39,6 +41,18 @@ public class ImageService {
     public List<String> readImgList(Long postId, PostType postType) {
         List<Image> images = imageRepository.findAllByPostIdAndPostTypeOrderByPostId(postId, postType);
         return images.stream().map(Image::getFilePath).collect(Collectors.toList());
+    }
+
+    @Transactional
+    public List<RehomingResDto.ImageResDto> readImgListNew(Long postId, PostType postType) {
+        List<Image> images = imageRepository.findAllByPostIdAndPostTypeOrderByPostId(postId, postType);
+        List<RehomingResDto.ImageResDto> imageResDtoList= new ArrayList<>();
+        for(Image image : images){
+            RehomingResDto.ImageResDto imageResDto =new RehomingResDto.ImageResDto(image.getImageId(),
+                    image.getFilePath());
+            imageResDtoList.add(imageResDto);
+        }
+        return imageResDtoList;
     }
 
     //이미지 url로 image의 FakeFileName 추출

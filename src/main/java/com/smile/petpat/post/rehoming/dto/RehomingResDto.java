@@ -5,6 +5,7 @@ import com.smile.petpat.post.common.CalculateTime;
 import com.smile.petpat.post.common.status.PostStatus;
 import com.smile.petpat.post.rehoming.domain.Rehoming;
 import com.smile.petpat.post.rehoming.domain.RehomingCommand;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -19,7 +20,7 @@ public class RehomingResDto {
     private PostType postType;
     private Long userId;
     private String nickname;
-    private List<String> imageList;
+    private List<ImageResDto> imageList;
     private String title;
     private String content;
     private String petName;
@@ -118,7 +119,7 @@ public class RehomingResDto {
     }
 
     // 회원 조회 시
-    public RehomingResDto(Rehoming rehoming, List<String> imageList, boolean isLiked, boolean isBookmarked, int likeCnt) {
+    public RehomingResDto(Rehoming rehoming, List<ImageResDto> imageList, boolean isLiked, boolean isBookmarked, int likeCnt) {
         this.postId = rehoming.getRehomingId();
         this.postType = rehoming.getPostType();
         this.userId = rehoming.getUser().getId();
@@ -151,7 +152,7 @@ public class RehomingResDto {
     }
 
     // 비회원 조회 시
-    public RehomingResDto(Rehoming rehoming, List<String> imageList, int likeCnt) {
+    public RehomingResDto(Rehoming rehoming, List<ImageResDto> imageList, int likeCnt) {
         this.postId = rehoming.getRehomingId();
         this.postType = rehoming.getPostType();
         this.userId = rehoming.getUser().getId();
@@ -181,5 +182,13 @@ public class RehomingResDto {
         this.fpv = rehoming.isFpv();
         this.felv = rehoming.isFelv();
         this.isNeutralized = rehoming.isNeutralized();
+    }
+
+    @NoArgsConstructor
+    @AllArgsConstructor
+    @Getter
+    public static class ImageResDto{
+        private Long imageId;
+        private String imagePath;
     }
 }

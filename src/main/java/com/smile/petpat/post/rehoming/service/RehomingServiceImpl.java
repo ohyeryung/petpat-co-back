@@ -77,7 +77,7 @@ public class RehomingServiceImpl implements RehomingService {
         Rehoming rehoming = rehomingReader.readRehomingById(postId);
         // 조회수 계산
         rehoming.updateViewCnt(rehoming);
-        List<String> imgList = imageService.readImgList(postId, PostType.REHOMING);
+        List<RehomingResDto.ImageResDto> imgList = imageService.readImgListNew(postId, PostType.REHOMING);
         return new RehomingResDto(rehoming, imgList,
                 commonUtils.getLikesCnt(postId, PostType.REHOMING));
     }
@@ -120,7 +120,7 @@ public class RehomingServiceImpl implements RehomingService {
     }
 
     private RehomingResDto getResDto(String userEmail, Long postId, Rehoming rehoming) {
-        List<String> imgList = imageService.readImgList(postId, PostType.REHOMING);
+        List<RehomingResDto.ImageResDto> imgList = imageService.readImgListNew(postId, PostType.REHOMING);
         return new RehomingResDto(rehoming, imgList,
                 commonUtils.LikePostChk(postId, PostType.REHOMING, userEmail),
                 commonUtils.BookmarkPostChk(postId, PostType.REHOMING, userEmail),
