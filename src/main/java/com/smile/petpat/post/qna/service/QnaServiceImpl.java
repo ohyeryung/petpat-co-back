@@ -1,14 +1,10 @@
 package com.smile.petpat.post.qna.service;
 
-import com.smile.petpat.image.domain.ImageUploadManager;
-import com.smile.petpat.image.domain.ImageUploader;
+import com.smile.petpat.image.util.ImageUploadManager;
+import com.smile.petpat.image.service.ImageService;
 import com.smile.petpat.post.category.domain.PostType;
 import com.smile.petpat.post.common.CommonUtils;
 import com.smile.petpat.post.qna.domain.*;
-import com.smile.petpat.post.qna.repository.QnaRepository;
-import com.smile.petpat.post.rehoming.dto.RehomingPagingDto;
-import com.smile.petpat.post.trade.domain.Trade;
-import com.smile.petpat.post.trade.domain.TradeInfo;
 import com.smile.petpat.user.domain.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -26,7 +22,7 @@ public class QnaServiceImpl implements QnaService{
     private final QnaStore qnaStore;
     private final QnaReader qnaReader;
     private final CommonUtils commonUtils;
-    private final ImageUploader imageUploader;
+    private final ImageService imageService;
     private final ImageUploadManager imageUploadManager;
 
     @Override
@@ -54,12 +50,13 @@ public class QnaServiceImpl implements QnaService{
     @Override
     @Transactional
     public QnaInfo.QnaDetail updateQna(User user, Long postId, QnaCommand qnaCommand) {
+        //이미지를 제외한 Qna 게시글 수정
         Qna qna = qnaReader.userChk(postId, user.getId());
         Qna initQna = qnaCommand.toUpdateEntity(user, postId);
         qna.update(initQna);
 
-        List<MultipartFile> images = qnaCommand.getImages();
-        imageUploadManager.updateImage(images, postId, PostType.QNA);
+        //이미지 수정
+        imageUploadManager.updateImage(qnaCommand.getImages(),qnaCommand.getDeletedImgUrls(), postId,PostType.QNA);
         return getQnaInfo(postId, user, qna);
 
     }
@@ -74,7 +71,7 @@ public class QnaServiceImpl implements QnaService{
         qna.updateViewCnt(qna);
 
         QnaInfo.QnaDetail qnaDetail = qnaReader.readQnaDetail(postId);
-        List<String> imageList = imageUploader.readImgList(postId, qna.getPostType());
+        List<String> imageList = imageService.readImgList(postId, qna.getPostType());
 
         return new QnaInfo.QnaDetail(qnaDetail, imageList);
     }
@@ -87,7 +84,7 @@ public class QnaServiceImpl implements QnaService{
     }
 
     private QnaInfo.QnaDetail getQnaInfo(Long postId, User user, Qna qna) {
-        List<String> imgList = imageUploader.readImgList(postId, PostType.QNA);
+        List<String> imgList = imageService.readImgList(postId, PostType.QNA);
         return new QnaInfo.QnaDetail();
     }
 

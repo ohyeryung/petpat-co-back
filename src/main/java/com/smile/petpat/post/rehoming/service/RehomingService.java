@@ -4,6 +4,7 @@ import com.smile.petpat.post.rehoming.domain.RehomingCommand;
 import com.smile.petpat.post.rehoming.domain.RehomingInfo;
 import com.smile.petpat.post.rehoming.dto.RehomingPagingDto;
 import com.smile.petpat.post.rehoming.dto.RehomingResDto;
+import com.smile.petpat.post.rehoming.dto.RehomingUpdateReqDto;
 import com.smile.petpat.user.domain.User;
 import org.springframework.data.domain.Pageable;
 
@@ -20,7 +21,10 @@ public interface RehomingService {
 
     RehomingResDto detailRehoming(Long postId);
 
-    RehomingResDto updateRehoming(String userEmail, Long postId, RehomingCommand rehomingCommand);
+//    RehomingResDto updateRehoming(String userEmail, Long postId, RehomingCommand rehomingCommand);
+
+    // 4. 분양 글 수정
+    RehomingResDto updateRehoming(String userEmail, Long postId, RehomingUpdateReqDto rehomingUpdateReqDto);
 
     void deleteRehoming(String userEmail, Long postId);
 

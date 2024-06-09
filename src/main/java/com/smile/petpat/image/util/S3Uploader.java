@@ -1,4 +1,4 @@
-package com.smile.petpat.image.domain;
+package com.smile.petpat.image.util;
 
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3Client;
@@ -6,6 +6,7 @@ import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.smile.petpat.common.exception.CustomException;
+import com.smile.petpat.image.util.ImageUtils;
 import com.smile.petpat.post.category.domain.PostType;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -24,15 +25,10 @@ import static com.smile.petpat.common.response.ErrorCode.FAILED_UPLOAD_IMAGE;
 @Slf4j
 @RequiredArgsConstructor
 @Component
-@Service
 public class S3Uploader {
-
-    private final AmazonS3Client amazonS3Client;
-    private final AmazonS3 amazonS3;
-    private final ImageUtils imageUtils;
-
+    private  final AmazonS3 amazonS3;
     @Value("${cloud.aws.s3.bucket}")
-    private String bucket;
+    private  String bucket;
 
     public String uploadFile(MultipartFile file, String fakeFileName){
 
@@ -55,6 +51,7 @@ public class S3Uploader {
             deleteImage(img);
         }
     }
+
 
     // S3 이미지 삭제 s3
     public void deleteImage(String fileName){

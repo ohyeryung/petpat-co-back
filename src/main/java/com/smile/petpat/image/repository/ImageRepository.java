@@ -10,4 +10,8 @@ public interface ImageRepository extends JpaRepository<Image,Long> {
     List<Image> findAllByPostIdAndPostTypeOrderByPostId(Long postId, PostType postType);
     void deleteByPostIdAndPostType(Long postId, PostType postType);
     Image findTop1ByPostIdAndPostTypeOrderByImageIdAsc(Long postId, PostType postType);
+
+    Image findByFilePath(String filepath);
+
+    void deleteByFilePath(String filepath);
 }

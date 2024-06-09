@@ -82,4 +82,48 @@ public class TradeDto {
         }
     }
 
+    @Getter
+    @Setter
+    @ToString
+    public static class TradeUpdateDto{
+        @NotBlank(message = "제목은 필수값입니다.")
+        private String title;
+        @NotBlank(message = "내용은 필수값입니다.")
+        private String content;
+        @NotNull(message = "가격은 필수값입니다.")
+        private Long price;
+        @NotNull(message = "시도군명은 필수값입니다.")
+        private String cityName;
+        @NotNull(message = "시도군명은 필수값입니다.")
+        private String cityCountryName;
+        @NotNull(message = "시도군명은 필수값입니다.")
+        private String townShipName;
+        @NotNull(message = "시도군명은 필수값입니다.")
+        private String detailAdName;
+        @NotNull(message = "시도군명은 필수값입니다.")
+        private String fullAdName;
+        @NotNull(message = "카테고리는 필수값입니다.")
+        private Long tradeCategoryDetailId;
+
+        private List<MultipartFile> newImages;
+        private List<String> deletedImgUrls;
+
+        public TradeCommand toCommand() {
+            return TradeCommand.builder()
+                    .title(title)
+                    .content(content)
+                    .price(price)
+                    .cityName(cityName)
+                    .cityCountryName(cityCountryName)
+                    .townShipName(townShipName)
+                    .detailAdName(detailAdName)
+                    .fullAdName(fullAdName)
+                    .tradeCategoryDetailId(tradeCategoryDetailId)
+                    .images(newImages)
+                    .deletedImgUrls(deletedImgUrls)
+                    .build();
+
+        }
+    }
+
 }

@@ -27,12 +27,13 @@ public class TradeCommand {
     private PostStatus postStatus;
     private Long tradeCategoryDetailId;
     private List<MultipartFile> images;
+    private List<String> deletedImgUrls;
 
     public TradeCommand(){
 
     }
     @Builder
-    public TradeCommand(User user, String title, String content, Long price, String cityName, String cityCountryName, String townShipName, String detailAdName, String fullAdName, Long tradeCategoryDetailId, List<MultipartFile> images) {
+    public TradeCommand(User user, String title, String content, Long price, String cityName, String cityCountryName, String townShipName, String detailAdName, String fullAdName, Long tradeCategoryDetailId, List<MultipartFile> images,List<String> deletedImgUrls) {
         this.user = user;
         this.title = title;
         this.content = content;
@@ -44,6 +45,7 @@ public class TradeCommand {
         this.fullAdName = fullAdName;
         this.tradeCategoryDetailId = tradeCategoryDetailId;
         this.images = images;
+        this.deletedImgUrls = deletedImgUrls;
     }
 
     public Trade toRegisterEntity(User user, TradeCategoryDetail tradeCategoryDetail){

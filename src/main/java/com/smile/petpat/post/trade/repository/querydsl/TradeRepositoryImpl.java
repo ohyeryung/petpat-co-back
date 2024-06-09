@@ -5,15 +5,14 @@ import com.querydsl.core.types.ExpressionUtils;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import com.smile.petpat.image.domain.ImagePriority;
 import com.smile.petpat.post.category.domain.PostType;
-import com.smile.petpat.post.rehoming.domain.RehomingInfo;
 import com.smile.petpat.post.trade.domain.TradeInfo;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 
 import javax.persistence.EntityManager;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -101,7 +100,7 @@ public class TradeRepositoryImpl implements TradeRepositoryQueryDsl{
                                                         .where(
                                                                 image.postId.eq(trade.tradeId)
                                                                         .and(image.postType.eq(PostType.TRADE))
-                                                                        .and(image.repImgNY.eq(true))
+                                                                        .and(image.priority.eq(ImagePriority.PRIORITY_1))
                                                         )
                                                 ,"image"),
                                         trade.title,
@@ -207,7 +206,7 @@ public class TradeRepositoryImpl implements TradeRepositoryQueryDsl{
                                                          .where(
                                                                  image.postId.eq(trade.tradeId)
                                                                          .and(image.postType.eq(PostType.TRADE))
-                                                                         .and(image.repImgNY.eq(true))
+                                                                         .and(image.priority.eq(ImagePriority.PRIORITY_1))
                                                          )
                                                  ,"imagePath"),
                                          trade.title,
