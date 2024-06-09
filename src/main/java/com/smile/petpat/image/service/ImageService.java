@@ -60,6 +60,11 @@ public class ImageService {
         return imageRepository.findByFilePath(imageUrl).getFakeFileName();
     }
 
+    //이미지 Id로 image의 FakeFileName 추출
+    public String getFakeFileNameByImageId(Long imageId){
+        return imageRepository.findById(imageId).get().getFakeFileName();
+    }
+
     //해당 postType 과 postId에 해당하는 이미지 모두 추출
     public List<Image> getImagesByPostTypeAndPostId(PostType postType,Long postId){
         return imageRepository.findAllByPostIdAndPostTypeOrderByPostId(postId,postType);
@@ -68,6 +73,11 @@ public class ImageService {
     //로컬DB 이미지 삭제 by ImageUrl
     public void deleteImgByImgUrl(String filePath){
         imageRepository.deleteByFilePath(filePath);
+    }
+
+    //로컬DB 이미지 삭제 by Id
+    public void deleteImgByImageId(Long imageId){
+        imageRepository.deleteById(imageId);
     }
 
 }

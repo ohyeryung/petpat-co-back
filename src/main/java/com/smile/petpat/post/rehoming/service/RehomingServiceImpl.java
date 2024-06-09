@@ -99,9 +99,9 @@ public class RehomingServiceImpl implements RehomingService {
 
         // 4-3. 이미지 수정
         List<MultipartFile> newImages = rehomingUpdateReqDto.getNewImages();
-        List<String> deletedImgUrls = rehomingUpdateReqDto.getDeletedImgUrl();
+        List<Long> deletedImageIds = rehomingUpdateReqDto.getDeletedImageIds();
 
-        imageUploadManager.updateImage(newImages,deletedImgUrls, postId, PostType.REHOMING);
+        imageUploadManager.updateImageNew(newImages,deletedImageIds, postId, PostType.REHOMING);
 
         return getResDto(userEmail, postId, rehoming);
     }

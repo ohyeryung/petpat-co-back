@@ -74,6 +74,40 @@ public class ImageUploadManager {
         imageService.savePostImage(imageList);
     }
 
+    /* 이미지 파일 수정 - 대표이미지 삭제 & 우선순위 삽입 */
+    @Transactional
+    public void updateImageNew(List<MultipartFile> newImages,List<Long> deletedImageIds,Long postId, PostType postType) {
+        //삭제되거나 추가되는 이미지가 없으면 return
+        //TODO: newImages에 아무것도 보내지 않았을 때 빈 Multipartfile이 1개 포함되는 문제
+        //  우선 newImages.get(0)이 비어있는 지로 수정되는 이미지가 있는지 판별
+        //  원인 파악 필요
+        if(newImages.get(0).isEmpty() && deletedImageIds.size()==0) return;
+
+        //삭제되는 이미지 삭제
+        for(Long deletedImageId : deletedImageIds){
+            System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@");
+            System.out.println(deletedImageId);
+            String fakeFileName =imageService.getFakeFileNameByImageId(deletedImageId);
+
+            System.out.println(fakeFileName);
+
+            s3Uploader.deleteImage(fakeFileName);
+            imageService.deleteImgByImageId(deletedImageId);
+        }
+
+        if(newImages.get(0).isEmpty()) return;
+
+        //기존의 ImageList 에 추가되는 image 삽입
+        List<Image> imageList = imageService.getImagesByPostTypeAndPostId(postType,postId);
+        for(MultipartFile newImage : newImages){
+            imageList.add(imageUtils.toImageEntity(postId, postType, newImage));
+        }
+
+        //ImageList 의 배열순서에 따라 우선순위 부여
+        imageUtils.setPriority(imageList);
+        imageService.savePostImage(imageList);
+    }
+
     /* 게시글 삭제 이미지도 삭제 */
     public void removePostImage(Long postId, PostType postType) {
         List<String> fakeFiles = imageService.createKey(postId, postType);
