@@ -37,15 +37,9 @@ public class ImageService {
     }
 
 
-    // 게시글 이미지 url 리스트 추출 method
+    //게시글 이미지 list의 url과 Id 추출 method
     @Transactional
-    public List<String> readImgList(Long postId, PostType postType) {
-        List<Image> images = imageRepository.findAllByPostIdAndPostTypeOrderByPostId(postId, postType);
-        return images.stream().map(Image::getFilePath).collect(Collectors.toList());
-    }
-
-    @Transactional
-    public List<ImageResDto> readImgListNew(Long postId, PostType postType) {
+    public List<ImageResDto> readImgList(Long postId, PostType postType) {
         List<Image> images = imageRepository.findAllByPostIdAndPostTypeOrderByPostId(postId, postType);
         List<ImageResDto> imageResDtoList= new ArrayList<>();
         for(Image image : images){

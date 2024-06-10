@@ -57,7 +57,7 @@ public class QnaServiceImpl implements QnaService{
         qna.update(initQna);
 
         //이미지 수정
-        imageUploadManager.updateImageNew(qnaCommand.getImages(),qnaCommand.getDeletedImageId(), postId,PostType.QNA);
+        imageUploadManager.updateImage(qnaCommand.getImages(),qnaCommand.getDeletedImageId(), postId,PostType.QNA);
         return getQnaInfo(postId, user, qna);
 
     }
@@ -72,7 +72,7 @@ public class QnaServiceImpl implements QnaService{
         qna.updateViewCnt(qna);
 
         QnaInfo.QnaDetail qnaDetail = qnaReader.readQnaDetail(postId);
-        List<ImageResDto> imageList = imageService.readImgListNew(postId, qna.getPostType());
+        List<ImageResDto> imageList = imageService.readImgList(postId, qna.getPostType());
 
         return new QnaInfo.QnaDetail(qnaDetail, imageList);
     }
@@ -85,7 +85,7 @@ public class QnaServiceImpl implements QnaService{
     }
 
     private QnaInfo.QnaDetail getQnaInfo(Long postId, User user, Qna qna) {
-        List<String> imgList = imageService.readImgList(postId, PostType.QNA);
+        List<ImageResDto> imgList = imageService.readImgList(postId, PostType.QNA);
         return new QnaInfo.QnaDetail();
     }
 

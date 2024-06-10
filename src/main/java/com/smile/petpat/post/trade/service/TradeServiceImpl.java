@@ -53,7 +53,7 @@ public class TradeServiceImpl implements TradeService{
         trade.update(initTrade);
 
         //이미지 수정
-        imageUploadManager.updateImageNew(tradeCommand.getImages(),tradeCommand.getDeletedImageId()
+        imageUploadManager.updateImage(tradeCommand.getImages(),tradeCommand.getDeletedImageId()
                             ,tradeId,PostType.TRADE);
         return getTradeInfo(tradeId, user, trade);
     }
@@ -67,7 +67,7 @@ public class TradeServiceImpl implements TradeService{
 
     @Override
     public TradeInfo.TradeDetail tradeDetail(Long tradeId) {
-        List<String> imgList = imageService.readImgList(tradeId, PostType.TRADE);
+        List<ImageResDto> imgList = imageService.readImgList(tradeId, PostType.TRADE);
         Trade trade = tradeReader.readTradeById(tradeId);
 
         // 조회수 계산
@@ -80,7 +80,7 @@ public class TradeServiceImpl implements TradeService{
         Trade trade = tradeReader.readTradeById(tradeId);
         trade.updateViewCnt(trade);
         TradeInfo.TradeDetail tradeDetail = tradeReader.readTradeDetail(user.getId(), tradeId);
-        List<ImageResDto> imageList = imageService.readImgListNew(tradeId,trade.getPostType());
+        List<ImageResDto> imageList = imageService.readImgList(tradeId,trade.getPostType());
         // 조회수 계산
         return new TradeInfo.TradeDetail(tradeDetail,imageList);
 
@@ -102,7 +102,7 @@ public class TradeServiceImpl implements TradeService{
     }
 
     private TradeInfo.TradeDetail getTradeInfo(Long tradeId, User user, Trade trade) {
-        List<String> imgList = imageService.readImgList(tradeId, PostType.TRADE);
+        List<ImageResDto> imgList = imageService.readImgList(tradeId, PostType.TRADE);
         return new TradeInfo.TradeDetail();
     }
 

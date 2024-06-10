@@ -45,38 +45,9 @@ public class ImageUploadManager {
     }
 
 
-
     /* 이미지 파일 수정 - 대표이미지 삭제 & 우선순위 삽입 */
     @Transactional
-    public void updateImage(List<MultipartFile> newImages,List<String> deletedImgUrls,Long postId, PostType postType) {
-        //삭제되거나 추가되는 이미지가 없으면 return
-        //TODO: newImages에 아무것도 보내지 않았을 때 빈 Multipartfile이 1개 포함되는 문제
-        //  우선 newImages.get(0)이 비어있는 지로 수정되는 이미지가 있는지 판별
-        //  원인 파악 필요
-        if(newImages.get(0).isEmpty() && deletedImgUrls.size()==0) return;
-
-        //삭제되는 이미지 삭제
-        for(String deletedImgUrl : deletedImgUrls){
-            s3Uploader.deleteImage(imageService.getFakeFileNameByImageUrl(deletedImgUrl));
-            imageService.deleteImgByImgUrl(deletedImgUrl);
-        }
-
-        if(newImages.get(0).isEmpty()) return;
-
-        //기존의 ImageList 에 추가되는 image 삽입
-        List<Image> imageList = imageService.getImagesByPostTypeAndPostId(postType,postId);
-        for(MultipartFile newImage : newImages){
-            imageList.add(imageUtils.toImageEntity(postId, postType, newImage));
-        }
-
-        //ImageList 의 배열순서에 따라 우선순위 부여
-        imageUtils.setPriority(imageList);
-        imageService.savePostImage(imageList);
-    }
-
-    /* 이미지 파일 수정 - 대표이미지 삭제 & 우선순위 삽입 */
-    @Transactional
-    public void updateImageNew(List<MultipartFile> newImages,List<Long> deletedImageIds,Long postId, PostType postType) {
+    public void updateImage(List<MultipartFile> newImages,List<Long> deletedImageIds,Long postId, PostType postType) {
         //삭제되거나 추가되는 이미지가 없으면 return
         //TODO: newImages에 아무것도 보내지 않았을 때 빈 Multipartfile이 1개 포함되는 문제
         //  우선 newImages.get(0)이 비어있는 지로 수정되는 이미지가 있는지 판별
