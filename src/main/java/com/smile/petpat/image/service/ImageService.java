@@ -1,6 +1,7 @@
 package com.smile.petpat.image.service;
 
 import com.smile.petpat.image.domain.Image;
+import com.smile.petpat.image.dto.ImageResDto;
 import com.smile.petpat.image.repository.ImageRepository;
 import com.smile.petpat.post.category.domain.PostType;
 import com.smile.petpat.post.rehoming.dto.RehomingResDto;
@@ -44,11 +45,11 @@ public class ImageService {
     }
 
     @Transactional
-    public List<RehomingResDto.ImageResDto> readImgListNew(Long postId, PostType postType) {
+    public List<ImageResDto> readImgListNew(Long postId, PostType postType) {
         List<Image> images = imageRepository.findAllByPostIdAndPostTypeOrderByPostId(postId, postType);
-        List<RehomingResDto.ImageResDto> imageResDtoList= new ArrayList<>();
+        List<ImageResDto> imageResDtoList= new ArrayList<>();
         for(Image image : images){
-            RehomingResDto.ImageResDto imageResDto =new RehomingResDto.ImageResDto(image.getImageId(),
+            ImageResDto imageResDto =new ImageResDto(image.getImageId(),
                     image.getFilePath());
             imageResDtoList.add(imageResDto);
         }

@@ -85,12 +85,7 @@ public class ImageUploadManager {
 
         //삭제되는 이미지 삭제
         for(Long deletedImageId : deletedImageIds){
-            System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@");
-            System.out.println(deletedImageId);
             String fakeFileName =imageService.getFakeFileNameByImageId(deletedImageId);
-
-            System.out.println(fakeFileName);
-
             s3Uploader.deleteImage(fakeFileName);
             imageService.deleteImgByImageId(deletedImageId);
         }

@@ -1,5 +1,6 @@
 package com.smile.petpat.post.rehoming.dto;
 
+import com.smile.petpat.image.dto.ImageResDto;
 import com.smile.petpat.post.category.domain.PostType;
 import com.smile.petpat.post.common.CalculateTime;
 import com.smile.petpat.post.common.status.PostStatus;
@@ -15,7 +16,7 @@ import java.util.List;
 
 @Getter
 @NoArgsConstructor
-public class RehomingResDto {
+public class RehomingResDto extends ImageResDto {
     private Long postId;
     private PostType postType;
     private Long userId;
@@ -184,11 +185,11 @@ public class RehomingResDto {
         this.isNeutralized = rehoming.isNeutralized();
     }
 
-    @NoArgsConstructor
-    @AllArgsConstructor
-    @Getter
-    public static class ImageResDto{
-        private Long imageId;
-        private String imagePath;
-    }
+//    @NoArgsConstructor
+//    @AllArgsConstructor
+//    @Getter
+//    public static class ImageResDto{
+//        private Long imageId;
+//        private String imagePath;
+//    }
 }
