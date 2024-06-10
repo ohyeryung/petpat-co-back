@@ -1,5 +1,6 @@
 package com.smile.petpat.post.trade.service;
 
+import com.smile.petpat.image.dto.ImageResDto;
 import com.smile.petpat.image.util.ImageUploadManager;
 import com.smile.petpat.image.service.ImageService;
 import com.smile.petpat.post.category.domain.PostType;
@@ -52,7 +53,7 @@ public class TradeServiceImpl implements TradeService{
         trade.update(initTrade);
 
         //이미지 수정
-        imageUploadManager.updateImage(tradeCommand.getImages(),tradeCommand.getDeletedImgUrls()
+        imageUploadManager.updateImageNew(tradeCommand.getImages(),tradeCommand.getDeletedImageId()
                             ,tradeId,PostType.TRADE);
         return getTradeInfo(tradeId, user, trade);
     }
@@ -79,7 +80,7 @@ public class TradeServiceImpl implements TradeService{
         Trade trade = tradeReader.readTradeById(tradeId);
         trade.updateViewCnt(trade);
         TradeInfo.TradeDetail tradeDetail = tradeReader.readTradeDetail(user.getId(), tradeId);
-        List<String> imageList = imageService.readImgList(tradeId,trade.getPostType());
+        List<ImageResDto> imageList = imageService.readImgListNew(tradeId,trade.getPostType());
         // 조회수 계산
         return new TradeInfo.TradeDetail(tradeDetail,imageList);
 

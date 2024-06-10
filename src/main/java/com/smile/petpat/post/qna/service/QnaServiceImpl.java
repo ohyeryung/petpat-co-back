@@ -1,5 +1,6 @@
 package com.smile.petpat.post.qna.service;
 
+import com.smile.petpat.image.dto.ImageResDto;
 import com.smile.petpat.image.util.ImageUploadManager;
 import com.smile.petpat.image.service.ImageService;
 import com.smile.petpat.post.category.domain.PostType;
@@ -56,7 +57,7 @@ public class QnaServiceImpl implements QnaService{
         qna.update(initQna);
 
         //이미지 수정
-        imageUploadManager.updateImage(qnaCommand.getImages(),qnaCommand.getDeletedImgUrls(), postId,PostType.QNA);
+        imageUploadManager.updateImageNew(qnaCommand.getImages(),qnaCommand.getDeletedImageId(), postId,PostType.QNA);
         return getQnaInfo(postId, user, qna);
 
     }
@@ -71,7 +72,7 @@ public class QnaServiceImpl implements QnaService{
         qna.updateViewCnt(qna);
 
         QnaInfo.QnaDetail qnaDetail = qnaReader.readQnaDetail(postId);
-        List<String> imageList = imageService.readImgList(postId, qna.getPostType());
+        List<ImageResDto> imageList = imageService.readImgListNew(postId, qna.getPostType());
 
         return new QnaInfo.QnaDetail(qnaDetail, imageList);
     }

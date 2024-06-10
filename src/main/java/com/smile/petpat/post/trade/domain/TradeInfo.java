@@ -1,5 +1,6 @@
 package com.smile.petpat.post.trade.domain;
 
+import com.smile.petpat.image.dto.ImageResDto;
 import com.smile.petpat.post.category.domain.PostType;
 import com.smile.petpat.post.common.CalculateTime;
 import com.smile.petpat.post.common.status.PostStatus;
@@ -27,7 +28,7 @@ public class TradeInfo {
         private String content;
         private Long price;
         private String region;
-        private List<String> imageList;
+        private List<ImageResDto> imageList;
         private PostType postType;
         private boolean isLiked;
         private boolean isBookmarked;
@@ -44,7 +45,7 @@ public class TradeInfo {
 
         public TradeDetail(Long postId, Long userId, String nickname, String title, String content, Long price,
                            String cityName, String cityCountryName, String townShipName, String detailAdName,
-                           String fullAdName, List<String> imageList, PostType postType, boolean isLiked,
+                           String fullAdName, List<ImageResDto> imageList, PostType postType, boolean isLiked,
                            boolean isBookmarked, int viewCnt, Long likeCnt, Long bookmarkCnt, String tradeCategoryDetailName, PostStatus status,LocalDateTime createdAt
         ) {
             this.postId = postId;
@@ -88,7 +89,7 @@ public class TradeInfo {
             this.createdAt = CalculateTime.dateformatForPost(createdAt);
         }
 
-        public TradeDetail(TradeDetail tradeDetail, List<String> imageList) {
+        public TradeDetail(TradeDetail tradeDetail, List<ImageResDto> imageList) {
             this.postId = tradeDetail.postId;
             this.userId = tradeDetail.userId;
             this.nickname = tradeDetail.nickname;
