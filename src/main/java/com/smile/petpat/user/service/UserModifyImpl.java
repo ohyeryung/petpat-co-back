@@ -2,7 +2,7 @@ package com.smile.petpat.user.service;
 
 import com.smile.petpat.common.exception.CustomException;
 import com.smile.petpat.common.response.ErrorCode;
-import com.smile.petpat.image.util.ImageUploadManager;
+import com.smile.petpat.image.util.ImageUtils;
 import com.smile.petpat.user.domain.User;
 import com.smile.petpat.user.domain.UserCommand;
 import com.smile.petpat.user.domain.UserModify;
@@ -21,7 +21,7 @@ import javax.transaction.Transactional;
 public class UserModifyImpl implements UserModify {
 
     private final UserRepository userRepository;
-    private final ImageUploadManager imageUploadManager;
+    private final ImageUtils imageUtils;
     private final PasswordEncoder passwordEncoder;
 
     /**프로필 수정
@@ -34,7 +34,7 @@ public class UserModifyImpl implements UserModify {
                 ()->new CustomException(ErrorCode.ILLEGAL_USER_NOT_EXIST)
         );
 
-        String filepath = imageUploadManager.saveProfileImage(request.getProfileImgFile(),
+        String filepath = imageUtils.saveProfileImage(request.getProfileImgFile(),
                 request.getProfileImgUrl());
 
         UserCommand userCommand = new UserCommand(request,filepath);
@@ -52,7 +52,7 @@ public class UserModifyImpl implements UserModify {
     public Boolean passwordCheck(String password, User user) {
         if(!passwordEncoder.matches(password, user.getPassword()))
             throw new CustomException(ErrorCode.ILLEGAL_PASSWORD_NOT_VALID);
-        return null;
+        return true;
     }
 
     /**
