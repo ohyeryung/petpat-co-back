@@ -130,7 +130,8 @@ public class RehomingResDto {
         this.category = rehoming.getCategory().getCategoryGroupName();
         this.type = rehoming.getType().getPetCategoryName();
         this.gender = rehoming.getGender();
-        this.region = rehoming.getCityName() + " " + rehoming.getCityCountryName() + " " + rehoming.getTownShipName();
+        this.region = rehoming.getAddress().getProvince() + " " + rehoming.getAddress().getCity() + " " + rehoming.getAddress().getDistrict()+" "
+        +rehoming.getAddress().getTown()+" "+rehoming.getDetailAdName();
         this.status = rehoming.getStatus();
         this.imageList = imageList;
         this.createdAt = CalculateTime.dateformatForPost(rehoming.getCreatedAt());
@@ -163,7 +164,7 @@ public class RehomingResDto {
         this.category = rehoming.getCategory().getCategoryGroupName();
         this.type = rehoming.getType().getPetCategoryName();
         this.gender = rehoming.getGender();
-        this.region = rehoming.getCityName() + " " + rehoming.getCityCountryName() + " " + rehoming.getTownShipName();
+//        this.region = rehoming.getCityName() + " " + rehoming.getCityCountryName() + " " + rehoming.getTownShipName();
         this.status = rehoming.getStatus();
         this.imageList = imageList;
         this.createdAt = CalculateTime.dateformatForPost(rehoming.getCreatedAt());

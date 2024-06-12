@@ -1,6 +1,7 @@
 package com.smile.petpat.post.rehoming.domain;
 
 import com.smile.petpat.post.category.domain.PostType;
+import com.smile.petpat.post.common.Address.domain.Address;
 import com.smile.petpat.post.common.CalculateTime;
 import com.smile.petpat.post.common.status.PostStatus;
 import lombok.Getter;
@@ -45,6 +46,27 @@ public class RehomingInfo {
         this.createdAt = CalculateTime.dateformatForPost(createdAt);
         this.updatedAt = CalculateTime.dateformatForPost(updatedAt);
     }
+
+    public RehomingInfo(Long postId, PostType postType, String imagePath,
+                        String title, Address address,PostStatus status,
+                        Long isLiked,Long isBookmarked,int viewCnt,Long likeCnt,Long bookmarkCnt,
+                        LocalDateTime createdAt, LocalDateTime updatedAt){
+        this.postId = postId;
+        this.postType = postType;
+        this.imagePath = imagePath;
+        this.title = title;
+        this.region = address.getProvince() + " " + address.getCity() + " " + address.getDistrict()+" "+address.getTown();
+        this.status = status;
+        this.isLiked = booleanChk(isLiked);
+        this.isBookmarked = booleanChk(isBookmarked);
+        this.viewCnt = viewCnt;
+        this.likeCnt = likeCnt;
+        this.bookmarkCnt = bookmarkCnt;
+        this.createdAt = CalculateTime.dateformatForPost(createdAt);
+        this.updatedAt = CalculateTime.dateformatForPost(updatedAt);
+    }
+
+
 
     private Boolean booleanChk(Long chkValue) {
         return chkValue != 0;

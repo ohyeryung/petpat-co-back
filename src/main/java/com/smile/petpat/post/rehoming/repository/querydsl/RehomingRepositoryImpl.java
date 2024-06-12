@@ -49,9 +49,9 @@ public class RehomingRepositoryImpl implements RehomingRepositoryQuerydsl {
                                                         image.priority.eq(ImagePriority.PRIORITY_1))
                                                 , "rehomingImg"),
                                 rehoming.title,
-                                rehoming.cityName,
-                                rehoming.cityCountryName,
-                                rehoming.townShipName,
+//                                rehoming.cityName,
+//                                rehoming.cityCountryName,
+//                                rehoming.townShipName,
                                 rehoming.status,
                                 ExpressionUtils.as(
                                         select(likes.count())
@@ -112,9 +112,9 @@ public class RehomingRepositoryImpl implements RehomingRepositoryQuerydsl {
                                                         image.priority.eq(ImagePriority.PRIORITY_1))
                                         , "rehomingImg"),
                                 rehoming.title,
-                                rehoming.cityName,
-                                rehoming.cityCountryName,
-                                rehoming.townShipName,
+//                                rehoming.cityName,
+//                                rehoming.cityCountryName,
+//                                rehoming.townShipName,
                                 rehoming.status,
                                 rehoming.viewCnt,
                                 ExpressionUtils.as(
@@ -161,9 +161,9 @@ public class RehomingRepositoryImpl implements RehomingRepositoryQuerydsl {
                                                         image.priority.eq(ImagePriority.PRIORITY_1))
                                         , "rehomingImg"),
                                 rehoming.title,
-                                rehoming.cityName,
-                                rehoming.cityCountryName,
-                                rehoming.townShipName,
+//                                rehoming.cityName,
+//                                rehoming.cityCountryName,
+//                                rehoming.townShipName,
                                 rehoming.status,
                                 ExpressionUtils.as(
                                         select(likes.count())
@@ -226,9 +226,9 @@ public class RehomingRepositoryImpl implements RehomingRepositoryQuerydsl {
                                                         image.priority.eq(ImagePriority.PRIORITY_1))
                                         , "rehomingImg"),
                                 rehoming.title,
-                                rehoming.cityName,
-                                rehoming.cityCountryName,
-                                rehoming.townShipName,
+//                                rehoming.cityName,
+//                                rehoming.cityCountryName,
+//                                rehoming.townShipName,
                                 rehoming.status,
                                 rehoming.viewCnt,
                                 ExpressionUtils.as(
@@ -276,9 +276,9 @@ public class RehomingRepositoryImpl implements RehomingRepositoryQuerydsl {
                                 rehoming.category,
                                 rehoming.type,
                                 rehoming.gender,
-                                rehoming.cityName,
-                                rehoming.cityCountryName,
-                                rehoming.townShipName,
+//                                rehoming.cityName,
+//                                rehoming.cityCountryName,
+//                                rehoming.townShipName,
                                 ExpressionUtils.as(
                                         select(likes.count())
                                                 .from(likes)
@@ -336,9 +336,9 @@ public class RehomingRepositoryImpl implements RehomingRepositoryQuerydsl {
                                                                 .and(image.priority.eq(ImagePriority.PRIORITY_1))
                                                 ), "image"),
                                 rehoming.title,
-                                rehoming.cityName,
-                                rehoming.cityCountryName,
-                                rehoming.townShipName,
+//                                rehoming.cityName,
+//                                rehoming.cityCountryName,
+//                                rehoming.townShipName,
                                 rehoming.status,
                                 ExpressionUtils.as(
                                         select(likes.count())

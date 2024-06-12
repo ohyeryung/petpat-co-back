@@ -21,11 +21,13 @@ public enum ErrorCode {
     BELOW_MIN_IMAGE_COUNT(HttpStatus.BAD_REQUEST, "최소 1개이상의 이미지를 등록해야합니다."),
     WRONG_TYPE_IMAGE(HttpStatus.BAD_REQUEST,  "잘못된 형식의 파일입니다"),
     EXCEEDED_MAX_IMAGE_COUNT(HttpStatus.BAD_REQUEST, "업로드가능한 최대 이미지갯수를 초과하였습니다."),
-    EXCEEDED_MAX_IMAGE_SIZE(HttpStatus.BAD_REQUEST,"업로드가능한 최대 이미지용량을 초과하였습니다.")
+    EXCEEDED_MAX_IMAGE_SIZE(HttpStatus.BAD_REQUEST,"업로드가능한 최대 이미지용량을 초과하였습니다."),
 
     // POST
 
 
+    //ADDRESS
+    ILLEGAL_ADDRESS_NOT_EXIST(HttpStatus.BAD_REQUEST,"존재하지 않는 주소입니다.")
     ;
 
 
