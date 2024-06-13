@@ -121,8 +121,13 @@ public class TradeInfo {
         private Long price;
         private String region;
         private boolean isLiked;
+        private boolean isBookmarked;
+        private Long likeCnt;
+        private Long bookmarkCnt;
         private int viewCnt;
         private PostStatus status;
+        private LocalDateTime createdAt;
+        private LocalDateTime updatedAt;
 
 
         public TradeList(){
@@ -130,16 +135,21 @@ public class TradeInfo {
         }
 
 
-        public TradeList(Long postId, String imagePath, String title, Long price, String cityName, String cityCountryName,
-                         String townshipName, Long isLiked, int viewCnt, PostStatus status) {
+        public TradeList(Long postId, String imagePath, String title, Long price, Address address, PostStatus status,Long isLiked,
+                         Long isBookmarked,int viewCnt,Long likeCnt,Long bookmarkCnt,LocalDateTime createdAt,LocalDateTime updatedAt) {
             this.postId = postId;
             this.imagePath = imagePath;
             this.title = title;
             this.price = price;
-            this.region = cityName + " " + cityCountryName + " " + townshipName;
+            this.region = address.getProvince() + " " + address.getCity() + " " + address.getDistrict()+" "+address.getTown();
             this.isLiked = booleanChk(isLiked);
+            this.isBookmarked =booleanChk(isBookmarked);
             this.viewCnt = viewCnt;
             this.status = status;
+            this.likeCnt = likeCnt;
+            this.bookmarkCnt = bookmarkCnt;
+            this.createdAt = createdAt;
+            this.updatedAt = updatedAt;
         }
 
     }

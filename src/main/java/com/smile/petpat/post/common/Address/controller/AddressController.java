@@ -25,10 +25,18 @@ public class AddressController {
     private final AddressService addressService;
 
     @Operation(summary = "주소에 해당하는 분양글 조회", description = "주소에 해당하는 분양글 조회")
-    @RequestMapping(value = "",method = RequestMethod.GET)
+    @RequestMapping(value = "/rehoming",method = RequestMethod.GET)
     public SuccessResponse getRehomingsByAddress(@AuthenticationPrincipal UserDetailsImpl userDetails,
                                                  @ModelAttribute @Valid AddressReqDto addressReqDto,
                                                  @PageableDefault Pageable pageable){
         return SuccessResponse.success(addressService.getRehomingsByAddress(addressReqDto,pageable,userDetails.getUsername()));
+    }
+
+    @Operation(summary = "주소에 해당하는 분양글 조회", description = "주소에 해당하는 분양글 조회")
+    @RequestMapping(value = "/trade",method = RequestMethod.GET)
+    public SuccessResponse getTradesByAddress(@AuthenticationPrincipal UserDetailsImpl userDetails,
+                                                 @ModelAttribute @Valid AddressReqDto addressReqDto,
+                                                 @PageableDefault Pageable pageable){
+        return SuccessResponse.success(addressService.getTradesByAddress(addressReqDto,pageable,userDetails.getUsername()));
     }
 }
