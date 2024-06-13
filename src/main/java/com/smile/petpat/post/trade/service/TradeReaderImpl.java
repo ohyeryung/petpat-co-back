@@ -43,9 +43,15 @@ public class TradeReaderImpl implements TradeReader {
     }
 
     @Override
-    public TradeInfo.TradeDetail readTradeDetail(Long userId, Long tradeId) {
+    public TradeInfo.TradeDetail readTradeDetailForUser(Long userId, Long tradeId) {
         readTradeById(tradeId);
-        return tradeRepository.tradeDetail(userId,tradeId);
+        return tradeRepository.tradeDetailForUser(userId,tradeId);
+    }
+
+    @Override
+    public TradeInfo.TradeDetail readTradeDetail(Long tradeId) {
+        readTradeById(tradeId);
+        return tradeRepository.tradeDetail(tradeId);
     }
 
     @Override

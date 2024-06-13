@@ -1,6 +1,8 @@
 package com.smile.petpat.post.trade.domain;
 
 import com.smile.petpat.post.category.domain.PostType;
+import com.smile.petpat.post.category.domain.TradeCategoryDetail;
+import com.smile.petpat.post.common.Address.domain.Address;
 import com.smile.petpat.post.common.CalculateTime;
 import com.smile.petpat.post.common.status.PostStatus;
 import lombok.AllArgsConstructor;
@@ -42,10 +44,9 @@ public class TradeInfo {
             
         }
 
-        public TradeDetail(Long postId, Long userId, String nickname, String title, String content, Long price,
-                           String cityName, String cityCountryName, String townShipName, String detailAdName,
-                           String fullAdName, List<String> imageList, PostType postType, boolean isLiked,
-                           boolean isBookmarked, int viewCnt, Long likeCnt, Long bookmarkCnt, String tradeCategoryDetailName, PostStatus status,LocalDateTime createdAt
+        public TradeDetail(Long postId, Long userId, String nickname, String title, String content, Long price, Address address,
+                           PostType postType, Long isLiked, Long isBookmarked, int viewCnt, Long likeCnt,
+                           Long bookmarkCnt, String tradeCategoryDetailName, PostStatus status, LocalDateTime createdAt
         ) {
             this.postId = postId;
             this.userId = userId;
@@ -53,11 +54,10 @@ public class TradeInfo {
             this.title = title;
             this.content = content;
             this.price = price;
-            this.region = cityName + " " + cityCountryName;
-            this.imageList = imageList;
+            this.region = address.getProvince() + " "  + address.getCity() + " "+address.getDistrict() + " "+address.getTown();
             this.postType = postType;
-            this.isLiked = isLiked;
-            this.isBookmarked = isBookmarked;
+            this.isLiked = isLiked==0? false:true ;
+            this.isBookmarked = isBookmarked==0? false:true;
             this.viewCnt = viewCnt;
             this.likeCnt = likeCnt;
             this.bookmarkCnt = bookmarkCnt;
@@ -141,9 +141,6 @@ public class TradeInfo {
             this.viewCnt = viewCnt;
             this.status = status;
         }
-
-
-
 
     }
     @Getter

@@ -3,6 +3,7 @@ package com.smile.petpat.post.trade.repository.querydsl;
 import com.querydsl.core.QueryResults;
 import com.querydsl.core.types.ExpressionUtils;
 import com.querydsl.core.types.Projections;
+import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.smile.petpat.image.domain.ImagePriority;
@@ -38,8 +39,7 @@ public class TradeRepositoryImpl implements TradeRepositoryQueryDsl{
                                         trade.user.nickname,
                                         trade.title,
                                         trade.price,
-                                        trade.cityName,
-                                        trade.cityCountryName,
+                                        trade.address,
                                         ExpressionUtils.as(
                                                 JPAExpressions
                                                         .select(image.filePath)
@@ -105,9 +105,9 @@ public class TradeRepositoryImpl implements TradeRepositoryQueryDsl{
                                                 ,"image"),
                                         trade.title,
                                         trade.price,
-                                        trade.cityName,
-                                        trade.cityCountryName,
-                                        trade.townShipName,
+//                                        trade.cityName,
+//                                        trade.cityCountryName,
+//                                        trade.townShipName,
 
                                         ExpressionUtils.as(
                                                 JPAExpressions
@@ -134,7 +134,7 @@ public class TradeRepositoryImpl implements TradeRepositoryQueryDsl{
     }
 
     @Override
-    public TradeInfo.TradeDetail tradeDetail(Long userId, Long tradeId) {
+    public TradeInfo.TradeDetail tradeDetailForUser(Long userId, Long tradeId) {
         return queryFactory
                 .select
                         (Projections.constructor
@@ -145,11 +145,7 @@ public class TradeRepositoryImpl implements TradeRepositoryQueryDsl{
                                         trade.title,
                                         trade.content,
                                         trade.price,
-                                        trade.cityName,
-                                        trade.cityCountryName,
-                                        trade.townShipName,
-                                        trade.detailAdName,
-                                        trade.fullAdName,
+                                        trade.address,
                                         trade.postType,
                                         ExpressionUtils.as(
                                                 JPAExpressions
@@ -165,6 +161,59 @@ public class TradeRepositoryImpl implements TradeRepositoryQueryDsl{
                                                         .from(bookmark)
                                                         .where(
                                                                 bookmark.user.id.eq(userId)
+                                                                        .and(bookmark.postId.eq(trade.tradeId))
+                                                        ), "isBookmarked"),
+                                        trade.viewCnt,
+                                        ExpressionUtils.as(
+                                                JPAExpressions
+                                                        .select(likes.count())
+                                                        .from(likes)
+                                                        .where(likes.postId.eq(trade.tradeId)),
+                                                "likeCnt"),
+                                        ExpressionUtils.as(
+                                                JPAExpressions
+                                                        .select(bookmark.count())
+                                                        .from(bookmark)
+                                                        .where(bookmark.postId.eq(trade.tradeId)),
+                                                "bookmarkCnt"),
+                                        trade.tradeCategoryDetail.tradeCategoryDetailName,
+                                        trade.status,
+                                        trade.createdAt
+                                )
+                        )
+                .from(trade)
+                .where(trade.tradeId.eq(tradeId))
+                .fetchOne();
+    }
+
+    @Override
+    public TradeInfo.TradeDetail tradeDetail(Long tradeId) {
+        return queryFactory
+                .select
+                        (Projections.constructor
+                                (TradeInfo.TradeDetail.class,
+                                        trade.tradeId,
+                                        trade.user.id,
+                                        trade.user.nickname,
+                                        trade.title,
+                                        trade.content,
+                                        trade.price,
+                                        trade.address,
+                                        trade.postType,
+                                        ExpressionUtils.as(
+                                                JPAExpressions
+                                                        .select(likes.count())
+                                                        .from(likes)
+                                                        .where(
+                                                                likes.user.id.eq(0L)
+                                                                        .and(likes.postId.eq(trade.tradeId))
+                                                        ), "isLiked"),
+                                        ExpressionUtils.as(
+                                                JPAExpressions
+                                                        .select(bookmark.count())
+                                                        .from(bookmark)
+                                                        .where(
+                                                                bookmark.user.id.eq(0L)
                                                                         .and(bookmark.postId.eq(trade.tradeId))
                                                         ), "isBookmarked"),
                                         trade.viewCnt,
@@ -211,9 +260,9 @@ public class TradeRepositoryImpl implements TradeRepositoryQueryDsl{
                                                  ,"imagePath"),
                                          trade.title,
                                          trade.price,
-                                         trade.cityName,
-                                         trade.cityCountryName,
-                                         trade.townShipName,
+//                                         trade.cityName,
+//                                         trade.cityCountryName,
+//                                         trade.townShipName,
                                          ExpressionUtils.as(
                                                  JPAExpressions
                                                          .select(likes.count())

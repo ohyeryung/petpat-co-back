@@ -55,14 +55,6 @@ public class Rehoming extends Timestamped {
     @Column(name = "GENDER", nullable = false)
     private RehomingCommand.PetGender gender;
 
-//    @Column(name = "CITY_NAME", nullable = false)
-//    private String cityName;
-//
-//    @Column(name = "CITY_COUNTRY_NAME", nullable = false)
-//    private String cityCountryName;
-//
-//    @Column(name = "TOWNSHIP_NAME", nullable = false)
-//    private String townShipName;
     @ManyToOne
     @JoinColumn(name = "ADDRESS_ID")
     @JsonBackReference //양방향 관계의 엔티티의 직렬화 방향 설정 -> 순환참조 방지
@@ -71,8 +63,6 @@ public class Rehoming extends Timestamped {
     @Column(name = "DETAIL_AD_NAME")
     private String detailAdName;
 
-//    @Column(name = "FULL_AD_NAME", nullable = false)
-//    private String fullAdName;
     @Column(name = "STATUS")
     @Enumerated(EnumType.STRING)
     private PostStatus status;

@@ -59,9 +59,10 @@ public class  TradeController {
     @Operation(summary = "중고거래 게시물 상세조회", description = "중고거래 게시물 상세조회")
     @RequestMapping(value = "/{tradeId}",method = RequestMethod.GET)
     public SuccessResponse detailTrade(@PathVariable Long tradeId, @AuthenticationPrincipal UserDetailsImpl userDetails){
-        if (userDetails == null) {
+        if (userDetails.getUser().getUserEmail().split("@")[1].contains("guest")) { //비회원 유저가 조회
             return SuccessResponse.success(tradeService.tradeDetail(tradeId),"ok");
-        } else {
+        } else { //회원인 유저가 조회
+            System.out.println(userDetails);
             return SuccessResponse.success(tradeService.tradeDetailforUser(tradeId, userDetails.getUser()),"ok");
         }
     }

@@ -11,7 +11,8 @@ public interface TradeReader {
     Page<TradeInfo.TradeList> readTradeList(User user, Pageable pageable);
     Trade readTradeById(Long tradeId);
     TradeCategoryDetail readTradeCategoryDetailById(Long tradeCategoryDetailId);
-    TradeInfo.TradeDetail readTradeDetail(Long userId, Long tradeId);
+    TradeInfo.TradeDetail readTradeDetailForUser(Long userId, Long tradeId);
+    TradeInfo.TradeDetail readTradeDetail(Long tradeId);
     Trade userChk(Long tradeId,Long userId);
 
     List<TradeInfo.TradeList> fetchTrendingTrade(Long userId);

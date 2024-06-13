@@ -4,6 +4,9 @@ import com.smile.petpat.image.util.ImageUploadManager;
 import com.smile.petpat.image.service.ImageService;
 import com.smile.petpat.post.category.domain.PostType;
 import com.smile.petpat.post.category.domain.TradeCategoryDetail;
+import com.smile.petpat.post.common.Address.Dto.AddressReqDto;
+import com.smile.petpat.post.common.Address.domain.Address;
+import com.smile.petpat.post.common.Address.service.AddressService;
 import com.smile.petpat.post.common.CommonUtils;
 import com.smile.petpat.post.trade.domain.*;
 import com.smile.petpat.user.domain.User;
@@ -13,7 +16,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -27,14 +29,19 @@ public class TradeServiceImpl implements TradeService{
     private final ImageUploadManager imageUploadManager;
     private final ImageService imageService;
     private final CommonUtils commonUtils;
+    private final AddressService addressService;
 
     @Override
     @Transactional
     public Long registerTrade(TradeCommand tradeCommand, User user) {
+        //AddressChk
+        Address address = addressService.getAddress(new AddressReqDto(tradeCommand));
         //1. 게시물 등록
         TradeCategoryDetail categoryDetail = tradeReader.readTradeCategoryDetailById(tradeCommand.getTradeCategoryDetailId());
-        Trade initTrade = tradeCommand.toRegisterEntity(user,categoryDetail);
+        Trade initTrade = tradeCommand.toRegisterEntity(user,categoryDetail,address);
+
         Trade trade = tradeStore.store(initTrade);
+        address.getTradelist().add(trade);
         //2. 사진 등록
         imageUploadManager.uploadPostImage(tradeCommand.getImages(),trade.getTradeId(),trade.getPostType());
 
@@ -66,19 +73,20 @@ public class TradeServiceImpl implements TradeService{
 
     @Override
     public TradeInfo.TradeDetail tradeDetail(Long tradeId) {
-        List<String> imgList = imageService.readImgList(tradeId, PostType.TRADE);
+        List<String> imageList = imageService.readImgList(tradeId, PostType.TRADE);
         Trade trade = tradeReader.readTradeById(tradeId);
+        trade.updateViewCnt(trade); //조회수 계산
+        TradeInfo.TradeDetail tradeDetail =tradeReader.readTradeDetail(tradeId);
 
-        // 조회수 계산
-        trade.updateViewCnt(trade);
-        return new TradeInfo.TradeDetail();
+
+        return new TradeInfo.TradeDetail(tradeDetail,imageList);
     }
 
     @Override
     public TradeInfo.TradeDetail tradeDetailforUser(Long tradeId, User user) {
         Trade trade = tradeReader.readTradeById(tradeId);
         trade.updateViewCnt(trade);
-        TradeInfo.TradeDetail tradeDetail = tradeReader.readTradeDetail(user.getId(), tradeId);
+        TradeInfo.TradeDetail tradeDetail = tradeReader.readTradeDetailForUser(user.getId(), tradeId);
         List<String> imageList = imageService.readImgList(tradeId,trade.getPostType());
         // 조회수 계산
         return new TradeInfo.TradeDetail(tradeDetail,imageList);
