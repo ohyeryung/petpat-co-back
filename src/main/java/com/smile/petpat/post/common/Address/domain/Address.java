@@ -30,6 +30,7 @@ public class Address {
     @Column(name = "TOWN")
     private String town;
 
+
     @OneToMany(mappedBy = "address",cascade = CascadeType.ALL,orphanRemoval = true)
     @JsonManagedReference //양방향 관계의 엔티티의 직렬화 방향 설정 -> 순환참조 방지
     private List<Rehoming> rehomingList = new ArrayList<>();
