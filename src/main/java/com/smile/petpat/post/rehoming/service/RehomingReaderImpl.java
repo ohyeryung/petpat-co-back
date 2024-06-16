@@ -57,7 +57,7 @@ public class RehomingReaderImpl implements RehomingReader {
     public List<RehomingInfo> fetchTrendingRehoming(Long userId) {
         WeekRange weekRange = new WeekRange();
         log.info("startOfWeek : {}", weekRange.getStartOfWeek());
-        log.info("endOfWeek() : {} ", weekRange.getEndOfWeek());
-        return rehomingRepository.fetchTrendingRehoming(userId, weekRange.getStartOfWeek(), weekRange.getEndOfWeek());
+        log.info("endOfWeek() : {} ", weekRange.getStartOfWeek().minusWeeks(1));
+        return rehomingRepository.fetchTrendingRehoming(userId, weekRange.getStartOfWeek().minusWeeks(1), weekRange.getStartOfWeek());
     }
 }
