@@ -52,14 +52,14 @@ public class QnaDto {
         private String content;
 
         private List<MultipartFile> newImages;
-        private List<String> deletedImgUrls;
+        private List<Long> deletedImageId;
 
         public QnaCommand toCommand(){
             return QnaCommand.builder()
                     .title(title)
                     .content(content)
                     .images(newImages)
-                    .deletedImgUrls(deletedImgUrls)
+                    .deletedImageId(deletedImageId)
                     .build();
         }
     }

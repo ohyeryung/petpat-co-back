@@ -29,7 +29,7 @@ import java.util.List;
 public class RehomingUpdateReqDto {
     private User user;
     private List<MultipartFile> newImages;
-    private List<String> deletedImgUrl;
+    private List<Long> deletedImageIds;
     @NotBlank(message = "제목은 필수값입니다.") private String title;
     @NotBlank(message = "설명은 필수값입니다.") private String content;
     @NotBlank(message = "이름은 필수값입니다.") private String petName;

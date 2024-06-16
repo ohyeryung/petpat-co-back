@@ -1,5 +1,8 @@
 package com.smile.petpat.image.domain;
 
+import com.smile.petpat.common.exception.CustomException;
+import com.smile.petpat.common.response.ErrorCode;
+
 public enum ImagePriority {
     PRIORITY_1(1),
     PRIORITY_2(2),
@@ -21,7 +24,7 @@ public enum ImagePriority {
         for(ImagePriority p : ImagePriority.values()){
             if(p.getPriority()==index) return p;
         }
-        throw new IllegalArgumentException("사진은 최대 5장까지 저장 가능합니다");
+        throw new CustomException(ErrorCode.EXCEEDED_MAX_IMAGE_COUNT);
     }
 
 }

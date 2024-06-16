@@ -1,6 +1,6 @@
 package com.smile.petpat.post.rehoming.service;
 
-import com.smile.petpat.image.util.ImageUploadManager;
+import com.smile.petpat.image.dto.ImageResDto;
 import com.smile.petpat.image.service.ImageService;
 import com.smile.petpat.post.category.domain.CategoryGroup;
 import com.smile.petpat.post.category.domain.PetCategory;
@@ -28,7 +28,6 @@ import java.util.List;
 @RequiredArgsConstructor
 @Service
 public class RehomingServiceImpl implements RehomingService {
-    private final ImageUploadManager imageUploadManager;
     private final ImageService imageService;
     private final RehomingReader rehomingReader;
     private final RehomingStore rehomingStore;
@@ -56,7 +55,7 @@ public class RehomingServiceImpl implements RehomingService {
 
         // 1-2. 이미지 등록
         Long postId = rehoming.getRehomingId();
-        imageUploadManager.uploadPostImage(rehomingCommand.getRehomingImg(), postId, PostType.REHOMING);
+        imageService.uploadPostImage(rehomingCommand.getRehomingImg(), postId, PostType.REHOMING);
     }
 
     // 2-1. 분양 글 목록 조회 (회원)
@@ -88,7 +87,10 @@ public class RehomingServiceImpl implements RehomingService {
         Rehoming rehoming = rehomingReader.readRehomingById(postId);
         // 조회수 계산
         rehoming.updateViewCnt(rehoming);
-        return getResDto("", postId, rehoming);
+        List<ImageResDto> imgList = imageService.getImagesByPost(postId, PostType.REHOMING);
+        return new RehomingResDto(rehoming, imgList,
+                commonUtils.getLikesCnt(postId, PostType.REHOMING));
+
     }
 
     // 4. 분양 글 수정
@@ -114,9 +116,9 @@ public class RehomingServiceImpl implements RehomingService {
 
         // 4-3. 이미지 수정
         List<MultipartFile> newImages = rehomingUpdateReqDto.getNewImages();
-        List<String> deletedImgUrls = rehomingUpdateReqDto.getDeletedImgUrl();
+        List<Long> deletedImageIds = rehomingUpdateReqDto.getDeletedImageIds();
 
-        imageUploadManager.updateImage(newImages,deletedImgUrls, postId, PostType.REHOMING);
+        imageService.updateImage(newImages,deletedImageIds, postId, PostType.REHOMING);
 
         return getResDto(userEmail, postId, rehoming);
     }
@@ -130,19 +132,14 @@ public class RehomingServiceImpl implements RehomingService {
         rehoming.getAddress().getRehomingList().remove(rehoming);
         rehomingStore.delete(userEmail, postId);
         // 5-2. 해당 게시글 이미지 삭제
-        imageUploadManager.removePostImage(postId, PostType.REHOMING);
+        imageService.removePostImage(postId, PostType.REHOMING);
         // 5-3. 해당 게시글의 좋아요, 북마크 삭제
         commonUtils.delLikes(postId, PostType.REHOMING.toString(), userEmail);
         commonUtils.delBookmark(postId, PostType.REHOMING.toString(), userEmail);
     }
 
     private RehomingResDto getResDto(String userEmail, Long postId, Rehoming rehoming) {
-        List<String> imgList = imageService.readImgList(postId, PostType.REHOMING);
-        //비회원으로 조회 시
-        if(userEmail.equals(""))
-            return new RehomingResDto(rehoming,imgList,false,false,
-                    commonUtils.getLikesCnt(postId,PostType.REHOMING));
-        //회원으로 조회 시
+        List<ImageResDto> imgList = imageService.getImagesByPost(postId, PostType.REHOMING);
         return new RehomingResDto(rehoming, imgList,
                 commonUtils.LikePostChk(postId, PostType.REHOMING, userEmail),
                 commonUtils.BookmarkPostChk(postId, PostType.REHOMING, userEmail),

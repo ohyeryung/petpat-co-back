@@ -22,6 +22,10 @@ public enum ErrorCode {
     WRONG_TYPE_IMAGE(HttpStatus.BAD_REQUEST,  "잘못된 형식의 파일입니다"),
     EXCEEDED_MAX_IMAGE_COUNT(HttpStatus.BAD_REQUEST, "업로드가능한 최대 이미지갯수를 초과하였습니다."),
     EXCEEDED_MAX_IMAGE_SIZE(HttpStatus.BAD_REQUEST,"업로드가능한 최대 이미지용량을 초과하였습니다."),
+    ILLEGAL_EMPTY_FILE(HttpStatus.BAD_REQUEST,"업로드된 파일이 비어있습니다."),
+    ILLEGAL_IMAGE_NOT_EXIST(HttpStatus.BAD_REQUEST,"해당 이미지가 존재하지 않습니다."),
+
+
 
     // POST
 
