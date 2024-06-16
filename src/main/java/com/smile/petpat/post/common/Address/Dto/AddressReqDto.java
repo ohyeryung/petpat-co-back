@@ -19,11 +19,11 @@ public class AddressReqDto {
         this.city = rehomingCommand.getCity();
         this.district =rehomingCommand.getDistrict();
         this.town = rehomingCommand.getTown();
-    }public AddressReqDto(RehomingUpdateReqDto rehomingCommand){
-        this.province = rehomingCommand.getProvince();
-        this.city = rehomingCommand.getCity();
-        this.district =rehomingCommand.getDistrict();
-        this.town = rehomingCommand.getTown();
+    }public AddressReqDto(RehomingUpdateReqDto rehomingUpdateReqDto){
+        this.province = rehomingUpdateReqDto.getProvince();
+        this.city = rehomingUpdateReqDto.getCity();
+        this.district =rehomingUpdateReqDto.getDistrict();
+        this.town = rehomingUpdateReqDto.getTown();
     }
 
     public AddressReqDto(TradeCommand tradeCommand){

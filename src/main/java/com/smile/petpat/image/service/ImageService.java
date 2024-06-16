@@ -48,10 +48,11 @@ public class ImageService {
         //TODO: newImages에 아무것도 보내지 않았을 때 빈 Multipartfile이 1개 포함되는 문제
         //  우선 newImages.get(0)이 비어있는 지로 수정되는 이미지가 있는지 판별
         //  원인 파악 필요
-        if(newImages.get(0).isEmpty() && deletedImageIds.isEmpty()) return;
+        if(newImages.isEmpty()&&deletedImageIds.isEmpty()) return;
+//        if(newImages.get(0).isEmpty() && deletedImageIds.isEmpty()) return;
 
         //삭제되는 이미지 삭제
-        deleteImages(deletedImageIds);
+        if(!deletedImageIds.isEmpty()) deleteImages(deletedImageIds);
 
         if(newImages.get(0).isEmpty()) return;
 
@@ -65,6 +66,11 @@ public class ImageService {
         imageUtils.setPriority(imageList);
 
         imageRepository.saveAll(imageList);
+
+//        for(Image image : imageList){
+//            if(image.getImageId() ==null) imageRepository.save(image);
+//            else imageRepository.saveAndFlush(image);
+//        }
     }
 
 

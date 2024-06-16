@@ -151,7 +151,7 @@ public class Rehoming extends Timestamped {
 
 
     // 분양 게시글 수정
-    public void update(Rehoming initRehoming) {
+    public void update(Rehoming initRehoming,Address address) {
         this.title = initRehoming.getTitle();
         this.content = initRehoming.getContent();
         this.petName = initRehoming.getPetName();
@@ -159,6 +159,7 @@ public class Rehoming extends Timestamped {
         this.category = initRehoming.getCategory();
         this.type = initRehoming.getType();
         this.gender = initRehoming.getGender();
+        this.address =address;
 //        this.cityName = initRehoming.getCityName();
 //        this.cityCountryName = initRehoming.getCityCountryName();
 //        this.townShipName = initRehoming.getTownShipName();

@@ -31,11 +31,13 @@ public class Address {
     private String town;
 
 
-    @OneToMany(mappedBy = "address",cascade = CascadeType.ALL,orphanRemoval = true)
+    @OneToMany(mappedBy = "address",cascade = CascadeType.ALL)
     @JsonManagedReference //양방향 관계의 엔티티의 직렬화 방향 설정 -> 순환참조 방지
     private List<Rehoming> rehomingList = new ArrayList<>();
 
-    @OneToMany(mappedBy = "address",cascade = CascadeType.ALL,orphanRemoval = true)
+    @OneToMany(mappedBy = "address",cascade = CascadeType.ALL)
     @JsonManagedReference //양방향 관계의 엔티티의 직렬화 방향 설정 -> 순환참조 방지
     private List<Trade> tradelist = new ArrayList<>();
+
+
 }

@@ -16,6 +16,7 @@ import com.smile.petpat.post.rehoming.dto.RehomingResDto;
 import com.smile.petpat.post.rehoming.dto.RehomingUpdateReqDto;
 import com.smile.petpat.post.rehoming.repository.RehomingRepository;
 import com.smile.petpat.user.domain.User;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -95,6 +96,7 @@ public class RehomingServiceImpl implements RehomingService {
 
     // 4. 분양 글 수정
     @Override
+    @Transactional
     public RehomingResDto updateRehoming(String userEmail, Long postId, RehomingUpdateReqDto rehomingUpdateReqDto) {
         // 4-1. 게시글 존재 유무 판단
         Rehoming rehoming = rehomingReader.readRehomingById(postId);
@@ -107,12 +109,11 @@ public class RehomingServiceImpl implements RehomingService {
         PostStatus status = rehoming.getStatus();
 
         Address address = addressService.getAddress(new AddressReqDto(rehomingUpdateReqDto));
-//        Address address = addressService.getAddress(rehomingUpdateReqDto.getAddressReqDto());
         Rehoming initRehoming = rehomingUpdateReqDto.toUpdateEntity(user, postId, category, type, status,address);
 
-        rehoming.getAddress().getRehomingList().remove(rehoming);
-        address.getRehomingList().add(initRehoming);
-        rehoming.update(initRehoming);
+        System.out.println(address.getTown());
+
+        rehoming.update(initRehoming,address);
 
         // 4-3. 이미지 수정
         List<MultipartFile> newImages = rehomingUpdateReqDto.getNewImages();

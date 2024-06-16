@@ -98,7 +98,6 @@ public class RehomingController {
     public SuccessResponse updateRehoming(@AuthenticationPrincipal UserDetailsImpl userDetails,
                                           @RequestParam Long postId,
                                           @ModelAttribute @Valid RehomingUpdateReqDto rehomingDto) {
-        System.out.println("RehomingController");
         return SuccessResponse.success(rehomingService.updateRehoming(userDetails.getUsername(), postId, rehomingDto), "OK");
     }
 
