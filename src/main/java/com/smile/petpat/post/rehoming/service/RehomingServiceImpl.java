@@ -88,9 +88,7 @@ public class RehomingServiceImpl implements RehomingService {
         Rehoming rehoming = rehomingReader.readRehomingById(postId);
         // 조회수 계산
         rehoming.updateViewCnt(rehoming);
-        List<String> imgList = imageService.readImgList(postId, PostType.REHOMING);
-        return new RehomingResDto(rehoming, imgList,
-                commonUtils.getLikesCnt(postId, PostType.REHOMING));
+        return getResDto("", postId, rehoming);
     }
 
     // 4. 분양 글 수정
@@ -99,13 +97,18 @@ public class RehomingServiceImpl implements RehomingService {
         // 4-1. 게시글 존재 유무 판단
         Rehoming rehoming = rehomingReader.readRehomingById(postId);
         rehomingReader.userChk(userEmail, rehoming);
+        User user = commonUtils.userChk(userEmail);
 
         // 4-2. 게시글 수정
         CategoryGroup category = rehomingReader.readCategoryById(rehomingUpdateReqDto.getCategory());
         PetCategory type = rehomingReader.readPetTypeById(rehomingUpdateReqDto.getType());
         PostStatus status = rehoming.getStatus();
-        User user = commonUtils.userChk(userEmail);
-        Rehoming initRehoming = rehomingUpdateReqDto.toUpdateEntity(user, postId, category, type, status);
+
+        Address address = addressService.getAddress(rehomingUpdateReqDto.getAddressReqDto());
+        Rehoming initRehoming = rehomingUpdateReqDto.toUpdateEntity(user, postId, category, type, status,address);
+
+        rehoming.getAddress().getRehomingList().remove(rehoming);
+        address.getRehomingList().add(initRehoming);
         rehoming.update(initRehoming);
 
         // 4-3. 이미지 수정
@@ -132,6 +135,11 @@ public class RehomingServiceImpl implements RehomingService {
 
     private RehomingResDto getResDto(String userEmail, Long postId, Rehoming rehoming) {
         List<String> imgList = imageService.readImgList(postId, PostType.REHOMING);
+        //비회원으로 조회 시
+        if(userEmail.equals(""))
+            return new RehomingResDto(rehoming,imgList,false,false,
+                    commonUtils.getLikesCnt(postId,PostType.REHOMING));
+        //회원으로 조회 시
         return new RehomingResDto(rehoming, imgList,
                 commonUtils.LikePostChk(postId, PostType.REHOMING, userEmail),
                 commonUtils.BookmarkPostChk(postId, PostType.REHOMING, userEmail),

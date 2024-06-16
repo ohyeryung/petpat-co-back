@@ -26,27 +26,7 @@ public class RehomingInfo {
     private String createdAt;
     private String updatedAt;
 
-    // 회원
-    public RehomingInfo(Long postId, PostType postType, String imagePath,
-                        String title, String cityName, String cityCountryName,
-                        String townShipName, PostStatus status,
-                        Long isLiked, Long isBookmarked, int viewCnt, Long likeCnt, Long bookmarkCnt,
-                        LocalDateTime createdAt, LocalDateTime updatedAt) {
-        this.postId = postId;
-        this.postType = postType;
-        this.imagePath = imagePath;
-        this.title = title;
-        this.region = cityName + " " + cityCountryName + " " + townShipName;
-        this.status = status;
-        this.isLiked = booleanChk(isLiked);
-        this.isBookmarked = booleanChk(isBookmarked);
-        this.viewCnt = viewCnt;
-        this.likeCnt = likeCnt;
-        this.bookmarkCnt = bookmarkCnt;
-        this.createdAt = CalculateTime.dateformatForPost(createdAt);
-        this.updatedAt = CalculateTime.dateformatForPost(updatedAt);
-    }
-
+    // 회원, Constructor of rehomingListForMember,rehomingCategoryListForMember,fetchTrendingRehoming
     public RehomingInfo(Long postId, PostType postType, String imagePath,
                         String title, Address address,PostStatus status,
                         Long isLiked,Long isBookmarked,int viewCnt,Long likeCnt,Long bookmarkCnt,
@@ -68,22 +48,18 @@ public class RehomingInfo {
 
 
 
-    private Boolean booleanChk(Long chkValue) {
-        return chkValue != 0;
-    }
 
-    // 비회원
+    // 비회원, Constructor of rehomingList,rehomingCategoryList
     public RehomingInfo(Long postId, PostType postType,
                         String imagePath, String title,
-                        String cityName, String cityCountryName,
-                        String townShipName, PostStatus status,
+                        Address address, PostStatus status,
                         int viewCnt, Long likeCnt, Long bookmarkCnt,
                         LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.postId = postId;
         this.postType = postType;
         this.imagePath = imagePath;
         this.title = title;
-        this.region = cityName + " " + cityCountryName+ " " + townShipName;
+        this.region = address.getProvince() + " " + address.getCity() + " " + address.getDistrict()+" "+address.getTown();
         this.status = status;
         this.isLiked = false;
         this.isBookmarked = false;
@@ -92,5 +68,9 @@ public class RehomingInfo {
         this.bookmarkCnt = bookmarkCnt;
         this.createdAt = CalculateTime.dateformatForPost(createdAt);
         this.updatedAt = CalculateTime.dateformatForPost(updatedAt);
+    }
+
+    private Boolean booleanChk(Long chkValue) {
+        return chkValue != 0;
     }
 }

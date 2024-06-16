@@ -9,7 +9,6 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.smile.petpat.image.domain.ImagePriority;
 import com.smile.petpat.post.category.domain.PostType;
 import com.smile.petpat.post.rehoming.domain.RehomingInfo;
-import com.smile.petpat.post.rehoming.dto.RehomingResDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -49,9 +48,7 @@ public class RehomingRepositoryImpl implements RehomingRepositoryQuerydsl {
                                                         image.priority.eq(ImagePriority.PRIORITY_1))
                                                 , "rehomingImg"),
                                 rehoming.title,
-//                                rehoming.cityName,
-//                                rehoming.cityCountryName,
-//                                rehoming.townShipName,
+                                rehoming.address,
                                 rehoming.status,
                                 ExpressionUtils.as(
                                         select(likes.count())
@@ -112,9 +109,7 @@ public class RehomingRepositoryImpl implements RehomingRepositoryQuerydsl {
                                                         image.priority.eq(ImagePriority.PRIORITY_1))
                                         , "rehomingImg"),
                                 rehoming.title,
-//                                rehoming.cityName,
-//                                rehoming.cityCountryName,
-//                                rehoming.townShipName,
+                                rehoming.address,
                                 rehoming.status,
                                 rehoming.viewCnt,
                                 ExpressionUtils.as(
@@ -161,9 +156,7 @@ public class RehomingRepositoryImpl implements RehomingRepositoryQuerydsl {
                                                         image.priority.eq(ImagePriority.PRIORITY_1))
                                         , "rehomingImg"),
                                 rehoming.title,
-//                                rehoming.cityName,
-//                                rehoming.cityCountryName,
-//                                rehoming.townShipName,
+                                rehoming.address,
                                 rehoming.status,
                                 ExpressionUtils.as(
                                         select(likes.count())
@@ -226,9 +219,7 @@ public class RehomingRepositoryImpl implements RehomingRepositoryQuerydsl {
                                                         image.priority.eq(ImagePriority.PRIORITY_1))
                                         , "rehomingImg"),
                                 rehoming.title,
-//                                rehoming.cityName,
-//                                rehoming.cityCountryName,
-//                                rehoming.townShipName,
+                                rehoming.address,
                                 rehoming.status,
                                 rehoming.viewCnt,
                                 ExpressionUtils.as(
@@ -259,6 +250,7 @@ public class RehomingRepositoryImpl implements RehomingRepositoryQuerydsl {
         return new PageImpl<>(content, pageable, total);
     }
 
+    /* 사용하는 데 없음
     @Override
     public RehomingResDto readRehomingDetailForMember(String userEmail, Long rehomingId) {
         return queryFactory
@@ -276,9 +268,6 @@ public class RehomingRepositoryImpl implements RehomingRepositoryQuerydsl {
                                 rehoming.category,
                                 rehoming.type,
                                 rehoming.gender,
-//                                rehoming.cityName,
-//                                rehoming.cityCountryName,
-//                                rehoming.townShipName,
                                 ExpressionUtils.as(
                                         select(likes.count())
                                                 .from(likes)
@@ -318,6 +307,8 @@ public class RehomingRepositoryImpl implements RehomingRepositoryQuerydsl {
                 .fetchOne();
     }
 
+     */
+
     @Override
     public List<RehomingInfo> fetchTrendingRehoming(Long userId, LocalDateTime startOfWeek, LocalDateTime endOfWeek) {
         return queryFactory
@@ -336,9 +327,7 @@ public class RehomingRepositoryImpl implements RehomingRepositoryQuerydsl {
                                                                 .and(image.priority.eq(ImagePriority.PRIORITY_1))
                                                 ), "image"),
                                 rehoming.title,
-//                                rehoming.cityName,
-//                                rehoming.cityCountryName,
-//                                rehoming.townShipName,
+                                rehoming.address,
                                 rehoming.status,
                                 ExpressionUtils.as(
                                         select(likes.count())

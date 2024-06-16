@@ -17,7 +17,7 @@ public interface RehomingRepositoryQuerydsl {
     
     Page<RehomingInfo> rehomingCategoryList(Long categoryId, Long typeId, Pageable pageable);
 
-    RehomingResDto readRehomingDetailForMember(String userEmail, Long rehomingId);
+//    RehomingResDto readRehomingDetailForMember(String userEmail, Long rehomingId);
 
     List<RehomingInfo> fetchTrendingRehoming(Long userId, LocalDateTime startOfWeek, LocalDateTime endOfWeek);
 }

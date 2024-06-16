@@ -88,12 +88,17 @@ public class RehomingController {
      * 분양 게시물 수정
      * @return 성공 시 200 Success 및 수정된 게시물 반환
      */
+    /**
+     * TODO: http://localhost:8081/api/v1/rehoming?postId=1 로 Put method로 보낼 때 오류 발생
+     *      "message" : "Default value must not be null" 오류 발생
+     */
     @PreAuthorize("hasRole('USER')")
     @Operation(summary = "분양게시물 수정", description = "분양게시물 수정")
     @RequestMapping(value = "", method = RequestMethod.PUT)
     public SuccessResponse updateRehoming(@AuthenticationPrincipal UserDetailsImpl userDetails,
                                           @RequestParam Long postId,
                                           @ModelAttribute @Valid RehomingUpdateReqDto rehomingDto) {
+        System.out.println("RehomingController");
         return SuccessResponse.success(rehomingService.updateRehoming(userDetails.getUsername(), postId, rehomingDto), "OK");
     }
 

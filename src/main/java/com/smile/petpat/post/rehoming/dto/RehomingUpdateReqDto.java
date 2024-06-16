@@ -4,6 +4,8 @@ import com.smile.petpat.common.exception.CustomException;
 import com.smile.petpat.common.response.ErrorCode;
 import com.smile.petpat.post.category.domain.CategoryGroup;
 import com.smile.petpat.post.category.domain.PetCategory;
+import com.smile.petpat.post.common.Address.Dto.AddressReqDto;
+import com.smile.petpat.post.common.Address.domain.Address;
 import com.smile.petpat.post.common.status.PostStatus;
 import com.smile.petpat.post.rehoming.domain.Rehoming;
 import com.smile.petpat.post.rehoming.domain.RehomingCommand;
@@ -35,11 +37,9 @@ public class RehomingUpdateReqDto {
     @NotNull(message = "카테고리는 필수값입니다.") private Long category;
     @NotNull(message = "종은 필수값입니다.") private Long type;
     @NotNull(message = "성별은 필수값입니다.") private RehomingCommand.PetGender gender;
-    private String cityName;
-    private String cityCountryName;
-    private String townShipName;
+
+    private AddressReqDto AddressReqDto;
     private String detailAdName;
-    private String fullAdName;
     private boolean dhppl;
     private boolean covidEnteritis;
     private boolean kennelCough;
@@ -52,7 +52,7 @@ public class RehomingUpdateReqDto {
 
 
 
-    public Rehoming toUpdateEntity(User user, Long rehomingId, CategoryGroup category, PetCategory type, PostStatus status) {
+    public Rehoming toUpdateEntity(User user, Long rehomingId, CategoryGroup category, PetCategory type, PostStatus status,Address address) {
         return Rehoming.builder()
                 .rehomingId(rehomingId)
                 .user(user)
@@ -63,11 +63,8 @@ public class RehomingUpdateReqDto {
                 .category(category)
                 .type(type)
                 .gender(gender)
-//                .cityName(cityName)
-//                .cityCountryName(cityCountryName)
-//                .townShipName(townShipName)
+                .address(address)
                 .detailAdName(detailAdName)
-//                .fullAdName(fullAdName)
                 .status(status)
                 .dhppl(dhppl)
                 .covidEnteritis(covidEnteritis)
