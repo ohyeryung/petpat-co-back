@@ -124,7 +124,9 @@ public class RehomingServiceImpl implements RehomingService {
     @Override
     @Transactional
     public void deleteRehoming(String userEmail, Long postId) {
+        Rehoming rehoming = rehomingReader.readRehomingById(postId);
         // 5-1. 게시글 삭제
+        rehoming.getAddress().getRehomingList().remove(rehoming);
         rehomingStore.delete(userEmail, postId);
         // 5-2. 해당 게시글 이미지 삭제
         imageUploadManager.removePostImage(postId, PostType.REHOMING);
