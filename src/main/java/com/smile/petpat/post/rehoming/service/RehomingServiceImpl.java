@@ -104,7 +104,8 @@ public class RehomingServiceImpl implements RehomingService {
         PetCategory type = rehomingReader.readPetTypeById(rehomingUpdateReqDto.getType());
         PostStatus status = rehoming.getStatus();
 
-        Address address = addressService.getAddress(rehomingUpdateReqDto.getAddressReqDto());
+        Address address = addressService.getAddress(new AddressReqDto(rehomingUpdateReqDto));
+//        Address address = addressService.getAddress(rehomingUpdateReqDto.getAddressReqDto());
         Rehoming initRehoming = rehomingUpdateReqDto.toUpdateEntity(user, postId, category, type, status,address);
 
         rehoming.getAddress().getRehomingList().remove(rehoming);
