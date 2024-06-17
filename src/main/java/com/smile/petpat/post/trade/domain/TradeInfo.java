@@ -45,6 +45,7 @@ public class TradeInfo {
             
         }
 
+        //Constructor of tradeDetailForUser,tradeDetail
         public TradeDetail(Long postId, Long userId, String nickname, String title, String content, Long price, Address address,
                            PostType postType, Long isLiked, Long isBookmarked, int viewCnt, Long likeCnt,
                            Long bookmarkCnt, String tradeCategoryDetailName, PostStatus status, LocalDateTime createdAt
@@ -64,28 +65,6 @@ public class TradeInfo {
             this.bookmarkCnt = bookmarkCnt;
             this.tradeCategoryDetailName = tradeCategoryDetailName;
             this.status =status;
-            this.createdAt = CalculateTime.dateformatForPost(createdAt);
-        }
-
-        public TradeDetail(Long postId, Long userId, String nickname, String title, String content, Long price,
-                           String cityName, String cityCountryName, String townShipName, String detailAdName,
-                           String fullAdName, PostType postType, Long isLiked, Long isBookmarked, int viewCnt,
-                           Long likeCnt, Long bookmarkCnt, String tradeCategoryDetailName,PostStatus status,LocalDateTime createdAt) {
-            this.postId = postId;
-            this.userId = userId;
-            this.nickname = nickname;
-            this.title = title;
-            this.content = content;
-            this.price = price;
-            this.region = cityName + " " + cityCountryName + " " + townShipName;
-            this.postType = postType;
-            this.isLiked = booleanChk(isLiked);
-            this.isBookmarked = booleanChk(isBookmarked);
-            this.viewCnt = viewCnt;
-            this.likeCnt = likeCnt;
-            this.bookmarkCnt = bookmarkCnt;
-            this.tradeCategoryDetailName = tradeCategoryDetailName;
-            this.status = status;
             this.createdAt = CalculateTime.dateformatForPost(createdAt);
         }
 
@@ -136,6 +115,7 @@ public class TradeInfo {
         }
 
 
+        //Constructor of tradeList, tradeList_Paging, fetchTrendingTrade
         public TradeList(Long postId, String imagePath, String title, Long price, Address address, PostStatus status,Long isLiked,
                          Long isBookmarked,int viewCnt,Long likeCnt,Long bookmarkCnt,LocalDateTime createdAt,LocalDateTime updatedAt) {
             this.postId = postId;

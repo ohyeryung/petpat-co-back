@@ -105,10 +105,7 @@ public class TradeRepositoryImpl implements TradeRepositoryQueryDsl{
                                                 ,"image"),
                                         trade.title,
                                         trade.price,
-//                                        trade.cityName,
-//                                        trade.cityCountryName,
-//                                        trade.townShipName,
-
+                                        trade.address,
                                         ExpressionUtils.as(
                                                 JPAExpressions
                                                         .select(likes.count())
@@ -260,9 +257,7 @@ public class TradeRepositoryImpl implements TradeRepositoryQueryDsl{
                                                  ,"imagePath"),
                                          trade.title,
                                          trade.price,
-//                                         trade.cityName,
-//                                         trade.cityCountryName,
-//                                         trade.townShipName,
+                                         trade.address,
                                          ExpressionUtils.as(
                                                  JPAExpressions
                                                          .select(likes.count())

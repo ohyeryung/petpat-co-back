@@ -43,8 +43,6 @@ public class Trade extends Timestamped {
     @Column(name = "DETAIL_AD_NAME")
     private String detailAdName;
 
-
-
     @Column(name = "POST_TYPE" , nullable = false)
     @Enumerated(EnumType.STRING)
     private PostType postType;

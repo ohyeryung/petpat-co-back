@@ -38,7 +38,7 @@ public class RehomingUpdateReqDto {
     @NotNull(message = "종은 필수값입니다.") private Long type;
     @NotNull(message = "성별은 필수값입니다.") private RehomingCommand.PetGender gender;
 
-    private AddressReqDto AddressReqDto;
+    private AddressReqDto addressReqDto;
     private String province;
     private String city;
     private String district;

@@ -30,8 +30,7 @@ public class  TradeController {
     @Operation(summary = "중고거래 게시물 등록", description = "중고거래 게시물 등록")
     @RequestMapping(value = "",method = RequestMethod.POST)
     public SuccessResponse registerTrade(@ModelAttribute @Valid TradeDto.CommonTrade tradeDto,
-                                         @AuthenticationPrincipal UserDetailsImpl userDetails
-    ){
+                                         @AuthenticationPrincipal UserDetailsImpl userDetails){
         TradeCommand tradeCommand = tradeDto.toCommand();
         tradeService.registerTrade(tradeCommand,userDetails.getUser());
         return SuccessResponse.success("ok");
