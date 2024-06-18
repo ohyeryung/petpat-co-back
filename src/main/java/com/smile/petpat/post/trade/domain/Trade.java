@@ -86,6 +86,8 @@ public class Trade extends Timestamped {
         this.price = price;
         this.address = address;
         this.detailAdName = detailAdName;
+        this.postType =postType;
+        this.status= status;
         this.postType =PostType.TRADE;
         this.status = PostStatus.TRADE_FINDING;
         this.viewCnt = viewCnt;
@@ -93,14 +95,10 @@ public class Trade extends Timestamped {
     }
 
     public void update(Trade trade){
-        this.tradeId =trade.getTradeId();
         this.title = trade.getTitle();
         this.content = trade.getContent();
         this.price = trade.getPrice();
-//        this.cityName = trade.getCityName();
-//        this.cityCountryName = trade.getCityCountryName();
-//        this.townShipName = trade.getTownShipName();
-//        this.fullAdName = trade.getFullAdName();
+        this.address =trade.address;
         this.detailAdName = trade.getDetailAdName();
         this.tradeCategoryDetail = trade.getTradeCategoryDetail();
     }

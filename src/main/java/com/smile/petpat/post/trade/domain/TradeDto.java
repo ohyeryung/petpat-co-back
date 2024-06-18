@@ -94,16 +94,20 @@ public class TradeDto {
         private String content;
         @NotNull(message = "가격은 필수값입니다.")
         private Long price;
-        @NotNull(message = "시도군명은 필수값입니다.")
-        private String cityName;
-        @NotNull(message = "시도군명은 필수값입니다.")
-        private String cityCountryName;
-        @NotNull(message = "시도군명은 필수값입니다.")
-        private String townShipName;
-        @NotNull(message = "시도군명은 필수값입니다.")
+        private String province;
+        private String city;
+        private String district;
+        private String town;
+//        @NotNull(message = "시도군명은 필수값입니다.")
+//        private String cityName;
+//        @NotNull(message = "시도군명은 필수값입니다.")
+//        private String cityCountryName;
+//        @NotNull(message = "시도군명은 필수값입니다.")
+//        private String townShipName;
+//        @NotNull(message = "시도군명은 필수값입니다.")
+//        private String detailAdName;
+//        @NotNull(message = "시도군명은 필수값입니다.")
         private String detailAdName;
-        @NotNull(message = "시도군명은 필수값입니다.")
-        private String fullAdName;
         @NotNull(message = "카테고리는 필수값입니다.")
         private Long tradeCategoryDetailId;
 
@@ -115,11 +119,11 @@ public class TradeDto {
                     .title(title)
                     .content(content)
                     .price(price)
-//                    .cityName(cityName)
-//                    .cityCountryName(cityCountryName)
-//                    .townShipName(townShipName)
+                    .province(province)
+                    .city(city)
+                    .district(district)
+                    .town(town)
                     .detailAdName(detailAdName)
-//                    .fullAdName(fullAdName)
                     .tradeCategoryDetailId(tradeCategoryDetailId)
                     .images(newImages)
                     .deletedImageId(deletedImageId)

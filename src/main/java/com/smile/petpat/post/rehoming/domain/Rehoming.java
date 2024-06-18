@@ -126,11 +126,7 @@ public class Rehoming extends Timestamped {
         this.category = category;
         this.type = type;
         this.gender = gender;
-//        this.cityName = cityName;
-//        this.cityCountryName = cityCountryName;
-//        this.townShipName = townShipName;
         this.detailAdName = detailAdName;
-//        this.fullAdName = fullAdName;
         this.status = status;
         this.postType = postType;
         this.viewCnt = viewCnt;
@@ -160,10 +156,6 @@ public class Rehoming extends Timestamped {
         this.type = initRehoming.getType();
         this.gender = initRehoming.getGender();
         this.address =address;
-//        this.cityName = initRehoming.getCityName();
-//        this.cityCountryName = initRehoming.getCityCountryName();
-//        this.townShipName = initRehoming.getTownShipName();
-//        this.fullAdName = initRehoming.getFullAdName();
         this.detailAdName = initRehoming.getDetailAdName();
         this.status = initRehoming.getStatus();
         this.dhppl = initRehoming.isDhppl();

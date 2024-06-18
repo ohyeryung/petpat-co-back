@@ -111,8 +111,6 @@ public class RehomingServiceImpl implements RehomingService {
         Address address = addressService.getAddress(new AddressReqDto(rehomingUpdateReqDto));
         Rehoming initRehoming = rehomingUpdateReqDto.toUpdateEntity(user, postId, category, type, status,address);
 
-        System.out.println(address.getTown());
-
         rehoming.update(initRehoming,address);
 
         // 4-3. 이미지 수정

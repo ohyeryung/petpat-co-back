@@ -63,18 +63,14 @@ public class TradeCommand {
                 .build();
     }
 
-    public Trade toUpdateEntity(User user,Long tradeId,TradeCategoryDetail tradeCategoryDetail){
+    public Trade toUpdateEntity(User user,TradeCategoryDetail tradeCategoryDetail,Address address){
         return Trade.builder()
-//                .tradeId(tradeId)
                 .user(user)
                 .title(title)
                 .content(content)
                 .price(price)
-//                .cityName(cityName)
-//                .cityCountryName(cityCountryName)
-//                .townShipName(townShipName)
+                .address(address)
                 .detailAdName(detailAdName)
-//                .fullAdName(fullAdName)
 //                .postType(PostType.TRADE)
 //                .status(PostStatus.TRADE_FINDING)
                 .tradeCategoryDetail(tradeCategoryDetail)

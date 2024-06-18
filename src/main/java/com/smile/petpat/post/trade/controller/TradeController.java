@@ -58,6 +58,7 @@ public class  TradeController {
     @Operation(summary = "중고거래 게시물 상세조회", description = "중고거래 게시물 상세조회")
     @RequestMapping(value = "/{tradeId}",method = RequestMethod.GET)
     public SuccessResponse detailTrade(@PathVariable Long tradeId, @AuthenticationPrincipal UserDetailsImpl userDetails){
+        System.out.println(userDetails.getUser().getId());
         if (userDetails.getUser().getUserEmail().split("@")[1].contains("guest")) { //비회원 유저가 조회
             return SuccessResponse.success(tradeService.tradeDetail(tradeId),"ok");
         } else { //회원인 유저가 조회

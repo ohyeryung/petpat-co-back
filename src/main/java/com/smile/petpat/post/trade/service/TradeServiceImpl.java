@@ -51,16 +51,18 @@ public class TradeServiceImpl implements TradeService{
     @Override
     @Transactional
     public TradeInfo.TradeDetail updateTrade( User user,Long tradeId,TradeCommand tradeCommand) {
+        //AddressChk
+        Address address = addressService.getAddress(new AddressReqDto(tradeCommand));
         //이미지를 제외한 게시글 수정
         Trade trade = tradeReader.userChk(tradeId, user.getId());
         TradeCategoryDetail categoryDetail = tradeReader.readTradeCategoryDetailById(tradeCommand.getTradeCategoryDetailId());
-        Trade initTrade = tradeCommand.toUpdateEntity(user,tradeId,categoryDetail);
+        Trade initTrade = tradeCommand.toUpdateEntity(user,categoryDetail,address);
         trade.update(initTrade);
 
         //이미지 수정
         imageService.updateImage(tradeCommand.getImages(),tradeCommand.getDeletedImageId()
                             ,tradeId,PostType.TRADE);
-        return getTradeInfo(tradeId, user, trade);
+        return getTradeInfo(tradeId);
     }
 
     // 중고거래 게시판 목록 반환(로그인한 유저)
@@ -107,9 +109,10 @@ public class TradeServiceImpl implements TradeService{
        return tradeReader.fetchTrendingTrade(user.getId());
     }
 
-    private TradeInfo.TradeDetail getTradeInfo(Long tradeId, User user, Trade trade) {
+    private TradeInfo.TradeDetail getTradeInfo(Long tradeId) {
         List<ImageResDto> imgList = imageService.getImagesByPost(tradeId, PostType.TRADE);
-        return new TradeInfo.TradeDetail();
+        TradeInfo.TradeDetail tradeDetail = tradeReader.readTradeDetail(tradeId);
+        return new TradeInfo.TradeDetail(tradeDetail,imgList);
     }
 
 
