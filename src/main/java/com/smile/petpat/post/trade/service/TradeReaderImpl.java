@@ -44,18 +44,16 @@ public class TradeReaderImpl implements TradeReader {
 
     @Override
     public TradeInfo.TradeDetail readTradeDetailForUser(Long userId, Long tradeId) {
-        readTradeById(tradeId);
         return tradeRepository.tradeDetailForUser(userId,tradeId);
     }
 
     @Override
     public TradeInfo.TradeDetail readTradeDetail(Long tradeId) {
-        readTradeById(tradeId);
         return tradeRepository.tradeDetail(tradeId);
     }
 
     @Override
-    public Trade userChk(Long tradeId,Long userId){
+    public Trade getTradeAndUserChk(Long tradeId, Long userId){
        Trade trade = readTradeById(tradeId);
        if(!trade.getUser().getId().equals(userId)) {
            throw new IllegalArgumentException("권한이 없습니다.");

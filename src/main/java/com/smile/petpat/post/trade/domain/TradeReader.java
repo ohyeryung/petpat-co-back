@@ -13,7 +13,7 @@ public interface TradeReader {
     TradeCategoryDetail readTradeCategoryDetailById(Long tradeCategoryDetailId);
     TradeInfo.TradeDetail readTradeDetailForUser(Long userId, Long tradeId);
     TradeInfo.TradeDetail readTradeDetail(Long tradeId);
-    Trade userChk(Long tradeId,Long userId);
+    Trade getTradeAndUserChk(Long tradeId, Long userId);
 
     List<TradeInfo.TradeList> fetchTrendingTrade(Long userId);
 }

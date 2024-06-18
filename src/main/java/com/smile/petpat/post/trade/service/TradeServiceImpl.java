@@ -16,8 +16,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.util.List;
+
+import com.smile.petpat.post.trade.domain.TradeInfo.*;
+
 
 @Service
 @Slf4j
@@ -30,71 +32,69 @@ public class TradeServiceImpl implements TradeService{
     private final CommonUtils commonUtils;
     private final AddressService addressService;
 
+    //1. Trade 게시글 등록
     @Override
     @Transactional
-    public Long registerTrade(TradeCommand tradeCommand, User user) {
+    public TradeDetail registerTrade(TradeCommand tradeCommand, User user) {
         //AddressChk
         Address address = addressService.getAddress(new AddressReqDto(tradeCommand));
         //1. 게시물 등록
         TradeCategoryDetail categoryDetail = tradeReader.readTradeCategoryDetailById(tradeCommand.getTradeCategoryDetailId());
         Trade initTrade = tradeCommand.toRegisterEntity(user,categoryDetail,address);
-
         Trade trade = tradeStore.store(initTrade);
+
+        //2. 게시물 주소 등록
         address.getTradelist().add(trade);
-        //2. 사진 등록
+
+        //3. 게시글 사진 등록
         imageService.uploadPostImage(tradeCommand.getImages(),trade.getTradeId(),trade.getPostType());
 
-        return trade.getTradeId();
+        return getTradeInfo(trade.getTradeId());
     }
 
-    // 게시물 수정
+    //2. 게시물 수정
     @Override
     @Transactional
-    public TradeInfo.TradeDetail updateTrade( User user,Long tradeId,TradeCommand tradeCommand) {
+    public TradeDetail updateTrade( User user,Long tradeId,TradeCommand tradeCommand) {
         //AddressChk
         Address address = addressService.getAddress(new AddressReqDto(tradeCommand));
-        //이미지를 제외한 게시글 수정
-        Trade trade = tradeReader.userChk(tradeId, user.getId());
+
+        //1. 이미지를 제외한 게시글 수정
+        Trade trade = tradeReader.getTradeAndUserChk(tradeId, user.getId());
         TradeCategoryDetail categoryDetail = tradeReader.readTradeCategoryDetailById(tradeCommand.getTradeCategoryDetailId());
         Trade initTrade = tradeCommand.toUpdateEntity(user,categoryDetail,address);
         trade.update(initTrade);
 
-        //이미지 수정
+        //2. 이미지 수정
         imageService.updateImage(tradeCommand.getImages(),tradeCommand.getDeletedImageId()
                             ,tradeId,PostType.TRADE);
         return getTradeInfo(tradeId);
     }
 
-    // 중고거래 게시판 목록 반환(로그인한 유저)
+    //3. 중고거래 게시판 목록 반환(로그인한 유저)
     @Override
-    public TradeInfo.TradePagingListInfo listTrade(User user, Pageable pageable) {
-        Page<TradeInfo.TradeList> listTrade = tradeReader.readTradeList(user,pageable);
-        return new TradeInfo.TradePagingListInfo(listTrade);
+    public TradePagingListInfo listTrade(User user, Pageable pageable) {
+        Page<TradeList> listTrade = tradeReader.readTradeList(user,pageable);
+        return new TradePagingListInfo(listTrade);
     }
 
+    //4-1. 중고거래 게시글 상세 조회(비회원)
     @Override
-    public TradeInfo.TradeDetail tradeDetail(Long tradeId) {
-        List<ImageResDto> imgList = imageService.getImagesByPost(tradeId, PostType.TRADE);
+    public TradeDetail tradeDetail(Long tradeId) {
+        return getTradeInfo(tradeId);
+    }
+
+    //4-2. 중고거래 게시글 상세 조회(회원)
+    @Override
+    public TradeDetail tradeDetailforUser(Long tradeId, User user) {
         Trade trade = tradeReader.readTradeById(tradeId);
-        trade.updateViewCnt(trade); //조회수 계산
-        TradeInfo.TradeDetail tradeDetail =tradeReader.readTradeDetail(tradeId);
-
-
-        return new TradeInfo.TradeDetail(tradeDetail,imgList);
-    }
-
-    @Override
-    public TradeInfo.TradeDetail tradeDetailforUser(Long tradeId, User user) {
-        Trade trade = tradeReader.readTradeById(tradeId);
-        trade.updateViewCnt(trade);
-        TradeInfo.TradeDetail tradeDetail = tradeReader.readTradeDetail(tradeId);
-        List<ImageResDto> imageList = imageService.getImagesByPost(tradeId,trade.getPostType());
-        // 조회수 계산
-        return new TradeInfo.TradeDetail(tradeDetail,imageList);
+        trade.updateViewCnt(trade); // 조회수 계산
+        return getTradeInfo(tradeId);
 
     }
 
 
+    //5. 중고거래 게시글 삭제
     @Override
     @Transactional
     public void deleteTrade(Long tradeId, User user) {
@@ -104,34 +104,41 @@ public class TradeServiceImpl implements TradeService{
         imageService.removePostImage(tradeId, PostType.TRADE);
     }
 
+    //6. 인기있는 중고거래 게시글 조회
     @Override
-    public List<TradeInfo.TradeList> fetchTrendingTrade(User user) {
+    public List<TradeList> fetchTrendingTrade(User user) {
        return tradeReader.fetchTrendingTrade(user.getId());
     }
 
-    private TradeInfo.TradeDetail getTradeInfo(Long tradeId) {
-        List<ImageResDto> imgList = imageService.getImagesByPost(tradeId, PostType.TRADE);
-        TradeInfo.TradeDetail tradeDetail = tradeReader.readTradeDetail(tradeId);
-        return new TradeInfo.TradeDetail(tradeDetail,imgList);
-    }
 
 
+    //7-1. 중고거래 게시글 상태변경 [판매 중]
     @Override
-    public void updateStatusFinding(User user, Long postId) {
+    public TradeDetail updateStatusFinding(User user, Long postId) {
         Trade trade = tradeReader.readTradeById(postId);
         trade.isFinding();
+        return getTradeInfo(trade.getTradeId());
     }
 
+    //7-2. 중고거래 게시글 상태변경 [예약 중]
     @Override
-    public void updateStatusReserved(User user, Long postId) {
+    public TradeDetail updateStatusReserved(User user, Long postId) {
         Trade trade = tradeReader.readTradeById(postId);
         trade.isReserved();
+        return getTradeInfo(trade.getTradeId());
     }
 
+    //7-3. 중고거래 게시글 상태변경 [판매 완료]
     @Override
-    public void updateStatusMatched(User user, Long postId) {
+    public TradeDetail updateStatusMatched(User user, Long postId) {
         Trade trade = tradeReader.readTradeById(postId);
         trade.isMatched();
+        return getTradeInfo(trade.getTradeId());
+    }
+    private TradeDetail getTradeInfo(Long tradeId) {
+        List<ImageResDto> imgList = imageService.getImagesByPost(tradeId, PostType.TRADE);
+        TradeInfo.TradeDetail tradeDetail = tradeReader.readTradeDetail(tradeId);
+        return new TradeDetail(tradeDetail,imgList);
     }
 
 
