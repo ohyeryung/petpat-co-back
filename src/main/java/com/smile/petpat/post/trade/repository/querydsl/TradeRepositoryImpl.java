@@ -116,7 +116,29 @@ public class TradeRepositoryImpl implements TradeRepositoryQueryDsl{
                                                                 likes.user.id.eq(userId)
                                                                         .and(likes.postId.eq(trade.tradeId))
                                                         ), "isLiked"),
+                                        ExpressionUtils.as(
+                                                JPAExpressions
+                                                        .select(bookmark.count())
+                                                        .from(bookmark)
+                                                        .where(
+                                                                bookmark.user.id.eq(userId)
+                                                                        .and(bookmark.postId.eq(trade.tradeId))
+                                                        ), "isBookmarked"),
                                         trade.viewCnt,
+                                        ExpressionUtils.as(
+                                                JPAExpressions
+                                                        .select(likes.count())
+                                                        .from(likes)
+                                                        .where(likes.postId.eq(trade.tradeId)),
+                                                "likeCnt"),
+                                        ExpressionUtils.as(
+                                                JPAExpressions
+                                                        .select(bookmark.count())
+                                                        .from(bookmark)
+                                                        .where(bookmark.postId.eq(trade.tradeId)),
+                                                "bookmarkCnt"),
+                                        trade.createdAt,
+                                        trade.updatedAt,
                                         trade.status
                                 )
                         )
@@ -268,7 +290,29 @@ public class TradeRepositoryImpl implements TradeRepositoryQueryDsl{
                                                                  likes.user.id.eq(userId)
                                                                          .and(likes.postId.eq(trade.tradeId))
                                                          ), "isLiked"),
+                                         ExpressionUtils.as(
+                                                 JPAExpressions
+                                                         .select(bookmark.count())
+                                                         .from(bookmark)
+                                                         .where(
+                                                                 bookmark.user.id.eq(userId)
+                                                                         .and(bookmark.postId.eq(trade.tradeId))
+                                                         ), "isBookmarked"),
                                          trade.viewCnt,
+                                         ExpressionUtils.as(
+                                                 JPAExpressions
+                                                         .select(likes.count())
+                                                         .from(likes)
+                                                         .where(likes.postId.eq(trade.tradeId)),
+                                                 "likeCnt"),
+                                         ExpressionUtils.as(
+                                                 JPAExpressions
+                                                         .select(bookmark.count())
+                                                         .from(bookmark)
+                                                         .where(bookmark.postId.eq(trade.tradeId)),
+                                                 "bookmarkCnt"),
+                                         trade.createdAt,
+                                         trade.updatedAt,
                                          trade.status
                                  )
                          )

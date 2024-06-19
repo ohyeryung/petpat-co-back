@@ -120,8 +120,8 @@ public class TradeInfo {
 
 
         //Constructor of tradeList, tradeList_Paging, fetchTrendingTrade
-        public TradeList(Long postId, String imagePath, String title, Long price, Address address, PostStatus status,Long isLiked,
-                         Long isBookmarked,int viewCnt,Long likeCnt,Long bookmarkCnt,LocalDateTime createdAt,LocalDateTime updatedAt) {
+        public TradeList(Long postId, String imagePath, String title, Long price, Address address, Long isLiked,
+                         Long isBookmarked,int viewCnt,Long likeCnt,Long bookmarkCnt,LocalDateTime createdAt,LocalDateTime updatedAt,PostStatus postStatus) {
             this.postId = postId;
             this.imagePath = imagePath;
             this.title = title;
@@ -130,11 +130,11 @@ public class TradeInfo {
             this.isLiked = booleanChk(isLiked);
             this.isBookmarked =booleanChk(isBookmarked);
             this.viewCnt = viewCnt;
-            this.status = status;
             this.likeCnt = likeCnt;
             this.bookmarkCnt = bookmarkCnt;
             this.createdAt = createdAt;
             this.updatedAt = updatedAt;
+            this.status =postStatus;
         }
 
     }

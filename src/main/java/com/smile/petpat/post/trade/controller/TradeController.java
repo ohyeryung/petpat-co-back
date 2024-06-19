@@ -43,8 +43,9 @@ public class  TradeController {
     @RequestMapping(value = "",method = RequestMethod.GET)
     public SuccessResponse listTrade(@AuthenticationPrincipal UserDetailsImpl userDetails,
                                      @PageableDefault() Pageable pageable){
-        if(userDetails == null){
-            // 1. 로그인 안한 유저
+        //TODO: 비로그인인 유저를 다르게 처리해야함, 미완료 상태
+        if (userDetails.getUser().getUserEmail().split("@")[1].contains("guest")) { //비회원 유저가 조회
+            return SuccessResponse.success(tradeService.listTrade(userDetails.getUser(),pageable),"ok");
         }
         // 2. 로그인 한 유저
         return SuccessResponse.success(tradeService.listTrade(userDetails.getUser(),pageable),"ok");
