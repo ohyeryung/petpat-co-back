@@ -87,10 +87,11 @@ public class TradeServiceImpl implements TradeService{
     //4-2. 중고거래 게시글 상세 조회(회원)
     @Override
     public TradeDetail tradeDetailforUser(Long tradeId, User user) {
-        Trade trade = tradeReader.readTradeById(tradeId);
-        trade.updateViewCnt(trade); // 조회수 계산
-        return getTradeInfo(tradeId);
-
+        TradeDetail tradeDetail = tradeReader.readTradeDetailForUser(user.getId(), tradeId);
+        tradeDetail.setImageList(
+                imageService.getImagesByPost(tradeId,PostType.TRADE)
+        );
+        return tradeDetail;
     }
 
 

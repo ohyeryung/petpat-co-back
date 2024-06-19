@@ -88,6 +88,10 @@ public class TradeInfo {
             this.createdAt = tradeDetail.createdAt;
         }
 
+        public void setImageList(List<ImageResDto> imageList){
+            this.imageList = imageList;
+        }
+
     }
     @Getter
     @ToString

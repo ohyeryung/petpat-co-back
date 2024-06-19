@@ -1,12 +1,14 @@
 package com.smile.petpat.post.trade.repository.querydsl;
 
 import com.querydsl.core.QueryResults;
+import com.querydsl.core.group.GroupBy;
 import com.querydsl.core.types.ExpressionUtils;
 import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.smile.petpat.image.domain.ImagePriority;
+import com.smile.petpat.image.dto.ImageResDto;
 import com.smile.petpat.post.category.domain.PostType;
 import com.smile.petpat.post.trade.domain.TradeInfo;
 import org.springframework.data.domain.Page;
@@ -180,7 +182,7 @@ public class TradeRepositoryImpl implements TradeRepositoryQueryDsl{
                         )
                 .from(trade)
                 .where(trade.tradeId.eq(tradeId))
-                .fetchOne();
+                .fetchFirst();
     }
 
     @Override
