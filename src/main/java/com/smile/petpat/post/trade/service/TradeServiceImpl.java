@@ -74,8 +74,9 @@ public class TradeServiceImpl implements TradeService{
     //3. 중고거래 게시판 목록 반환(로그인한 유저)
     @Override
     public TradePagingListInfo listTrade(User user, Pageable pageable) {
-        Page<TradeList> listTrade = tradeReader.readTradeList(user,pageable);
-        return new TradePagingListInfo(listTrade);
+        if(user.getUserEmail().split("@")[1].contains("guest"))
+            return new TradePagingListInfo(tradeReader.readTradeList(0L,pageable));
+        return new TradePagingListInfo(tradeReader.readTradeList(user.getId(),pageable));
     }
 
     //4-1. 중고거래 게시글 상세 조회(비회원)
