@@ -23,7 +23,7 @@ public interface AddressRepository extends JpaRepository<Address,Long>, AddressR
                                        @Param("city") String city);
 
     @Query("SELECT a.town from TB_ADDRESS a WHERE a.province = :province AND a.city = :city AND a.district = :district")
-    List<String> findTownDistinct(@Param("province")String province,
+    List<String> findTownsDistinct(@Param("province")String province,
                                   @Param("city")String city,
                                   @Param("district")String district);
 }

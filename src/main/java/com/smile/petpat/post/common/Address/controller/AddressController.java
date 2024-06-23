@@ -51,15 +51,15 @@ public class AddressController {
 
     @Operation(summary = "구 목록 조회", description = "구 목록 조회")
     @RequestMapping(value = "/district",method = RequestMethod.GET)
-    public SuccessResponse getCity(@RequestParam String province,
+    public SuccessResponse getDistrict(@RequestParam String province,
                                    @RequestParam String city){
         return SuccessResponse.success(addressService.getDistrictList(province,city));
     }
     @Operation(summary = "동,면 목록 조회", description = "동,면 목록 조회")
     @RequestMapping(value = "/town",method = RequestMethod.GET)
-    public SuccessResponse getCity(@RequestParam String province,
+    public SuccessResponse getTown(@RequestParam String province,
                                    @RequestParam String city,
                                    @RequestParam String district){
-        return SuccessResponse.success(addressService.getTownList(province,city,district));
+        return SuccessResponse.success(addressService.getTownsList(province,city,district));
     }
 }

@@ -19,5 +19,5 @@ public interface AddressService{
 
     List<String> getDistrictList(String province,String city);
 
-    List<String> getTownList(String province,String city, String district);
+    List<String> getTownsList(String province,String city, String district);
 }

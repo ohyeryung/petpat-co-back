@@ -58,8 +58,8 @@ public class AddressServiceImpl implements AddressService{
     }
 
     @Override
-    public List<String> getTownList(String province, String city, String district) {
-        return addressRepository.findTownDistinct(province,city,district);
+    public List<String> getTownsList(String province, String city, String district) {
+        return addressRepository.findTownsDistinct(province,city,district);
     }
 
 }
