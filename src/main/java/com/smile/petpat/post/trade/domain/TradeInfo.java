@@ -2,7 +2,7 @@ package com.smile.petpat.post.trade.domain;
 
 import com.smile.petpat.image.dto.ImageResDto;
 import com.smile.petpat.post.category.domain.PostType;
-import com.smile.petpat.post.category.domain.TradeCategoryDetail;
+import com.smile.petpat.post.common.Address.util.AddressUtils;
 import com.smile.petpat.post.common.Address.domain.Address;
 import com.smile.petpat.post.common.CalculateTime;
 import com.smile.petpat.post.common.status.PostStatus;
@@ -11,6 +11,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import org.springframework.data.domain.Page;
+
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -56,7 +57,7 @@ public class TradeInfo {
             this.title = title;
             this.content = content;
             this.price = price;
-            this.region = address.getProvince() + " "  + address.getCity() + " "+address.getDistrict() + " "+address.getTown();
+            this.region = AddressUtils.makeRegionFromAddress(address);
             this.postType = postType;
             this.isLiked = isLiked==0? false:true ;
             this.isBookmarked = isBookmarked==0? false:true;
@@ -126,7 +127,7 @@ public class TradeInfo {
             this.imagePath = imagePath;
             this.title = title;
             this.price = price;
-            this.region = address.getProvince() + " " + address.getCity() + " " + address.getDistrict()+" "+address.getTown();
+            this.region = AddressUtils.makeRegionFromAddress(address);
             this.isLiked = booleanChk(isLiked);
             this.isBookmarked =booleanChk(isBookmarked);
             this.viewCnt = viewCnt;

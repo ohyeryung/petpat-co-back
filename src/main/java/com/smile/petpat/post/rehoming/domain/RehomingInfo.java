@@ -4,6 +4,7 @@ import com.smile.petpat.post.category.domain.PostType;
 import com.smile.petpat.post.common.Address.domain.Address;
 import com.smile.petpat.post.common.CalculateTime;
 import com.smile.petpat.post.common.status.PostStatus;
+import com.smile.petpat.post.common.Address.util.AddressUtils;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -35,7 +36,7 @@ public class RehomingInfo {
         this.postType = postType;
         this.imagePath = imagePath;
         this.title = title;
-        this.region = address.getProvince() + " " + address.getCity() + " " + address.getDistrict()+" "+address.getTown();
+        this.region = AddressUtils.makeRegionFromAddress(address);
         this.status = status;
         this.isLiked = booleanChk(isLiked);
         this.isBookmarked = booleanChk(isBookmarked);
@@ -59,7 +60,7 @@ public class RehomingInfo {
         this.postType = postType;
         this.imagePath = imagePath;
         this.title = title;
-        this.region = address.getProvince() + " " + address.getCity() + " " + address.getDistrict()+" "+address.getTown();
+        this.region = AddressUtils.makeRegionFromAddress(address);
         this.status = status;
         this.isLiked = false;
         this.isBookmarked = false;
