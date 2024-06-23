@@ -30,26 +30,19 @@ public class S3Uploader {
     @Value("${cloud.aws.s3.bucket}")
     private  String bucket;
 
-    public String uploadFile(MultipartFile file, String fakeFileName){
-
+    public String uploadImage(MultipartFile file, String fakeFileName){
         ObjectMetadata objectMetadata = new ObjectMetadata();
         objectMetadata.setContentLength(file.getSize());
         objectMetadata.setContentType(file.getContentType());
+
         try (InputStream inputStream = file.getInputStream()) {
             amazonS3.putObject(new PutObjectRequest(bucket, fakeFileName, inputStream, objectMetadata)
                     .withCannedAcl(CannedAccessControlList.PublicRead));
         } catch (IOException e) {
             throw new CustomException(FAILED_UPLOAD_IMAGE);
         }
-        return amazonS3.getUrl(bucket, fakeFileName).toString();
-    }
 
-    // 게시글 Id와 postType 으로 S3 이미지 삭제
-    @Transactional
-    public void deleteS3(List<String> imgUrl, Long postId, PostType postType) {
-        for (String img : imgUrl) {
-            deleteImage(img);
-        }
+        return amazonS3.getUrl(bucket, fakeFileName).toString();
     }
 
 

@@ -106,7 +106,7 @@ public class TradeDto {
         private Long tradeCategoryDetailId;
 
         private List<MultipartFile> newImages;
-        private List<String> deletedImgUrls;
+        private List<Long> deletedImageId;
 
         public TradeCommand toCommand() {
             return TradeCommand.builder()
@@ -120,7 +120,7 @@ public class TradeDto {
                     .fullAdName(fullAdName)
                     .tradeCategoryDetailId(tradeCategoryDetailId)
                     .images(newImages)
-                    .deletedImgUrls(deletedImgUrls)
+                    .deletedImageId(deletedImageId)
                     .build();
 
         }

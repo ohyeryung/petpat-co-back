@@ -1,6 +1,6 @@
 package com.smile.petpat.post.trade.service;
 
-import com.smile.petpat.image.util.ImageUploadManager;
+import com.smile.petpat.image.dto.ImageResDto;
 import com.smile.petpat.image.service.ImageService;
 import com.smile.petpat.post.category.domain.PostType;
 import com.smile.petpat.post.category.domain.TradeCategoryDetail;
@@ -13,7 +13,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -24,7 +23,6 @@ public class TradeServiceImpl implements TradeService{
 
     private final TradeStore  tradeStore;
     private final TradeReader tradeReader;
-    private final ImageUploadManager imageUploadManager;
     private final ImageService imageService;
     private final CommonUtils commonUtils;
 
@@ -36,7 +34,7 @@ public class TradeServiceImpl implements TradeService{
         Trade initTrade = tradeCommand.toRegisterEntity(user,categoryDetail);
         Trade trade = tradeStore.store(initTrade);
         //2. 사진 등록
-        imageUploadManager.uploadPostImage(tradeCommand.getImages(),trade.getTradeId(),trade.getPostType());
+        imageService.uploadPostImage(tradeCommand.getImages(),trade.getTradeId(),trade.getPostType());
 
         return trade.getTradeId();
     }
@@ -52,7 +50,7 @@ public class TradeServiceImpl implements TradeService{
         trade.update(initTrade);
 
         //이미지 수정
-        imageUploadManager.updateImage(tradeCommand.getImages(),tradeCommand.getDeletedImgUrls()
+        imageService.updateImage(tradeCommand.getImages(),tradeCommand.getDeletedImageId()
                             ,tradeId,PostType.TRADE);
         return getTradeInfo(tradeId, user, trade);
     }
@@ -66,7 +64,7 @@ public class TradeServiceImpl implements TradeService{
 
     @Override
     public TradeInfo.TradeDetail tradeDetail(Long tradeId) {
-        List<String> imgList = imageService.readImgList(tradeId, PostType.TRADE);
+        List<ImageResDto> imgList = imageService.getImagesByPost(tradeId, PostType.TRADE);
         Trade trade = tradeReader.readTradeById(tradeId);
 
         // 조회수 계산
@@ -79,7 +77,7 @@ public class TradeServiceImpl implements TradeService{
         Trade trade = tradeReader.readTradeById(tradeId);
         trade.updateViewCnt(trade);
         TradeInfo.TradeDetail tradeDetail = tradeReader.readTradeDetail(user.getId(), tradeId);
-        List<String> imageList = imageService.readImgList(tradeId,trade.getPostType());
+        List<ImageResDto> imageList = imageService.getImagesByPost(tradeId,trade.getPostType());
         // 조회수 계산
         return new TradeInfo.TradeDetail(tradeDetail,imageList);
 
@@ -92,7 +90,7 @@ public class TradeServiceImpl implements TradeService{
         // 1. 게시글 삭제
         tradeStore.delete(tradeId, user.getId());
         // 2. 해당 게시물 이미지 삭제
-        imageUploadManager.removePostImage(tradeId, PostType.TRADE);
+        imageService.removePostImage(tradeId, PostType.TRADE);
     }
 
     @Override
@@ -101,7 +99,7 @@ public class TradeServiceImpl implements TradeService{
     }
 
     private TradeInfo.TradeDetail getTradeInfo(Long tradeId, User user, Trade trade) {
-        List<String> imgList = imageService.readImgList(tradeId, PostType.TRADE);
+        List<ImageResDto> imgList = imageService.getImagesByPost(tradeId, PostType.TRADE);
         return new TradeInfo.TradeDetail();
     }
 
