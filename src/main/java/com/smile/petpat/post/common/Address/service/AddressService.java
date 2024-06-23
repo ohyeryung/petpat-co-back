@@ -1,43 +1,23 @@
 package com.smile.petpat.post.common.Address.service;
 
-import com.smile.petpat.common.exception.CustomException;
-import com.smile.petpat.common.response.ErrorCode;
 import com.smile.petpat.post.common.Address.Dto.AddressReqDto;
 import com.smile.petpat.post.common.Address.domain.Address;
-import com.smile.petpat.post.common.Address.repository.AddressRepository;
-import com.smile.petpat.post.common.CommonUtils;
 import com.smile.petpat.post.rehoming.dto.RehomingPagingDto;
 import com.smile.petpat.post.trade.domain.TradeInfo;
-import com.smile.petpat.user.domain.User;
-import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
-import org.springframework.stereotype.Service;
 
+import java.util.List;
 
-@Service
-@RequiredArgsConstructor
-public class AddressService {
-    private final AddressRepository addressRepository;
-    private final CommonUtils commonUtils;
+public interface AddressService{
+    Address getAddress(AddressReqDto addressReqDto);
+    RehomingPagingDto getRehomingsByAddress(AddressReqDto addressReqDto, Pageable pageable, String userEmail);
+    TradeInfo.TradePagingListInfo getTradesByAddress(AddressReqDto addressReqDto, Pageable pageable, String userEmail);
 
-    public Address getAddress(AddressReqDto addressReqDto){
-        return addressRepository.findAddressByProvinceAndCityAndDistrictAndTown(addressReqDto.getProvince(),
-                        addressReqDto.getCity(), addressReqDto.getDistrict(), addressReqDto.getTown())
-                .orElseThrow(()->new CustomException(ErrorCode.ILLEGAL_ADDRESS_NOT_EXIST));
-    }
+    List<String> getProvinceList();
 
-    public RehomingPagingDto getRehomingsByAddress(AddressReqDto addressReqDto, Pageable pageable, String userEmail){
-        // User && Address Check
-        User user = commonUtils.userChk(userEmail);
-        Address address = getAddress(addressReqDto);
-        return new RehomingPagingDto(addressRepository.getRehomingsByAddress(address,pageable,user.getUserEmail()));
-    }
+    List<String> getCityList(String province);
 
-    public TradeInfo.TradePagingListInfo getTradesByAddress(AddressReqDto addressReqDto, Pageable pageable, String userEmail){
-        // User && Address Check
-        User user = commonUtils.userChk(userEmail);
-        Address address = getAddress(addressReqDto);
-        return new TradeInfo.TradePagingListInfo(addressRepository.getTradesByAddress(address,pageable,user.getUserEmail()));
-    }
+    List<String> getDistrictList(String province,String city);
 
+    List<String> getTownList(String province,String city, String district);
 }

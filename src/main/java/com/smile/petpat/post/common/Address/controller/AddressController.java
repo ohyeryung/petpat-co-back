@@ -10,10 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
@@ -38,5 +35,31 @@ public class AddressController {
                                                  @ModelAttribute @Valid AddressReqDto addressReqDto,
                                                  @PageableDefault Pageable pageable){
         return SuccessResponse.success(addressService.getTradesByAddress(addressReqDto,pageable,userDetails.getUsername()));
+    }
+
+    @Operation(summary = "광역시,특별시,도 목록 조회",description = "광역시,특별시,도 목록 조회")
+    @RequestMapping(value = "/province",method = RequestMethod.GET)
+    public SuccessResponse getProvince(){
+        return SuccessResponse.success(addressService.getProvinceList());
+    }
+
+    @Operation(summary = "시,군 목록 조회", description = "시,군 목록 조회")
+    @RequestMapping(value = "/city",method = RequestMethod.GET)
+    public SuccessResponse getCity(@RequestParam String province){
+        return SuccessResponse.success(addressService.getCityList(province));
+    }
+
+    @Operation(summary = "구 목록 조회", description = "구 목록 조회")
+    @RequestMapping(value = "/district",method = RequestMethod.GET)
+    public SuccessResponse getCity(@RequestParam String province,
+                                   @RequestParam String city){
+        return SuccessResponse.success(addressService.getDistrictList(province,city));
+    }
+    @Operation(summary = "동,면 목록 조회", description = "동,면 목록 조회")
+    @RequestMapping(value = "/town",method = RequestMethod.GET)
+    public SuccessResponse getCity(@RequestParam String province,
+                                   @RequestParam String city,
+                                   @RequestParam String district){
+        return SuccessResponse.success(addressService.getTownList(province,city,district));
     }
 }

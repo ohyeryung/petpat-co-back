@@ -16,7 +16,6 @@ import com.smile.petpat.post.rehoming.dto.RehomingResDto;
 import com.smile.petpat.post.rehoming.dto.RehomingUpdateReqDto;
 import com.smile.petpat.post.rehoming.repository.RehomingRepository;
 import com.smile.petpat.user.domain.User;
-import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
