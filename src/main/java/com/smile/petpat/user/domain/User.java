@@ -1,9 +1,6 @@
 package com.smile.petpat.user.domain;
 
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 import org.springframework.security.core.GrantedAuthority;
@@ -14,7 +11,7 @@ import javax.persistence.*;
 import java.util.Collection;
 import java.util.Collections;
 
-@Getter
+@Data
 @NoArgsConstructor
 @Entity
 @Table(name = "TB_USER")

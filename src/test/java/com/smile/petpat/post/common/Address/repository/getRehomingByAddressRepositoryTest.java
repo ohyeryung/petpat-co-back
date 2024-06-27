@@ -1,4 +1,4 @@
-package com.smile.petpat.post.common.Address;
+package com.smile.petpat.post.common.Address.repository;
 
 import com.smile.petpat.common.exception.CustomException;
 import com.smile.petpat.post.category.domain.CategoryGroup;
@@ -7,7 +7,6 @@ import com.smile.petpat.post.category.repository.CategoryGroupRepository;
 import com.smile.petpat.post.category.repository.PetCategoryRepository;
 import com.smile.petpat.post.common.Address.Dto.AddressReqDto;
 import com.smile.petpat.post.common.Address.domain.Address;
-import com.smile.petpat.post.common.Address.repository.AddressRepository;
 import com.smile.petpat.post.common.Address.service.AddressService;
 import com.smile.petpat.post.rehoming.domain.Rehoming;
 import com.smile.petpat.post.rehoming.domain.RehomingCommand;
@@ -28,7 +27,9 @@ import org.springframework.test.context.ActiveProfiles;
 
 import javax.transaction.Transactional;
 import java.util.List;
-import static org.junit.jupiter.api.Assertions.*;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 
 @SpringBootTest
@@ -50,7 +51,7 @@ public class getRehomingByAddressRepositoryTest {
     @Autowired
     private AddressRepository addressRepository;
     Pageable pageable = PageRequest.of(0,10);
-    User user;
+    private User user;
 
 
     Address address1;
