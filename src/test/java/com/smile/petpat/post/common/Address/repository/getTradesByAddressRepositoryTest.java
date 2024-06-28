@@ -31,7 +31,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 @ActiveProfiles("test")
 @Transactional
-public class getTradesByAddressRepository {
+public class getTradesByAddressRepositoryTest {
     @Autowired private TradeRepository tradeRepository;
     @Autowired private PasswordEncoder passwordEncoder;
     @Autowired private UserRepository userRepository;
