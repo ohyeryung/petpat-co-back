@@ -113,7 +113,6 @@ public class AddressRepositoryImpl implements AddressRepositoryQuerydsl {
                                 trade.title,
                                 trade.price,
                                 trade.address,
-                                trade.status,
                                 ExpressionUtils.as(
                                         select(likes.count())
                                                 .from(likes)
@@ -140,8 +139,9 @@ public class AddressRepositoryImpl implements AddressRepositoryQuerydsl {
                                                 .where(bookmark.postId.eq(trade.tradeId)),
                                         "bookmarkCnt"),
                                 trade.createdAt,
-                                trade.updatedAt
-                        )
+                                trade.updatedAt,
+                                trade.status
+                                )
                 )
                 .from(trade)
                 .where(trade.address.eq(address))

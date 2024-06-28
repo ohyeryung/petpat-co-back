@@ -123,9 +123,9 @@ public class getRehomingByAddressRepositoryTest {
         for (int i = 0; i < num; i++) {
             rehoming_TEST = Rehoming.builder()
                     .user(user)
-                    .title("title_TEST " + num)
-                    .content("content_TEST " + num)
-                    .petName("petName_TEST " + num)
+                    .title("title_TEST " + i)
+                    .content("content_TEST " + i)
+                    .petName("petName_TEST " + i)
                     .category(categoryGroup)
                     .type(petCategory)
                     .gender(RehomingCommand.PetGender.BOY)
