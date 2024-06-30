@@ -5,6 +5,9 @@ import com.smile.petpat.image.service.ImageService;
 import com.smile.petpat.post.category.domain.CategoryGroup;
 import com.smile.petpat.post.category.domain.PetCategory;
 import com.smile.petpat.post.category.domain.PostType;
+import com.smile.petpat.post.common.Address.Dto.AddressReqDto;
+import com.smile.petpat.post.common.Address.domain.Address;
+import com.smile.petpat.post.common.Address.service.AddressService;
 import com.smile.petpat.post.common.CommonUtils;
 import com.smile.petpat.post.common.status.PostStatus;
 import com.smile.petpat.post.rehoming.domain.*;
@@ -30,6 +33,7 @@ public class RehomingServiceImpl implements RehomingService {
     private final RehomingStore rehomingStore;
     private final CommonUtils commonUtils;
     private final RehomingRepository rehomingRepository;
+    private final AddressService addressService;
 
     // 1. 분양 글 등록
     @Override
@@ -37,11 +41,18 @@ public class RehomingServiceImpl implements RehomingService {
     public void registerRehoming(String userEmail, RehomingCommand rehomingCommand) {
         // userChk
         User user = commonUtils.userChk(userEmail);
-        // 1-1. 게시물 등록
+
+        //AddressChk
+        Address address = addressService.getAddress(new AddressReqDto(rehomingCommand));
+
+        // 1-1. 게시물 등록(주소)
         CategoryGroup category = rehomingReader.readCategoryById(rehomingCommand.getCategory());
         PetCategory type = rehomingReader.readPetTypeById(rehomingCommand.getType());
-        Rehoming initRehoming = rehomingCommand.toRegisterEntity(user, category, type);
+        Rehoming initRehoming = rehomingCommand.toRegisterEntity(user, category, type,address);
+
         Rehoming rehoming = rehomingStore.store(initRehoming);
+        address.getRehomingList().add(rehoming);
+
         // 1-2. 이미지 등록
         Long postId = rehoming.getRehomingId();
         imageService.uploadPostImage(rehomingCommand.getRehomingImg(), postId, PostType.REHOMING);
@@ -79,22 +90,27 @@ public class RehomingServiceImpl implements RehomingService {
         List<ImageResDto> imgList = imageService.getImagesByPost(postId, PostType.REHOMING);
         return new RehomingResDto(rehoming, imgList,
                 commonUtils.getLikesCnt(postId, PostType.REHOMING));
+
     }
 
     // 4. 분양 글 수정
     @Override
+    @Transactional
     public RehomingResDto updateRehoming(String userEmail, Long postId, RehomingUpdateReqDto rehomingUpdateReqDto) {
         // 4-1. 게시글 존재 유무 판단
         Rehoming rehoming = rehomingReader.readRehomingById(postId);
         rehomingReader.userChk(userEmail, rehoming);
+        User user = commonUtils.userChk(userEmail);
 
         // 4-2. 게시글 수정
         CategoryGroup category = rehomingReader.readCategoryById(rehomingUpdateReqDto.getCategory());
         PetCategory type = rehomingReader.readPetTypeById(rehomingUpdateReqDto.getType());
         PostStatus status = rehoming.getStatus();
-        User user = commonUtils.userChk(userEmail);
-        Rehoming initRehoming = rehomingUpdateReqDto.toUpdateEntity(user, postId, category, type, status);
-        rehoming.update(initRehoming);
+
+        Address address = addressService.getAddress(new AddressReqDto(rehomingUpdateReqDto));
+        Rehoming initRehoming = rehomingUpdateReqDto.toUpdateEntity(user, postId, category, type, status,address);
+
+        rehoming.update(initRehoming,address);
 
         // 4-3. 이미지 수정
         List<MultipartFile> newImages = rehomingUpdateReqDto.getNewImages();
@@ -109,7 +125,9 @@ public class RehomingServiceImpl implements RehomingService {
     @Override
     @Transactional
     public void deleteRehoming(String userEmail, Long postId) {
+        Rehoming rehoming = rehomingReader.readRehomingById(postId);
         // 5-1. 게시글 삭제
+        rehoming.getAddress().getRehomingList().remove(rehoming);
         rehomingStore.delete(userEmail, postId);
         // 5-2. 해당 게시글 이미지 삭제
         imageService.removePostImage(postId, PostType.REHOMING);

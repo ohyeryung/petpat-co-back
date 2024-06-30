@@ -5,6 +5,7 @@ import com.smile.petpat.common.response.ErrorCode;
 import com.smile.petpat.post.category.domain.CategoryGroup;
 import com.smile.petpat.post.category.domain.PetCategory;
 import com.smile.petpat.post.category.domain.PostType;
+import com.smile.petpat.post.common.Address.domain.Address;
 import com.smile.petpat.post.common.status.PostStatus;
 import com.smile.petpat.user.domain.User;
 import lombok.Builder;
@@ -34,11 +35,11 @@ public class RehomingCommand {
     @NotNull(message = "카테고리는 필수값입니다.") private Long category;
     @NotNull(message = "종은 필수값입니다.") private Long type;
     @NotNull(message = "성별은 필수값입니다.") private PetGender gender;
-    private String cityName;
-    private String cityCountryName;
-    private String townShipName;
+    private String province;
+    private String city;
+    private String district;
+    private String town;
     private String detailAdName;
-    private String fullAdName;
     private boolean dhppl;
     private boolean covidEnteritis;
     private boolean kennelCough;
@@ -65,11 +66,11 @@ public class RehomingCommand {
                 .category(category)
                 .type(type)
                 .gender(gender)
-                .cityName(cityName)
-                .cityCountryName(cityCountryName)
-                .townShipName(townShipName)
+                .province(province)
+                .city(city)
+                .town(town)
+                .district(district)
                 .detailAdName(detailAdName)
-                .fullAdName(fullAdName)
                 .dhppl(dhppl)
                 .covidEnteritis(covidEnteritis)
                 .kennelCough(kennelCough)
@@ -82,7 +83,7 @@ public class RehomingCommand {
                 .build();
     }
 
-    public Rehoming toRegisterEntity(User user, CategoryGroup category, PetCategory type) {
+    public Rehoming toRegisterEntity(User user, CategoryGroup category, PetCategory type, Address address) {
         return Rehoming.builder()
                 .user(user)
                 .title(title)
@@ -92,11 +93,12 @@ public class RehomingCommand {
                 .category(category)
                 .type(type)
                 .gender(gender)
-                .cityName(cityName)
-                .cityCountryName(cityCountryName)
-                .townShipName(townShipName)
+                .address(address)
+//                .cityName(cityName)
+//                .cityCountryName(cityCountryName)
+//                .townShipName(townShipName)
                 .detailAdName(detailAdName)
-                .fullAdName(fullAdName)
+//                .fullAdName(fullAdName)
                 .status(PostStatus.REHOMING_FINDING)
                 .postType(PostType.REHOMING)
                 .dhppl(dhppl)
@@ -122,11 +124,11 @@ public class RehomingCommand {
                 .category(category)
                 .type(type)
                 .gender(gender)
-                .cityName(cityName)
-                .cityCountryName(cityCountryName)
-                .townShipName(townShipName)
+//                .cityName(cityName)
+//                .cityCountryName(cityCountryName)
+//                .townShipName(townShipName)
                 .detailAdName(detailAdName)
-                .fullAdName(fullAdName)
+//                .fullAdName(fullAdName)
                 .status(status)
                 .dhppl(dhppl)
                 .covidEnteritis(covidEnteritis)

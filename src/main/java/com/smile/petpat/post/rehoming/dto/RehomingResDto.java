@@ -6,6 +6,7 @@ import com.smile.petpat.post.common.CalculateTime;
 import com.smile.petpat.post.common.status.PostStatus;
 import com.smile.petpat.post.rehoming.domain.Rehoming;
 import com.smile.petpat.post.rehoming.domain.RehomingCommand;
+import com.smile.petpat.post.common.Address.util.AddressUtils;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -131,7 +132,7 @@ public class RehomingResDto  {
         this.category = rehoming.getCategory().getCategoryGroupName();
         this.type = rehoming.getType().getPetCategoryName();
         this.gender = rehoming.getGender();
-        this.region = rehoming.getCityName() + " " + rehoming.getCityCountryName() + " " + rehoming.getTownShipName();
+        this.region = AddressUtils.makeRegionFromAddress(rehoming.getAddress());
         this.status = rehoming.getStatus();
         this.imageList = imageList;
         this.createdAt = CalculateTime.dateformatForPost(rehoming.getCreatedAt());
@@ -164,7 +165,7 @@ public class RehomingResDto  {
         this.category = rehoming.getCategory().getCategoryGroupName();
         this.type = rehoming.getType().getPetCategoryName();
         this.gender = rehoming.getGender();
-        this.region = rehoming.getCityName() + " " + rehoming.getCityCountryName() + " " + rehoming.getTownShipName();
+        this.region = AddressUtils.makeRegionFromAddress(rehoming.getAddress());
         this.status = rehoming.getStatus();
         this.imageList = imageList;
         this.createdAt = CalculateTime.dateformatForPost(rehoming.getCreatedAt());
