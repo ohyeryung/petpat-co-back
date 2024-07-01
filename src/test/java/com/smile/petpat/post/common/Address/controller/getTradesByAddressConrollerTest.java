@@ -1,6 +1,6 @@
 package com.smile.petpat.post.common.Address.controller;
 
-import com.smile.petpat.WithMockCustomUser;
+import com.smile.petpat.annotation.WithMockCustomUser;
 import com.smile.petpat.post.common.Address.Dto.AddressReqDto;
 import com.smile.petpat.post.common.Address.service.AddressService;
 import com.smile.petpat.post.trade.domain.TradeInfo;

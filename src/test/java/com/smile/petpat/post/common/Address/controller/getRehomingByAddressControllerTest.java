@@ -1,6 +1,6 @@
 package com.smile.petpat.post.common.Address.controller;
 
-import com.smile.petpat.WithMockCustomUser;
+import com.smile.petpat.annotation.WithMockCustomUser;
 import com.smile.petpat.post.common.Address.Dto.AddressReqDto;
 import com.smile.petpat.post.common.Address.service.AddressService;
 import com.smile.petpat.post.rehoming.dto.RehomingPagingDto;
@@ -12,7 +12,6 @@ import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;

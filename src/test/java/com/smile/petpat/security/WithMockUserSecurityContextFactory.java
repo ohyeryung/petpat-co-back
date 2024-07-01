@@ -1,5 +1,6 @@
-package com.smile.petpat;
+package com.smile.petpat.security;
 
+import com.smile.petpat.annotation.WithMockCustomUser;
 import com.smile.petpat.user.domain.User;
 import com.smile.petpat.user.domain.UserRole;
 import com.smile.petpat.user.service.UserDetailsImpl;

@@ -1,5 +1,6 @@
-package com.smile.petpat;
+package com.smile.petpat.annotation;
 
+import com.smile.petpat.security.WithMockUserSecurityContextFactory;
 import com.smile.petpat.user.domain.UserRole;
 import org.springframework.security.test.context.support.WithSecurityContext;
 
