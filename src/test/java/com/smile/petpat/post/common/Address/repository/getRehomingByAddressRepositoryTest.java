@@ -8,12 +8,9 @@ import com.smile.petpat.post.category.repository.PetCategoryRepository;
 import com.smile.petpat.post.common.Address.Dto.AddressReqDto;
 import com.smile.petpat.post.common.Address.domain.Address;
 import com.smile.petpat.post.common.Address.service.AddressService;
-import com.smile.petpat.post.rehoming.domain.Rehoming;
-import com.smile.petpat.post.rehoming.domain.RehomingCommand;
 import com.smile.petpat.post.rehoming.domain.RehomingInfo;
-import com.smile.petpat.post.rehoming.repository.RehomingRepository;
 import com.smile.petpat.user.domain.User;
-import com.smile.petpat.user.repository.UserRepository;
+import com.smile.petpat.utils.TestUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -22,7 +19,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.ActiveProfiles;
 
 import javax.transaction.Transactional;
@@ -37,15 +33,11 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 @Transactional
 public class getRehomingByAddressRepositoryTest {
     @Autowired
-    private RehomingRepository rehomingRepository;
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-    @Autowired
-    private UserRepository userRepository;
-    @Autowired
     private CategoryGroupRepository categoryGroupRepository;
     @Autowired
     private PetCategoryRepository petCategoryRepository;
+    @Autowired
+    private TestUtils testUtils;
     @Autowired
     private AddressService addressService;
     @Autowired
@@ -60,7 +52,7 @@ public class getRehomingByAddressRepositoryTest {
     @BeforeEach
     void setup() {
 
-        user = createUser(1);
+        user = testUtils.creatUser(1);
 
         address1 = addressService.getAddress(new AddressReqDto("서울특별시","","마포구","연남동"));
         address2 = addressService.getAddress(new AddressReqDto("서울특별시","","종로구","평창동"));
@@ -69,8 +61,8 @@ public class getRehomingByAddressRepositoryTest {
         PetCategory petCategory = petCategoryRepository.findById(1L).get();
 
 
-        createRehomingPosts(user, address1,categoryGroup, petCategory, 5);
-        createRehomingPosts(user, address2,categoryGroup, petCategory, 3);
+        testUtils.createRehomingPosts(user, address1,categoryGroup, petCategory, 5);
+        testUtils.createRehomingPosts(user, address2,categoryGroup, petCategory, 3);
     }
 
     @Nested
@@ -104,35 +96,5 @@ public class getRehomingByAddressRepositoryTest {
             assertEquals("존재하지 않는 주소입니다.",ex.getMessage());
         }
 
-    }
-
-    private User createUser(int num) {
-        User user = User.builder()
-                .userEmail("userEmail_TEST_" + num)
-                .nickname("nickname_TEST_" + num)
-                .password(passwordEncoder.encode("test11!!"))
-                .profileImgPath("TEST.jpg_" + num)
-                .loginType(User.loginTypeEnum.NORMAL)
-                .build();
-
-        return userRepository.save(user);
-    }
-
-    private void createRehomingPosts(User user, Address address, CategoryGroup categoryGroup, PetCategory petCategory, int num) {
-        Rehoming rehoming_TEST;
-        for (int i = 0; i < num; i++) {
-            rehoming_TEST = Rehoming.builder()
-                    .user(user)
-                    .title("title_TEST " + i)
-                    .content("content_TEST " + i)
-                    .petName("petName_TEST " + i)
-                    .category(categoryGroup)
-                    .type(petCategory)
-                    .gender(RehomingCommand.PetGender.BOY)
-                    .address(address)
-                    .build();
-
-            address.getRehomingList().add(rehomingRepository.save(rehoming_TEST));
-        }
     }
 }

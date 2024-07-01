@@ -21,7 +21,7 @@ import java.util.List;
 @RequestMapping("/api/v1")
 public class PostCategoryController {
 
-    private final PostCategoryService postCategoryService;
+    private final PostCategoryServiceImpl postCategoryService;
 
     /**
      * 카테고리 그룹 리스트 조회
