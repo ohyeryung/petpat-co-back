@@ -3,7 +3,7 @@ package com.smile.petpat.post.common.Address.controller;
 import com.smile.petpat.WithMockCustomUser;
 import com.smile.petpat.post.common.Address.Dto.AddressReqDto;
 import com.smile.petpat.post.common.Address.service.AddressService;
-import com.smile.petpat.post.rehoming.dto.RehomingPagingDto;
+import com.smile.petpat.post.trade.domain.TradeInfo;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -12,7 +12,6 @@ import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
@@ -22,24 +21,22 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 @ActiveProfiles("test")
 @WebMvcTest(AddressController.class)
-public class getRehomingByAddressControllerTest {
+public class getTradesByAddressConrollerTest {
     @Autowired private MockMvc mockMvc;
     @MockBean private AddressService addressService;
-    private RehomingPagingDto expectedResult =new RehomingPagingDto();
-
-
+    private TradeInfo.TradePagingListInfo expectedResult = new TradeInfo.TradePagingListInfo();
 
     @BeforeEach
-    void setup() {
-        Mockito.when(addressService.getRehomingsByAddress(Mockito.any(AddressReqDto.class),Mockito.any(Pageable.class),Mockito.anyString()))
+    void setup(){
+        Mockito.when(addressService.getTradesByAddress(Mockito.any(AddressReqDto.class),Mockito.any(Pageable.class),Mockito.anyString()))
                 .thenReturn(expectedResult);
     }
 
     @Test
     @DisplayName("SUCCESS")
     @WithMockCustomUser
-    void success()throws Exception{
-        mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/address/rehoming")
+    void success() throws Exception{
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/address/trade")
                 .param("province","서울특별시")
                 .param("city","")
                 .param("district","마포구")
@@ -59,7 +56,7 @@ public class getRehomingByAddressControllerTest {
         @Test
         @DisplayName("FAIL_USER_NOT_EXIST")
         void fail() throws Exception {
-            mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/address/rehoming")
+            mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/address/trade")
                             .param("province", "서울특별시")
                             .param("city", "")
                             .param("district", "마포구")
