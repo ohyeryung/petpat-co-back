@@ -8,9 +8,11 @@ import com.smile.petpat.post.trade.domain.TradeInfo;
 import com.smile.petpat.user.domain.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public interface AddressService{
     Address getAddress(AddressReqDto addressReqDto);
     RehomingPagingDto getRehomingsByAddress(AddressReqDto addressReqDto, Pageable pageable, String userEmail);
