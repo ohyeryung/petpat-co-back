@@ -1,13 +1,12 @@
 package com.smile.petpat.post.common.Address.controller;
 
 import com.smile.petpat.WithMockCustomUser;
-import com.smile.petpat.common.response.SuccessResponse;
 import com.smile.petpat.post.common.Address.Dto.AddressReqDto;
 import com.smile.petpat.post.common.Address.service.AddressService;
 import com.smile.petpat.post.rehoming.dto.RehomingPagingDto;
-import com.smile.petpat.user.service.UserDetailsImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,5 +54,23 @@ public class getRehomingByAddressControllerTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.message").exists())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.data").exists())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.result").value("SUCCESS"));
+    }
+
+    @Nested
+    @DisplayName("FAILURE")
+    class Failure{
+        @Test
+        @DisplayName("FAIL_USER_NOT_EXIST")
+        void fail() throws Exception {
+            mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/address/rehoming")
+                            .param("province", "서울특별시")
+                            .param("city", "")
+                            .param("district", "마포구")
+                            .param("town", "연남동")
+                            .param("page", "0")
+                            .param("size", "10")
+                            .contentType(MediaType.APPLICATION_JSON))
+                    .andExpect(MockMvcResultMatchers.status().is(401));
+        }
     }
 }
