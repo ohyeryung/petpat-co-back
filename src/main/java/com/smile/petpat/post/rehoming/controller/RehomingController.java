@@ -5,6 +5,7 @@ import com.smile.petpat.post.rehoming.domain.RehomingCommand;
 import com.smile.petpat.post.rehoming.domain.RehomingInfo;
 import com.smile.petpat.post.rehoming.dto.RehomingPagingDto;
 import com.smile.petpat.post.rehoming.dto.RehomingUpdateReqDto;
+import com.smile.petpat.post.rehoming.service.RehomingService;
 import com.smile.petpat.post.rehoming.service.RehomingServiceImpl;
 import com.smile.petpat.user.service.UserDetailsImpl;
 import io.swagger.v3.oas.annotations.Operation;
@@ -26,7 +27,7 @@ import java.util.List;
 @RequestMapping("/api/v1/rehoming")
 public class RehomingController {
 
-    private final RehomingServiceImpl rehomingService;
+    private final RehomingService rehomingService;
 
     /**
      * 분양 게시물 등록
