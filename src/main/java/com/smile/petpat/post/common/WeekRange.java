@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
 @Component
@@ -18,8 +19,9 @@ public class WeekRange {
     private final LocalDateTime endOfWeek;
 
     public WeekRange() {
-        this.startOfWeek = LocalDateTime.now().with(DayOfWeek.MONDAY);
-        this.endOfWeek = LocalDateTime.now().with(DayOfWeek.SUNDAY);
+        LocalDate now = LocalDate.now();
+        this.startOfWeek = now.with(DayOfWeek.MONDAY).atStartOfDay();
+        this.endOfWeek = now.with(DayOfWeek.SUNDAY).atTime(LocalTime.MAX);
     }
 
 
