@@ -59,10 +59,10 @@ public class RehomingController {
     @PreAuthorize("hasRole('GUEST')")
     @Operation(summary = "분양게시글 목록 조회", description = "분양게시글 목록 조회")
     @RequestMapping(value = "/public", method = RequestMethod.GET)
-    public ResponseEntity listRehomingPublic(@PageableDefault Pageable pageable) {
+    public SuccessResponse listRehomingPublic(@PageableDefault Pageable pageable) {
         RehomingPagingDto rehomingInfos;
         rehomingInfos = rehomingService.listRehoming(pageable);
-        return ResponseEntity.ok(rehomingInfos);
+        return SuccessResponse.success(rehomingInfos);
     }
 
     /**
@@ -148,23 +148,23 @@ public class RehomingController {
     @PreAuthorize("hasRole('USER')")
     @Operation(summary = "분양게시물 카테고리별 목록 조회", description = "분양게시물 카테고리별 목록 조회")
     @RequestMapping(value = "/category", method = RequestMethod.GET)
-    public ResponseEntity<?> getCategoryList(@AuthenticationPrincipal UserDetailsImpl userDetails,
+    public SuccessResponse<?> getCategoryList(@AuthenticationPrincipal UserDetailsImpl userDetails,
                                              @RequestParam("categoryId") Long categoryId, @RequestParam("typeId") Long typeId,
                                              @PageableDefault Pageable pageable) {
         RehomingPagingDto rehomingPagingDto;
         rehomingPagingDto = rehomingService.getCategoryListForMember(userDetails.getUsername(), categoryId, typeId, pageable);
-        return ResponseEntity.ok(rehomingPagingDto);
+        return SuccessResponse.success(rehomingPagingDto);
 
     }
 
     @PreAuthorize("hasRole('GUEST')")
     @Operation(summary = "분양게시물 카테고리별 목록 조회", description = "분양게시물 카테고리별 목록 조회")
     @RequestMapping(value = "/public/category", method = RequestMethod.GET)
-    public ResponseEntity<?> getCategoryListPublic(@RequestParam("categoryId") Long categoryId, @RequestParam("typeId") Long typeId,
+    public SuccessResponse<?> getCategoryListPublic(@RequestParam("categoryId") Long categoryId, @RequestParam("typeId") Long typeId,
                                              @PageableDefault Pageable pageable) {
         RehomingPagingDto rehomingPagingDto;
         rehomingPagingDto = rehomingService.getCategoryList(categoryId, typeId, pageable);
-        return ResponseEntity.ok(rehomingPagingDto);
+        return SuccessResponse.success(rehomingPagingDto);
 
     }
 
@@ -174,7 +174,7 @@ public class RehomingController {
      */
     @Operation(summary = "인기있는 분양 게시물", description = "인기있는 분양 게시물")
     @RequestMapping(value = "/trending",method = RequestMethod.GET)
-    public ResponseEntity<List<RehomingInfo>> fetchTrendingRehoming(@AuthenticationPrincipal UserDetailsImpl userDetails) {
-        return ResponseEntity.ok(rehomingService.fetchTrendingRehoming(userDetails.getUser()));
+    public SuccessResponse<List<RehomingInfo>> fetchTrendingRehoming(@AuthenticationPrincipal UserDetailsImpl userDetails) {
+        return SuccessResponse.success(rehomingService.fetchTrendingRehoming(userDetails.getUser()));
     }
 }

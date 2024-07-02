@@ -14,7 +14,6 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class RehomingInfo {
     private Long postId;
-    private PostType postType;
     private String imagePath;
     private String title;
     private String region;
@@ -28,12 +27,11 @@ public class RehomingInfo {
     private String updatedAt;
 
     // 회원, Constructor of rehomingListForMember,rehomingCategoryListForMember,fetchTrendingRehoming
-    public RehomingInfo(Long postId, PostType postType, String imagePath,
+    public RehomingInfo(Long postId, String imagePath,
                         String title, Address address,PostStatus status,
                         Long isLiked,Long isBookmarked,int viewCnt,Long likeCnt,Long bookmarkCnt,
                         LocalDateTime createdAt, LocalDateTime updatedAt){
         this.postId = postId;
-        this.postType = postType;
         this.imagePath = imagePath;
         this.title = title;
         this.region = AddressUtils.makeRegionFromAddress(address);
@@ -51,13 +49,12 @@ public class RehomingInfo {
 
 
     // 비회원, Constructor of rehomingList,rehomingCategoryList
-    public RehomingInfo(Long postId, PostType postType,
+    public RehomingInfo(Long postId,
                         String imagePath, String title,
                         Address address, PostStatus status,
                         int viewCnt, Long likeCnt, Long bookmarkCnt,
                         LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.postId = postId;
-        this.postType = postType;
         this.imagePath = imagePath;
         this.title = title;
         this.region = AddressUtils.makeRegionFromAddress(address);

@@ -39,7 +39,6 @@ public class RehomingRepositoryImpl implements RehomingRepositoryQuerydsl {
                         Projections.constructor(
                                 RehomingInfo.class,
                                 rehoming.rehomingId,
-                                rehoming.postType,
                                 Expressions.as(
                                         select(image.filePath)
                                                 .from(image)
@@ -100,7 +99,6 @@ public class RehomingRepositoryImpl implements RehomingRepositoryQuerydsl {
                         Projections.constructor(
                                 RehomingInfo.class,
                                 rehoming.rehomingId,
-                                rehoming.postType,
                                 Expressions.as(
                                         select(image.filePath)
                                                 .from(image)
@@ -147,7 +145,6 @@ public class RehomingRepositoryImpl implements RehomingRepositoryQuerydsl {
                         Projections.constructor(
                                 RehomingInfo.class,
                                 rehoming.rehomingId,
-                                rehoming.postType,
                                 Expressions.as(
                                         select(image.filePath)
                                                 .from(image)
@@ -210,7 +207,6 @@ public class RehomingRepositoryImpl implements RehomingRepositoryQuerydsl {
                         Projections.constructor(
                                 RehomingInfo.class,
                                 rehoming.rehomingId,
-                                rehoming.postType,
                                 Expressions.as(
                                         select(image.filePath)
                                                 .from(image)
@@ -316,7 +312,6 @@ public class RehomingRepositoryImpl implements RehomingRepositoryQuerydsl {
                         Projections.constructor(
                                 RehomingInfo.class,
                                 rehoming.rehomingId,
-                                rehoming.postType,
                                 ExpressionUtils.as(
                                         JPAExpressions
                                                 .select(image.filePath)
