@@ -3,6 +3,7 @@ package com.smile.petpat.post.common.Address.domain;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.smile.petpat.post.rehoming.domain.Rehoming;
 import com.smile.petpat.post.trade.domain.Trade;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -39,5 +40,11 @@ public class Address {
     @JsonManagedReference //양방향 관계의 엔티티의 직렬화 방향 설정 -> 순환참조 방지
     private List<Trade> tradelist = new ArrayList<>();
 
+    public Address(String province,String city, String district, String town){
+        this.province= province;
+        this.city = city;
+        this.district= district;
+        this.town = town;
+    }
 
 }

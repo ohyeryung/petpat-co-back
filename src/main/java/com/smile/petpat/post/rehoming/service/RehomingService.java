@@ -7,9 +7,11 @@ import com.smile.petpat.post.rehoming.dto.RehomingResDto;
 import com.smile.petpat.post.rehoming.dto.RehomingUpdateReqDto;
 import com.smile.petpat.user.domain.User;
 import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public interface RehomingService {
     void registerRehoming(String userEmail, RehomingCommand rehomingCommand);
 

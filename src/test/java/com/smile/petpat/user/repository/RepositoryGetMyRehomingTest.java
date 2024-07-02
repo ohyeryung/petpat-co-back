@@ -4,6 +4,9 @@ import com.smile.petpat.post.category.domain.CategoryGroup;
 import com.smile.petpat.post.category.domain.PetCategory;
 import com.smile.petpat.post.category.repository.CategoryGroupRepository;
 import com.smile.petpat.post.category.repository.PetCategoryRepository;
+import com.smile.petpat.post.common.Address.Dto.AddressReqDto;
+import com.smile.petpat.post.common.Address.domain.Address;
+import com.smile.petpat.post.common.Address.service.AddressService;
 import com.smile.petpat.post.rehoming.domain.Rehoming;
 import com.smile.petpat.post.rehoming.domain.RehomingCommand;
 import com.smile.petpat.post.rehoming.repository.RehomingRepository;
@@ -37,6 +40,7 @@ public class RepositoryGetMyRehomingTest {
     private CategoryGroupRepository categoryGroupRepository;
     @Autowired
     private PetCategoryRepository petCategoryRepository;
+    @Autowired private AddressService addressService;
     Pageable pageable = PageRequest.of(0,10);
     User user;
 
@@ -45,6 +49,7 @@ public class RepositoryGetMyRehomingTest {
         //2명의 User 생성
         user = createUser(1);
         User anotherUser = createUser(2);
+
 
         CategoryGroup categoryGroup =categoryGroupRepository.findById(1L).get();
         PetCategory petCategory = petCategoryRepository.findById(1L).get();
@@ -101,6 +106,7 @@ public class RepositoryGetMyRehomingTest {
     }
     private void createRehomingPosts(User user, CategoryGroup categoryGroup, PetCategory petCategory,int num) {
         Rehoming rehoming_TEST;
+        Address address =addressService.getAddress(new AddressReqDto("서울특별시","","마포구","연남동"));
         for(int i = 0; i<num; i++){
             rehoming_TEST = Rehoming.builder()
                     .user(user)
@@ -110,10 +116,7 @@ public class RepositoryGetMyRehomingTest {
                     .category(categoryGroup)
                     .type(petCategory)
                     .gender(RehomingCommand.PetGender.BOY)
-                    .cityName("cityName_TEST "+num)
-                    .cityCountryName("cityCountryName_TEST "+num)
-                    .townShipName("townShipName_TEST "+num)
-                    .fullAdName("fullAdName_TEST "+num)
+                    .address(address)
                     .build();
 
             rehomingRepository.save(rehoming_TEST);

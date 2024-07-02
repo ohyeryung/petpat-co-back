@@ -89,6 +89,7 @@ public class WebSecurityConfig {
                 .antMatchers("/api/v1/user").hasRole("USER")
                 .antMatchers("/api/v1/admin").hasRole("ADMIN")
 
+
                 .anyRequest().authenticated();
 
         return http.build();
