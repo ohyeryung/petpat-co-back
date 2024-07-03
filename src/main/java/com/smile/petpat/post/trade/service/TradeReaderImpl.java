@@ -66,7 +66,7 @@ public class TradeReaderImpl implements TradeReader {
         WeekRange weekRange = new WeekRange();
         log.info("start -> {} ",weekRange.getStartOfWeek());
         log.info("end   -> {} ",weekRange.getEndOfWeek());
-       return tradeRepository.fetchTrendingTrade(userId,weekRange.getStartOfWeek(),weekRange.getEndOfWeek());
+       return tradeRepository.fetchTrendingTrade(userId,weekRange.getStartOfWeek().minusWeeks(1), weekRange.getStartOfWeek());
 
     }
 }

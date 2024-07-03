@@ -10,6 +10,7 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.smile.petpat.image.domain.ImagePriority;
 import com.smile.petpat.image.dto.ImageResDto;
 import com.smile.petpat.post.category.domain.PostType;
+import com.smile.petpat.post.common.status.PostStatus;
 import com.smile.petpat.post.trade.domain.TradeInfo;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -318,7 +319,8 @@ public class TradeRepositoryImpl implements TradeRepositoryQueryDsl{
                          )
                  .from(trade)
                  .leftJoin(likes).on(trade.tradeId.eq(likes.postId).and(likes.postType.eq(PostType.TRADE)))
-                 .where(trade.createdAt.between(startOfWeek,endOfWeek))
+                 .where(trade.createdAt.between(startOfWeek,endOfWeek)
+                         .and(trade.status.eq(PostStatus.TRADE_FINDING)))
                  .orderBy(likes.count().desc(),trade.createdAt.desc())
                  .groupBy (trade.tradeId)
                  .limit(3)
