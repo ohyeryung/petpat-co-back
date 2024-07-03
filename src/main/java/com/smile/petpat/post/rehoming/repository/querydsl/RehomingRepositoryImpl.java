@@ -8,6 +8,7 @@ import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.smile.petpat.image.domain.ImagePriority;
 import com.smile.petpat.post.category.domain.PostType;
+import com.smile.petpat.post.common.status.PostStatus;
 import com.smile.petpat.post.rehoming.domain.RehomingInfo;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -356,7 +357,8 @@ public class RehomingRepositoryImpl implements RehomingRepositoryQuerydsl {
                 )
                 .from(rehoming)
                 .leftJoin(likes).on(rehoming.rehomingId.eq(likes.postId).and(likes.postType.eq(PostType.REHOMING)))
-                .where(rehoming.createdAt.between(startOfWeek, endOfWeek))
+                .where(rehoming.createdAt.between(startOfWeek, endOfWeek)
+                        .and(rehoming.status.eq(PostStatus.REHOMING_FINDING)))
                 .orderBy(likes.count().desc(), rehoming.createdAt.desc())
                 .groupBy(rehoming.rehomingId)
                 .limit(3)
