@@ -4,8 +4,6 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
 import org.springframework.stereotype.Component;
 
-import java.time.DayOfWeek;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -18,8 +16,8 @@ public class WeekRange {
     private final LocalDateTime endOfWeek;
 
     public WeekRange() {
-        this.startOfWeek = LocalDateTime.now().with(DayOfWeek.MONDAY);
-        this.endOfWeek = LocalDateTime.now().with(DayOfWeek.SUNDAY);
+        this.startOfWeek = LocalDateTime.now();
+        this.endOfWeek = startOfWeek.minusWeeks(1);
     }
 
 
