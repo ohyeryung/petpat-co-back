@@ -1,7 +1,5 @@
 package com.smile.petpat.post.rehoming.dto;
 
-import com.smile.petpat.common.exception.CustomException;
-import com.smile.petpat.common.response.ErrorCode;
 import com.smile.petpat.post.category.domain.CategoryGroup;
 import com.smile.petpat.post.category.domain.PetCategory;
 import com.smile.petpat.post.common.Address.Dto.AddressReqDto;
@@ -12,9 +10,7 @@ import com.smile.petpat.post.rehoming.domain.RehomingCommand;
 import com.smile.petpat.user.domain.User;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.Setter;
 import lombok.ToString;
-import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.NotBlank;
