@@ -4,16 +4,15 @@ import com.smile.petpat.common.response.SuccessResponse;
 import com.smile.petpat.post.rehoming.domain.RehomingCommand;
 import com.smile.petpat.post.rehoming.domain.RehomingInfo;
 import com.smile.petpat.post.rehoming.dto.RehomingPagingDto;
+import com.smile.petpat.post.rehoming.dto.RehomingResDto;
 import com.smile.petpat.post.rehoming.dto.RehomingUpdateReqDto;
 import com.smile.petpat.post.rehoming.service.RehomingService;
-import com.smile.petpat.post.rehoming.service.RehomingServiceImpl;
 import com.smile.petpat.user.service.UserDetailsImpl;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
@@ -37,7 +36,7 @@ public class RehomingController {
     @Operation(summary = "분양게시글 등록", description = "분양게시글 등록")
     @RequestMapping(value = "",method = RequestMethod.POST)
     public SuccessResponse registerRehoming(@AuthenticationPrincipal UserDetailsImpl userDetails,
-                                  @ModelAttribute @Valid RehomingCommand rehomingDto) {
+                                            @ModelAttribute @Valid RehomingCommand rehomingDto) {
         RehomingCommand rehomingCommand = rehomingDto.toCommand();
         rehomingService.registerRehoming(userDetails.getUsername(), rehomingCommand);
         return SuccessResponse.noDataSuccess("OK");
@@ -72,16 +71,16 @@ public class RehomingController {
      */
     @PreAuthorize("hasRole('USER')")
     @Operation(summary = "분양게시글 상세 조회", description = "분양게시글 상세 조회")
-    @RequestMapping(value = "/detail", method = RequestMethod.GET)
-    public SuccessResponse detail(@RequestParam Long postId,
-                                  @AuthenticationPrincipal UserDetailsImpl userDetails) {
+    @RequestMapping(value = "/{postId}", method = RequestMethod.GET)
+    public SuccessResponse<RehomingResDto> detail(@PathVariable Long postId,
+                                                  @AuthenticationPrincipal UserDetailsImpl userDetails) {
         return SuccessResponse.success(rehomingService.detailRehomingForMember(postId, userDetails.getUsername()), "OK");
     }
 
     @PreAuthorize("hasRole('GUEST')")
     @Operation(summary = "분양게시글 상세 조회", description = "분양게시글 상세 조회")
-    @RequestMapping(value = "/public/detail", method = RequestMethod.GET)
-    public SuccessResponse detailPublic(@RequestParam Long postId) {
+    @RequestMapping(value = "/public/{postId}", method = RequestMethod.GET)
+    public SuccessResponse<RehomingResDto> detailPublic(@PathVariable Long postId) {
         return SuccessResponse.success(rehomingService.detailRehoming(postId), "OK");
     }
 
@@ -95,9 +94,9 @@ public class RehomingController {
      */
     @PreAuthorize("hasRole('USER')")
     @Operation(summary = "분양게시물 수정", description = "분양게시물 수정")
-    @RequestMapping(value = "", method = RequestMethod.PUT)
+    @RequestMapping(value = "/{postId}", method = RequestMethod.PUT)
     public SuccessResponse updateRehoming(@AuthenticationPrincipal UserDetailsImpl userDetails,
-                                          @RequestParam Long postId,
+                                          @PathVariable Long postId,
                                           @ModelAttribute @Valid RehomingUpdateReqDto rehomingDto) {
         return SuccessResponse.success(rehomingService.updateRehoming(userDetails.getUsername(), postId, rehomingDto), "OK");
     }
@@ -108,9 +107,9 @@ public class RehomingController {
      */
     @PreAuthorize("hasRole('USER')")
     @Operation(summary = "분양게시물 삭제", description = "분양 게시물 삭제")
-    @RequestMapping(value = "",method = RequestMethod.DELETE)
+    @RequestMapping(value = "/{postId}",method = RequestMethod.DELETE)
     public SuccessResponse deleteRehoming(@AuthenticationPrincipal UserDetailsImpl userDetails,
-                                          @RequestParam Long postId) {
+                                          @PathVariable Long postId) {
         rehomingService.deleteRehoming(userDetails.getUsername(), postId);
         return SuccessResponse.noDataSuccess("OK");
     }
@@ -123,7 +122,7 @@ public class RehomingController {
     @Operation(summary = "분양게시물 상태변경 [분양 중]", description= "분양게시물 상태변경 [분양 중]")
     @RequestMapping(value = "/statusFinding", method = RequestMethod.POST)
     public SuccessResponse updateStatusFinding(@AuthenticationPrincipal UserDetailsImpl userDetails,
-                                                @RequestParam Long postId) {
+                                               @RequestParam Long postId) {
         rehomingService.updateStatusFinding(userDetails.getUsername(), postId);
         return SuccessResponse.noDataSuccess("OK");
     }
@@ -150,8 +149,8 @@ public class RehomingController {
     @Operation(summary = "분양게시물 카테고리별 목록 조회", description = "분양게시물 카테고리별 목록 조회")
     @RequestMapping(value = "/category", method = RequestMethod.GET)
     public SuccessResponse<?> getCategoryList(@AuthenticationPrincipal UserDetailsImpl userDetails,
-                                             @RequestParam("categoryId") Long categoryId, @RequestParam("typeId") Long typeId,
-                                             @PageableDefault Pageable pageable) {
+                                              @RequestParam("categoryId") Long categoryId, @RequestParam("typeId") Long typeId,
+                                              @PageableDefault Pageable pageable) {
         RehomingPagingDto rehomingPagingDto;
         rehomingPagingDto = rehomingService.getCategoryListForMember(userDetails.getUsername(), categoryId, typeId, pageable);
         return SuccessResponse.success(rehomingPagingDto);
@@ -162,7 +161,7 @@ public class RehomingController {
     @Operation(summary = "분양게시물 카테고리별 목록 조회", description = "분양게시물 카테고리별 목록 조회")
     @RequestMapping(value = "/public/category", method = RequestMethod.GET)
     public SuccessResponse<?> getCategoryListPublic(@RequestParam("categoryId") Long categoryId, @RequestParam("typeId") Long typeId,
-                                             @PageableDefault Pageable pageable) {
+                                                    @PageableDefault Pageable pageable) {
         RehomingPagingDto rehomingPagingDto;
         rehomingPagingDto = rehomingService.getCategoryList(categoryId, typeId, pageable);
         return SuccessResponse.success(rehomingPagingDto);
