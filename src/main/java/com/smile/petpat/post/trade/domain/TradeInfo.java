@@ -30,7 +30,10 @@ public class TradeInfo {
         private String title;
         private String content;
         private Long price;
-        private String region;
+        private String province;
+        private String district;
+        private String city;
+        private String town;
         private List<ImageResDto> imageList;
         private PostType postType;
         private boolean isLiked;
@@ -57,7 +60,10 @@ public class TradeInfo {
             this.title = title;
             this.content = content;
             this.price = price;
-            this.region = AddressUtils.makeRegionFromAddress(address);
+            this.province = address.getProvince();
+            this.district = address.getDistrict();
+            this.city = address.getCity();
+            this.town = address.getTown();
             this.postType = postType;
             this.isLiked = isLiked==0? false:true ;
             this.isBookmarked = isBookmarked==0? false:true;
@@ -76,7 +82,10 @@ public class TradeInfo {
             this.title = tradeDetail.title;
             this.content = tradeDetail.content;
             this.price = tradeDetail.price;
-            this.region = tradeDetail.getRegion();
+            this.province = tradeDetail.province;
+            this.district = tradeDetail.district;
+            this.city = tradeDetail.city;
+            this.town = tradeDetail.town;
             this.imageList = imageList;
             this.postType = tradeDetail.postType;
             this.isLiked = tradeDetail.isLiked;
