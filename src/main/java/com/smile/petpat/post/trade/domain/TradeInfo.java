@@ -41,6 +41,9 @@ public class TradeInfo {
         private int viewCnt;
         private Long likeCnt;
         private Long bookmarkCnt;
+        private Long secondDepthId;
+        private String secondDepthName;
+        private Long tradeCategoryDetailId;
         private String tradeCategoryDetailName;
         private PostStatus status;
         private String createdAt;
@@ -52,7 +55,8 @@ public class TradeInfo {
         //Constructor of tradeDetailForUser,tradeDetail
         public TradeDetail(Long postId, Long userId, String nickname, String title, String content, Long price, Address address,
                            PostType postType, Long isLiked, Long isBookmarked, int viewCnt, Long likeCnt,
-                           Long bookmarkCnt, String tradeCategoryDetailName, PostStatus status, LocalDateTime createdAt
+                           Long bookmarkCnt, Long secondDepthId, String secondDepthName,
+                           Long tradeCategoryDetailId, String tradeCategoryDetailName, PostStatus status, LocalDateTime createdAt
         ) {
             this.postId = postId;
             this.userId = userId;
@@ -70,6 +74,9 @@ public class TradeInfo {
             this.viewCnt = viewCnt;
             this.likeCnt = likeCnt;
             this.bookmarkCnt = bookmarkCnt;
+            this.secondDepthId = secondDepthId;
+            this.secondDepthName = secondDepthName;
+            this.tradeCategoryDetailId = tradeCategoryDetailId;
             this.tradeCategoryDetailName = tradeCategoryDetailName;
             this.status =status;
             this.createdAt = CalculateTime.dateformatForPost(createdAt);
@@ -93,6 +100,9 @@ public class TradeInfo {
             this.viewCnt = tradeDetail.viewCnt;
             this.likeCnt = tradeDetail.likeCnt;
             this.bookmarkCnt = tradeDetail.bookmarkCnt;
+            this.secondDepthId = tradeDetail.secondDepthId;
+            this.secondDepthName = tradeDetail.secondDepthName;
+            this.tradeCategoryDetailId = tradeDetail.tradeCategoryDetailId;
             this.tradeCategoryDetailName = tradeDetail.tradeCategoryDetailName;
             this.status=tradeDetail.status;
             this.createdAt = tradeDetail.createdAt;
