@@ -30,7 +30,10 @@ public class TradeInfo {
         private String title;
         private String content;
         private Long price;
-        private String region;
+        private String province;
+        private String district;
+        private String city;
+        private String town;
         private List<ImageResDto> imageList;
         private PostType postType;
         private boolean isLiked;
@@ -38,6 +41,9 @@ public class TradeInfo {
         private int viewCnt;
         private Long likeCnt;
         private Long bookmarkCnt;
+        private Long secondDepthId;
+        private String secondDepthName;
+        private Long tradeCategoryDetailId;
         private String tradeCategoryDetailName;
         private PostStatus status;
         private String createdAt;
@@ -49,7 +55,8 @@ public class TradeInfo {
         //Constructor of tradeDetailForUser,tradeDetail
         public TradeDetail(Long postId, Long userId, String nickname, String title, String content, Long price, Address address,
                            PostType postType, Long isLiked, Long isBookmarked, int viewCnt, Long likeCnt,
-                           Long bookmarkCnt, String tradeCategoryDetailName, PostStatus status, LocalDateTime createdAt
+                           Long bookmarkCnt, Long secondDepthId, String secondDepthName,
+                           Long tradeCategoryDetailId, String tradeCategoryDetailName, PostStatus status, LocalDateTime createdAt
         ) {
             this.postId = postId;
             this.userId = userId;
@@ -57,13 +64,19 @@ public class TradeInfo {
             this.title = title;
             this.content = content;
             this.price = price;
-            this.region = AddressUtils.makeRegionFromAddress(address);
+            this.province = address.getProvince();
+            this.district = address.getDistrict();
+            this.city = address.getCity();
+            this.town = address.getTown();
             this.postType = postType;
             this.isLiked = isLiked==0? false:true ;
             this.isBookmarked = isBookmarked==0? false:true;
             this.viewCnt = viewCnt;
             this.likeCnt = likeCnt;
             this.bookmarkCnt = bookmarkCnt;
+            this.secondDepthId = secondDepthId;
+            this.secondDepthName = secondDepthName;
+            this.tradeCategoryDetailId = tradeCategoryDetailId;
             this.tradeCategoryDetailName = tradeCategoryDetailName;
             this.status =status;
             this.createdAt = CalculateTime.dateformatForPost(createdAt);
@@ -76,7 +89,10 @@ public class TradeInfo {
             this.title = tradeDetail.title;
             this.content = tradeDetail.content;
             this.price = tradeDetail.price;
-            this.region = tradeDetail.getRegion();
+            this.province = tradeDetail.province;
+            this.district = tradeDetail.district;
+            this.city = tradeDetail.city;
+            this.town = tradeDetail.town;
             this.imageList = imageList;
             this.postType = tradeDetail.postType;
             this.isLiked = tradeDetail.isLiked;
@@ -84,6 +100,9 @@ public class TradeInfo {
             this.viewCnt = tradeDetail.viewCnt;
             this.likeCnt = tradeDetail.likeCnt;
             this.bookmarkCnt = tradeDetail.bookmarkCnt;
+            this.secondDepthId = tradeDetail.secondDepthId;
+            this.secondDepthName = tradeDetail.secondDepthName;
+            this.tradeCategoryDetailId = tradeDetail.tradeCategoryDetailId;
             this.tradeCategoryDetailName = tradeDetail.tradeCategoryDetailName;
             this.status=tradeDetail.status;
             this.createdAt = tradeDetail.createdAt;

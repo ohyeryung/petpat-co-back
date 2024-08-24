@@ -56,12 +56,12 @@ public class  TradeController {
      * @return 성공 시 200 Success 와 함께 분양게시물 상세 반환
      */
     @Operation(summary = "중고거래 게시물 상세조회", description = "중고거래 게시물 상세조회")
-    @RequestMapping(value = "/{tradeId}",method = RequestMethod.GET)
-    public SuccessResponse detailTrade(@PathVariable Long tradeId, @AuthenticationPrincipal UserDetailsImpl userDetails){
+    @RequestMapping(value = "/{postId}",method = RequestMethod.GET)
+    public SuccessResponse detailTrade(@PathVariable Long postId, @AuthenticationPrincipal UserDetailsImpl userDetails){
         if (userDetails.getUser().getUserEmail().split("@")[1].contains("guest")) { //비회원 유저가 조회
-            return SuccessResponse.success(tradeService.tradeDetail(tradeId),"ok");
+            return SuccessResponse.success(tradeService.tradeDetail(postId),"ok");
         } else { //회원인 유저가 조회
-            return SuccessResponse.success(tradeService.tradeDetailforUser(tradeId, userDetails.getUser()),"ok");
+            return SuccessResponse.success(tradeService.tradeDetailforUser(postId, userDetails.getUser()),"ok");
         }
     }
 
@@ -83,11 +83,11 @@ public class  TradeController {
      * @return 성공 시 200 Success 반환
      */
     @Operation(summary = "중고거래 게시물 삭제", description = "중고거래 게시물 삭제")
-    @RequestMapping(value = "/{tradeId}",method = RequestMethod.DELETE)
-    public SuccessResponse deleteTrade(@PathVariable Long tradeId,
+    @RequestMapping(value = "/{postId}",method = RequestMethod.DELETE)
+    public SuccessResponse deleteTrade(@PathVariable Long postId,
                                        @AuthenticationPrincipal UserDetailsImpl userDetails
     ){
-        tradeService.deleteTrade(tradeId,userDetails.getUser());
+        tradeService.deleteTrade(postId,userDetails.getUser());
         return SuccessResponse.success("OK");
     }
     /**

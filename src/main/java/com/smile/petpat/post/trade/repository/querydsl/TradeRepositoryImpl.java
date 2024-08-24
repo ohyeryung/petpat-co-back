@@ -5,11 +5,14 @@ import com.querydsl.core.group.GroupBy;
 import com.querydsl.core.types.ExpressionUtils;
 import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.BooleanExpression;
+import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.smile.petpat.image.domain.ImagePriority;
 import com.smile.petpat.image.dto.ImageResDto;
 import com.smile.petpat.post.category.domain.PostType;
+import com.smile.petpat.post.category.domain.QCategoryGroup;
+import com.smile.petpat.post.category.domain.QTradeCategory;
 import com.smile.petpat.post.common.status.PostStatus;
 import com.smile.petpat.post.trade.domain.TradeInfo;
 import org.springframework.data.domain.Page;
@@ -21,6 +24,9 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import static com.smile.petpat.image.domain.QImage.image;
+import static com.smile.petpat.post.category.domain.QCategoryGroup.categoryGroup;
+import static com.smile.petpat.post.category.domain.QTradeCategory.tradeCategory;
+import static com.smile.petpat.post.category.domain.QTradeCategoryDetail.tradeCategoryDetail;
 import static com.smile.petpat.post.common.bookmarks.domain.QBookmark.bookmark;
 import static com.smile.petpat.post.common.likes.domain.QLikes.likes;
 import static com.smile.petpat.post.trade.domain.QTrade.trade;
@@ -198,6 +204,19 @@ public class TradeRepositoryImpl implements TradeRepositoryQueryDsl{
                                                         .from(bookmark)
                                                         .where(bookmark.postId.eq(trade.tradeId)),
                                                 "bookmarkCnt"),
+                                        Expressions.as(
+                                                JPAExpressions
+                                                        .select(tradeCategory.tradeCategoryId)
+                                                        .from(tradeCategory)
+                                                        .where(tradeCategory.tradeCategoryId.eq(trade.tradeCategoryDetail.tradeCategory.tradeCategoryId)),
+                                                "secondDepthId"),
+                                        Expressions.as(
+                                                JPAExpressions
+                                                        .select(tradeCategory.tradeCategoryName)
+                                                        .from(tradeCategory)
+                                                        .where(tradeCategory.tradeCategoryId.eq(trade.tradeCategoryDetail.tradeCategory.tradeCategoryId)),
+                                                "secondDepthName"),
+                                        trade.tradeCategoryDetail.tradeCategoryDetailId,
                                         trade.tradeCategoryDetail.tradeCategoryDetailName,
                                         trade.status,
                                         trade.createdAt
@@ -251,6 +270,19 @@ public class TradeRepositoryImpl implements TradeRepositoryQueryDsl{
                                                         .from(bookmark)
                                                         .where(bookmark.postId.eq(trade.tradeId)),
                                                 "bookmarkCnt"),
+                                        Expressions.as(
+                                                JPAExpressions
+                                                        .select(tradeCategory.tradeCategoryId)
+                                                        .from(tradeCategory)
+                                                        .where(tradeCategory.tradeCategoryId.eq(trade.tradeCategoryDetail.tradeCategory.tradeCategoryId)),
+                                                "secondDepthId"),
+                                        Expressions.as(
+                                                JPAExpressions
+                                                        .select(tradeCategory.tradeCategoryName)
+                                                        .from(tradeCategory)
+                                                        .where(tradeCategory.tradeCategoryId.eq(trade.tradeCategoryDetail.tradeCategory.tradeCategoryId)),
+                                                "secondDepthName"),
+                                        trade.tradeCategoryDetail.tradeCategoryDetailId,
                                         trade.tradeCategoryDetail.tradeCategoryDetailName,
                                         trade.status,
                                         trade.createdAt

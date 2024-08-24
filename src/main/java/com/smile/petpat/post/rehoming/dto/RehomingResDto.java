@@ -6,7 +6,6 @@ import com.smile.petpat.post.common.CalculateTime;
 import com.smile.petpat.post.common.status.PostStatus;
 import com.smile.petpat.post.rehoming.domain.Rehoming;
 import com.smile.petpat.post.rehoming.domain.RehomingCommand;
-import com.smile.petpat.post.common.Address.util.AddressUtils;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -26,10 +25,15 @@ public class RehomingResDto  {
     private String content;
     private String petName;
     private LocalDate petAge;
-    private String category;
-    private String type;
+    private String firstDepth;
+    private Long firstDepthId;
+    private String secondDepth;
+    private Long secondDepthId;
     private RehomingCommand.PetGender gender;
-    private String region;
+    private String province;
+    private String district;
+    private String city;
+    private String town;
     private PostStatus status;
     private String createdAt;
     private String updatedAt;
@@ -49,8 +53,8 @@ public class RehomingResDto  {
 
     public RehomingResDto(Long postId, PostType postType, Long userId, String nickname,
                           String title, String content, String petName, LocalDate petAge,
-                          String category, String type, RehomingCommand.PetGender gender, 
-                          String cityName, String cityCountryName, String townShipName, PostStatus status,
+                          Long firstDepthId, String firstDepth, Long secondDepthId, String secondDepth, RehomingCommand.PetGender gender,
+                          String province, String district, String city, String town, PostStatus status,
                           LocalDateTime createdAt, LocalDateTime updatedAt, Long isLiked, Long isBookmarked, int viewCnt, int likeCnt,
                           boolean dhppl, boolean covidEnteritis, boolean kennelCough, boolean influenza, boolean rabies,
                           boolean comprehensiveVaccine, boolean fpv, boolean felv, boolean isNeutralized) {
@@ -62,10 +66,15 @@ public class RehomingResDto  {
         this.content = content;
         this.petName = petName;
         this.petAge = petAge;
-        this.category = category;
-        this.type = type;
+        this.firstDepthId = firstDepthId;
+        this.firstDepth = firstDepth;
+        this.secondDepthId = secondDepthId;
+        this.secondDepth = secondDepth;
         this.gender = gender;
-        this.region = cityName + " " + cityCountryName + " " + townShipName;
+        this.province = province;
+        this.district = district;
+        this.city = city;
+        this.town = town;
         this.isLiked = booleanChk(isLiked);
         this.isBookmarked = booleanChk(isBookmarked);
         this.viewCnt = viewCnt;
@@ -96,10 +105,15 @@ public class RehomingResDto  {
         this.content = rehomingResDto.content;
         this.petName = rehomingResDto.petName;
         this.petAge = rehomingResDto.petAge;
-        this.category = rehomingResDto.category;
-        this.type = rehomingResDto.type;
+        this.firstDepthId = rehomingResDto.firstDepthId;
+        this.firstDepth = rehomingResDto.firstDepth;
+        this.secondDepthId = rehomingResDto.secondDepthId;
+        this.secondDepth = rehomingResDto.secondDepth;
         this.gender = rehomingResDto.gender;
-        this.region = rehomingResDto.getRegion();
+        this.province = rehomingResDto.province;
+        this.district = rehomingResDto.district;
+        this.city = rehomingResDto.city;
+        this.town = rehomingResDto.town;
         this.isLiked = rehomingResDto.isLiked;
         this.isBookmarked = rehomingResDto.isBookmarked;
         this.viewCnt = rehomingResDto.viewCnt;
@@ -129,10 +143,15 @@ public class RehomingResDto  {
         this.content = rehoming.getContent();
         this.petName = rehoming.getPetName();
         this.petAge = rehoming.getPetAge();
-        this.category = rehoming.getCategory().getCategoryGroupName();
-        this.type = rehoming.getType().getPetCategoryName();
+        this.firstDepthId = rehoming.getCategory().getCategoryGroupId();
+        this.firstDepth = rehoming.getCategory().getCategoryGroupName();
+        this.secondDepthId = rehoming.getType().getPetCategoryId();
+        this.secondDepth = rehoming.getType().getPetCategoryName();
         this.gender = rehoming.getGender();
-        this.region = AddressUtils.makeRegionFromAddress(rehoming.getAddress());
+        this.province = rehoming.getAddress().getProvince();
+        this.district = rehoming.getAddress().getDistrict();
+        this.city = rehoming.getAddress().getCity();
+        this.town = rehoming.getAddress().getTown();
         this.status = rehoming.getStatus();
         this.imageList = imageList;
         this.createdAt = CalculateTime.dateformatForPost(rehoming.getCreatedAt());
@@ -162,10 +181,15 @@ public class RehomingResDto  {
         this.content = rehoming.getContent();
         this.petName = rehoming.getPetName();
         this.petAge = rehoming.getPetAge();
-        this.category = rehoming.getCategory().getCategoryGroupName();
-        this.type = rehoming.getType().getPetCategoryName();
+        this.firstDepthId = rehoming.getCategory().getCategoryGroupId();
+        this.firstDepth = rehoming.getCategory().getCategoryGroupName();
+        this.secondDepthId = rehoming.getType().getPetCategoryId();
+        this.secondDepth = rehoming.getType().getPetCategoryName();
         this.gender = rehoming.getGender();
-        this.region = AddressUtils.makeRegionFromAddress(rehoming.getAddress());
+        this.province = rehoming.getAddress().getProvince();
+        this.district = rehoming.getAddress().getDistrict();
+        this.city = rehoming.getAddress().getCity();
+        this.town = rehoming.getAddress().getTown();
         this.status = rehoming.getStatus();
         this.imageList = imageList;
         this.createdAt = CalculateTime.dateformatForPost(rehoming.getCreatedAt());
