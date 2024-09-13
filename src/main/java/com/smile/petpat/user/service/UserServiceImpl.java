@@ -6,6 +6,7 @@ import com.smile.petpat.user.domain.*;
 import com.smile.petpat.user.dto.SocialUserDto;
 import lombok.RequiredArgsConstructor;
 
+import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,20 +24,17 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public User registerUser(UserCommand command) {
-
         userReader.getUserByUserEmail(command.getUserEmail());
+        userReader.getUserByNickName(command.getNickname());
         return userStore.store(command.toEntity());
     }
 
     // 로그인
     @Override
     @Transactional
-    public String loginUser(UserCommand command) {
-
-        User initUser = command.toLogin();
-        userReader.getUser(initUser);
-
-        return userAuth.getToken(initUser);
+    public HttpHeaders loginUser(UserCommand loginUser) {
+        User user = userReader.getUser(loginUser.getUserEmail(),loginUser.getPassword());
+        return userAuth.generateHeaderTokens(user);
     }
 
     @Override

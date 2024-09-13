@@ -1,8 +1,10 @@
 package com.smile.petpat.user.dto;
 
 import com.smile.petpat.user.domain.UserCommand;
+import com.smile.petpat.user.domain.UserRole;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
@@ -24,12 +26,15 @@ public class UserDto {
         @NotEmpty
         private String profileImgPath;
 
+        private UserRole userRole;
+
         public UserCommand toCommand(){
             return UserCommand.builder()
                     .userEmail(userEmail)
                     .nickname(nickname)
                     .password(password)
                     .profileImgPath(profileImgPath)
+                    .userRole(userRole)
                     .build();
         }
     }
@@ -56,5 +61,27 @@ public class UserDto {
                     .password(password)
                     .build();
         }
+    }
+
+    @Getter
+    @Setter
+    public static class ModifyUserRequest{
+        private String username;
+        private String email;
+        private String profileImgUrl;
+        private MultipartFile profileImgFile;
+    }
+
+    @Getter
+    @Setter
+    public static class ModifyPasswordRequest{
+        private String newPassword;
+        private String newPasswordChk;
+    }
+
+    @Getter
+    @Setter
+    public static class CheckPasswordRequest{
+        private String password;
     }
 }

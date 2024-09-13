@@ -1,9 +1,10 @@
 package com.smile.petpat.post.common.bookmarks.service;
 
-import com.smile.petpat.user.domain.User;
+import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 
+@Service
 public interface BookmarkService {
-    HashMap<String, String> BookmarkPost(String postType, Long postId, User user);
+    HashMap<String, String> bookmarkPost(String postType, Long postId, String userEmail);
 }

@@ -3,10 +3,13 @@ package com.smile.petpat.post.category.dto;
 import com.smile.petpat.post.category.domain.PetCategory;
 import com.smile.petpat.post.category.domain.TradeCategory;
 import com.smile.petpat.post.category.domain.TradeCategoryDetail;
+import com.smile.petpat.post.trade.domain.Trade;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+
+import java.util.List;
 
 public class PostCategoryInfo {
 
@@ -19,12 +22,12 @@ public class PostCategoryInfo {
     @NoArgsConstructor
     @AllArgsConstructor
     public static class PetCategoryRes {
-        private Long petCategoryId;
-        private String petCategoryName;
+        private Long secondCategoryId;
+        private String secondCategoryName;
 
         public PetCategoryRes(PetCategory petCategory) {
-            this.petCategoryId = petCategory.getPetCategoryId();
-            this.petCategoryName = petCategory.getPetCategoryName();
+            this.secondCategoryId = petCategory.getPetCategoryId();
+            this.secondCategoryName = petCategory.getPetCategoryName();
         }
     }
 
@@ -33,12 +36,12 @@ public class PostCategoryInfo {
     @NoArgsConstructor
     @AllArgsConstructor
     public static class TradeCategoryRes{
-        private Long tradeCategoryId;
-        private String tradeCategoryName;
+        private Long secondCategoryId;
+        private String secondCategoryName;
 
         public TradeCategoryRes(TradeCategory tradeCategory){
-            this.tradeCategoryId = tradeCategory.getTradeCategoryId();
-            this.tradeCategoryName = tradeCategory.getTradeCategoryName();
+            this.secondCategoryId = tradeCategory.getTradeCategoryId();
+            this.secondCategoryName = tradeCategory.getTradeCategoryName();
         }
 
     }
@@ -48,13 +51,16 @@ public class PostCategoryInfo {
     @NoArgsConstructor
     @AllArgsConstructor
     public static class TradeCategoryDetailRes{
-        private Long tradeCategoryDetailId;
-        private String tradeCategoryDetailName;
+        private Long thirdCategoryId;
+        private String thirdCategoryName;
 
         public TradeCategoryDetailRes(TradeCategoryDetail tradeCategoryDetail){
-            this.tradeCategoryDetailId = tradeCategoryDetail.getTradeCategoryDetailId();
-            this.tradeCategoryDetailName = tradeCategoryDetail.getTradeCategoryDetailName();
+            this.thirdCategoryId = tradeCategoryDetail.getTradeCategoryDetailId();
+            this.thirdCategoryName = tradeCategoryDetail.getTradeCategoryDetailName();
         }
     }
+
+
+
 
 }

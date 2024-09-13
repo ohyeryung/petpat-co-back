@@ -1,89 +1,74 @@
 package com.smile.petpat.post.rehoming.domain;
 
 import com.smile.petpat.post.category.domain.PostType;
+import com.smile.petpat.post.common.Address.domain.Address;
+import com.smile.petpat.post.common.CalculateTime;
 import com.smile.petpat.post.common.status.PostStatus;
+import com.smile.petpat.post.common.Address.util.AddressUtils;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Getter
 @NoArgsConstructor
 public class RehomingInfo {
-    private Long rehomingId;
-    private String rehomingImg;
-    private Long userId;
-    private String nickname;
+    private Long postId;
+    private String imagePath;
     private String title;
-    private String petName;
-    private String category;
-    private String type;
-    private RehomingCommand.PetGender gender;
+    private String region;
     private PostStatus status;
-    private PostType postType;
-    private LocalDateTime createdAt;
-    private LocalDateTime updatedAt;
     private boolean isLiked;
     private boolean isBookmarked;
     private int viewCnt;
     private Long likeCnt;
     private Long bookmarkCnt;
+    private String createdAt;
+    private String updatedAt;
 
-    // 회원
-    public RehomingInfo(Long rehomingId, String rehomingImg, Long userId, String nickname,
-                        String title, String petName,
-                        String category, String type, RehomingCommand.PetGender gender,
-                        PostStatus status, PostType postType, LocalDateTime createdAt, LocalDateTime updatedAt,
-                        Long isLiked, Long isBookmarked, int viewCnt, Long likeCnt, Long bookmarkCnt) {
-        this.rehomingId = rehomingId;
-        this.rehomingImg = rehomingImg;
-        this.userId = userId;
-        this.nickname = nickname;
+    // 회원, Constructor of rehomingListForMember,rehomingCategoryListForMember,fetchTrendingRehoming
+    public RehomingInfo(Long postId, String imagePath,
+                        String title, Address address,PostStatus status,
+                        Long isLiked,Long isBookmarked,int viewCnt,Long likeCnt,Long bookmarkCnt,
+                        LocalDateTime createdAt, LocalDateTime updatedAt){
+        this.postId = postId;
+        this.imagePath = imagePath;
         this.title = title;
-        this.petName = petName;
-        this.category = category;
-        this.type = type;
-        this.gender = gender;
+        this.region = AddressUtils.makeRegionFromAddress(address);
         this.status = status;
-        this.postType = postType;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
         this.isLiked = booleanChk(isLiked);
         this.isBookmarked = booleanChk(isBookmarked);
         this.viewCnt = viewCnt;
         this.likeCnt = likeCnt;
         this.bookmarkCnt = bookmarkCnt;
+        this.createdAt = CalculateTime.dateformatForPost(createdAt);
+        this.updatedAt = CalculateTime.dateformatForPost(updatedAt);
     }
 
-    private Boolean booleanChk(Long chkValue) {
-        return chkValue != 0;
-    }
 
-    // 비회원
-    public RehomingInfo(Long rehomingId, String rehomingImg, Long userId, String nickname,
-                        String title, String petName,
-                        String category, String type, RehomingCommand.PetGender gender,
-                        PostStatus status, PostType postType, LocalDateTime createdAt, LocalDateTime updatedAt,
-                        int viewCnt, Long likeCnt, Long bookmarkCnt) {
-        this.rehomingId = rehomingId;
-        this.rehomingImg = rehomingImg;
-        this.userId = userId;
-        this.nickname = nickname;
+
+
+    // 비회원, Constructor of rehomingList,rehomingCategoryList
+    public RehomingInfo(Long postId,
+                        String imagePath, String title,
+                        Address address, PostStatus status,
+                        int viewCnt, Long likeCnt, Long bookmarkCnt,
+                        LocalDateTime createdAt, LocalDateTime updatedAt) {
+        this.postId = postId;
+        this.imagePath = imagePath;
         this.title = title;
-        this.petName = petName;
-        this.category = category;
-        this.type = type;
-        this.gender = gender;
+        this.region = AddressUtils.makeRegionFromAddress(address);
         this.status = status;
-        this.postType = postType;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
         this.isLiked = false;
         this.isBookmarked = false;
         this.viewCnt = viewCnt;
         this.likeCnt = likeCnt;
         this.bookmarkCnt = bookmarkCnt;
+        this.createdAt = CalculateTime.dateformatForPost(createdAt);
+        this.updatedAt = CalculateTime.dateformatForPost(updatedAt);
+    }
+
+    private Boolean booleanChk(Long chkValue) {
+        return chkValue != 0;
     }
 }
